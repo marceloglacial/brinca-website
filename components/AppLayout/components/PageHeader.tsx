@@ -1,40 +1,38 @@
+import { default as NextLink } from 'next/link'
 import { Link, NavBar } from '@marceloglacial/brinca-ui'
-import Image from 'next/image'
+import { Logo } from 'components'
+import { styles } from './PageHeaderStyles'
 
 const PageHeader = () => (
     <NavBar>
         <NavBar.Brand>
-            <a href='#'>
-                <div className='w-[160px] h-[65px] md:w-[230px] md:h-[95px] object-contain relative'>
-                    <Image
-                        src='https://res.cloudinary.com/brinca/image/upload/v1664060764/brinca-ui/image_qcfpyy.png'
-                        alt=''
-                        fill
-                    />
+            <NextLink href='/'>
+                <div className={styles.logo}>
+                    <Logo />
                 </div>
-            </a>
+            </NextLink>
         </NavBar.Brand>
         <NavBar.Items>
             <Link>
-                <a href='#'>Item 1</a>
+                <NextLink href='#'>Item 1</NextLink>
             </Link>
             <Link>
-                <a href='#'>Item 2</a>
+                <NextLink href='#'>Item 2</NextLink>
             </Link>
             <Link>
-                <a href='#'>Item 3</a>
+                <NextLink href='#'>Item 3</NextLink>
             </Link>
             <Link>
-                <a href='#'>Item 4</a>
+                <NextLink href='#'>Item 4</NextLink>
             </Link>
             <Link>
-                <a href='#'>Item 5</a>
+                <NextLink href='#'>Item 5</NextLink>
             </Link>
             <Link>
-                <a href='#'>Item 6</a>
+                <NextLink href='#'>Item 6</NextLink>
             </Link>
             <Link variant='primary'>
-                <a href='#'>Item 7</a>
+                <NextLink href='#'>Item 7</NextLink>
             </Link>
         </NavBar.Items>
     </NavBar>

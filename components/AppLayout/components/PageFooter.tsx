@@ -1,32 +1,30 @@
+import { default as NextLink } from 'next/link'
 import { Link, NavBar } from '@marceloglacial/brinca-ui'
-import Image from 'next/image'
+import { Logo } from 'components'
+import { styles } from './PageFooterStyles'
 
 const PageFooter = () => (
     <NavBar variant='bottom'>
         <NavBar.Brand>
-            <a href='#' className='w-[150px] h-[60px] object-contain relative'>
-                <Image
-                    src='https://res.cloudinary.com/brinca/image/upload/v1664060777/brinca-ui/image_yfpt9t.png'
-                    alt=''
-                    fill
-                />
-            </a>
+            <NextLink href='#' className={styles.logo}>
+                <Logo variant='white' />
+            </NextLink>
         </NavBar.Brand>
         <NavBar.Items variant='bottom'>
             <Link variant='white'>
-                <a href='#'>Item</a>
+                <NextLink href='#'>Item</NextLink>
             </Link>
             <Link variant='white'>
-                <a href='#'>Item</a>
+                <NextLink href='#'>Item</NextLink>
             </Link>
             <Link variant='white'>
-                <a href='#'>Item</a>
+                <NextLink href='#'>Item</NextLink>
             </Link>
             <Link variant='white'>
-                <a href='#'>Item</a>
+                <NextLink href='#'>Item</NextLink>
             </Link>
             <Link variant='white'>
-                <a href='#'>Item</a>
+                <NextLink href='#'>Item</NextLink>
             </Link>
         </NavBar.Items>
     </NavBar>
