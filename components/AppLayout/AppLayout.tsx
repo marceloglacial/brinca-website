@@ -1,14 +1,28 @@
 import { FC, ReactNode } from 'react'
-import { Layout } from '@marceloglacial/brinca-ui'
+import { Layout, LinkTypes } from '@marceloglacial/brinca-ui'
 import PageFooter from './components/PageFooter'
 import PageHeader from './components/PageHeader'
 export interface AppLayoutProps {
     children: ReactNode
+    navigation: navItem[]
 }
 
-const AppLayout: FC<AppLayoutProps> = ({ children }): JSX.Element => {
+export type navItem = {
+    id: number
+    href: string
+    text: string
+    type: LinkTypes
+}
+
+const AppLayout: FC<AppLayoutProps> = ({
+    children,
+    navigation,
+}): JSX.Element => {
     return (
-        <Layout header={<PageHeader />} footer={<PageFooter />}>
+        <Layout
+            header={<PageHeader navigation={navigation} />}
+            footer={<PageFooter navigation={navigation} />}
+        >
             {children}
         </Layout>
     )
