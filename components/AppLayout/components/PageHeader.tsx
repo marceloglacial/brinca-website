@@ -11,7 +11,6 @@ export interface PageHeaderProps {
 
 const PageHeader: FC<PageHeaderProps> = ({ navigation }): JSX.Element => {
     const hasNavItems = navigation?.length > 0
-
     return (
         <NavBar>
             <NavBar.Brand>
