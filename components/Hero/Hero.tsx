@@ -19,10 +19,11 @@ const HeroComponent: FC<HeroComponentProps> = ({
     title,
     description,
     link,
+    rounded,
 }): JSX.Element => {
     return (
         <Hero reversed={reversed}>
-            <Hero.Image rounded shadow className='relative'>
+            <Hero.Image rounded={rounded} shadow={rounded} className='relative'>
                 <Image
                     src={image.src}
                     alt={image?.alt}
@@ -33,9 +34,11 @@ const HeroComponent: FC<HeroComponentProps> = ({
             <Hero.Body>
                 <h2>{title}</h2>
                 <p>{description}</p>
-                <NextLink href={link.href}>
-                    <Link variant='secondary'>{link.text}</Link>
-                </NextLink>
+                <div>
+                    <NextLink href={link.href}>
+                        <Link variant='secondary'>{link.text}</Link>
+                    </NextLink>
+                </div>
             </Hero.Body>
         </Hero>
     )
