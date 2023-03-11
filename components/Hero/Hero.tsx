@@ -28,6 +28,7 @@ const HeroComponent: FC<HeroComponentProps> = ({
                     src={image.src}
                     alt={image?.alt}
                     fill
+                    sizes='(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 50vw'
                     className='w-full h-full object-cover'
                 />
             </Hero.Image>

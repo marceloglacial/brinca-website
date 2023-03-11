@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { AppLayout, Block } from 'components'
+import { AppLayout, Block, Section } from 'components'
 import { navItem } from 'components/AppLayout/AppLayout'
 import { getNavigation } from 'services/data'
 import getHomePage from 'services/data/getHomepage'
@@ -18,11 +18,11 @@ export type BlockType = HeroComponentProps
 const Home: FC<HomeProps> = ({ navigation, pageData }): JSX.Element => {
     return (
         <AppLayout navigation={navigation}>
-            <div className='flex flex-col gap-24'>
+            <Section spacing='lg' className='test' id='khjhjk'>
                 {pageData?.blocks?.map((block: BlockType, index: number) => (
                     <Block reversed={!(index % 2)} {...block} key={index} />
                 ))}
-            </div>
+            </Section>
         </AppLayout>
     )
 }

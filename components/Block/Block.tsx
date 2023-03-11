@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Hero } from 'components'
 import { FC } from 'react'
 
 const Blocks: FC = (props: any): JSX.Element => {
+    console.log(props)
+
     const blockType: any = {
         hero: <Hero {...props} />,
     }
