@@ -64,9 +64,26 @@ const getContentList = (props: any) => {
     }
 }
 
-const getHero = (props: any) => {
+export type getHeroTypes = {
+    title: string
+    description: string
+    image: {
+        data: {
+            attributes: {
+                url: string
+            }
+        }
+    }
+    button: {
+        href: string
+        text: string
+    }
+    isRounded: boolean
+}
+
+const getHero = (props: getHeroTypes) => {
     const { title, description, image, button, isRounded } = props
-    const hero: HeroComponentProps & { type: any } = {
+    const hero: HeroComponentProps & { type: string } = {
         type: getComponentType(props),
         title,
         rounded: isRounded,
