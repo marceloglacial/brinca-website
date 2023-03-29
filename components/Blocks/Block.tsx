@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Hero } from 'components'
+import { ContentList, Hero } from 'components'
 import { FC } from 'react'
 
 // TODO: Fix types
@@ -7,6 +7,7 @@ import { FC } from 'react'
 const Block: FC = (props: any): JSX.Element => {
     const blockType: any = {
         hero: <Hero {...props} reversed={!(props.id % 2)} />,
+        'content-list': <ContentList {...props} reversed={!(props.id % 2)} />,
     }
     return <div data-aos='fade-up'>{blockType[props.type]}</div>
 }
