@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { AppLayout, Blocks, ContentList } from 'components'
+import { AppLayout, Blocks } from 'components'
 import { navItem } from 'components/AppLayout/AppLayout'
 import { getEvents, getNavigation } from 'services/data'
 import getHomePage from 'services/data/getHomepage'
@@ -15,13 +15,10 @@ export type PageDataType = {
 }
 export type BlockType = HeroComponentProps
 
-const Home: FC<HomeProps> = ({ navigation, pageData, events }): JSX.Element => {
-    console.log(events)
-
+const Home: FC<HomeProps> = ({ navigation, pageData }): JSX.Element => {
     return (
         <AppLayout navigation={navigation}>
             <Blocks blocks={pageData.blocks} spacing='lg' />
-            <ContentList cards={[]} title={'Eventos'} />
         </AppLayout>
     )
 }
