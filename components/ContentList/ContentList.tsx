@@ -1,17 +1,18 @@
 import { Button, Heading, Section } from '@marceloglacial/brinca-ui'
 import { Card } from 'components'
 import { CardComponentProps } from 'components/Card/Card'
+import Link from 'next/link'
 import { FC } from 'react'
 
 export interface ContentListProps {
     title: string
-    cards?: CardComponentProps[]
+    cards?: cardType[]
 }
 
-const ContentList: FC<ContentListProps> = ({
-    title,
-    cards = [],
-}): JSX.Element => {
+type cardType = { href: string } & CardComponentProps
+
+const ContentList: FC<ContentListProps> = (props): JSX.Element => {
+    const { title, cards = [] } = props
     const isEmpty = cards.length === 0
     return (
         <Section>
@@ -27,7 +28,9 @@ const ContentList: FC<ContentListProps> = ({
             )}
             <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-3'>
                 {cards.map((item, index) => (
-                    <Card key={index} {...item} />
+                    <Link href={item.href} key={index}>
+                        <Card {...item} />
+                    </Link>
                 ))}
             </div>
         </Section>

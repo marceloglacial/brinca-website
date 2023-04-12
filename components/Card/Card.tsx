@@ -4,7 +4,7 @@ import { FC, ReactNode } from 'react'
 
 export interface CardComponentProps {
     title: string
-    description: ReactNode
+    description?: ReactNode
     image: ImageProps
 }
 
@@ -20,7 +20,7 @@ const CardComponent: FC<CardComponentProps> = ({
             </Card.Image>
             <Card.Body>
                 <h4>{title}</h4>
-                <p>{description}</p>
+                {description && <p>{description}</p>}
             </Card.Body>
         </Card>
     )
