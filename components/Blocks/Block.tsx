@@ -7,7 +7,7 @@ import { FC } from 'react'
 const Block: FC = (props: any): JSX.Element => {
     const blockType: any = {
         hero: <Hero {...props} reversed={!(props.id % 2)} />,
-        'content-list': <ContentList {...props} reversed={!(props.id % 2)} />,
+        'content-list': <ContentList {...props} />,
     }
     return <div data-aos='fade-up'>{blockType[props.type]}</div>
 }

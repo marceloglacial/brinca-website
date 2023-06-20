@@ -1,11 +1,12 @@
 import { Card } from '@marceloglacial/brinca-ui'
 import Image, { ImageProps } from 'next/image'
 import { FC, ReactNode } from 'react'
+import styles from './CardStyles'
 
 export interface CardComponentProps {
     title: string
     description?: ReactNode
-    image: ImageProps
+    image?: ImageProps
 }
 
 const CardComponent: FC<CardComponentProps> = ({
@@ -15,9 +16,17 @@ const CardComponent: FC<CardComponentProps> = ({
 }): JSX.Element => {
     return (
         <Card className='transition-transform hover:scale-95'>
-            <Card.Image>
-                <Image {...image} />
-            </Card.Image>
+            {image && (
+                <Card.Image>
+                    <Image
+                        src={image.src}
+                        alt={image.alt}
+                        width={image.width}
+                        height={image.height}
+                        className={styles.image}
+                    />
+                </Card.Image>
+            )}
             <Card.Body>
                 <h4>{title}</h4>
                 {description && <p>{description}</p>}

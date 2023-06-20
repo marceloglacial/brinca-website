@@ -1,19 +1,27 @@
+import { FC } from 'react'
 import { Button, Heading, Section } from '@marceloglacial/brinca-ui'
 import { Card } from 'components'
-import { CardComponentProps } from 'components/Card/Card'
+import useContentList, {
+    contentType,
+    useContentListItemType,
+} from 'hooks/useContentList'
 import Link from 'next/link'
-import { FC } from 'react'
 
 export interface ContentListProps {
     title: string
-    cards?: cardType[]
+    contentType: contentType
 }
 
-type cardType = { href: string } & CardComponentProps
-
 const ContentList: FC<ContentListProps> = (props): JSX.Element => {
-    const { title, cards = [] } = props
-    const isEmpty = cards.length === 0
+    const { title, contentType } = props
+
+    const { data, isLoading, isError } = useContentList(contentType)
+
+    if (isLoading) return <div>...</div>
+    if (isError) return <div>Error</div>
+    const items = data
+    const isEmpty = items?.length === 0
+
     return (
         <Section>
             <Heading>
@@ -27,9 +35,9 @@ const ContentList: FC<ContentListProps> = (props): JSX.Element => {
                 </div>
             )}
             <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-3'>
-                {cards.map((item, index) => (
-                    <Link href={item.href} key={index}>
-                        <Card {...item} />
+                {items.map((item: useContentListItemType) => (
+                    <Link href={item?.link} key={item.id}>
+                        <Card title={item.title} image={item.image} />
                     </Link>
                 ))}
             </div>
