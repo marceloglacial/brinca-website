@@ -14,7 +14,7 @@ const CardComponent: FC<CardComponentProps> = ({
     image,
 }): JSX.Element => {
     return (
-        <Card className='transition-transform hover:scale-95'>
+        <Card className={styles.container}>
             <Card.Image>
                 <Image {...image} />
             </Card.Image>
@@ -26,3 +26,7 @@ const CardComponent: FC<CardComponentProps> = ({
     )
 }
 export default CardComponent
+
+const styles = {
+    container: 'transition-transform hover:scale-95',
+}

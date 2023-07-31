@@ -23,13 +23,17 @@ const HeroComponent: FC<HeroComponentProps> = ({
 }): JSX.Element => {
     return (
         <Hero reversed={reversed}>
-            <Hero.Image rounded={rounded} shadow={rounded} className='relative'>
+            <Hero.Image
+                rounded={rounded}
+                shadow={rounded}
+                className={styles.heroImage}
+            >
                 <Image
                     src={image.src}
                     alt={image?.alt}
                     fill
                     sizes='(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 50vw'
-                    className='w-full h-full object-cover'
+                    className={styles.image}
                 />
             </Hero.Image>
             <Hero.Body>
@@ -45,3 +49,8 @@ const HeroComponent: FC<HeroComponentProps> = ({
     )
 }
 export default HeroComponent
+
+const styles = {
+    heroImage: 'relative',
+    image: 'w-full h-full object-cover',
+}

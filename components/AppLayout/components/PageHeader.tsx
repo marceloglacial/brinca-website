@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { Link, NavBar } from '@marceloglacial/brinca-ui'
 import { Logo } from 'components'
-import { styles } from './PageHeaderStyles'
 import { navItem } from '../AppLayout'
 import { default as NextLink } from 'next/link'
 
@@ -36,3 +35,7 @@ const PageHeader: FC<PageHeaderProps> = ({ navigation }): JSX.Element => {
     )
 }
 export default PageHeader
+
+const styles = {
+    logo: `w-[160px] h-[65px] md:w-[230px] md:h-[95px] object-contain relative`,
+}

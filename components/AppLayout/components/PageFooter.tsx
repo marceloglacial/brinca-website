@@ -1,7 +1,6 @@
 import { default as NextLink } from 'next/link'
 import { Link, NavBar } from '@marceloglacial/brinca-ui'
 import { Logo } from 'components'
-import { styles } from './PageFooterStyles'
 import { navItem } from '../AppLayout'
 import { FC } from 'react'
 
@@ -33,3 +32,7 @@ const PageFooter: FC<PageFooterProps> = ({ navigation }): JSX.Element => {
     )
 }
 export default PageFooter
+
+const styles = {
+    logo: `w-[150px] h-[60px] object-contain relative`,
+}

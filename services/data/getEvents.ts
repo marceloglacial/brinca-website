@@ -13,6 +13,7 @@ const getEvents = async () => {
     const results = await fetch(`${API_URL}/${API_EVENTS_PARAMS}`)
     const event = await results.json()
     const eventAttributes = event.data
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return eventAttributes.map((item: any) => {
         const { id, attributes } = item
         const image = attributes.thumbnail.data.attributes
