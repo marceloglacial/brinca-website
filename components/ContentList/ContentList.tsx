@@ -20,13 +20,13 @@ const ContentList: FC<ContentListProps> = (props): JSX.Element => {
                 <h2>{title}</h2>
             </Heading>
             {isEmpty && (
-                <div className='flex justify-center'>
+                <div className={styles.containerEmpty}>
                     <Button variant='secondary' disabled>
                         Sem eventos
                     </Button>
                 </div>
             )}
-            <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-3'>
+            <div className={styles.cardGrid}>
                 {cards.map((item, index) => (
                     <Link href={item.href} key={index}>
                         <Card {...item} />
@@ -37,3 +37,8 @@ const ContentList: FC<ContentListProps> = (props): JSX.Element => {
     )
 }
 export default ContentList
+
+const styles = {
+    containerEmpty: 'flex justify-center',
+    cardGrid: 'grid gap-8 md:grid-cols-2 lg:grid-cols-3',
+}
