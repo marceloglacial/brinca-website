@@ -47,13 +47,20 @@ const ContentList: FC<ContentListProps> = (props): JSX.Element => {
                 </div>
             )}
             {!isEmpty && (
-                <div className={styles.cardGrid}>
-                    {cards?.map((item, index) => (
-                        <Link href={item.url} key={index}>
-                            <Card {...item} />
+                <>
+                    <div className={styles.cardGrid}>
+                        {cards?.map((item, index) => (
+                            <Link href={item.url} key={index}>
+                                <Card {...item} />
+                            </Link>
+                        ))}
+                    </div>
+                    <div className={styles.centered}>
+                        <Link href={contentType}>
+                            <Button variant='secondary'>Ver todos</Button>
                         </Link>
-                    ))}
-                </div>
+                    </div>
+                </>
             )}
         </Section>
     )
