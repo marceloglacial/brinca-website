@@ -1,44 +1,66 @@
-import { Button, Heading, Section } from '@marceloglacial/brinca-ui'
 import { Card } from 'components'
 import { CardComponentProps } from 'components/Card/Card'
-import Link from 'next/link'
+import { ContentTypes } from 'hooks/useContentList'
 import { FC } from 'react'
+import { Button, Heading, Section } from '@marceloglacial/brinca-ui'
+import { useContentList } from 'hooks'
+import Link from 'next/link'
 
 export interface ContentListProps {
     title: string
-    cards?: cardType[]
+    items: number
+    contentType: ContentTypes
 }
 
-type cardType = { href: string } & CardComponentProps
+type cardType = { url: string } & CardComponentProps
 
 const ContentList: FC<ContentListProps> = (props): JSX.Element => {
-    const { title, cards = [] } = props
-    const isEmpty = cards.length === 0
+    const { title, contentType, items } = props
+    const { data, isLoading, isError } = useContentList(contentType)
+    const cards: cardType[] = data?.slice(0, items)
+    const isEmpty = cards?.length === 0
+
     return (
         <Section>
             <Heading>
                 <h2>{title}</h2>
             </Heading>
-            {isEmpty && (
-                <div className={styles.containerEmpty}>
+            {isLoading && (
+                <div className={styles.centered}>
                     <Button variant='secondary' disabled>
-                        Sem eventos
+                        Carregando ...
                     </Button>
                 </div>
             )}
-            <div className={styles.cardGrid}>
-                {cards.map((item, index) => (
-                    <Link href={item.href} key={index}>
-                        <Card {...item} />
-                    </Link>
-                ))}
-            </div>
+            {isError && (
+                <div className={styles.centered}>
+                    <Button variant='secondary' disabled>
+                        Ocorreu um erro inesperado
+                    </Button>
+                </div>
+            )}
+            {isEmpty && (
+                <div className={styles.centered}>
+                    <Button variant='secondary' disabled>
+                        Nada encontrado
+                    </Button>
+                </div>
+            )}
+            {!isEmpty && (
+                <div className={styles.cardGrid}>
+                    {cards?.map((item, index) => (
+                        <Link href={item.url} key={index}>
+                            <Card {...item} />
+                        </Link>
+                    ))}
+                </div>
+            )}
         </Section>
     )
 }
 export default ContentList
 
 const styles = {
-    containerEmpty: 'flex justify-center',
     cardGrid: 'grid gap-8 md:grid-cols-2 lg:grid-cols-3',
+    centered: 'flex items-center justify-center',
 }

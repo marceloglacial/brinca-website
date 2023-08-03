@@ -145,9 +145,9 @@
     "@jridgewell/sourcemap-codec" "1.4.14"
 
 "@marceloglacial/brinca-ui@^1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@marceloglacial/brinca-ui/-/brinca-ui-1.2.2.tgz#cc32b9507c58c137f628cf217bc2a652c2415a2b"
-  integrity sha512-o+s07F6SjuuBRi46Q09wiBG6Top4VdXwa+ev97sKa3oQrgRGMW3ku0csimJ4B3TjVqB/+YybmiQ0ZORty7orfw==
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@marceloglacial/brinca-ui/-/brinca-ui-1.3.0.tgz#ab5a4e60c18907cf9e544e9b89d4d30d0b48a5fc"
+  integrity sha512-Y4DxKmnNy8OfyEhighGU379wpoQKTKH1WStI1Qzuc4nU3lRzN6mSMT1FxsLqPtDtdm7Nmh9b3hBYLJhfRxE+dA==
   dependencies:
     "@types/node" "^18.11.18"
     "@types/react" "^18.0.26"
