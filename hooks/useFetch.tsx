@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react'
 
 const useFetch = (url: string) => {
-    const [data, setData] = useState<any | null>(null)
+    const [data, setData] = useState<object[] | null>(null)
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState<string | null>(null)
 

@@ -1,16 +1,24 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ImageProps } from 'next/image'
 import useFetch from './useFetch'
 import { API_EVENTS_PARAMS, API_PAGES_PARAMS, API_URL } from 'constants/api'
 
-// Define the type for the data you expect from the API
-// interface ApiResponse {
-// Add properties based on the response from your API
-// For example:
-// id: number;
-// name: string;
-// ...
-// }
+export interface useContentListApiResponse {
+    id: number
+    attributes: {
+        title: string
+        slug: string
+        thumbnail: {
+            data: {
+                attributes: {
+                    url: string
+                    alternativeText?: string
+                    width: number
+                    height: number
+                }
+            }
+        }
+    }
+}
 
 export type ContentTypes = 'events' | 'pages'
 type typeUrlType = {
@@ -35,7 +43,8 @@ const useContentList = (contentType: string) => {
         isLoading,
         isError,
     } = useFetch(`${API_URL}/${typeURL[contentType]}`)
-    const data = events?.map((item: any) => {
+
+    const data: unknown = events?.map((item: useContentListApiResponse) => {
         const { id, attributes } = item
         const image = attributes.thumbnail.data.attributes
         const result: EventType = {
