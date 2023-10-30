@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Mulish } from 'next/font/google'
 import './globals.css'
+import { Layout } from '@marceloglacial/brinca-ui'
+import { PageFooter, PageHeader } from '@/components'
 
 const defaultFont = Mulish({ subsets: ['latin'] })
 
@@ -16,7 +18,11 @@ export default function RootLayout({
 }) {
     return (
         <html lang='en'>
-            <body className={defaultFont.className}>{children}</body>
+            <body className={defaultFont.className}>
+                <Layout header={<PageHeader />} footer={<PageFooter />}>
+                    {children}
+                </Layout>
+            </body>
         </html>
     )
 }

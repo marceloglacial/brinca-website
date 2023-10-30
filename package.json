@@ -1,34 +1,35 @@
 {
-  "name": "web",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "bun format && bun lint && next build",
-    "start": "next start",
-    "format": "prettier -w app",
-    "lint": "next lint && eslint --fix app/*.ts*",
-    "prepare": "husky install",
-    "husky-actions": "bun format && bun lint"
-  },
-  "dependencies": {
-    "@marceloglacial/brinca-ui": "^1.9.0",
-    "next": "13.5.6",
-    "react": "^18",
-    "react-dom": "^18"
-  },
-  "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "autoprefixer": "^10",
-    "eslint": "^8",
-    "eslint-config-next": "13.5.6",
-    "eslint-plugin-prettier": "^5.0.1",
-    "postcss": "^8",
-    "prettier": "^3.0.3",
-    "tailwindcss": "^3",
-    "typescript": "^5",
-    "husky": "^8.0.0"
-  }
+    "name": "web",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "bun format && bun lint && next build",
+        "start": "next start",
+        "format": "prettier -w app",
+        "lint": "next lint && eslint --fix app/*.ts*",
+        "prepare": "husky install",
+        "husky-actions": "bun format && bun lint",
+        "update": "bun x npm-check-updates -u"
+    },
+    "dependencies": {
+        "@marceloglacial/brinca-ui": "^1.9.0",
+        "next": "14.0.1",
+        "react": "^18",
+        "react-dom": "^18"
+    },
+    "devDependencies": {
+        "@types/node": "^20",
+        "@types/react": "^18",
+        "@types/react-dom": "^18",
+        "autoprefixer": "^10",
+        "eslint": "^8",
+        "eslint-config-next": "14.0.1",
+        "eslint-plugin-prettier": "^5.0.1",
+        "postcss": "^8",
+        "prettier": "^3.0.3",
+        "tailwindcss": "^3",
+        "typescript": "^5",
+        "husky": "^8.0.3"
+    }
 }
