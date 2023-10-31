@@ -6,7 +6,7 @@ import { default as NextLink } from 'next/link'
 export type NavBarItemProps = {
     href: string
     text: string
-    variant: LinkTypes
+    variant?: LinkTypes
 }
 export interface NavBarItemsProps {
     variant: NavBarTypes
@@ -20,8 +20,9 @@ const NavBarItems: FC<NavBarItemsProps> = ({
     return (
         <NavBar.Items variant={variant}>
             {items.map((item, key) => {
-                const defaultVariant = variant === 'top' ? 'default' : 'white'
-                const linkVariant = item.variant || defaultVariant
+                const isTopVariant = variant === 'top'
+                const defaultVariant = isTopVariant ? 'default' : 'white'
+                const linkVariant = isTopVariant ? item.variant : defaultVariant
                 return (
                     <Link key={key} variant={linkVariant}>
                         <NextLink href={item.href}> {item.text}</NextLink>

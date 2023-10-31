@@ -3,6 +3,7 @@ import { FC } from 'react'
 import { NavBar as NavbarBrinca, NavBarTypes } from '@marceloglacial/brinca-ui'
 import NavBarItems, { NavBarItemProps } from './NavBarItems'
 import { Logo, LogoProps } from '@/components'
+import Link from 'next/link'
 
 export interface NavBarProps {
     variant: NavBarTypes
@@ -20,7 +21,9 @@ export const NavBar: FC<NavBarProps> = ({
     return (
         <NavbarBrinca variant={variant}>
             <NavbarBrinca.Brand>
-                <Logo {...logoProps} />
+                <Link href='/'>
+                    <Logo {...logoProps} />
+                </Link>
             </NavbarBrinca.Brand>
             {items && <NavBarItems items={items} variant={variant} />}
         </NavbarBrinca>
