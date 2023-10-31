@@ -1,9 +1,9 @@
-import { Hero, Link } from '@marceloglacial/brinca-ui'
+import { Hero as HeroBrinca, Link } from '@marceloglacial/brinca-ui'
 import Image, { ImageProps } from 'next/image'
 import { FC } from 'react'
 import { default as NextLink, LinkProps } from 'next/link'
 
-export interface HeroComponentProps {
+export interface HeroProps {
     reversed?: boolean
     rounded?: boolean
     shadow?: boolean
@@ -13,7 +13,7 @@ export interface HeroComponentProps {
     link: LinkProps & { text: string }
 }
 
-const HeroComponent: FC<HeroComponentProps> = ({
+export const Hero: FC<HeroProps> = ({
     reversed,
     image,
     title,
@@ -22,8 +22,8 @@ const HeroComponent: FC<HeroComponentProps> = ({
     rounded,
 }): JSX.Element => {
     return (
-        <Hero reversed={reversed}>
-            <Hero.Image rounded={rounded} shadow={rounded}>
+        <HeroBrinca reversed={reversed}>
+            <HeroBrinca.Image rounded={rounded} shadow={rounded}>
                 <Image
                     src={image.src}
                     alt={image?.alt}
@@ -33,8 +33,8 @@ const HeroComponent: FC<HeroComponentProps> = ({
                     className='w-full h-full object-cover'
                     priority={true}
                 />
-            </Hero.Image>
-            <Hero.Body>
+            </HeroBrinca.Image>
+            <HeroBrinca.Body>
                 <h2>{title}</h2>
                 <p>{description}</p>
                 <div>
@@ -42,8 +42,7 @@ const HeroComponent: FC<HeroComponentProps> = ({
                         <Link variant='secondary'>{link.text}</Link>
                     </NextLink>
                 </div>
-            </Hero.Body>
-        </Hero>
+            </HeroBrinca.Body>
+        </HeroBrinca>
     )
 }
-export default HeroComponent

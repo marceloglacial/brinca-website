@@ -1,5 +1,7 @@
-export { default as Card } from './Card/Card'
-export { default as CardGrid } from './CardGrid/CardGrid'
-export { default as Hero } from './Hero/Hero'
-export { default as PageFooter } from './PageFooter/PageFooter'
-export { default as PageHeader } from './PageHeader/PageHeader'
+export * from './Card/Card'
+export * from './CardGrid/CardGrid'
+export * from './Hero/Hero'
+export * from './Logo/Logo'
+export * from './NavBar/NavBar'
+
+export { default as NavBar } from './NavBar/NavBar'

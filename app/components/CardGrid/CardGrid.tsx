@@ -6,7 +6,10 @@ interface CardGridProps {
     title: string
 }
 
-const CardGrid: FC<CardGridProps> = ({ children, title }) => {
+export const CardGrid: FC<CardGridProps> = ({
+    children,
+    title,
+}): JSX.Element => {
     return (
         <Section spacing='l'>
             <Heading>
@@ -21,4 +24,3 @@ const CardGrid: FC<CardGridProps> = ({ children, title }) => {
         </Section>
     )
 }
-export default CardGrid

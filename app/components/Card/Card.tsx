@@ -1,21 +1,21 @@
-import { Card } from '@marceloglacial/brinca-ui'
+import { Card as BrincaCard } from '@marceloglacial/brinca-ui'
 import Image, { ImageProps } from 'next/image'
 import { FC } from 'react'
 
-interface CardComponentProps {
+export interface CardProps {
     title: string
     description: string
     image: ImageProps
 }
-const CardComponent: FC<CardComponentProps> = ({
+export const Card: FC<CardProps> = ({
     title,
     description,
     image,
-}) => {
+}): JSX.Element => {
     return (
         <div className='transition-transform hover:scale-95'>
-            <Card>
-                <Card.Image>
+            <BrincaCard>
+                <BrincaCard.Image>
                     <Image
                         alt={image.alt}
                         className='w-full h-full object-cover object-top'
@@ -23,13 +23,12 @@ const CardComponent: FC<CardComponentProps> = ({
                         height={image.height}
                         src={image.src}
                     />
-                </Card.Image>
-                <Card.Body>
+                </BrincaCard.Image>
+                <BrincaCard.Body>
                     <h4>{title}</h4>
                     <p>{description}</p>
-                </Card.Body>
-            </Card>
+                </BrincaCard.Body>
+            </BrincaCard>
         </div>
     )
 }
-export default CardComponent
