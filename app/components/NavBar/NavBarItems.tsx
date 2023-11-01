@@ -24,9 +24,9 @@ const NavBarItems: FC<NavBarItemsProps> = ({
                 const defaultVariant = isTopVariant ? 'default' : 'white'
                 const linkVariant = isTopVariant ? item.variant : defaultVariant
                 return (
-                    <Link key={key} variant={linkVariant}>
-                        <NextLink href={item.href}> {item.text}</NextLink>
-                    </Link>
+                    <NextLink href={item.href} key={key}>
+                        <Link variant={linkVariant}>{item.text}</Link>
+                    </NextLink>
                 )
             })}
         </NavBar.Items>
