@@ -28,7 +28,7 @@ export default async function Home() {
     return (
         <Section spacing='xl'>
             {heroes.map((hero, index) => {
-                const isRounded = !Boolean(index % 2)
+                const isRounded = !(index % 2)
                 const imageProps = hero.image.data.attributes
 
                 return (
@@ -46,8 +46,8 @@ export default async function Home() {
                             src: imageProps.url,
                         }}
                         link={{
-                            href: '/',
-                            text: 'Learn More',
+                            href: hero.button.href,
+                            text: hero.button.text,
                         }}
                     />
                 )
