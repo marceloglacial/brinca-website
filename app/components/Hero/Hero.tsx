@@ -20,10 +20,11 @@ export const Hero: FC<HeroProps> = ({
     description,
     link,
     rounded,
+    shadow,
 }): JSX.Element => {
     return (
         <HeroBrinca reversed={reversed}>
-            <HeroBrinca.Image rounded={rounded} shadow={rounded}>
+            <HeroBrinca.Image rounded={rounded} shadow={shadow}>
                 <Image
                     src={image.src}
                     alt={image?.alt}
