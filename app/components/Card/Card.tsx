@@ -4,7 +4,7 @@ import { FC } from 'react'
 
 export interface CardProps {
     title: string
-    description: string
+    description?: string
     image: ImageProps
 }
 export const Card: FC<CardProps> = ({
@@ -25,8 +25,8 @@ export const Card: FC<CardProps> = ({
                     />
                 </BrincaCard.Image>
                 <BrincaCard.Body>
-                    <h4>{title}</h4>
-                    <p>{description}</p>
+                    <h6>{title}</h6>
+                    {description && <p>{description}</p>}
                 </BrincaCard.Body>
             </BrincaCard>
         </div>

@@ -81,7 +81,7 @@ type Attributes = {
     createdAt: string
     updatedAt: string
     locale: string
-    frontpage: HeroComponent[]
+    frontpage: (HeroComponent & ContentList)[]
 }
 
 // Define types for data
@@ -93,5 +93,5 @@ type Data = {
 // Define types for the root object
 type RootObject = {
     data: Data
-    meta: {}
+    meta: object
 }
