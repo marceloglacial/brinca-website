@@ -28,10 +28,16 @@ export const NavBar: FC<NavBarUiProps> = ({
         {items?.map((item, index) => {
           return (
             <Link key={index} variant={componentStyles}>
-              <a href={item.link}>{item.text}</a>
+              <NextLink href={`/${item.link}`}>{item.text}</NextLink>
             </Link>
           );
         })}
+        <Link>
+          <a href='/en'>🇨🇦</a>
+        </Link>
+        <Link>
+          <a href='/pt-BR'>🇧🇷</a>
+        </Link>
       </NavBarUi.Items>
     </NavBarUi>
   );
