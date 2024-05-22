@@ -5,9 +5,16 @@ import { Logo } from '@/components';
 import NextLink from 'next/link';
 export interface NavBarUiProps {
   variant?: 'top' | 'bottom';
+  items: {
+    text: string;
+    link: string;
+  }[];
 }
 
-export const NavBar: FC<NavBarUiProps> = ({ variant = 'top' }): JSX.Element => {
+export const NavBar: FC<NavBarUiProps> = ({
+  variant = 'top',
+  items,
+}): JSX.Element => {
   const componentStyles = variant === 'bottom' ? 'white' : undefined;
 
   return (
@@ -18,21 +25,13 @@ export const NavBar: FC<NavBarUiProps> = ({ variant = 'top' }): JSX.Element => {
         </NextLink>
       </NavBarUi.Brand>
       <NavBarUi.Items variant={variant}>
-        <Link variant={componentStyles}>
-          <a href='#'>Item</a>
-        </Link>
-        <Link variant={componentStyles}>
-          <a href='#'>Item</a>
-        </Link>
-        <Link variant={componentStyles}>
-          <a href='#'>Item</a>
-        </Link>
-        <Link variant={componentStyles}>
-          <a href='#'>Item</a>
-        </Link>
-        <Link variant={componentStyles}>
-          <a href='#'>Item</a>
-        </Link>
+        {items?.map((item, index) => {
+          return (
+            <Link key={index} variant={componentStyles}>
+              <a href={item.link}>{item.text}</a>
+            </Link>
+          );
+        })}
       </NavBarUi.Items>
     </NavBarUi>
   );

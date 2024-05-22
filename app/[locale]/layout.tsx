@@ -17,15 +17,17 @@ export default async function RootLayout({
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: any;
+  params: { locale: string };
 }>) {
   const menu = await getMenus();
-  console.log(menu);
-
+  const menuItems = menu.data[0].locales[params.locale];
   return (
     <html lang={params.locale}>
       <body className={inter.className}>
-        <Layout header={<NavBar />} footer={<NavBar variant='bottom' />}>
+        <Layout
+          header={<NavBar items={menuItems} />}
+          footer={<NavBar items={menuItems} variant='bottom' />}
+        >
           {children}
         </Layout>
       </body>
