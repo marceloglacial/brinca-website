@@ -1,5 +1,4 @@
 import { Hero, Link, Section } from '@marceloglacial/brinca-ui';
-import Image from 'next/image';
 
 export default function Home() {
   return (
