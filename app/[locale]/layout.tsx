@@ -3,7 +3,7 @@ import { Nunito_Sans } from 'next/font/google';
 import '../globals.css';
 import { Layout } from '@marceloglacial/brinca-ui';
 import { NavBar } from '@/components';
-import { getMenus } from '@/services';
+import { getData } from '@/services';
 
 const inter = Nunito_Sans({ subsets: ['latin'] });
 
@@ -15,11 +15,8 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
   params,
-}: Readonly<{
-  children: React.ReactNode;
-  params: { locale: string };
-}>) {
-  const menu = await getMenus();
+}: Readonly<PageProps>) {
+  const menu = await getData('menus');
   const menuItems = menu.data[0].locales[params.locale];
   return (
     <html lang={params.locale}>
