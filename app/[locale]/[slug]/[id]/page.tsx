@@ -2,8 +2,8 @@ import { getData } from '@/services';
 import { Heading, Section } from '@marceloglacial/brinca-ui';
 
 export default async function Page({ params }: { params: PageParamsProps }) {
-  const data = await getData('events', params.id, params.locale);
-  const content = data.data;
+  const data = await getData('pages', params.id, params.locale);
+  const content = data.data[0];
 
   if (!content) return <h1>Not found</h1>;
 

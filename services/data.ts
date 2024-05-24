@@ -2,20 +2,22 @@ import db from "@/config/firestore"
 import { Timestamp, collection, getDocs, query, where } from "firebase/firestore"
 
 export interface PageDocumentData {
-    createdAt: Timestamp;
-    title: string;
+    createdAt?: Timestamp;
+    title?: string;
     content: string;
-    updatedAt: Timestamp;
+    updatedAt?: Timestamp;
     slug: string;
-    publishedAt: Timestamp;
+    publishedAt?: Timestamp;
     locale: string;
     id: string;
+    parent?: PageParamsProps['slug']
+    image?: HTMLImageElement
 }
 
 
 export interface DataResponseProps {
     status: 'success' | 'error'
-    data: any
+    data: PageDocumentData[]
     error?: any
 }
 
@@ -40,7 +42,7 @@ export const getData = async (collectionName: string, slug?: string, locale?: st
 
         return {
             status: 'success',
-            data: slug ? results[0] : results
+            data: results
         };
     } catch (e) {
         throw (e);
