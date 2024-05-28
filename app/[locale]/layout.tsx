@@ -3,7 +3,7 @@ import { Nunito_Sans } from 'next/font/google';
 import '../globals.css';
 import { Layout } from '@marceloglacial/brinca-ui';
 import { NavBar } from '@/components';
-import { getData } from '@/services';
+import { getMenus } from '@/services';
 
 const inter = Nunito_Sans({ subsets: ['latin'] });
 
@@ -16,12 +16,14 @@ export default async function RootLayout({
   children,
   params,
 }: Readonly<PageProps>) {
+  const menuData = await getMenus();
+  const menu = menuData.data[0].locales[params.locale];
   return (
     <html lang={params.locale}>
       <body className={inter.className}>
         <Layout
-          header={<NavBar items={[]} />}
-          footer={<NavBar items={[]} variant='bottom' />}
+          header={<NavBar items={menu} />}
+          footer={<NavBar items={menu} variant='bottom' />}
         >
           {children}
         </Layout>
