@@ -1,30 +1,27 @@
-import { PageDocumentData, getData } from '@/services';
 import { Card, Heading, Section } from '@marceloglacial/brinca-ui';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
 
-export interface PageListProps {
+export type CardItemType = {
+  id: string | number;
+  link: string;
+  image: HTMLImageElement;
+  title: string;
+  content: string;
+};
+export interface CardGridProps {
   title?: string;
-  parent: PageParamsProps['slug'];
-  locale: PageParamsProps['locale'];
+  items: CardItemType[];
 }
 
-export const PageList: FC<PageListProps> = async ({
-  title,
-  parent,
-  locale,
-}) => {
-  const data = await getData('pages', undefined, locale);
-  const content = data.data.filter(
-    (item: PageDocumentData) => item.parent === parent
-  );
+export const CardGrid: FC<CardGridProps> = ({ title, items }) => {
   return (
     <Section>
       {title && <Heading>{title}</Heading>}
       <div className='grid grid-cols-3 gap-6'>
-        {content.map((item: PageDocumentData) => (
-          <Link key={item.id} href={`/${parent}/${item.slug}`}>
+        {items.map((item) => (
+          <Link key={item.id} href={`/${item.link}`}>
             <Card>
               {item.image && (
                 <Card.Image>

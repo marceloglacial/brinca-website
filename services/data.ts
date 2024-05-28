@@ -21,29 +21,13 @@ export interface DataResponseProps {
     error?: any
 }
 
-export const getData = async (collectionName: string, slug?: string, locale?: string): Promise<DataResponseProps> => {
+export const getData = async (page: string, slug?: string, locale?: string): Promise<DataResponseProps> => {
     try {
-        const colRef = collection(db, collectionName);
-        let q;
-
-        if (slug) {
-            q = query(colRef, where("slug", "==", slug));
-        } else if (locale) {
-            q = query(colRef, where("locale", "==", locale));
-        } else {
-            q = query(colRef);
-        }
-
-        const querySnapshot = await getDocs(q);
-        const results: PageDocumentData[] = querySnapshot.docs.map(doc => ({
-            ...(doc.data() as PageDocumentData),
-            id: doc.id
-        }));
-
+        const data: any = await fetch(`http://localhost:3007/api/${page}/${locale}/${slug}`)
         return {
             status: 'success',
-            data: results
-        };
+            data: data.json()
+        }
     } catch (e) {
         throw (e);
     }

@@ -16,14 +16,12 @@ export default async function RootLayout({
   children,
   params,
 }: Readonly<PageProps>) {
-  const menu = await getData('menus');
-  const menuItems = menu.data[0].locales[params.locale];
   return (
     <html lang={params.locale}>
       <body className={inter.className}>
         <Layout
-          header={<NavBar items={menuItems} />}
-          footer={<NavBar items={menuItems} variant='bottom' />}
+          header={<NavBar items={[]} />}
+          footer={<NavBar items={[]} variant='bottom' />}
         >
           {children}
         </Layout>
