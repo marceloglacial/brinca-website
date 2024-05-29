@@ -1,14 +1,15 @@
-import { CardGrid } from '@/components';
-import { getPages, getSinglePage } from '@/services';
+import { getSinglePage } from '@/services';
 import { Heading, Section } from '@marceloglacial/brinca-ui';
 
-export default async function Page({ params }: { params: PageParamsProps }) {
+export default async function Page({ params }: PageProps) {
   const data = await getSinglePage(params.locale, params.slug || '');
-  const pageData = data.data[0];
-
-  if (!pageData || !params.slug) return <h1>Page Not found</h1>;
-
+  const pageData = data.data;
   const language = params.locale;
+
+  if (!pageData) {
+    console.error(data.error);
+    return <h1>Page Not found</h1>;
+  }
 
   return (
     <Section>
