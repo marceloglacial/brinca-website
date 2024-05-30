@@ -6,7 +6,11 @@ import { FC } from 'react';
 export const CardGrid: FC<CardGridProps> = ({ title, items }) => {
   return (
     <Section>
-      {title && <Heading>{title}</Heading>}
+      {title && (
+        <Heading>
+          <h2>{title}</h2>
+        </Heading>
+      )}
       <div className='grid grid-cols-3 gap-6'>
         {items.map((item) => (
           <Link key={item.id} href={`/${item.link}`}>

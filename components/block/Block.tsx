@@ -5,14 +5,15 @@ export const Block: FC<BlockProps> = (props): JSX.Element => {
   const blockType: BlockType = {
     contentList: (
       <ContentList
-        type={props.blockContent.content.type}
+        type={props.blockContent.data.type}
+        title={props.blockContent.data.title}
         language={props.blockLanguage}
       />
     ),
     photoGallery: <>Photo Gallery</>,
     richText: (
       <RichText
-        content={props.blockContent.content}
+        content={props.blockContent.data.content}
         language={props.blockLanguage}
       />
     ),

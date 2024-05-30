@@ -1,4 +1,8 @@
+type RichTextDataType = {
+    content: LocalizedString
+}
+
 interface RichTextProps {
-    content: any;
+    content: RichTextDataType;
     language: string;
 }

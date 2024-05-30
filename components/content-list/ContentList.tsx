@@ -5,6 +5,7 @@ import { FC } from 'react';
 export const ContentList: FC<ContentListProps> = async ({
   language,
   type,
+  title,
 }): Promise<JSX.Element> => {
   const events = await getDataByType(type);
   const allEvents = events.data.map((item: IPageData): CardGridItemType => {
@@ -16,5 +17,5 @@ export const ContentList: FC<ContentListProps> = async ({
     };
   });
 
-  return <CardGrid items={allEvents} />;
+  return <CardGrid title={title && title[language]} items={allEvents} />;
 };
