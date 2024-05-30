@@ -3,18 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
 
-export type CardItemType = {
-  id: string | number;
-  link: string;
-  image: HTMLImageElement;
-  title: string;
-  content: string;
-};
-export interface CardGridProps {
-  title?: string;
-  items: CardItemType[];
-}
-
 export const CardGrid: FC<CardGridProps> = ({ title, items }) => {
   return (
     <Section>
@@ -36,7 +24,9 @@ export const CardGrid: FC<CardGridProps> = ({ title, items }) => {
               )}
               <Card.Body>
                 <h4>{item.title}</h4>
-                <p className=' line-clamp-3'>{item.content}</p>
+                {item.content && (
+                  <p className=' line-clamp-3'>{item.content}</p>
+                )}
               </Card.Body>
             </Card>
           </Link>

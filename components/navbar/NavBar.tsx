@@ -3,13 +3,6 @@ import { Link, NavBar as NavBarUi } from '@marceloglacial/brinca-ui';
 import { FC } from 'react';
 import { Logo } from '@/components';
 import NextLink from 'next/link';
-export interface NavBarUiProps {
-  variant?: 'top' | 'bottom';
-  items: {
-    text: string;
-    link: string;
-  }[];
-}
 
 export const NavBar: FC<NavBarUiProps> = ({
   variant = 'top',

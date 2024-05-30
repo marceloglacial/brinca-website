@@ -1,3 +1,4 @@
+import { Content } from '@/components';
 import { getPageByType } from '@/services';
 import { Heading, Section } from '@marceloglacial/brinca-ui';
 
@@ -17,9 +18,7 @@ export default async function Page({ params }: PageProps) {
       <Heading className='mb-4'>
         <h1>{pageData.title[language]}</h1>
       </Heading>
-      <Section
-        dangerouslySetInnerHTML={{ __html: pageData.content[language] }}
-      />
+      <Content items={pageData.content} language={language} />
     </Section>
   );
 }

@@ -1,0 +1,3 @@
+interface ContentListProps {
+    language: string;
+}

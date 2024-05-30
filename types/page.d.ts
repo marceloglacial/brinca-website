@@ -21,6 +21,6 @@ interface IPageData {
     id: string;
     title: LocalizedString;
     slug: LocalizedString;
-    content: LocalizedString;
-    image?: HTMLImageElement
+    content: ContentType[];
+    image: HTMLImageElement
 }
