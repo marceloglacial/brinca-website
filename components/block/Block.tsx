@@ -3,7 +3,12 @@ import { ContentList, RichText } from '@/components';
 
 export const Block: FC<BlockProps> = (props): JSX.Element => {
   const blockType: BlockType = {
-    contentList: <ContentList language={props.blockLanguage} />,
+    contentList: (
+      <ContentList
+        type={props.blockContent.content.type}
+        language={props.blockLanguage}
+      />
+    ),
     photoGallery: <>Photo Gallery</>,
     richText: (
       <RichText

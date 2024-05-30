@@ -8,7 +8,7 @@ export async function getPageByType(pageType: string, locale: string, slug: stri
     return res.json();
 }
 
-export async function getEvents(): Promise<any> {
-    const res = await fetch(`${process.env.API_URL}/events`);
+export async function getDataByType(type: string): Promise<any> {
+    const res = await fetch(`${process.env.API_URL}/${type}`);
     return res.json();
 }

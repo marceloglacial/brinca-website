@@ -13,6 +13,7 @@ const logoVariants = {
       src='https://res.cloudinary.com/brinca/image/upload/v1664060777/brinca-ui/image_yfpt9t.png'
       width={150}
       height={60}
+      priority
     />
   ),
   default: (
@@ -22,6 +23,7 @@ const logoVariants = {
       src='https://res.cloudinary.com/brinca/image/upload/v1664060764/brinca-ui/image_qcfpyy.png'
       width={169}
       height={65}
+      priority
     />
   ),
 };

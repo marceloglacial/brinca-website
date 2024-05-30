@@ -1,15 +1,16 @@
 import { CardGrid } from '@/components';
-import { getEvents } from '@/services';
+import { getDataByType } from '@/services';
 import { FC } from 'react';
 
 export const ContentList: FC<ContentListProps> = async ({
   language,
+  type,
 }): Promise<JSX.Element> => {
-  const events = await getEvents();
+  const events = await getDataByType(type);
   const allEvents = events.data.map((item: IPageData): CardGridItemType => {
     return {
       id: item.id,
-      link: `events/${item.slug[language]}`,
+      link: `${type}/${item.slug[language]}`,
       title: item.title[language],
       image: item.image,
     };
