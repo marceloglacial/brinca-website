@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { ContentList, RichText } from '@/components';
+import { ContentList, Form, RichText } from '@/components';
 
 export const Block: FC<BlockProps> = (props): JSX.Element => {
   const blockType: BlockType = {
@@ -10,7 +10,9 @@ export const Block: FC<BlockProps> = (props): JSX.Element => {
         language={props.blockLanguage}
       />
     ),
-    photoGallery: <>Photo Gallery</>,
+    form: (
+      <Form language={props.blockLanguage} data={props.blockContent.data} />
+    ),
     richText: (
       <RichText
         content={props.blockContent.data.content}
