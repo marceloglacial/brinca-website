@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import { Nunito_Sans } from 'next/font/google';
+import { Mulish } from 'next/font/google';
 import '../globals.css';
 import { Layout } from '@marceloglacial/brinca-ui';
 import { NavBar } from '@/components';
 import { getMenus } from '@/services';
 
-const inter = Nunito_Sans({ subsets: ['latin'] });
+const inter = Mulish({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Brinca',

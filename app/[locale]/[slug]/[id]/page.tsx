@@ -2,7 +2,7 @@ import { Content } from '@/components';
 import { getPageByType } from '@/services';
 import { Heading, Section } from '@marceloglacial/brinca-ui';
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }: PageParamsType) {
   const data = await getPageByType(
     params.slug || '',
     params.locale,

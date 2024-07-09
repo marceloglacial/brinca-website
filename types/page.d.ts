@@ -1,14 +1,14 @@
-interface PageParamsProps {
-    slug?: string
-    locale: string
-    id?: string
+type PageParamsType = {
+    params: {
+        slug?: string
+        locale: string
+        id?: string
+    }
 }
 
-interface PageProps {
-    children?: React.ReactNode;
-    params: PageParamsProps;
+interface PageProps extends PageParamsType {
+    children: React.ReactNode
 }
-
 
 type LocalizedString = {
     [k: string]: string

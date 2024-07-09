@@ -2,7 +2,7 @@ import { Content } from '@/components';
 import { getSinglePage } from '@/services';
 import { Heading, Section } from '@marceloglacial/brinca-ui';
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }: PageParamsType) {
   const data = await getSinglePage(params.locale, params.slug || '');
   const pageData = data.data;
   const language = params.locale;
