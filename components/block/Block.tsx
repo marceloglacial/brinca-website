@@ -1,12 +1,12 @@
 import { FC } from 'react';
-import { ContentList, Form, RichText } from '@/components';
+import { CloudinaryGallery, ContentList, Form, RichText } from '@/components';
 
 export const Block: FC<BlockProps> = (props): JSX.Element => {
   const blockType: BlockType = {
     contentList: (
       <ContentList
-        type={props.blockContent.data.type}
-        title={props.blockContent.data.title}
+        type={props.blockContent.data?.type}
+        title={props.blockContent.data?.title}
         language={props.blockLanguage}
       />
     ),
@@ -15,9 +15,12 @@ export const Block: FC<BlockProps> = (props): JSX.Element => {
     ),
     richText: (
       <RichText
-        content={props.blockContent.data.content}
+        content={props.blockContent.data?.content}
         language={props.blockLanguage}
       />
+    ),
+    cloudinaryGallery: (
+      <CloudinaryGallery path={props.blockContent.data.path} />
     ),
   };
 
