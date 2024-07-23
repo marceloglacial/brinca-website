@@ -16,6 +16,7 @@ export async function getCloudinaryImages(folderPath: string): Promise<string[]>
         const result = await cloudinary.api.resources({
             type: 'upload',
             prefix: folderPath,
+            max_results: 500,
             resource_type: 'image',
         });
 
