@@ -4,6 +4,7 @@ type CardGridItemType = {
     image: HTMLImageElement;
     title: string;
     content?: string;
+    date?: string
 };
 
 interface CardGridProps {
