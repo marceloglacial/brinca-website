@@ -5,9 +5,9 @@ export const Content: FC<ContentProps> = ({ items, language }): JSX.Element => {
   if (!items.length) return <></>;
   return (
     <>
-      {items.map((item: any) => {
+      {items.map((item: any, index: number) => {
         return (
-          <Block key={item.id} blockContent={item} blockLanguage={language} />
+          <Block key={index} blockContent={item} blockLanguage={language} />
         );
       })}
     </>
