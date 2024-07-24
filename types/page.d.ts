@@ -23,4 +23,5 @@ interface IPageData {
     slug: LocalizedString;
     content: ContentType[];
     image: HTMLImageElement
+    date?: string
 }

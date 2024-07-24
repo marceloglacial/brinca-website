@@ -20,7 +20,7 @@ export const Block: FC<BlockProps> = (props): JSX.Element => {
       />
     ),
     cloudinaryGallery: (
-      <CloudinaryGallery path={props.blockContent.data.path} />
+      <CloudinaryGallery path={props.blockContent.data?.path} />
     ),
   };
 
