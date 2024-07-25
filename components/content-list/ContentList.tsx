@@ -16,6 +16,7 @@ export const ContentList: FC<ContentListProps> = async ({
       title: item.title[language],
       image: item.image,
       date: item.date,
+      locale: language,
     };
   });
 
