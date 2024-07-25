@@ -1,8 +1,22 @@
 import { FC } from 'react';
-import { CloudinaryGallery, ContentList, Form, RichText } from '@/components';
+import {
+  CloudinaryGallery,
+  ContentList,
+  Form,
+  Hero,
+  RichText,
+} from '@/components';
 
 export const Block: FC<BlockProps> = (props): JSX.Element => {
   const blockType: BlockType = {
+    hero: (
+      <Hero
+        locale={props.blockLanguage}
+        title={props.blockContent.data.title}
+        description={props.blockContent.data.description}
+        image={props.blockContent.data.image}
+      />
+    ),
     contentList: (
       <ContentList
         type={props.blockContent.data?.type}
