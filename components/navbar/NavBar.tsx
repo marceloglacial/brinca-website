@@ -1,37 +1,22 @@
-'use client';
-import { Link, NavBar as NavBarUi } from '@marceloglacial/brinca-ui';
+import { NavBar as NavBarUi } from '@marceloglacial/brinca-ui';
 import { FC } from 'react';
-import { Logo } from '@/components';
-import NextLink from 'next/link';
+import { LocaleList, Logo, NavBarItems } from '@/components';
+import Link from 'next/link';
 
 export const NavBar: FC<NavBarUiProps> = ({
   variant = 'top',
   items,
 }): JSX.Element => {
   const componentStyles = variant === 'bottom' ? 'white' : undefined;
-
   return (
     <NavBarUi variant={variant}>
       <NavBarUi.Brand>
-        <NextLink href={'/'}>
+        <Link href={'/'} aria-label='Home'>
           <Logo variant={componentStyles} />
-        </NextLink>
+        </Link>
       </NavBarUi.Brand>
-      <NavBarUi.Items variant={variant}>
-        {items?.map((item, index) => {
-          return (
-            <Link key={index} variant={componentStyles}>
-              <NextLink href={`/${item.link}`}>{item.text}</NextLink>
-            </Link>
-          );
-        })}
-        <Link>
-          <a href='/en'>🇨🇦</a>
-        </Link>
-        <Link>
-          <a href='/pt-BR'>🇧🇷</a>
-        </Link>
-      </NavBarUi.Items>
+      <NavBarItems variant={variant} items={items} />
+      <LocaleList />
     </NavBarUi>
   );
 };
