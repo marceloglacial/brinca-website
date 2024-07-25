@@ -1,5 +1,6 @@
 export * from './block/Block'
 export * from './branding/Logo'
+export * from './link/Link'
 export * from './card-grid/CardGrid'
 export * from './cloudinary-gallery/CloudinaryGallery'
 export * from './content-list/ContentList'

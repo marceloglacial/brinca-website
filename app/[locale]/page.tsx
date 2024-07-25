@@ -1,6 +1,6 @@
 import { Block } from '@/components';
-import { getDataByType, getPageByType } from '@/services';
-import { Hero, Section } from '@marceloglacial/brinca-ui';
+import { getDataByType } from '@/services';
+import { Section } from '@marceloglacial/brinca-ui';
 
 export default async function Home({ params }: PageParamsType) {
   const data = await getDataByType('homepage');
@@ -11,16 +11,15 @@ export default async function Home({ params }: PageParamsType) {
       <Section spacing='xl'>
         {pageData.map((item: any, index: number) => {
           return (
-            <div key={index}>
-              <Block
-                blockLanguage={params.locale}
-                blockContent={{
-                  id: index.toString(),
-                  type: item.type,
-                  data: item.data,
-                }}
-              />
-            </div>
+            <Block
+              key={index}
+              blockLanguage={params.locale}
+              blockContent={{
+                id: index,
+                type: item.type,
+                data: item.data,
+              }}
+            />
           );
         })}
       </Section>
