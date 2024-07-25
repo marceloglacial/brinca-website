@@ -1,8 +1,26 @@
 import { FC } from 'react';
-import { CloudinaryGallery, ContentList, Form, RichText } from '@/components';
+import {
+  CloudinaryGallery,
+  ContentList,
+  Form,
+  Hero,
+  RichText,
+} from '@/components';
 
 export const Block: FC<BlockProps> = (props): JSX.Element => {
   const blockType: BlockType = {
+    hero: (
+      <Hero
+        id={props.blockContent.id}
+        language={props.blockLanguage}
+        title={props.blockContent.data.title}
+        description={props.blockContent.data.description}
+        image={props.blockContent.data.image}
+        link={props.blockContent.data.link}
+        rounded={props.blockContent.data.rounded}
+        shadow={props.blockContent.data.shadow}
+      />
+    ),
     contentList: (
       <ContentList
         type={props.blockContent.data?.type}
@@ -25,6 +43,8 @@ export const Block: FC<BlockProps> = (props): JSX.Element => {
   };
 
   return (
-    <div key={props.blockContent.id}>{blockType[props.blockContent.type]}</div>
+    <div className='block' key={props.blockContent.id}>
+      {blockType[props.blockContent.type]}
+    </div>
   );
 };

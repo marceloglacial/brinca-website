@@ -12,7 +12,7 @@ export const CardGrid: FC<CardGridProps> = ({ title, items }) => {
           <h2>{title}</h2>
         </Heading>
       )}
-      <div className='grid grid-cols-3 gap-6'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
         {items.map((item) => {
           const formatedDate = item.date ? formatDate(item.date) : '';
           return (
@@ -30,12 +30,12 @@ export const CardGrid: FC<CardGridProps> = ({ title, items }) => {
                   </Card.Image>
                 )}
                 <Card.Body>
-                  <h4>{item.title}</h4>
+                  <p className=' text-xl font-bold'>{item.title}</p>
                   {item.content && (
                     <p className=' line-clamp-3'>{item.content}</p>
                   )}
                   {formatedDate && (
-                    <p className=' first-letter:uppercase'>{formatedDate}</p>
+                    <p className='first-letter:uppercase'>{formatedDate}</p>
                   )}
                 </Card.Body>
               </Card>

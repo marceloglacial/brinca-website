@@ -1,5 +1,5 @@
 type ContentType = {
-    id: string,
+    id: number,
     type: string,
     data: any
 }
