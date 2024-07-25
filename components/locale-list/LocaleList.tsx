@@ -1,5 +1,4 @@
 import { getDataByType } from '@/services';
-import Link from 'next/link';
 import { FC } from 'react';
 
 type LocaleListType = {
@@ -15,14 +14,14 @@ export const LocaleList: FC = async (): Promise<JSX.Element> => {
   return (
     <div className='locale-list flex gap-4 justify-center items-center'>
       {locales.map((item, index) => (
-        <Link
+        <a
           key={index}
-          href={item.locale}
+          href={`/${item.locale}`}
           title={item.title}
           className='inline-block'
         >
           {item.icon}
-        </Link>
+        </a>
       ))}
     </div>
   );

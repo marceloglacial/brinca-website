@@ -5,6 +5,7 @@ type CardGridItemType = {
     title: string;
     content?: string;
     date?: string
+    locale: string
 };
 
 interface CardGridProps {
