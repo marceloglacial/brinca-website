@@ -1,9 +1,13 @@
-import { Section } from '@marceloglacial/brinca-ui';
 import { FC } from 'react';
 
 export const RichText: FC<RichTextProps> = ({
   content,
   language,
 }): JSX.Element => {
-  return <Section dangerouslySetInnerHTML={{ __html: content[language] }} />;
+  return (
+    <article
+      className='grid grid-cols-1 gap-8'
+      dangerouslySetInnerHTML={{ __html: content[language] }}
+    />
+  );
 };
