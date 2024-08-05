@@ -6,7 +6,7 @@ const PartnersSection: FC<PartnersSectionProps> = (props): JSX.Element => {
   return (
     <div className='grid grid-cols-1 gap-8'>
       <h4>{props.title[props.locale]}</h4>
-      <div className='grid grid-cols-2 gap-8'>
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
         {props.items.map((item) => (
           <PartnerCard key={item.id} locale={props.locale} {...item} />
         ))}

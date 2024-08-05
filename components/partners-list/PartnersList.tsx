@@ -7,7 +7,7 @@ export const PartnersList: FC<PartnersListProps> = async (
   props
 ): Promise<JSX.Element> => {
   const menu = await getPartnersMenu();
-  const partners = await getPartners();
+  const partners = await getPartners('partner');
   const community = await getPartners('community');
 
   return (

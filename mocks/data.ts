@@ -53,7 +53,8 @@ export const partners: PartnerType[] = [
                 url: 'https://wa.me/+16136148156',
             },
         ],
-        isActive: false,
+        isActive: true,
+        type: 'partner',
         createdAt: Date.now().toString(),
         updatedAt: Date.now().toString(),
         image: {
@@ -74,5 +75,90 @@ export const partners: PartnerType[] = [
             },
         ]
     },
-
+    {
+        id: '1',
+        title: {
+            en: 'Twelvem Acupuncture',
+            'pt-BR': 'Twelvem Acupuncture',
+        },
+        description: {
+            en: 'Descriptiont in English',
+            'pt-BR': 'Acupuntura e Massagens no tratamento da dor, saude da mulher, fertilidade e gestação, insônia, digestão, enxaqueca, ansiedade e stress, entre outros.',
+        },
+        email: 'jocelito@twelvem.ca',
+        address: '1090, Ambleside Drive, sala 124, Ottawa',
+        website: 'http://www.twelvem.ca',
+        phone: '(343) 988-4427',
+        social: [
+            {
+                type: 'instagram',
+                url: 'https://instagram.com/twelvemacupuncture',
+            },
+            {
+                type: 'facebook',
+                url: 'https://facebook.com/twelvemacupuncture',
+            },
+            {
+                type: 'whatsapp',
+                url: 'https://wa.me/+3439884427',
+            },
+        ],
+        isActive: true,
+        type: 'partner',
+        createdAt: Date.now().toString(),
+        updatedAt: Date.now().toString(),
+        image: {
+            src: 'https://res.cloudinary.com/dw2wjwhuv/image/upload/v1654776571/brinca/partners/ujotudwx8fhkbwfnmnu5.png',
+            alt: 'Logo'
+        },
+        category: [
+            {
+                id: '1',
+                title: {
+                    en: 'Banks and Insurance',
+                    'pt-BR': 'Bancos e Seguros',
+                },
+                slug: {
+                    en: 'bancos-e-seguros',
+                    'pt-BR': 'banks-and-insurance',
+                },
+            },
+        ]
+    },
+    {
+        id: '2',
+        isActive: true,
+        type: 'community',
+        title: {
+            en: 'Mommy Owl - Gift Shop',
+            'pt-BR': 'Mommy Owl - Gift Shop',
+        },
+        description: {
+            en: 'Descriptiont in English',
+            'pt-BR': 'Acupuntura e Massagens no tratamento da dor, saude da mulher, fertilidade e gestação, insônia, digestão, enxaqueca, ansiedade e stress, entre outros.',
+        },
+        phone: '(343)987-1331',
+        website: 'http://www.mommyowl.ca',
+        email: 'contact@mommyowl.ca',
+        social: [],
+        createdAt: Date.now().toString(),
+        updatedAt: Date.now().toString(),
+        image: {
+            src: 'https://res.cloudinary.com/dw2wjwhuv/image/upload/v1652878239/brinca/partners/06_s1sjdj.png',
+            alt: 'Logo'
+        },
+        category: [
+            {
+                id: '0',
+                title: {
+                    en: 'Food',
+                    'pt-BR': 'Alimentação',
+                },
+                slug: {
+                    en: 'food',
+                    'pt-BR': 'alimentacao',
+                },
+            },
+        ]
+    },
 ];

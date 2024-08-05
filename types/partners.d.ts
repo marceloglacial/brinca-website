@@ -2,6 +2,7 @@
 type PartnerType = {
     id: string,
     isActive: boolean,
+    type?: 'partner' | 'community',
     createdAt: string,
     updatedAt: string,
     title: LocalizedString,
@@ -9,9 +10,9 @@ type PartnerType = {
     image: ImageProps,
     category: PartnerCategoryType[]
     email: string,
-    address: string,
+    address?: string,
     website?: string,
-    phone: string,
+    phone?: string,
     social: {
         type: IconTypes,
         url: string
