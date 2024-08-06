@@ -23,24 +23,25 @@ type PartnerCategoryType = {
     id: string;
     title: LocalizedString;
     slug: LocalizedString;
+    locale: LocaleTypes
 }
 
 interface PartnersListProps {
-    language: string;
+    language: LocaleTypes;
 }
 
 interface PartnersCard extends PartnerType {
-    locale: string,
+    locale: LocaleTypes,
 }
 
 interface PartnersListMenuProps {
     title: LocalizedString;
     items: PartnerCategoryType[];
-    locale: string;
+    locale: LocaleTypes;
 }
 
 interface PartnersSectionProps {
     title: LocalizedString;
-    locale: string;
+    locale: LocaleTypes;
     items: PartnerType[];
 }

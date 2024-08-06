@@ -10,8 +10,10 @@ interface PageProps extends PageParamsType {
     children: React.ReactNode
 }
 
+type LocaleTypes = 'en' | 'pt-BR' | 'fr-CA'
+
 type LocalizedString = {
-    [k: string]: string
+    [k in LocaleTypes]?: string
 }
 
 interface IPageData {

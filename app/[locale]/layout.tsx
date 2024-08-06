@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { Mulish } from 'next/font/google';
-import '../globals.css';
 import { Layout } from '@marceloglacial/brinca-ui';
 import { NavBar } from '@/components';
 import { getMenus } from '@/services';
+import '../globals.css';
 
 const inter = Mulish({ subsets: ['latin'] });
 
@@ -21,12 +21,14 @@ export default async function RootLayout({
   return (
     <html lang={params.locale}>
       <body className={inter.className}>
-        <Layout
-          header={<NavBar items={menu} />}
-          footer={<NavBar items={menu} variant='bottom' />}
-        >
-          {children}
-        </Layout>
+        <div className='lg:px-8'>
+          <Layout
+            header={<NavBar items={menu} />}
+            footer={<NavBar items={menu} variant='bottom' />}
+          >
+            {children}
+          </Layout>
+        </div>{' '}
       </body>
     </html>
   );

@@ -21,6 +21,11 @@ export const partnersCategories: PartnerCategoryType[] = [
             'pt-BR': 'banks-and-insurance',
         },
     },
+    {
+        id: '2',
+        title: { en: 'Hair', 'pt-BR': 'Cabelo, Estética e Cuidados Pessoais' },
+        slug: { en: 'hair', 'pt-BR': 'cabelo-estetica-e-cuidados-pessoais' }
+    }
 ];
 
 
