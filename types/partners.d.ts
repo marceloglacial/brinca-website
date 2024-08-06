@@ -1,8 +1,9 @@
+type PartnerTypes = 'partner' | 'community'
 
 type PartnerType = {
     id: string,
     isActive: boolean,
-    type?: 'partner' | 'community',
+    type?: PartnerTypes,
     createdAt: string,
     updatedAt: string,
     title: LocalizedString,
@@ -23,7 +24,6 @@ type PartnerCategoryType = {
     id: string;
     title: LocalizedString;
     slug: LocalizedString;
-    locale: LocaleTypes
 }
 
 interface PartnersListProps {
@@ -35,13 +35,16 @@ interface PartnersCard extends PartnerType {
 }
 
 interface PartnersListMenuProps {
-    title: LocalizedString;
-    items: PartnerCategoryType[];
     locale: LocaleTypes;
 }
 
 interface PartnersSectionProps {
-    title: LocalizedString;
+    id: string
+    title: LocalizedString
     locale: LocaleTypes;
-    items: PartnerType[];
+    type: PartnerTypes
+}
+
+interface PartnersListItemProps extends PartnerCategoryType {
+    locale: LocaleTypes;
 }

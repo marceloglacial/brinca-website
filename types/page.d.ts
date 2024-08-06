@@ -1,7 +1,7 @@
 type PageParamsType = {
     params: {
         slug?: string
-        locale: string
+        locale: LocaleTypes
         id?: string
     }
 }

@@ -1,7 +1,7 @@
-const INVALIDATE_INTERVAL: number = 3600
+import { COLLECTIONS, INVALIDATE_INTERVAL } from '@/constants'
 
 export async function getSinglePage(locale: string, slug: string): Promise<IPageResponse> {
-    const res = await fetch(`${process.env.API_URL}/pages/${locale}/${slug}`, { next: { revalidate: INVALIDATE_INTERVAL } });
+    const res = await fetch(`${process.env.API_URL}/${COLLECTIONS.PAGES}/${locale}/${slug}`, { next: { revalidate: INVALIDATE_INTERVAL } });
     return res.json();
 }
 
