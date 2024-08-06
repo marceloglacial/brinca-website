@@ -11,7 +11,7 @@ interface FormFieldsProps {
 }
 
 interface FormProps {
-    language: string
+    language: LocaleTypes
     data: FormDataContentType
 }
 
@@ -20,6 +20,6 @@ type FieldTypes = {
 };
 
 interface FormFieldProps {
-    language: string;
+    language: LocaleTypes;
     attributes: any;
 }
