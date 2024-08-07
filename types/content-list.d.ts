@@ -4,7 +4,7 @@ type ContentListDataType = {
 }
 
 interface ContentListProps {
-    language: string;
+    language: LocaleTypes;
     type: ContentListDataType.type
     title?: ContentListDataType.title
 }

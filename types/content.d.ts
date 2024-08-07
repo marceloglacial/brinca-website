@@ -6,5 +6,5 @@ type ContentType = {
 
 interface ContentProps {
     items: ContentType[];
-    language: string;
+    language: LocaleTypes;
 }
