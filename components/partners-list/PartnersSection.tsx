@@ -2,15 +2,20 @@ import { FC } from 'react';
 import PartnerCard from './PartnerCard';
 import { getDataByType } from '@/services';
 import { COLLECTIONS } from '@/constants';
+import { filterItemsByCategory } from '@/utils';
 
 const PartnersSection: FC<PartnersSectionProps> = async (
   props
 ): Promise<JSX.Element> => {
   const data = await getDataByType(COLLECTIONS.PARTNERS);
-  const items: PartnerType[] = data.data.filter(
+  const filteredData: PartnerType[] = data.data.filter(
     (partner: PartnerType) => partner.isActive && partner.type === props.type
   );
-
+  const items = filterItemsByCategory(
+    filteredData,
+    props.locale,
+    props.category
+  );
   if (items.length === 0) return <></>;
 
   return (

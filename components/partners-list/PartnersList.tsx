@@ -13,6 +13,7 @@ export const PartnersList: FC<PartnersListProps> = async (
     data.data,
     `title.${props.language}`
   );
+
   return (
     <div className='partners-list pt-8 grid grid-cols-1 gap-16'>
       <PartnersListMenu locale={props.language} />
@@ -20,6 +21,7 @@ export const PartnersList: FC<PartnersListProps> = async (
         <PartnersSection
           {...section}
           locale={props.language}
+          category={props.category}
           key={section.id}
         />
       ))}

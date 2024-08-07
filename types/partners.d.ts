@@ -28,6 +28,7 @@ type PartnerCategoryType = {
 
 interface PartnersListProps {
     language: LocaleTypes;
+    category?: string
 }
 
 interface PartnersCard extends PartnerType {
@@ -43,6 +44,7 @@ interface PartnersSectionProps {
     title: LocalizedString
     locale: LocaleTypes;
     type: PartnerTypes
+    category?: string
 }
 
 interface PartnersListItemProps extends PartnerCategoryType {

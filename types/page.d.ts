@@ -3,6 +3,7 @@ type PageParamsType = {
         slug?: string
         locale: LocaleTypes
         id?: string
+        tag?: string
     }
 }
 
