@@ -1,6 +1,6 @@
 interface HeroProps {
     id: number
-    language: string;
+    language: LocaleTypes;
     title: LocalizedString;
     description: LocalizedString;
     rounded: boolean

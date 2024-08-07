@@ -4,6 +4,7 @@ import {
   ContentList,
   Form,
   Hero,
+  PartnersList,
   RichText,
 } from '@/components';
 
@@ -40,6 +41,7 @@ export const Block: FC<BlockProps> = (props): JSX.Element => {
     cloudinaryGallery: (
       <CloudinaryGallery path={props.blockContent.data?.path} />
     ),
+    partnersList: <PartnersList language={props.blockLanguage} />,
   };
 
   return (

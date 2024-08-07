@@ -1,8 +1,9 @@
 type PageParamsType = {
     params: {
         slug?: string
-        locale: string
+        locale: LocaleTypes
         id?: string
+        tag?: string
     }
 }
 
@@ -10,8 +11,10 @@ interface PageProps extends PageParamsType {
     children: React.ReactNode
 }
 
+type LocaleTypes = 'en' | 'pt-BR'
+
 type LocalizedString = {
-    [k: string]: string
+    [k in LocaleTypes]: string
 }
 
 interface IPageData {
