@@ -19,9 +19,7 @@ export const LocaleListItems: FC<LocaleListItemsProps> = (
     (locale) => locale.locale !== params.locale
   );
 
-  const styles = `locale-list fixed bottom-[50%] -right-${
-    remainLocales.length * 12
-  } hover:right-0 transition-all flex gap-4 px-4 py-2 bg-white shadow-2xl border border-r-none rounded-full rounded-tr-none rounded-br-none`;
+  const styles = `locale-list fixed bottom-[50%] -right-12 hover:right-0 transition-all flex gap-4 px-4 py-2 bg-white shadow-2xl border border-r-none rounded-full rounded-tr-none rounded-br-none`;
 
   return (
     <div className={styles}>
