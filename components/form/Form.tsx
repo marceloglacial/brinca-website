@@ -11,7 +11,7 @@ export const Form: FC<FormProps> = async ({
   const formData = allData.data;
 
   return (
-    <div className='form max-w-4xl mx-auto'>
+    <div className='form'>
       {formData.title && (
         <Heading>
           <h2>{formData.title[language]}</h2>

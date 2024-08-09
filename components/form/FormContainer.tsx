@@ -1,9 +1,10 @@
 'use client';
+import { FC } from 'react';
 import { formServerAction } from '@/actions';
 import { FormField } from './FormField';
 import { FormSubmitButton } from './FormSubmitButton';
 import { useFormState } from 'react-dom';
-import { FC } from 'react';
+import { Form } from '@marceloglacial/brinca-ui';
 
 export const FormContainer: FC<FormContainerProps> = (props): JSX.Element => {
   const { data, language } = props;
@@ -20,7 +21,7 @@ export const FormContainer: FC<FormContainerProps> = (props): JSX.Element => {
   }
 
   return (
-    <form action={formAction} className='grid gap-8'>
+    <Form action={formAction}>
       <input type='hidden' name='formType' value={action.type} />
       <input type='hidden' name='formEndpoint' value={action.endpoint} />
       <input type='text' name='full_name' className='hidden' tabIndex={-1} />
@@ -29,6 +30,6 @@ export const FormContainer: FC<FormContainerProps> = (props): JSX.Element => {
         <FormField key={field.id} language={language} attributes={field} />
       ))}
       <FormSubmitButton value={submitButton.title[language]} />
-    </form>
+    </Form>
   );
 };
