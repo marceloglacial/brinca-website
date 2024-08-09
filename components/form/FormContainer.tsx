@@ -23,6 +23,8 @@ export const FormContainer: FC<FormContainerProps> = (props): JSX.Element => {
     <form action={formAction} className='grid gap-8'>
       <input type='hidden' name='formType' value={action.type} />
       <input type='hidden' name='formEndpoint' value={action.endpoint} />
+      <input type='text' name='full_name' className='hidden' tabIndex={-1} />
+
       {fields.map((field: any) => (
         <FormField key={field.id} language={language} attributes={field} />
       ))}

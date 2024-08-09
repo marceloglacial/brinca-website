@@ -10,6 +10,12 @@ export async function formServerAction(prevState: any, formData: FormData) {
 
 export async function addContent(data: any) {
     try {
+        // honeypot
+        if (data.full_name) return {
+            message: 'Error',
+            status: 'error',
+        }
+
         const content = structuredClone(data)
         Object.keys(content).forEach((key) => key.startsWith('$ACTION_') && delete content[key])
         delete content.formType
