@@ -27,6 +27,7 @@ export const FormContainer: FC<FormContainerProps> = (props): JSX.Element => {
   return (
     <Form action={formAction}>
       <FormTitle title={title} language={language} />
+      <input type='hidden' name='formTitle' value={title[language]} />
       <input type='hidden' name='formType' value={action.type} />
       <input type='hidden' name='formEndpoint' value={action.endpoint} />
       <input type='text' name='full_name' className='hidden' tabIndex={-1} />

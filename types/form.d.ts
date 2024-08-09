@@ -5,13 +5,13 @@ type FormDataContentType = {
 }
 
 type FormStatus = 'success' | 'error'
-
+type FormActionTypes = 'addContent' | 'sendEmail'
 
 interface FormFieldsProps {
     data: {
         action: {
             endpoint: string
-            type: 'addContent' | 'email'
+            type: FormActionTypes
         }
         submitButton: {
             title: LocalizedString
