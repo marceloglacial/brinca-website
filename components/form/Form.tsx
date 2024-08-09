@@ -1,27 +1,23 @@
+import { FC } from 'react';
 import { getDataById } from '@/services';
 import { Heading } from '@marceloglacial/brinca-ui';
-import { FC } from 'react';
-import { FormField } from './FormField';
+import { FormContainer } from './FormContainer';
 
 export const Form: FC<FormProps> = async ({
   language,
   data,
 }): Promise<JSX.Element> => {
   const allData: FormFieldsProps = await getDataById('forms', data.formId);
-  const formFields = allData.data.fields;
+  const formData = allData.data;
 
   return (
     <div className='form max-w-4xl mx-auto'>
-      {data.title && (
+      {formData.title && (
         <Heading>
-          <h2>{data.title[language]}</h2>
+          <h2>{formData.title[language]}</h2>
         </Heading>
       )}
-      <form className='grid gap-8'>
-        {formFields.map((field) => (
-          <FormField key={field.id} language={language} attributes={field} />
-        ))}
-      </form>
+      <FormContainer data={formData} language={language} />
     </div>
   );
 };

@@ -4,5 +4,6 @@ export const COLLECTIONS = {
     PAGES: 'pages',
     PARTNERS: 'partners',
     PARTNERS_CATEGORY: 'partnersCategory',
-    PARTNERS_TYPES: 'partnersTypes'
+    PARTNERS_TYPES: 'partnersTypes',
+    GODFATHERS: 'godfathers'
 }
