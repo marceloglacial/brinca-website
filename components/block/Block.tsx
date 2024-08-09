@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import {
+  ButtonGroup,
   CloudinaryGallery,
   ContentList,
   Form,
@@ -42,6 +43,9 @@ export const Block: FC<BlockProps> = (props): JSX.Element => {
       <CloudinaryGallery path={props.blockContent.data?.path} />
     ),
     partnersList: <PartnersList language={props.blockLanguage} />,
+    buttonGroup: (
+      <ButtonGroup locale={props.blockLanguage} content={props.blockContent} />
+    ),
   };
 
   return (

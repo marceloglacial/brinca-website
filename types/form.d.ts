@@ -4,9 +4,24 @@ type FormDataContentType = {
     formId: string
 }
 
+type FormStatus = 'success' | 'error'
+type FormActionTypes = 'addContent' | 'sendEmail'
+
 interface FormFieldsProps {
     data: {
+        action: {
+            endpoint: string
+            type: FormActionTypes
+        }
+        submitButton: {
+            title: LocalizedString
+        }
+        title: LocalizedString
         fields: any[]
+        status: {
+            success: { message: LocalizedString },
+            error: { message: LocalizedString }
+        }
     }
 }
 
@@ -22,4 +37,14 @@ type FieldTypes = {
 interface FormFieldProps {
     language: LocaleTypes;
     attributes: any;
+}
+
+interface FormContainerProps extends FormFieldsProps {
+    language: LocaleTypes;
+}
+
+
+interface FormTitleProps {
+    title?: LocalizedString;
+    language: LocaleTypes;
 }
