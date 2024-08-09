@@ -1,23 +1,40 @@
+'use client';
+import { FC } from 'react';
 import { formatAttributes, formatOptions } from '@/services';
 import { Form } from '@marceloglacial/brinca-ui';
-import { FC } from 'react';
+import { useFormStatus } from 'react-dom';
 
 export const FormField: FC<FormFieldProps> = (props): JSX.Element => {
+  const { pending } = useFormStatus();
+
   const fieldTypes: FieldTypes = {
-    textarea: <Form.Textarea {...formatAttributes(props)} full />,
-    submit: <Form.Input {...formatAttributes(props)} />,
-    select: <Form.Select options={formatOptions(props)} full />,
+    textarea: (
+      <Form.Textarea
+        rows={10}
+        disabled={pending}
+        {...formatAttributes(props)}
+        full
+      />
+    ),
+    submit: <Form.Input disabled={pending} {...formatAttributes(props)} />,
+    select: (
+      <Form.Select disabled={pending} options={formatOptions(props)} full />
+    ),
     checkbox: <Checkbox {...props} />,
-    default: <Form.Input {...formatAttributes(props)} full />,
+    default: (
+      <Form.Input disabled={pending} {...formatAttributes(props)} full />
+    ),
   };
 
   return (
-    <Form.Group>
-      {props.attributes.label && (
-        <Form.Label>{props.attributes.label[props.language]}</Form.Label>
-      )}
-      {fieldTypes[props.attributes.type] || fieldTypes['default']}
-    </Form.Group>
+    <div className={pending ? 'opacity-50' : ''}>
+      <Form.Group>
+        {props.attributes.label && (
+          <Form.Label>{props.attributes.label[props.language]}</Form.Label>
+        )}
+        {fieldTypes[props.attributes.type] || fieldTypes['default']}
+      </Form.Group>
+    </div>
   );
 };
 
