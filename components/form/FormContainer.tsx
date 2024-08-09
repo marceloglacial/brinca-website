@@ -4,7 +4,8 @@ import { formServerAction } from '@/actions';
 import { FormField } from './FormField';
 import { FormSubmitButton } from './FormSubmitButton';
 import { useFormState } from 'react-dom';
-import { Form, Heading } from '@marceloglacial/brinca-ui';
+import { Form } from '@marceloglacial/brinca-ui';
+import { FormTitle } from './FormTitle';
 
 export const FormContainer: FC<FormContainerProps> = (props): JSX.Element => {
   const { data, language } = props;
@@ -14,13 +15,8 @@ export const FormContainer: FC<FormContainerProps> = (props): JSX.Element => {
   if (state) {
     const textColor = state.status === 'error' ? 'text-red-600 font-bold' : '';
     return (
-      <div>
-        {title && (
-          <Heading>
-            <h2>{title[language]}</h2>
-          </Heading>
-        )}
-
+      <div className='form-feedback'>
+        <FormTitle title={title} language={language} />
         <div className={`p-8 text-center ${textColor}`}>
           {status[state.status as FormStatus].message[language]}
         </div>
@@ -30,12 +26,7 @@ export const FormContainer: FC<FormContainerProps> = (props): JSX.Element => {
 
   return (
     <Form action={formAction}>
-      {title && (
-        <Heading>
-          <h2>{title[language]}</h2>
-        </Heading>
-      )}
-
+      <FormTitle title={title} language={language} />
       <input type='hidden' name='formType' value={action.type} />
       <input type='hidden' name='formEndpoint' value={action.endpoint} />
       <input type='text' name='full_name' className='hidden' tabIndex={-1} />

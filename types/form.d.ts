@@ -42,3 +42,9 @@ interface FormFieldProps {
 interface FormContainerProps extends FormFieldsProps {
     language: LocaleTypes;
 }
+
+
+interface FormTitleProps {
+    title?: LocalizedString;
+    language: LocaleTypes;
+}
