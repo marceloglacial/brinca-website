@@ -25,3 +25,8 @@ export async function getContentByType(type: string, locale: string, pageSize: n
     const res = await fetch(`${process.env.STRAPI_URL}/${type}?locale=${locale}&populate=${populateOptions}&pagination[pageSize]=${pageSize}`, { next: { revalidate: INVALIDATE_INTERVAL } });
     return res.json();
 }
+
+export async function getHomePage(locale: string): Promise<ApiListResponse> {
+    const res = await fetch(`${process.env.STRAPI_URL}/homepage?locale=${locale}&populate=frontpage.image,frontpage.button`, { next: { revalidate: INVALIDATE_INTERVAL } });
+    return res.json();
+}
