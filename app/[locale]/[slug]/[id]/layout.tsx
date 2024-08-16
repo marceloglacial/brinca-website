@@ -1,20 +1,20 @@
 import { SITE } from '@/constants';
-import { getPageByType } from '@/services';
+import { getContentBySlug, getPageByType } from '@/services';
+import { formatData } from '@/utils';
 import { Metadata } from 'next';
 
 export async function generateMetadata({
   params,
 }: PageParamsType): Promise<Metadata> {
-  const data = await getPageByType(
-    params.slug || '',
-    params.locale,
-    params.id || ''
-  );
+  const data = await getContentBySlug(params.slug, params.id, params.locale);
 
-  const pageData = data.data;
-  const language = params.locale;
+  if ('error' in data)
+    return {
+      title: `${SITE.NAME} - ${data.error.message}`,
+    };
+
   return {
-    title: `${SITE.NAME} - ${pageData.title[language]}`,
+    title: `${SITE.NAME} - ${formatData(data).title}`,
   };
 }
 

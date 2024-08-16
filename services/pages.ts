@@ -30,3 +30,8 @@ export async function getHomePage(locale: string): Promise<ApiListResponse> {
     const res = await fetch(`${process.env.STRAPI_URL}/homepage?locale=${locale}&populate=frontpage.image,frontpage.button`, { next: { revalidate: INVALIDATE_INTERVAL } });
     return res.json();
 }
+
+export async function getContentBySlug(type: string, slug: string, locale: string): Promise<ApiListResponse> {
+    const res = await fetch(`${process.env.STRAPI_URL}/${type}/${slug}?locale=${locale}&populate=${populateOptions}`, { next: { revalidate: INVALIDATE_INTERVAL } });
+    return res.json();
+}
