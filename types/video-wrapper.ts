@@ -1,0 +1,3 @@
+interface VideoWrapperProps {
+    url: string;
+}

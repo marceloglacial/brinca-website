@@ -1,12 +1,31 @@
-interface IResponse {
-    status: 'success' | 'error',
-    message: string,
-    id?: string | number
-    error?: Error | unknown
-    data?: any
+interface ApiError {
+    error: {
+        status: number;
+        name: string;
+        message: string;
+        details?: any;
+    };
 }
 
-interface IPageResponse extends IResponse {
-    total?: number
-    data: IPageData
+interface ApiResult {
+    data: {
+        id: number;
+        attributes: any;
+    };
+    meta?: any;
+}
+
+type ApiResponse = ApiResult | ApiError;
+
+interface FormatedData {
+    id: number,
+    title: string,
+    slug: string,
+    date: string,
+    createdAt: string,
+    updatedAt: string,
+    publishedAt: string,
+    locale: string,
+    content: any,
+    thumbnail?: any
 }

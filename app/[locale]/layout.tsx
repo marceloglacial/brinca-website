@@ -3,8 +3,8 @@ import { Mulish } from 'next/font/google';
 import { Layout } from '@marceloglacial/brinca-ui';
 import { NavBar } from '@/components';
 import { getMenus } from '@/services';
-import '../globals.css';
 import { SITE } from '@/constants';
+import '../globals.css';
 
 const inter = Mulish({ subsets: ['latin'] });
 
@@ -29,7 +29,7 @@ export default async function RootLayout({
           >
             {children}
           </Layout>
-        </div>{' '}
+        </div>
       </body>
     </html>
   );

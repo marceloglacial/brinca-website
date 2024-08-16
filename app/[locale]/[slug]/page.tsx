@@ -1,23 +1,24 @@
 import { Content } from '@/components';
 import { getSinglePage } from '@/services';
+import { formatData } from '@/utils';
 import { Heading, Section } from '@marceloglacial/brinca-ui';
 
 export default async function Page({ params }: PageParamsType) {
   const data = await getSinglePage(params.locale, params.slug || '');
-  const pageData = data.data;
-  const language = params.locale;
 
-  if (!pageData) {
+  if ('error' in data) {
     console.error(data.error);
-    return <h1>Page Not found</h1>;
+    return <h1>{data.error.message}</h1>;
   }
+
+  const pageData = formatData(data);
 
   return (
     <Section>
       <Heading className='mb-4'>
-        <h1>{pageData.title[language]}</h1>
+        <h1>{pageData.title}</h1>
       </Heading>
-      <Content items={pageData.content} language={language} />
+      <Content locale={pageData.locale} items={pageData.content} />
     </Section>
   );
 }

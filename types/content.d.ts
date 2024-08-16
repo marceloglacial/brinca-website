@@ -1,10 +1,15 @@
 type ContentType = {
+    caption: string
+    content: any
+    contentType: string
+    embedType: string
     id: number,
+    title: string
     type: string,
-    data: any
+    url: string
 }
 
 interface ContentProps {
+    locale: string
     items: ContentType[];
-    language: LocaleTypes;
 }

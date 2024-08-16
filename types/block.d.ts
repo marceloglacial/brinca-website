@@ -3,6 +3,6 @@ type BlockType = {
 };
 
 interface BlockProps {
-    blockLanguage: LocaleTypes;
-    blockContent: ContentType;
+    locale: string
+    data: ContentType;
 }

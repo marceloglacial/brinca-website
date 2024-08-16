@@ -3,6 +3,7 @@ import {
   ButtonGroup,
   CloudinaryGallery,
   ContentList,
+  Embed,
   Form,
   Hero,
   PartnersList,
@@ -10,47 +11,54 @@ import {
 } from '@/components';
 
 export const Block: FC<BlockProps> = (props): JSX.Element => {
-  const blockType: BlockType = {
-    hero: (
-      <Hero
-        id={props.blockContent.id}
-        language={props.blockLanguage}
-        title={props.blockContent.data.title}
-        description={props.blockContent.data.description}
-        image={props.blockContent.data.image}
-        link={props.blockContent.data.link}
-        rounded={props.blockContent.data.rounded}
-        shadow={props.blockContent.data.shadow}
-      />
-    ),
-    contentList: (
-      <ContentList
-        type={props.blockContent.data?.type}
-        title={props.blockContent.data?.title}
-        language={props.blockLanguage}
-      />
-    ),
-    form: (
-      <Form language={props.blockLanguage} data={props.blockContent.data} />
-    ),
-    richText: (
-      <RichText
-        content={props.blockContent.data?.content}
-        language={props.blockLanguage}
-      />
-    ),
-    cloudinaryGallery: (
-      <CloudinaryGallery path={props.blockContent.data?.path} />
-    ),
-    partnersList: <PartnersList language={props.blockLanguage} />,
-    buttonGroup: (
-      <ButtonGroup locale={props.blockLanguage} content={props.blockContent} />
-    ),
-  };
+  // console.log(props.data);
 
-  return (
-    <div className='block' key={props.blockContent.id}>
-      {blockType[props.blockContent.type]}
-    </div>
-  );
+  switch (props.data.type) {
+    case 'text-editor':
+      return <RichText content={props.data.content} />;
+    case 'embed':
+      return <Embed url={props.data.url} type={props.data.embedType} />;
+    case 'content-list':
+      return (
+        <ContentList
+          type={props.data.contentType}
+          title={props.data.title}
+          locale={props.locale}
+        />
+      );
+    default:
+      return <></>;
+  }
+  // const blockType: BlockType = {
+  //   hero: (
+  //     <Hero
+  //       id={props.blockContent.id}
+  //       title={props.blockContent.data.title}
+  //       description={props.blockContent.data.description}
+  //       image={props.blockContent.data.image}
+  //       link={props.blockContent.data.link}
+  //       rounded={props.blockContent.data.rounded}
+  //       shadow={props.blockContent.data.shadow}
+  //     />
+  //   ),
+  //   contentList: (
+  //     <ContentList
+  //       type={props.blockContent.data?.type}
+  //       title={props.blockContent.data?.title}
+  //     />
+  //   ),
+  //   form: <Form data={props.blockContent.data} />,
+  //   richText: <RichText content={props.blockContent.data?.content} />,
+  //   cloudinaryGallery: (
+  //     <CloudinaryGallery path={props.blockContent.data?.path} />
+  //   ),
+  //   partnersList: <PartnersList />,
+  //   buttonGroup: <ButtonGroup content={props.blockContent} />,
+  // };
+
+  // return (
+  //   <div className='block' key={props.blockContent.id}>
+  //     {blockType[props.blockContent.type]}
+  //   </div>
+  // );
 };

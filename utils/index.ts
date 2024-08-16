@@ -1,3 +1,5 @@
+export * from './embeds'
 export * from './filterItemsByCategory'
+export * from './formatData'
 export * from './formatDate'
 export * from './sortArray'
