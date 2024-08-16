@@ -21,7 +21,7 @@ export async function getDataById(type: string, id: string): Promise<any> {
     return res.json();
 }
 
-export async function getContentByType(type: string, locale: string): Promise<ApiResponse> {
-    const res = await fetch(`${process.env.STRAPI_URL}/${type}?locale=${locale}&populate=${populateOptions}`, { next: { revalidate: INVALIDATE_INTERVAL } });
+export async function getContentByType(type: string, locale: string, pageSize: number): Promise<ApiListResponse> {
+    const res = await fetch(`${process.env.STRAPI_URL}/${type}?locale=${locale}&populate=${populateOptions}&pagination[pageSize]=${pageSize}`, { next: { revalidate: INVALIDATE_INTERVAL } });
     return res.json();
 }

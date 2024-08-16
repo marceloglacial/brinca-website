@@ -11,7 +11,7 @@ import {
 } from '@/components';
 
 export const Block: FC<BlockProps> = (props): JSX.Element => {
-  // console.log(props.data);
+  console.log(props.data);
 
   switch (props.data.type) {
     case 'text-editor':
@@ -24,6 +24,7 @@ export const Block: FC<BlockProps> = (props): JSX.Element => {
           type={props.data.contentType}
           title={props.data.title}
           locale={props.locale}
+          pageSize={props.data.items}
         />
       );
     default:

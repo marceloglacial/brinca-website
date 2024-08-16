@@ -1,26 +1,28 @@
 import { FC } from 'react';
 import { CardGrid } from '@/components';
 import { getContentByType } from '@/services';
+import { formatData } from '@/utils';
 
 export const ContentList: FC<ContentListProps> = async ({
   type,
   title,
   locale,
+  pageSize = 12,
 }): Promise<JSX.Element> => {
-  const data = await getContentByType(type, locale);
+  const response = await getContentByType(type, locale, pageSize);
 
-  const items = data.data.map((item: IPageData): CardGridItemType => {
+  if ('error' in response) return <>Error loading the page!</>;
+
+  const items = response.data.map((item): CardGridItemType => {
+    const content = formatData({ data: item });
+
     return {
-      id: item.id,
-      link: `${type}/${item.attributes.slug}`,
-      title: item.attributes.title,
+      id: content.id,
+      link: `${type}/${content.slug}`,
+      title: content.title,
       locale,
-      image: item.attributes.thumbnail.data
-        ? {
-            src: item.attributes.thumbnail.data.attributes.url,
-          }
-        : null,
-      date: item.attributes.date,
+      image: content.thumbnail,
+      date: content.date,
     };
   });
 

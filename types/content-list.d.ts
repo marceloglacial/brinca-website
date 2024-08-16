@@ -2,5 +2,6 @@
 interface ContentListProps {
     type: string
     title?: string
-    locale
+    locale: string
+    pageSize?: number
 }

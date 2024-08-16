@@ -12,5 +12,16 @@ export const formatData = (data: any): FormatedData => {
             delete result.__component
             return result
         }),
+        thumbnail: formatThumbnail(info.attributes.thumbnail)
     }
+}
+
+export const formatThumbnail = (thumbnail: any) => {
+    if (!thumbnail.data) return null
+    const image = thumbnail.data.attributes
+    return {
+        src: image.url,
+        alt: image.alternativeText
+    }
+
 }

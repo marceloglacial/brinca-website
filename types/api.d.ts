@@ -7,11 +7,13 @@ interface ApiError {
     };
 }
 
+type ApiDataType = {
+    id: number;
+    attributes: any;
+}
+
 interface ApiResult {
-    data: {
-        id: number;
-        attributes: any;
-    };
+    data: ApiDataType;
     meta?: any;
 }
 
@@ -29,3 +31,18 @@ interface FormatedData {
     content: any,
     thumbnail?: any
 }
+
+
+interface ApiListResult {
+    data: ApiDataType[]
+    meta: {
+        pagination: {
+            page: number,
+            pageSize: number,
+            pageCount: number,
+            total: number
+        }
+    }
+}
+
+type ApiListResponse = ApiListResult | ApiError

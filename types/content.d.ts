@@ -7,6 +7,7 @@ type ContentType = {
     title: string
     type: string,
     url: string
+    items: number
 }
 
 interface ContentProps {
