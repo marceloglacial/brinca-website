@@ -11,13 +11,15 @@ import {
 } from '@/components';
 
 export const Block: FC<BlockProps> = (props): JSX.Element => {
-  // console.log(props.data);
+  console.log(props.data);
 
   switch (props.data.type) {
     case 'text-editor':
       return <RichText content={props.data.content} />;
     case 'embed':
       return <Embed url={props.data.url} type={props.data.embedType} />;
+    case 'cloudinary-folder':
+      return <CloudinaryGallery path={props.data.folderName} />;
     case 'hero':
       return (
         <Hero
@@ -43,13 +45,8 @@ export const Block: FC<BlockProps> = (props): JSX.Element => {
       return <></>;
   }
   // const blockType: BlockType = {
-  //   hero: (
-  //
   //   form: <Form data={props.blockContent.data} />,
   //
-  //   cloudinaryGallery: (
-  //     <CloudinaryGallery path={props.blockContent.data?.path} />
-  //   ),
   //   partnersList: <PartnersList />,
   //   buttonGroup: <ButtonGroup content={props.blockContent} />,
   // };
