@@ -1,6 +1,6 @@
 import { Block } from '@/components';
 import { getHomePage } from '@/services';
-import { formatBaseData } from '@/utils';
+import { formatFrontPageData } from '@/utils';
 import { Section } from '@marceloglacial/brinca-ui';
 
 export default async function Home({ params }: PageParamsType) {
@@ -17,6 +17,3 @@ export default async function Home({ params }: PageParamsType) {
     </main>
   );
 }
-
-const formatFrontPageData = (data: any) =>
-  data.data.attributes.frontpage.map((item: any) => formatBaseData(item));

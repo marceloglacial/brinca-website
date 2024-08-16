@@ -38,3 +38,17 @@ export const formatBaseData = (item: any) => {
     delete result.__component
     return result
 }
+
+
+export const formatFrontPageData = (data: any) =>
+    data.data.attributes.frontpage.map((item: any) => {
+        return {
+            ...formatBaseData(item),
+            rounded: item.isRounded,
+            shadow: item.hasShadow || true,
+            link: {
+                link: item?.button?.href,
+                text: item?.button?.text
+            }
+        }
+    });
