@@ -19,6 +19,7 @@ export const formatData = (data: any): FormatedData => {
 
 export const formatThumbnail = (thumbnail: any) => {
     if (!thumbnail?.data) return null
+
     const image = thumbnail.data.attributes
     return {
         src: image.url,
@@ -31,7 +32,7 @@ export const formatBaseData = (item: any) => {
     const result = {
         ...item,
         id: item.id,
-        type: item['__component'].split('.')[1],
+        type: item['__component']?.split('.')[1],
         image: formatThumbnail(item.image),
         thumbnail: formatThumbnail(item.thumbnail)
     }
@@ -52,3 +53,25 @@ export const formatFrontPageData = (data: any) =>
             }
         }
     });
+
+
+export const formatContentListData = (data: any): any => {
+    const result = data.map((item: any) => {
+
+        return {
+            id: item.id,
+            ...item.attributes,
+            logo: { ...item.attributes.logo?.data.attributes },
+            category: { ...item.attributes.category?.data?.attributes }
+        }
+
+    })
+    return result
+}
+
+export const normalizeData = (data: any) => {
+    return {
+        id: data.data.id,
+        ...data.data.attributes
+    }
+}

@@ -11,7 +11,7 @@ import {
 } from '@/components';
 
 export const Block: FC<BlockProps> = (props): JSX.Element => {
-  console.log(props.data);
+  // console.log(props.data);
 
   switch (props.data.type) {
     case 'text-editor':
@@ -20,6 +20,8 @@ export const Block: FC<BlockProps> = (props): JSX.Element => {
       return <Embed url={props.data.url} type={props.data.embedType} />;
     case 'cloudinary-folder':
       return <CloudinaryGallery path={props.data.folderName} />;
+    case 'partners-list':
+      return <PartnersList locale={props.locale} />;
     case 'hero':
       return (
         <Hero
@@ -44,16 +46,7 @@ export const Block: FC<BlockProps> = (props): JSX.Element => {
     default:
       return <></>;
   }
-  // const blockType: BlockType = {
-  //   form: <Form data={props.blockContent.data} />,
-  //
-  //   partnersList: <PartnersList />,
-  //   buttonGroup: <ButtonGroup content={props.blockContent} />,
-  // };
-
-  // return (
-  //   <div className='block' key={props.blockContent.id}>
-  //     {blockType[props.blockContent.type]}
-  //   </div>
-  // );
 };
+
+//   form: <Form data={props.blockContent.data} />,
+//   buttonGroup: <ButtonGroup content={props.blockContent} />,

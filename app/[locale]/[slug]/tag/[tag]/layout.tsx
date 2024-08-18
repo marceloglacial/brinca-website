@@ -1,27 +1,48 @@
-import { COLLECTIONS, SITE } from '@/constants';
-import { getPageByType } from '@/services';
+import { COLLECTIONS, DICTIONARY, SITE } from '@/constants';
+import { getContentBySlug, getPageByType } from '@/services';
+import { normalizeData } from '@/utils';
+import { Heading, Section } from '@marceloglacial/brinca-ui';
 import { Metadata } from 'next';
 
 export async function generateMetadata({
   params,
 }: PageParamsType): Promise<Metadata> {
-  const data = await await getPageByType(
-    COLLECTIONS.PARTNERS_CATEGORY,
-    params.locale,
-    params.tag || ''
-  );
-  if (data.status === 'error')
+  const data = await getData({ params });
+
+  if ('error' in data)
     return {
-      title: SITE.NAME,
+      title: `${SITE.NAME} - ${data.error.message}`,
     };
 
-  const pageData = data.data;
-  const language = params.locale;
   return {
-    title: `${SITE.NAME} ${params.slug} - ${pageData.title[language]}`,
+    title: `${SITE.NAME} - ${data.title}`,
   };
 }
 
-export default async function RootLayout({ children }: Readonly<PageProps>) {
-  return <>{children}</>;
+export default async function RootLayout({
+  children,
+  params,
+}: Readonly<PageProps>) {
+  const data = await getData({ params });
+
+  return (
+    <Section>
+      <Heading className='mb-4'>
+        <h1>
+          {DICTIONARY.PARTNETS_TITLE[params.locale]} - {data.title}
+        </h1>
+      </Heading>
+      <div>{children}</div>;
+    </Section>
+  );
 }
+
+const getData = async ({ params }: PageParamsType) => {
+  const data = await getContentBySlug(
+    COLLECTIONS.PARTNERS_CATEGORY,
+    params.tag,
+    params.locale
+  );
+  const pageData = normalizeData(data);
+  return pageData;
+};

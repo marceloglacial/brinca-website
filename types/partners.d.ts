@@ -1,3 +1,4 @@
+
 type PartnerTypes = 'partner' | 'community'
 
 type PartnerType = {
@@ -6,45 +7,43 @@ type PartnerType = {
     type?: PartnerTypes,
     createdAt: string,
     updatedAt: string,
-    title: LocalizedString,
-    description?: LocalizedString,
-    image: ImageProps,
+    title: string,
+    description?: string,
+    logo: {
+        alternativeText?: string,
+        url: string
+    }
     category: PartnerCategoryType[]
     email: string,
     address?: string,
     website?: string,
     phone?: string,
-    social: {
-        type: IconTypes,
-        url: string
-    }[]
+    facebook?: string,
+    instagram?: string,
+    linkedin?: string,
+    whatsapp?: string
 }
 
 type PartnerCategoryType = {
     id: string;
-    title: LocalizedString;
-    slug: LocalizedString;
+    title: string;
+    slug: string;
 }
 
 interface PartnersListProps {
-    language: LocaleTypes;
+    locale: LocaleTypes;
     category?: string
 }
 
-interface PartnersCard extends PartnerType {
-    locale: LocaleTypes,
-}
 
 interface PartnersListMenuProps {
     locale: LocaleTypes;
 }
 
 interface PartnersSectionProps {
-    id: string
-    title: LocalizedString
-    locale: LocaleTypes;
-    type: PartnerTypes
-    category?: string
+    locale: LocaleTypes
+    filter?: string
+    isMember?: boolean
 }
 
 interface PartnersListItemProps extends PartnerCategoryType {

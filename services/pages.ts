@@ -1,5 +1,5 @@
 import { INVALIDATE_INTERVAL } from '@/constants'
-const populateOptions = 'content.photos,content.buttons,content.image,thumbnail'
+const populateOptions = 'content.photos,content.buttons,content.image,thumbnail,category,logo'
 
 export async function getSinglePage(locale: string, slug: string): Promise<ApiResponse> {
     const res = await fetch(`${process.env.STRAPI_URL}/pages/${slug}?locale=${locale}&populate=${populateOptions}`, { next: { revalidate: INVALIDATE_INTERVAL } });
@@ -21,8 +21,13 @@ export async function getDataById(type: string, id: string): Promise<any> {
     return res.json();
 }
 
-export async function getContentByType(type: string, locale: string, pageSize: number): Promise<ApiListResponse> {
-    const res = await fetch(`${process.env.STRAPI_URL}/${type}?locale=${locale}&populate=${populateOptions}&pagination[pageSize]=${pageSize}`, { next: { revalidate: INVALIDATE_INTERVAL } });
+export async function getContentByType(type: string, locale: string, pageSize?: number, sort?: string, order?: 'asc' | 'desc', filter?: string): Promise<ApiListResponse> {
+    const sortQuery = sort ? `&sort[0]=${sort}` : ''
+    const orderQuery = order ? `:${order}` : ''
+    const paginationQuery = pageSize ? `&pagination[pageSize]=${pageSize || 100}` : ''
+    const populateQuery = `&populate=${populateOptions}`
+    const filterQyery = filter ? `&filters${filter}` : ''
+    const res = await fetch(`${process.env.STRAPI_URL}/${type}?locale=${locale}${populateQuery}${paginationQuery}${sortQuery}${orderQuery}${filterQyery}`, { next: { revalidate: INVALIDATE_INTERVAL } });
     return res.json();
 }
 

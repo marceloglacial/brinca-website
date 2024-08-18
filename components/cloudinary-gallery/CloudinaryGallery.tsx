@@ -7,6 +7,7 @@ interface ICloudinaryGallery {
 }
 
 export const CloudinaryGallery: FC<ICloudinaryGallery> = async (props) => {
+  if (!props.path) return <></>;
   const data = await getCloudinaryImages(props.path);
   const images = data.map((image) => {
     return {
