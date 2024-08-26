@@ -3,6 +3,7 @@ import PartnersListItem from './PartnersListItem';
 import { getContentByType } from '@/services';
 import { COLLECTIONS, DICTIONARY } from '@/constants';
 import { formatContentListData } from '@/utils';
+import { ErrorState } from '@/components';
 
 const PartnersListMenu: FC<PartnersListMenuProps> = async (
   props
@@ -15,7 +16,8 @@ const PartnersListMenu: FC<PartnersListMenuProps> = async (
     'asc'
   );
 
-  if ('error' in response) return <> Error loading data</>;
+  if ('error' in response) return <ErrorState />;
+
   const items: PartnersListItemProps[] = formatContentListData(response.data);
 
   if (items.length === 0) return <></>;

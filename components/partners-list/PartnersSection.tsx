@@ -3,6 +3,7 @@ import PartnerCard from './PartnerCard';
 import { getContentByType } from '@/services';
 import { COLLECTIONS, DICTIONARY } from '@/constants';
 import { formatContentListData } from '@/utils';
+import { ErrorState } from '@/components';
 
 const PartnersSection: FC<PartnersSectionProps> = async (
   props
@@ -24,7 +25,7 @@ const PartnersSection: FC<PartnersSectionProps> = async (
     filters
   );
 
-  if ('error' in response) return <>Error loading content</>;
+  if ('error' in response) return <ErrorState />;
 
   const items = formatContentListData(response.data);
 

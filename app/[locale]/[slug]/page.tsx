@@ -1,4 +1,4 @@
-import { Content } from '@/components';
+import { Content, ErrorState } from '@/components';
 import { getSinglePage } from '@/services';
 import { formatData } from '@/utils';
 import { Heading, Section } from '@marceloglacial/brinca-ui';
@@ -6,10 +6,7 @@ import { Heading, Section } from '@marceloglacial/brinca-ui';
 export default async function Page({ params }: PageParamsType) {
   const data = await getSinglePage(params.locale, params.slug || '');
 
-  if ('error' in data) {
-    console.error(data.error);
-    return <h1>{data.error.message}</h1>;
-  }
+  if ('error' in data) return <ErrorState data={data} />;
 
   const pageData = formatData(data);
 

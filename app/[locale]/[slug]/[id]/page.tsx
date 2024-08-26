@@ -1,14 +1,13 @@
-import { Content } from '@/components';
-import { getContentBySlug, getPageByType } from '@/services';
+import { Content, ErrorState } from '@/components';
+import { getContentBySlug } from '@/services';
 import { formatData } from '@/utils';
 import { Heading, Section } from '@marceloglacial/brinca-ui';
 
 export default async function Page({ params }: PageParamsType) {
   const data = await getContentBySlug(params.slug, params.id, params.locale);
 
-  if ('error' in data) {
-    return <>{data.error.message}</>;
-  }
+  if ('error' in data) return <ErrorState data={data} />;
+
   const pageData = formatData(data);
 
   return (

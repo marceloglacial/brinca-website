@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { CardGrid } from '@/components';
+import { CardGrid, ErrorState } from '@/components';
 import { getContentByType } from '@/services';
 import { formatData } from '@/utils';
 
@@ -11,7 +11,7 @@ export const ContentList: FC<ContentListProps> = async ({
 }): Promise<JSX.Element> => {
   const response = await getContentByType(type, locale, pageSize);
 
-  if ('error' in response) return <>Error loading the page!</>;
+  if ('error' in response) return <ErrorState />;
 
   const items = response.data.map((item): CardGridItemType => {
     const content = formatData({ data: item });
