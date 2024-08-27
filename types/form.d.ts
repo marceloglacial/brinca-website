@@ -1,4 +1,3 @@
-
 type FormDataContentType = {
     title?: LocalizedString,
     formId: string
@@ -31,13 +30,28 @@ type FieldTypes = {
 
 interface FormFieldProps {
     label: string
-    placeholder: string
-    defaultValue: string
     name: string
-    type: string
-    fieldType: string
+    placeholder?: string
+    defaultValue?: string
+    type?: string
+    fieldType?: string
+    options?: OptionsType[]
+    disabled?: boolean
+    required?: boolean
 }
 
 interface FormTitleProps {
     title?: string;
+}
+
+interface FormGroupProps {
+    pending: boolean
+    label: string
+    children: React.ReactNode
+    required?: boolean
+}
+
+interface FormCollectionListProps {
+    pending: boolean
+    options: OptionsType[]
 }

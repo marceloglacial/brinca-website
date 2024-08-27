@@ -35,5 +35,9 @@ export const DICTIONARY = {
     COMMUNITY_TITLE: {
         en: 'Community',
         'pt-BR': 'Comunidade'
+    },
+    FORM_REQUIRED: {
+        en: 'Required',
+        'pt-BR': 'Obrigatório'
     }
 }

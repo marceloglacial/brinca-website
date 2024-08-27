@@ -1,6 +1,8 @@
-'use client';
-export const FormCollectionList = (props) => {
-  console.log(props);
+import { Form } from '@marceloglacial/brinca-ui';
+import { FC } from 'react';
 
-  return <>FormCollectionList</>;
+export const FormCollectionList: FC<FormCollectionListProps> = (
+  props
+): JSX.Element => {
+  return <Form.Select disabled={props.pending} options={props.options} full />;
 };
