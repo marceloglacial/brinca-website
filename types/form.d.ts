@@ -1,5 +1,5 @@
 type FormDataContentType = {
-    title?: LocalizedString,
+    showTitle?: boolean,
     formId: string
 }
 
@@ -8,7 +8,8 @@ type FormActionTypes = 'addContent' | 'sendEmail'
 
 interface FormContainerProps {
     data: {
-        title?: string
+        title: string
+        showTitle?: boolean
         type: 'database' | 'email'
         endpoint: string
         fields: any[]
