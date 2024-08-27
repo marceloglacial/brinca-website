@@ -43,6 +43,8 @@ export const Block: FC<BlockProps> = (props): JSX.Element => {
           pageSize={props.data.items}
         />
       );
+    case 'form':
+      return <Form data={props.data} locale={props.locale} />;
     default:
       return <></>;
   }

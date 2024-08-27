@@ -72,6 +72,25 @@ export const formatContentListData = (data: any): any => {
 export const normalizeData = (data: any) => {
     return {
         id: data.data.id,
-        ...data.data.attributes
+        ...data.data.attributes,
     }
+}
+
+export const normalizeFormsData = (data: any) => {
+    const formData = data.data
+    const result = {
+        id: formData.id,
+        ...formData.attributes,
+        fields: formData.attributes?.fields.map((item: any) => formatField(item))
+    }
+    return result
+}
+
+export const formatField = (field: any) => {
+    const result = {
+        ...field,
+        fieldType: field['__component']?.split('.')[1],
+    }
+    delete result['__component']
+    return result
 }

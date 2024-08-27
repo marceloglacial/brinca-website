@@ -1,5 +1,6 @@
 import { INVALIDATE_INTERVAL } from '@/constants'
-const populateOptions = 'content.photos,content.buttons,content.image,thumbnail,category,logo'
+// const populateOptions = 'content.photos,content.buttons,content.image,thumbnail,category,logo'
+const populateOptions = '*'
 
 export async function getSinglePage(locale: string, slug: string): Promise<ApiResponse> {
     const res = await fetch(`${process.env.STRAPI_URL}/pages/${slug}?locale=${locale}&populate=${populateOptions}`, { next: { revalidate: INVALIDATE_INTERVAL } });
@@ -38,5 +39,10 @@ export async function getHomePage(locale: string): Promise<ApiListResponse> {
 
 export async function getContentBySlug(type: string, slug: string, locale: string): Promise<ApiListResponse> {
     const res = await fetch(`${process.env.STRAPI_URL}/${type}/${slug}?locale=${locale}&populate=${populateOptions}`, { next: { revalidate: INVALIDATE_INTERVAL } });
+    return res.json();
+}
+
+export async function getContentById(type: string, id: string, locale: string): Promise<ApiListResponse> {
+    const res = await fetch(`${process.env.STRAPI_URL}/${type}/${id}?locale=${locale}&populate=${populateOptions}`, { next: { revalidate: INVALIDATE_INTERVAL } });
     return res.json();
 }
