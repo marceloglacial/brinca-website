@@ -7,13 +7,13 @@ import { Form } from '@marceloglacial/brinca-ui';
 import { FormTitle } from './FormTitle';
 
 export const FormContainer: FC<FormContainerProps> = (props): JSX.Element => {
-  console.log(props);
-
   const form = props.data;
+
   const [state, formAction] = useFormState(formServerAction, null);
 
   if (state) {
     const textColor = state.status === 'error' ? 'text-red-600 font-bold' : '';
+
     return (
       <div className='form-feedback'>
         {form.showTitle && <FormTitle title={form.title} />}

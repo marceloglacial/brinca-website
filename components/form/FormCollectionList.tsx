@@ -4,5 +4,11 @@ import { FC } from 'react';
 export const FormCollectionList: FC<FormCollectionListProps> = (
   props
 ): JSX.Element => {
-  return <Form.Select disabled={props.pending} options={props.options} full />;
+  const options = props.options.map((option) => {
+    return {
+      label: option.attributes.title,
+      value: option.attributes.slug,
+    };
+  });
+  return <Form.Select disabled={props.pending} options={options} full />;
 };

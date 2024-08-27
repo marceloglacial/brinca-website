@@ -78,10 +78,18 @@ export const normalizeData = (data: any) => {
 
 export const normalizeFormsData = (data: any) => {
     const formData = data.data
-    const result = {
+    const result: FormDataType = {
         id: formData.id,
         ...formData.attributes,
-        fields: formData.attributes?.fields.map((item: any) => formatField(item))
+        status: {
+            success: {
+                message: formData.attributes.onSuccess
+            },
+            error: {
+                message: formData.attributes.onError
+            }
+        },
+        fields: formData.attributes?.fields.map((item: any) => formatField(item)),
     }
     return result
 }

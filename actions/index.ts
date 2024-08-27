@@ -1,11 +1,11 @@
 'use server'
-import { MESSAGES, SITE } from '@/constants'
+import { MESSAGES } from '@/constants'
 import { postContent } from '@/services'
 
 export async function formServerAction(prevState: any, formData: FormData) {
     const data = Object.fromEntries(formData)
-    if (data.formType === 'addContent') return await addContent(data)
-    if (data.formType === 'sendEmail') return await sendEmail(data)
+    if (data.formType === 'database') return await addContent(data)
+    if (data.formType === 'email') return await sendEmail(data)
     throw Error
 }
 

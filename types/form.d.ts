@@ -6,18 +6,21 @@ type FormDataContentType = {
 type FormStatus = 'success' | 'error'
 type FormActionTypes = 'addContent' | 'sendEmail'
 
-interface FormContainerProps {
-    data: {
-        title: string
-        showTitle?: boolean
-        type: 'database' | 'email'
-        endpoint: string
-        fields: any[]
-        status: {
-            success: { message: string },
-            error: { message: string }
-        }
+type FormDataType = {
+    id?: string | number
+    title: string,
+    showTitle?: boolean,
+    type: 'database' | 'email',
+    endpoint: string,
+    fields: FormFieldProps[],
+    status: {
+        success: { message: string },
+        error: { message: string }
     }
+}
+
+interface FormContainerProps {
+    data: FormDataType
 }
 
 interface FormProps {
