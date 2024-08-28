@@ -95,10 +95,22 @@ export const normalizeFormsData = (data: any) => {
 }
 
 export const formatField = (field: any) => {
+
     const result = {
         ...field,
         fieldType: field['__component']?.split('.')[1],
+        options: field.options?.map((option: any) => formatOptions(option))
     }
     delete result['__component']
+    return result
+}
+
+export const formatOptions = (option: any) => {
+    const result = {
+        ...option,
+        ...option.attributes
+    }
+    delete result.attributes
+
     return result
 }

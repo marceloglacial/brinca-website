@@ -1,3 +1,4 @@
+import { normalizeData } from '@/utils';
 import { Form } from '@marceloglacial/brinca-ui';
 import { FC } from 'react';
 
@@ -6,7 +7,7 @@ export const FormCollectionList: FC<FormCollectionListProps> = (
 ): JSX.Element => {
   const options = props.options.map((option) => {
     return {
-      label: option.attributes.title,
+      label: option.title,
       value: option.id,
     };
   });
