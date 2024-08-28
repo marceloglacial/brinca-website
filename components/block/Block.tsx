@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import {
-  ButtonGroup,
+  LinksGroup,
   CloudinaryGallery,
   ContentList,
   Embed,
@@ -11,17 +11,19 @@ import {
 } from '@/components';
 
 export const Block: FC<BlockProps> = (props): JSX.Element => {
-  console.log(props.data);
-
   switch (props.data.type) {
     case 'text-editor':
       return <RichText content={props.data.content} />;
+
     case 'embed':
       return <Embed url={props.data.url} type={props.data.embedType} />;
+
     case 'cloudinary-folder':
       return <CloudinaryGallery path={props.data.folderName} />;
+
     case 'partners-list':
       return <PartnersList locale={props.locale} />;
+
     case 'hero':
       return (
         <Hero
@@ -34,6 +36,7 @@ export const Block: FC<BlockProps> = (props): JSX.Element => {
           link={props.data.link}
         />
       );
+
     case 'content-list':
       return (
         <ContentList
@@ -43,12 +46,14 @@ export const Block: FC<BlockProps> = (props): JSX.Element => {
           pageSize={props.data.items}
         />
       );
+
     case 'form':
       return <Form data={props.data} locale={props.locale} />;
+
+    case 'links-group':
+      return <LinksGroup data={props.data} />;
+
     default:
       return <></>;
   }
 };
-
-//   form: <Form data={props.blockContent.data} />,
-//   buttonGroup: <ButtonGroup content={props.blockContent} />,
