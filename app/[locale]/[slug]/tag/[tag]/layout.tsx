@@ -1,5 +1,5 @@
 import { COLLECTIONS, DICTIONARY, SITE } from '@/constants';
-import { getContentBySlug, getPageByType } from '@/services';
+import { getContentBySlug } from '@/services';
 import { normalizeData } from '@/utils';
 import { Heading, Section } from '@marceloglacial/brinca-ui';
 import { Metadata } from 'next';

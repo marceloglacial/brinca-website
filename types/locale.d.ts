@@ -1,5 +1,10 @@
 type LocaleListType = {
-    icon: string;
-    locale: string;
-    title: string;
+    id: string | number,
+    name: string,
+    code: LocaleTypes,
+    isDefault: boolean
 };
+
+interface LocaleListItemsProps {
+    items: LocaleListType[];
+}

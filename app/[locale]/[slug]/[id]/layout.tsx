@@ -1,5 +1,5 @@
 import { SITE } from '@/constants';
-import { getContentBySlug, getPageByType } from '@/services';
+import { getContentBySlug } from '@/services';
 import { formatData } from '@/utils';
 import { Metadata } from 'next';
 

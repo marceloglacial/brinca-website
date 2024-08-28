@@ -1,7 +1,14 @@
-interface NavBarUiProps {
-    variant?: 'top' | 'bottom';
+type NavBarVariantTypes = 'top' | 'bottom'
+
+interface NavBarProps {
+    variant?: NavBarVariantTypes;
+    locale: LocaleTypes
+}
+
+interface NavBarItemsProps {
+    variant?: NavBarVariantTypes;
     items: {
-        text: string;
-        link: string;
-    }[];
+        href: string,
+        text: string
+    }[]
 }

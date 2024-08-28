@@ -1,45 +1,9 @@
-import { INVALIDATE_INTERVAL } from '@/constants'
+import { COLLECTIONS, INVALIDATE_INTERVAL } from '@/constants'
 
 export async function getSinglePage(locale: string, slug: string): Promise<ApiResponse> {
     try {
         const res = await fetch(`${process.env.STRAPI_URL}/pages/${slug}?locale=${locale}&populate[content][populate]=*`, { next: { revalidate: INVALIDATE_INTERVAL } });
         if (!res) throw Error
-        return res.json();
-    } catch (e) {
-        console.error(e);
-        return {
-            error: e
-        } as ApiError
-    }
-}
-
-export async function getPageByType(pageType: string, locale: string, slug: string): Promise<ApiResponse> {
-    try {
-        const res = await fetch(`${process.env.API_URL}/${pageType}/${locale}/${slug}`, { next: { revalidate: INVALIDATE_INTERVAL } });
-        return res.json();
-    } catch (e) {
-        console.error(e);
-        return {
-            error: e
-        } as ApiError
-    }
-}
-
-export async function getDataByType(type: string): Promise<any> {
-    try {
-        const res = await fetch(`${process.env.API_URL}/${type}`, { next: { revalidate: INVALIDATE_INTERVAL } });
-        return res.json();
-    } catch (e) {
-        console.error(e);
-        return {
-            error: e
-        } as ApiError
-    }
-}
-
-export async function getDataById(type: string, id: string): Promise<any> {
-    try {
-        const res = await fetch(`${process.env.API_URL}/${type}/id/${id}`, { next: { revalidate: INVALIDATE_INTERVAL } });
         return res.json();
     } catch (e) {
         console.error(e);
@@ -68,7 +32,7 @@ export async function getContentByType(type: string, locale: string, pageSize?: 
 
 export async function getHomePage(locale: string): Promise<ApiListResponse> {
     try {
-        const res = await fetch(`${process.env.STRAPI_URL}/homepage?locale=${locale}&populate[frontpage][populate]=*`, { next: { revalidate: INVALIDATE_INTERVAL } });
+        const res = await fetch(`${process.env.STRAPI_URL}/${COLLECTIONS.HOMEPAGE}?locale=${locale}&populate[frontpage][populate]=*`, { next: { revalidate: INVALIDATE_INTERVAL } });
         return res.json();
     } catch (e) {
         console.error(e);

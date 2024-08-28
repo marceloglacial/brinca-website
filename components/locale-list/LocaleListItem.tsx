@@ -1,12 +1,13 @@
 import { FC } from 'react';
+import { Icon } from '@/components';
 export const LocaleListItem: FC<LocaleListType> = (props): JSX.Element => {
   return (
     <a
-      href={`/${props.locale}`}
-      title={props.title}
+      href={`/${props.code}`}
+      title={props.name}
       className='inline-block text-2xl'
     >
-      {props.icon}
+      <Icon type={props.code} />
     </a>
   );
 };

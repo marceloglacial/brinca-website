@@ -1,5 +1,6 @@
 export * from './cloudinary'
+export * from './content'
 export * from './form'
+export * from './locales'
 export * from './menus'
-export * from './pages'
 export * from './upload'

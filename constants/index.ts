@@ -6,7 +6,10 @@ export const COLLECTIONS = {
     PARTNERS_CATEGORY: 'partner-categories',
     PARTNERS_TYPES: 'partnersTypes',
     GODFATHERS: 'godfathers',
-    FORMS: 'forms'
+    FORMS: 'forms',
+    LOCALE: 'i18n/locales',
+    MENU: 'menu',
+    HOMEPAGE: 'homepage'
 }
 
 export const SITE = {

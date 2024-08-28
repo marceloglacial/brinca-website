@@ -46,3 +46,7 @@ interface ApiListResult {
 }
 
 type ApiListResponse = ApiListResult | ApiError
+
+type ApiLocalesResult = LocaleListType[]
+
+type ApiLocalesResponse = ApiLocalesResult | ApiError
