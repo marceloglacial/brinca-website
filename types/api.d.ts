@@ -27,7 +27,7 @@ interface FormatedData {
     createdAt: string,
     updatedAt: string,
     publishedAt: string,
-    locale: string,
+    locale: LocaleTypes,
     content: any,
     thumbnail?: any
 }
