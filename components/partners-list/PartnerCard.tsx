@@ -10,15 +10,17 @@ const PartnerCard: FC<PartnerType> = (props): JSX.Element => {
     <Card>
       <Card.Body className='text-center lg:text-left'>
         <div className='flex flex-wrap lg:flex-nowrap gap-4 justify-center lg:justify-start'>
-          <figure className='w-auto h-[200px] md:h-[100px] relative aspect-square'>
-            <Image
-              alt={props.logo?.alternativeText || `${props.title}'s logo`}
-              src={props.logo.url}
-              sizes='200px 200px'
-              fill
-              className='object-contain'
-            />
-          </figure>
+          {props.logo.url && (
+            <figure className='w-auto h-[200px] md:h-[100px] relative aspect-square'>
+              <Image
+                alt={props.logo?.alternativeText || `${props.title}'s logo`}
+                src={props.logo.url}
+                sizes='200px 200px'
+                fill
+                className='object-contain'
+              />
+            </figure>
+          )}
           <div className='w-full text-center md:text-left'>
             <h4 className='text-[20px]'>{props.title}</h4>
             {props.description && (

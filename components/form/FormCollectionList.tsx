@@ -7,8 +7,15 @@ export const FormCollectionList: FC<FormCollectionListProps> = (
   const options = props.options.map((option) => {
     return {
       label: option.attributes.title,
-      value: option.attributes.slug,
+      value: option.id,
     };
   });
-  return <Form.Select disabled={props.pending} options={options} full />;
+  return (
+    <Form.Select
+      name={props.name}
+      disabled={props.pending}
+      options={options}
+      full
+    />
+  );
 };

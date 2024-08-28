@@ -11,7 +11,7 @@ import {
 } from '@/components';
 
 export const Block: FC<BlockProps> = (props): JSX.Element => {
-  // console.log(props.data);
+  console.log(props.data);
 
   switch (props.data.type) {
     case 'text-editor':

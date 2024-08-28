@@ -1,6 +1,6 @@
 'use server'
 import { MESSAGES } from '@/constants'
-import { postContent } from '@/services'
+import { postContent, uploadImage } from '@/services'
 
 export async function formServerAction(prevState: any, formData: FormData) {
     const data = Object.fromEntries(formData)
@@ -18,11 +18,21 @@ export async function addContent(data: any) {
         }
 
         const content = structuredClone(data)
-        Object.keys(content).forEach((key) => key.startsWith('$ACTION_') && delete content[key])
+        Object.keys(content).forEach((key) => {
+            if (key.startsWith('$ACTION_') || !content[key]) {
+                delete content[key]
+            }
+        })
+        delete content.full_name
         delete content.formType
         delete content.formEndpoint
         delete content.formTitle
+
+        const image = await uploadImage(content.logo)
+        content.logo = image
+
         const response = await postContent({ data: content }, data.formEndpoint)
+
         await sendEmail({
             formTitle: data.formTitle,
             message: MESSAGES.NEW_DOCUMENT,
@@ -31,7 +41,7 @@ export async function addContent(data: any) {
 
         return {
             message: 'Success',
-            data: { ...content, id: response.data },
+            data: { ...content, id: response?.data },
             status: 'success',
         }
     } catch (e) {

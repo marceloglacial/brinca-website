@@ -61,7 +61,7 @@ export const formatContentListData = (data: any): any => {
         return {
             id: item.id,
             ...item.attributes,
-            logo: { ...item.attributes.logo?.data.attributes },
+            logo: { ...item.attributes?.logo?.data?.attributes },
             category: { ...item.attributes.category?.data?.attributes }
         }
 

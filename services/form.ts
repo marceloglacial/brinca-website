@@ -8,6 +8,7 @@ export const postContent = async (postData: any, collection: string) => {
         body: JSON.stringify(postData),
     })
     if (!res.ok) {
+        console.error(res);
         throw new Error('Error')
     }
     const apiData = await res.json()

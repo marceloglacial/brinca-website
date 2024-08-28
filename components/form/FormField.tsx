@@ -58,7 +58,11 @@ export const FormField: FC<FormFieldProps> = (props): JSX.Element => {
           pending={pending}
           required={props.required}
         >
-          <FormCollectionList pending={pending} options={props.options || []} />
+          <FormCollectionList
+            name={props.name}
+            pending={pending}
+            options={props.options || []}
+          />
         </FormGroup>
       );
     case 'select':
@@ -69,6 +73,7 @@ export const FormField: FC<FormFieldProps> = (props): JSX.Element => {
           required={props.required}
         >
           <Form.Select
+            name={props.name}
             disabled={pending}
             required={props.required}
             options={props.options || []}

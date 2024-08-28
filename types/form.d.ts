@@ -56,6 +56,7 @@ interface FormGroupProps {
 }
 
 interface FormCollectionListProps {
+    name: string
     pending: boolean
     options: OptionsType[]
 }
