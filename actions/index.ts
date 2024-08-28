@@ -71,7 +71,7 @@ const sendEmail = async (data: any) => {
             headers: { 'Content-Type': 'application/json' },
         });
         const emailJson = await emailResponse.json();
-        console.log('Email sent');
+        console.info('Email sent');
 
         return {
             message: 'Success',
