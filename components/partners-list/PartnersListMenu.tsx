@@ -16,7 +16,7 @@ const PartnersListMenu: FC<PartnersListMenuProps> = async (
     'asc'
   );
 
-  if ('error' in response) return <ErrorState />;
+  if ('error' in response) return <ErrorState data={response} />;
 
   const items: PartnersListItemProps[] = formatContentListData(response.data);
 

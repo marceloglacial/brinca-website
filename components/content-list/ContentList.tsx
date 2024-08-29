@@ -11,7 +11,7 @@ export const ContentList: FC<ContentListProps> = async ({
 }): Promise<JSX.Element> => {
   const response = await getContentByType(type, locale, pageSize);
 
-  if ('error' in response) return <ErrorState />;
+  if ('error' in response) return <ErrorState data={response} />;
 
   const items = response.data.map((item): CardGridItemType => {
     const content = formatData({ data: item });

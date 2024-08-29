@@ -25,7 +25,7 @@ const PartnersSection: FC<PartnersSectionProps> = async (
     filters
   );
 
-  if ('error' in response) return <ErrorState />;
+  if ('error' in response) return <ErrorState data={response} />;
 
   const items = formatContentListData(response.data);
 

@@ -9,7 +9,8 @@ export const COLLECTIONS = {
     FORMS: 'forms',
     LOCALE: 'i18n/locales',
     MENU: 'menu',
-    HOMEPAGE: 'homepage'
+    HOMEPAGE: 'homepage',
+    SPONSORS: 'sponsors'
 }
 
 export const SITE = {

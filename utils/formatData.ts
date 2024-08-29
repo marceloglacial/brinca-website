@@ -76,6 +76,14 @@ export const normalizeData = (data: any) => {
     }
 }
 
+export const normalizeItem = (item: any) => {
+    return {
+        id: item.id,
+        ...item.attributes,
+    }
+}
+
+
 export const normalizeFormsData = (data: any) => {
     const formData = data.data
     const result: FormDataType = {

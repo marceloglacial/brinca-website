@@ -8,12 +8,16 @@ import {
   Hero,
   PartnersList,
   RichText,
+  Sponsors,
 } from '@/components';
 
 export const Block: FC<BlockProps> = (props): JSX.Element => {
   switch (props.data.type) {
     case 'text-editor':
       return <RichText content={props.data.content} />;
+
+    case 'sponsors':
+      return <Sponsors data={props.data} />;
 
     case 'embed':
       return <Embed url={props.data.url} type={props.data.embedType} />;
