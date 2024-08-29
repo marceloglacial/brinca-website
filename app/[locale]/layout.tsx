@@ -4,7 +4,6 @@ import { Layout } from '@marceloglacial/brinca-ui';
 import { Footer, NavBar } from '@/components';
 import { SITE } from '@/constants';
 import '../globals.css';
-import { FC } from 'react';
 
 const inter = Mulish({ subsets: ['latin'] });
 

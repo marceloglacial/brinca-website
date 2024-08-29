@@ -4,7 +4,7 @@ export const uploadImage = async (fileBlob: Blob) => {
     formData.append('files', fileBlob);
 
     try {
-        const response = await fetch(`${process.env.STRAPI_URL}/upload`, {
+        const response = await fetch(`${process.env.API_URL}/upload`, {
             method: 'POST',
             body: formData,
         });
