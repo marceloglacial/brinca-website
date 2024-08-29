@@ -37,6 +37,7 @@ export const Sponsors: FC<SponsorsProps> = async (
                   src={image.url}
                   alt={`${sponsor.name} logo`}
                   className=' object-contain'
+                  sizes='150px, 60px'
                   fill
                 />
               </figure>

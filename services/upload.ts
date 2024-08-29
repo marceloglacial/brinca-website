@@ -1,4 +1,3 @@
-'use server'
 export const uploadImage = async (fileBlob: Blob) => {
     const formData = new FormData();
     formData.append('files', fileBlob);

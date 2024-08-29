@@ -1,4 +1,3 @@
-'use server'
 export const postContent = async (postData: any, collection: string) => {
     const res = await fetch(`${process.env.API_URL}/${collection}`, {
         method: 'POST',
