@@ -28,8 +28,10 @@ export async function addContent(data: any) {
         delete content.formEndpoint
         delete content.formTitle
 
-        const image = await uploadImage(content.logo)
-        content.logo = image
+        if (content.logo || content.image) {
+            const image = await uploadImage(content?.logo || content.image)
+            content.logo = image
+        }
 
         const response = await postContent({ data: content }, data.formEndpoint)
 

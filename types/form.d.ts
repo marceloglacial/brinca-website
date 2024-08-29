@@ -33,6 +33,7 @@ type FieldTypes = {
 };
 
 interface FormFieldProps {
+    id: string | number
     label: string
     name: string
     placeholder?: string
@@ -42,6 +43,7 @@ interface FormFieldProps {
     options?: OptionsType[]
     disabled?: boolean
     required?: boolean
+    content: string
 }
 
 interface FormTitleProps {

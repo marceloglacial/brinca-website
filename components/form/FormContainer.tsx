@@ -17,9 +17,13 @@ export const FormContainer: FC<FormContainerProps> = (props): JSX.Element => {
     return (
       <div className='form-feedback'>
         {form.showTitle && <FormTitle title={form.title} />}
-        <div className={`p-8 text-center ${textColor}`}>
-          {form.status[state.status as FormStatus].message}
-        </div>
+        <article className={`p-8 text-center ${textColor}`}>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: form.status[state.status as FormStatus].message,
+            }}
+          />
+        </article>
       </div>
     );
   }

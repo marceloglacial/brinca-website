@@ -13,7 +13,14 @@ export const FormField: FC<FormFieldProps> = (props): JSX.Element => {
   if (props.type === 'submit') return <FormSubmitButton value={props.label} />;
 
   switch (props.fieldType) {
+    case 'text-editor':
+      return (
+        <FormGroup label={''} pending={pending} required={props.required}>
+          <div dangerouslySetInnerHTML={{ __html: props.content }} />
+        </FormGroup>
+      );
     case 'input':
+      if (props.type === 'checkbox') return <Checkbox {...props} />;
       return (
         <FormGroup
           label={props.label}
@@ -82,16 +89,6 @@ export const FormField: FC<FormFieldProps> = (props): JSX.Element => {
         </FormGroup>
       );
 
-    case 'checkbox':
-      return (
-        <Checkbox
-          disabled={pending}
-          required={props.required}
-          label={props.label}
-          name={props.name}
-        />
-      );
-
     default:
       return <></>;
   }
@@ -102,12 +99,11 @@ const Checkbox: FC<FormFieldProps> = (props): JSX.Element => {
     <Form.Group>
       <div className='flex gap-4 items-start'>
         <Form.Input
-          name={props.name}
+          id={`checkbox-${props.id}`}
           type='checkbox'
           required={props.required}
-          disabled={props.disabled}
         />
-        <Form.Label htmlFor={props.name}>{props.label}</Form.Label>
+        <Form.Label htmlFor={`checkbox-${props.id}`}>{props.label}</Form.Label>
       </div>
     </Form.Group>
   );
