@@ -16,7 +16,7 @@ export const COLLECTIONS = {
 export const SITE = {
     NAME: 'Brinca',
     DESCRIPTION: 'Sua comunidade Brasileira em Ottawa-Gatineau!',
-    LOGIN_URL: 'https://brinca-admin.vercel.app'
+    LOGIN_URL: 'https://brinca-strapi.fly.dev/admin'
 }
 
 export const MESSAGES = {
