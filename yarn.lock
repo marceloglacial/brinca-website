@@ -660,10 +660,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@marceloglacial/brinca-ui@^1.19.0":
-  version "1.19.0"
-  resolved "https://registry.yarnpkg.com/@marceloglacial/brinca-ui/-/brinca-ui-1.19.0.tgz#25808752252337b127484f76059c951461df4f21"
-  integrity sha512-QOAQaIksLTbRUH5aARHSYw97DcnKBZf2LULrv9LhjnBVe9L/jxhTOwhQcMfsPlNBvVK31ksPzf6TxFFC4yuu1g==
+"@marceloglacial/brinca-ui@^1.20.0":
+  version "1.20.0"
+  resolved "https://registry.yarnpkg.com/@marceloglacial/brinca-ui/-/brinca-ui-1.20.0.tgz#a31103da216b40e09694328412a7dcd8649f5406"
+  integrity sha512-lTluG9OH5yifd725zCHjZofeW1cWVFnhDv9l/tvzJjm2Y6aOUwpQSlKQ8gRZxJFhWOFDMr4PUJ54YErOJu1DKg==
   dependencies:
     jackspeak "4.0.1"
     react "^18.3.1"

@@ -11,11 +11,17 @@ export const FormField: FC<FormFieldProps> = (props): JSX.Element => {
   const { pending } = useFormStatus();
 
   if (props.type === 'submit') return <FormSubmitButton value={props.label} />;
+  const fieldId = `${props.fieldType}-${props.id?.toString()}`;
 
   switch (props.fieldType) {
     case 'text-editor':
       return (
-        <FormGroup label={''} pending={pending} required={props.required}>
+        <FormGroup
+          id={fieldId}
+          label={''}
+          pending={pending}
+          required={props.required}
+        >
           <div dangerouslySetInnerHTML={{ __html: props.content }} />
         </FormGroup>
       );
@@ -23,11 +29,13 @@ export const FormField: FC<FormFieldProps> = (props): JSX.Element => {
       if (props.type === 'checkbox') return <Checkbox {...props} />;
       return (
         <FormGroup
+          id={fieldId}
           label={props.label}
           pending={pending}
           required={props.required}
         >
           <Form.Input
+            id={fieldId}
             disabled={pending}
             placeholder={props.placeholder}
             defaultValue={props.defaultValue}
@@ -42,11 +50,13 @@ export const FormField: FC<FormFieldProps> = (props): JSX.Element => {
     case 'textarea':
       return (
         <FormGroup
+          id={fieldId}
           label={props.label}
           pending={pending}
           required={props.required}
         >
           <Form.Textarea
+            id={fieldId}
             disabled={pending}
             placeholder={props.placeholder}
             defaultValue={props.defaultValue}
@@ -61,11 +71,13 @@ export const FormField: FC<FormFieldProps> = (props): JSX.Element => {
     case 'collectionlist':
       return (
         <FormGroup
+          id={fieldId}
           label={props.label}
           pending={pending}
           required={props.required}
         >
           <FormCollectionList
+            id={fieldId}
             name={props.name}
             pending={pending}
             options={props.options || []}
@@ -75,11 +87,13 @@ export const FormField: FC<FormFieldProps> = (props): JSX.Element => {
     case 'select':
       return (
         <FormGroup
+          id={fieldId}
           label={props.label}
           pending={pending}
           required={props.required}
         >
           <Form.Select
+            id={fieldId}
             name={props.name}
             disabled={pending}
             required={props.required}
@@ -114,10 +128,10 @@ const FormGroup: FC<FormGroupProps> = (props): JSX.Element => {
   return (
     <div className={props.pending ? 'opacity-50' : ''}>
       <Form.Group>
-        <Form.Label>
+        <Form.Label htmlFor={props.id?.toString()}>
           {props.label}{' '}
           {props.required && (
-            <span className=' lowercase font-normal text-gray-400'>
+            <span className=' lowercase font-normal text-gray-600'>
               ({DICTIONARY.FORM_REQUIRED[params.locale as LocaleTypes]})
             </span>
           )}

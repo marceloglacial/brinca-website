@@ -51,6 +51,7 @@ interface FormTitleProps {
 }
 
 interface FormGroupProps {
+    id: string | undefined
     pending: boolean
     label: string
     children: React.ReactNode
@@ -58,6 +59,7 @@ interface FormGroupProps {
 }
 
 interface FormCollectionListProps {
+    id: string | undefined
     name: string
     pending: boolean
     options: OptionsType[]

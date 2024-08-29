@@ -13,6 +13,7 @@ export const FormCollectionList: FC<FormCollectionListProps> = (
   });
   return (
     <Form.Select
+      id={props.id?.toString()}
       name={props.name}
       disabled={props.pending}
       options={options}
