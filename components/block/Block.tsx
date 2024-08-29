@@ -35,7 +35,8 @@ export const Block: FC<BlockProps> = (props): JSX.Element => {
           title={props.data.title}
           description={props.data.description}
           rounded={props.data.rounded}
-          shadow={props.data.shadow || true}
+          shadow={props.data.shadow}
+          reverse={props.data.reverse}
           image={props.data.image}
           link={props.data.link}
         />

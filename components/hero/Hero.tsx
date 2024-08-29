@@ -5,9 +5,8 @@ import { Link as LinkUI } from '@/components';
 import Link from 'next/link';
 
 export const Hero: FC<HeroProps> = (props): JSX.Element => {
-  const isReverse = props.id % 2 === 0;
   return (
-    <HeroUi reversed={isReverse}>
+    <HeroUi reversed={props.reverse}>
       <HeroUi.Image rounded={props.rounded} shadow={props.shadow}>
         <figure className='relative w-full h-full'>
           <Image

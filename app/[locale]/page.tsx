@@ -9,6 +9,7 @@ export default async function Home({ params }: PageParamsType) {
   if ('error' in response) return <ErrorState data={response} />;
 
   const homePageData = formatFrontPageData(response);
+  console.log(homePageData);
 
   return (
     <main className='main'>
