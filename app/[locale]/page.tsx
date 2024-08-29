@@ -1,4 +1,4 @@
-import { Block, ErrorState } from '@/components';
+import { Block, ErrorState, Motion } from '@/components';
 import { getHomePage } from '@/services';
 import { formatFrontPageData } from '@/utils';
 import { Section } from '@marceloglacial/brinca-ui';
@@ -14,7 +14,11 @@ export default async function Home({ params }: PageParamsType) {
     <main className='main'>
       <Section spacing='xl'>
         {homePageData.map((item: any, index: number) => {
-          return <Block key={index} data={item} locale={params.locale} />;
+          return (
+            <Motion key={index}>
+              <Block data={item} locale={params.locale} />
+            </Motion>
+          );
         })}
       </Section>
     </main>

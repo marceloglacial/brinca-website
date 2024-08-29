@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import Lightbox from 'react-spring-lightbox';
 import { ImagesListItem } from 'react-spring-lightbox/dist/types/ImagesList';
+import { Motion } from '@/components';
 
 export const PhotoGallery = ({
   images,
@@ -48,20 +49,21 @@ export const PhotoGallery = ({
       />
       <div className='gallery grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8'>
         {images.map((image: ImagesListItem, index: number) => (
-          <figure
-            key={index}
-            className='relative w-full aspect-square shadow-xl cursor-pointer'
-            onClick={() => handleClick(index)}
-          >
-            <Image
-              alt='image'
-              src={image.src}
-              className=' object-cover rounded-lg'
-              sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-              fill
-              priority
-            />
-          </figure>
+          <Motion key={index}>
+            <figure
+              className='relative w-full aspect-square shadow-xl cursor-pointer'
+              onClick={() => handleClick(index)}
+            >
+              <Image
+                alt='image'
+                src={image.src}
+                className=' object-cover rounded-lg'
+                sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                fill
+                priority
+              />
+            </figure>
+          </Motion>
         ))}
       </div>
     </>

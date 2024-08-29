@@ -5,6 +5,7 @@ import { FormField } from './FormField';
 import { useFormState } from 'react-dom';
 import { Form } from '@marceloglacial/brinca-ui';
 import { FormTitle } from './FormTitle';
+import { Motion } from '../motion/Motion';
 
 export const FormContainer: FC<FormContainerProps> = (props): JSX.Element => {
   const form = props.data;
@@ -37,7 +38,9 @@ export const FormContainer: FC<FormContainerProps> = (props): JSX.Element => {
       <input type='text' name='full_name' className='hidden' tabIndex={-1} />
 
       {form.fields.map((field: any, index: number) => (
-        <FormField key={index} {...field} />
+        <Motion key={index}>
+          <FormField {...field} />
+        </Motion>
       ))}
     </Form>
   );

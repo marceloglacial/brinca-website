@@ -1,12 +1,16 @@
 import { FC } from 'react';
-import { Block } from '@/components';
+import { Block, Motion } from '@/components';
 
 export const Content: FC<ContentProps> = ({ items, locale }): JSX.Element => {
   if (!items.length) return <></>;
   return (
     <>
       {items.map((item: any, index: number) => {
-        return <Block key={index} data={item} locale={locale} />;
+        return (
+          <Motion key={index}>
+            <Block data={item} locale={locale} />
+          </Motion>
+        );
       })}
     </>
   );

@@ -1,4 +1,4 @@
-import { Content, ErrorState } from '@/components';
+import { Content, ErrorState, Motion } from '@/components';
 import { getSinglePage } from '@/services';
 import { formatData } from '@/utils';
 import { Heading, Section } from '@marceloglacial/brinca-ui';
@@ -12,9 +12,11 @@ export default async function Page({ params }: PageParamsType) {
 
   return (
     <Section>
-      <Heading className='mb-4'>
-        <h1>{pageData.title}</h1>
-      </Heading>
+      <Motion>
+        <Heading className='mb-4'>
+          <h1>{pageData.title}</h1>
+        </Heading>
+      </Motion>
       <Content locale={pageData.locale} items={pageData.content} />
     </Section>
   );
