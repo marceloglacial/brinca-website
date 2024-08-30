@@ -22,7 +22,7 @@ export const Footer: FC<FooterProps> = (props): JSX.Element => {
     <>
       <NavBar locale={props.locale} variant='bottom' />
       <div className='footer--secondary'>
-        <ul className='footer--secondary__menu flex list-none lowercase text-sm justify-center p-4 gap-8'>
+        <ul className='footer--secondary__menu flex flex-col lg:flex-row text-center list-none lowercase text-sm justify-center p-4 gap-8'>
           <li>Copyrights Brinca - {new Date().getFullYear()}</li>
           {menu.map((item, index) => (
             <li key={index}>

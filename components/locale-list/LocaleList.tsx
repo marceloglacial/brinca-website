@@ -22,7 +22,7 @@ export const LocaleList: FC = async (): Promise<JSX.Element> => {
 
 const LocaleListContainer: FC<PropsWithChildren> = (props) => {
   return (
-    <div className='locale-list fixed top-4 -right-8 hover:right-0 transition-all grid grid-cols-2 gap-4 border rounded-full px-4 py-2 bg-white shadow-2xl rounded-tr-none rounded-br-none border-none'>
+    <div className='locale-list absolute lg:static top-[38px] right-4 flex items-center ml-auto mr-16 lg:m-0 z-0'>
       {props.children}
     </div>
   );

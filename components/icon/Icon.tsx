@@ -128,5 +128,5 @@ export const Icon: FC<IconProps> = (props): JSX.Element => {
       </svg>
     ),
   };
-  return <div className='icon'>{icon[props.type]}</div>;
+  return <div className='icon inline'>{icon[props.type]}</div>;
 };

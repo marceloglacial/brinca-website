@@ -11,7 +11,8 @@ export const NavBar: FC<NavBarProps> = async (props): Promise<JSX.Element> => {
   if ('error' in data) return <ErrorState data={data} />;
 
   const menu = normalizeData(data);
-  const componentStyles = props.variant === 'bottom' ? 'white' : undefined;
+  const isBottom = props.variant === 'bottom';
+  const componentStyles = isBottom ? 'white' : undefined;
 
   return (
     <NavBarUi variant={props.variant}>
@@ -23,7 +24,7 @@ export const NavBar: FC<NavBarProps> = async (props): Promise<JSX.Element> => {
       <Suspense fallback={<>...</>}>
         <NavBarItems variant={props.variant} items={menu.items} />
       </Suspense>
-      <LocaleList />
+      {!isBottom && <LocaleList />}
     </NavBarUi>
   );
 };
