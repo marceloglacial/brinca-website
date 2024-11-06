@@ -1,6 +1,6 @@
 import { COLLECTIONS, INVALIDATE_INTERVAL } from '@/constants'
-import { getDocumentBySlug } from './firebase';
-import { localizedContent } from '@/utils';
+import { getCollectionById, getDocumentBySlug } from './firebase';
+import { localizedContent, localizedData } from '@/utils';
 
 export async function getSinglePage(locale: string, slug: string): Promise<ApiResponse<ContentType>> {
     try {
@@ -14,6 +14,20 @@ export async function getSinglePage(locale: string, slug: string): Promise<ApiRe
         throw Error
     }
 }
+
+export async function getPageDataBySlug(type: string, locale?: string): Promise<ApiResponse<any>> {
+    try {
+        const result = await getCollectionById(type);
+        return {
+            ...result,
+            data: localizedData(result.data, locale),
+        }
+    } catch (e) {
+        console.error(e)
+        throw Error
+    }
+}
+
 
 export async function getPageByType(pageType: string, locale: string, slug: string): Promise<IPageResponse> {
     const res = await fetch(`${process.env.API_URL}/${pageType}/${locale}/${slug}`, { next: { revalidate: INVALIDATE_INTERVAL } });

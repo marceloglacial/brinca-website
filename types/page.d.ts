@@ -11,7 +11,7 @@ interface PageProps extends PageParamsType {
     children: React.ReactNode
 }
 
-type LocaleTypes = 'en' | 'pt-BR'
+type LocaleTypes = 'en' | 'pt_br'
 
 type LocalizedString = {
     [k in LocaleTypes]: string

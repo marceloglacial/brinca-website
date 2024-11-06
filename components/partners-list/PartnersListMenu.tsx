@@ -6,7 +6,7 @@ import { sortArray } from '@/utils';
 const PartnersListMenu: FC<PartnersListMenuProps> = async (
   props
 ): Promise<JSX.Element> => {
-  const title: LocalizedString = { en: 'Categories', 'pt-BR': 'Categorias' };
+  const title: LocalizedString = { en: 'Categories', pt_br: 'Categorias' };
   const data = await getDataByType('partnersCategory');
   const items: PartnerCategoryType[] = sortArray(
     data.data,

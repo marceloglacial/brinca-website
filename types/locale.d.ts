@@ -1,5 +1,9 @@
 type LocaleListType = {
     icon: string;
-    locale: string;
+    slug: string;
     title: string;
 };
+
+interface LocaleListItemsProps {
+    items: LocaleListType[];
+}
