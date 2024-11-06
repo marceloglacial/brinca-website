@@ -1,7 +1,7 @@
 import { Heading, Section } from '@marceloglacial/brinca-ui';
 
 export const ErrorState = ({ message }: { message: string }) => {
-  console.error(`Error: ${message}`);
+  console.debug(`Error: ${message}`);
   return (
     <Section>
       <Heading className='mb-4'>

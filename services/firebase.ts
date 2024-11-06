@@ -52,6 +52,7 @@ export const getCollectionById = async (
 
         return {
             status: 'success',
+            message: 'Success',
             meta: {
                 totalCount,
                 page,
@@ -87,6 +88,7 @@ export const getDocumentById = async (
         if (docSnapshot.exists()) {
             return {
                 status: 'success',
+                message: 'Success',
                 data: { id: docSnapshot.id, ...docSnapshot.data() },
                 meta: {
                     totalCount: 0,
@@ -138,6 +140,7 @@ export const getDocumentBySlug = async (
         if (!querySnapshot.empty) {
             const docData = querySnapshot.docs[0]; // Assuming only one document per slug
             return {
+                message: 'Success',
                 status: 'success',
                 data: { id: docData.id, ...docData.data() },
                 meta: {

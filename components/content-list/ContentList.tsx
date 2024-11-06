@@ -1,24 +1,26 @@
-import { CardGrid } from '@/components';
-import { getDataByType } from '@/services';
+import { CardGrid, ErrorState } from '@/components';
+import { getPageDataBySlug } from '@/services';
 import { FC } from 'react';
 
 export const ContentList: FC<ContentListProps> = async ({
-  language,
   type,
   title,
 }): Promise<JSX.Element> => {
-  const data = await getDataByType(type);
+  const data = await getPageDataBySlug(type);
 
-  const items = data.data.map((item: IPageData): CardGridItemType => {
+  if (data.status === 'error') return <ErrorState message={data.message} />;
+
+  const content = data.data;
+  const items = content.map((item: CardGridItemType): CardGridItemType => {
     return {
       id: item.id,
-      link: `${type}/${item.slug[language]}`,
-      title: item.title[language],
+      link: `${type}/${item.slug}`,
+      slug: item.slug,
+      title: item.title,
       image: item.image,
       date: item.date,
-      locale: language,
     };
   });
 
-  return <CardGrid title={title && title[language]} items={items} />;
+  return <CardGrid title={title && title} items={items} />;
 };

@@ -21,6 +21,6 @@ type Meta = {
 type ApiResponse<T> = {
     data: T;
     status: "success" | "error";
-    message?: string;
+    message: string;
     meta: Meta
 };

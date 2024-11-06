@@ -8,8 +8,7 @@ export default async function Page(props: {
   const params = await props.params;
   const result = await getSinglePage(params.locale, params.slug);
 
-  if (result.status === 'error')
-    return <ErrorState message={result.message || ''} />;
+  if (result.status === 'error') return <ErrorState message={result.message} />;
 
   const content = result.data;
 
