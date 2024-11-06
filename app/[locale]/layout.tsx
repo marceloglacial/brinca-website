@@ -13,10 +13,13 @@ export const metadata: Metadata = {
   description: SITE.DESCRIPTION,
 };
 
-export default async function RootLayout({
-  children,
-  params,
-}: Readonly<PageProps>) {
+export default async function RootLayout(props: Readonly<PageProps>) {
+  const params = await props.params;
+
+  const {
+    children
+  } = props;
+
   const menuData = await getMenus();
   const menu = menuData.data[0].locales[params.locale];
   return (

@@ -1,28 +1,23 @@
 import { Content } from '@/components';
 import { getSinglePage } from '@/services';
-import { getCollectionById } from '@/services/firebase';
 import { Heading, Section } from '@marceloglacial/brinca-ui';
 
-export default async function Page({ params }: PageParamsType) {
-  const data = await getSinglePage(params.locale, params.slug || '');
-  const pageData = data.data;
-  const language = params.locale;
+export default async function Page(props: {
+  params: { slug: string; locale: string };
+}) {
+  const params = await props.params;
+  const result = await getSinglePage(params.locale, params.slug);
 
-  const pageResult = await getCollectionById('pages');
+  if (result.status === 'error') return <>Error: {result.message}</>;
 
-  console.log(pageResult);
-
-  if (!pageData) {
-    console.error(data.error);
-    return <h1>Page Not found</h1>;
-  }
+  const content = result.data;
 
   return (
     <Section>
       <Heading className='mb-4'>
-        <h1>{pageData.title[language]}</h1>
+        <h1>{content.title}</h1>
       </Heading>
-      <Content items={pageData.content} language={language} />
+      <Content items={content.blocks} />
     </Section>
   );
 }

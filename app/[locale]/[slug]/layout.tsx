@@ -2,19 +2,19 @@ import { SITE } from '@/constants';
 import { getSinglePage } from '@/services';
 import { Metadata } from 'next';
 
-export async function generateMetadata({
-  params,
-}: PageParamsType): Promise<Metadata> {
-  const data = await getSinglePage(params.locale, params.slug || '');
-  if (data.status === 'error')
-    return {
-      title: SITE.NAME,
-    };
+export async function generateMetadata(props: {
+  params: { slug: string; locale: string };
+}): Promise<Metadata> {
+  const params = await props.params;
+  const result = await getSinglePage(params.locale, params.slug);
 
-  const pageData = data.data;
-  const language = params.locale;
+  if (result.status === 'error') {
+    return { title: SITE.NAME };
+  }
+
+  const content = result.data;
   return {
-    title: `${SITE.NAME} - ${pageData.title[language]}`,
+    title: `${SITE.NAME} - ${content.title}`,
   };
 }
 

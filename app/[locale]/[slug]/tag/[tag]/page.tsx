@@ -5,9 +5,8 @@ import { getDataByType, getPageByType } from '@/services';
 import { sortArray } from '@/utils';
 import { Heading } from '@marceloglacial/brinca-ui';
 
-const PartnersPage = async ({
-  params,
-}: PageParamsType): Promise<JSX.Element> => {
+const PartnersPage = async (props: PageParamsType): Promise<JSX.Element> => {
+  const params = await props.params;
   const data = await getDataByType(COLLECTIONS.PARTNERS_TYPES);
   const pageData = await getPageByType(
     COLLECTIONS.PARTNERS_CATEGORY,

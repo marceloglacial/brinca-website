@@ -4,18 +4,39 @@ export const localizedContent = (
     content: any,
     locale?: string,
 ): any => {
-    const fallbackLocale: string = SITE.DEFAULT_LOCALE
-    return Object.keys(content).reduce((acc: LocalizedContent, key: string) => {
-        const value = content[key];
+    const fallbackLocale: string = SITE.DEFAULT_LOCALE;
 
-        if (typeof value === 'object') {
-            acc[key] = value[locale || fallbackLocale] || value;
-        } else {
-            acc[key] = value;
+    const localize = (value: any): any => {
+        // Handle arrays by iterating over them and localizing each item
+        if (Array.isArray(value)) {
+            return value.map(item => localize(item));
         }
-        return acc;
-    }, {});
+
+        // Handle objects by reducing them into a localized object
+        if (typeof value === 'object' && value !== null) {
+            const result = Object.keys(value).reduce((acc: any, key: string) => {
+                const nestedValue = value[key];
+
+                // Recurse into nested objects or arrays
+                if (typeof nestedValue === 'object' && nestedValue !== null) {
+                    acc[key] = localize(nestedValue[locale || fallbackLocale] || nestedValue);
+                } else {
+                    acc[key] = nestedValue;
+                }
+                return acc;
+            }, {});
+
+            return result;
+        }
+
+        // Return the value if it's neither an object nor an array
+        return value;
+    };
+
+    return localize(content);
 };
+
+
 
 export const localizedData = (data: any, locale?: string): any => data.map((item: any) => localizedContent(item, locale))
 

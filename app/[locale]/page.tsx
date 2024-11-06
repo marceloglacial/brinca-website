@@ -2,7 +2,8 @@ import { Block } from '@/components';
 import { getDataByType } from '@/services';
 import { Section } from '@marceloglacial/brinca-ui';
 
-export default async function Home({ params }: PageParamsType) {
+export default async function Home(props: PageParamsType) {
+  const params = await props.params;
   const data = await getDataByType('homepage');
   const pageData = data.data[0].content;
 

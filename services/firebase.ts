@@ -1,3 +1,4 @@
+import { SITE } from '@/constants'
 import { initializeApp, getApps, getApp } from 'firebase/app'
 import { collection, doc, getDoc, getDocs, getFirestore, limit, orderBy, query, startAfter, where } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
@@ -125,11 +126,13 @@ export const getDocumentById = async (
 
 export const getDocumentBySlug = async (
     collectionId: string,
-    slug: string
+    slug: string,
+    locale?: string
 ): Promise<ApiResponse<any>> => {
     try {
         const collectionRef = collection(db, collectionId);
-        const q = query(collectionRef, where("slug", "==", slug));
+        const slugField = `slug.${locale || SITE.DEFAULT_LOCALE}`;
+        const q = query(collectionRef, where(slugField, "==", slug));
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {

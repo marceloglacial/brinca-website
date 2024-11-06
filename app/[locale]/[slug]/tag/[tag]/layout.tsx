@@ -2,9 +2,8 @@ import { COLLECTIONS, SITE } from '@/constants';
 import { getPageByType } from '@/services';
 import { Metadata } from 'next';
 
-export async function generateMetadata({
-  params,
-}: PageParamsType): Promise<Metadata> {
+export async function generateMetadata(props: PageParamsType): Promise<Metadata> {
+  const params = await props.params;
   const data = await await getPageByType(
     COLLECTIONS.PARTNERS_CATEGORY,
     params.locale,

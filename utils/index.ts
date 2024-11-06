@@ -1,3 +1,5 @@
+export * from './embed'
 export * from './filterItemsByCategory'
 export * from './formatDate'
+export * from './localization'
 export * from './sortArray'
