@@ -11,5 +11,7 @@ export const Block: FC<BlockProps> = (props): JSX.Element => {
     content_list: <ContentList type={props.content.value} />,
   };
 
-  return <div className='block'>{blockType[props.content.type] || ''}</div>;
+  const block = blockType[props.content.type];
+
+  return <>{block && <div className='block'>{block}</div>}</>;
 };
