@@ -1,9 +1,7 @@
 type MenuItemType = {
-    type: string,
-    value: {
-        slug: string;
-        title: string;
-    }
+    slug: string;
+    title: string;
+    type: 'link' | 'primary' | 'secondary'
 }
 
 type MenusType = {

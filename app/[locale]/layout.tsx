@@ -16,7 +16,8 @@ export const metadata: Metadata = {
 export default async function RootLayout(props: Readonly<PageProps>) {
   const params = await props.params;
   const result = await getMenus(params.locale);
-  const menu = result.status === 'error' ? [] : result.data[0].items;
+
+  const menu = result.status === 'error' ? [] : result.data[0]?.items;
 
   return (
     <html lang={params.locale}>

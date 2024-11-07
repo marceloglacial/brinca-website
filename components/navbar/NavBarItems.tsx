@@ -4,13 +4,14 @@ import NextLink from 'next/link';
 import { FC } from 'react';
 
 export const NavBarItems: FC<NavBarUiProps> = ({ variant, items }) => {
-  const componentStyles = variant === 'bottom' ? 'white' : undefined;
   return (
     <NavBar.Items variant={variant}>
       {items?.map((item, index) => {
+        const linkType = item.type === 'link' ? undefined : item.type;
+        const componentStyles = variant === 'bottom' ? 'white' : linkType;
         return (
           <Link key={index} variant={componentStyles}>
-            <NextLink href={`/${item.value.slug}`}>{item.value.title}</NextLink>
+            <NextLink href={`/${item.slug}`}>{item.title}</NextLink>
           </Link>
         );
       })}
