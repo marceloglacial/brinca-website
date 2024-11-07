@@ -5,7 +5,8 @@ export const COLLECTIONS = {
     PARTNERS: 'partners',
     PARTNERS_CATEGORY: 'partnersCategory',
     PARTNERS_TYPES: 'partnersTypes',
-    GODFATHERS: 'godfathers'
+    GODFATHERS: 'godfathers',
+    MENUS: 'menus'
 }
 
 export const SITE = {

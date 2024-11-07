@@ -10,7 +10,7 @@ export const NavBarItems: FC<NavBarUiProps> = ({ variant, items }) => {
       {items?.map((item, index) => {
         return (
           <Link key={index} variant={componentStyles}>
-            <NextLink href={`/${item.link}`}>{item.text}</NextLink>
+            <NextLink href={`/${item.value.slug}`}>{item.value.title}</NextLink>
           </Link>
         );
       })}
