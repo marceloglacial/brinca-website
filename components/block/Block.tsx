@@ -1,5 +1,11 @@
 import { FC } from 'react';
-import { CloudinaryGallery, ContentList, Embed, RichText } from '@/components';
+import {
+  CloudinaryGallery,
+  ContentList,
+  Embed,
+  PartnersList,
+  RichText,
+} from '@/components';
 
 export const Block: FC<BlockProps> = (props): JSX.Element => {
   if (!props.content) return <></>;
@@ -9,6 +15,7 @@ export const Block: FC<BlockProps> = (props): JSX.Element => {
     content: <RichText content={props.content.value} />,
     cloudinary_folder: <CloudinaryGallery path={props.content.value} />,
     content_list: <ContentList type={props.content.value} />,
+    partners_list: <PartnersList />,
   };
 
   const block = blockType[props.content.type];

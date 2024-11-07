@@ -28,7 +28,6 @@ export async function getPageDataBySlug(type: string, locale?: string): Promise<
     }
 }
 
-
 export async function getPageByType(pageType: string, locale: string, slug: string): Promise<IPageResponse> {
     const res = await fetch(`${process.env.API_URL}/${pageType}/${locale}/${slug}`, { next: { revalidate: INVALIDATE_INTERVAL } });
     return res.json();

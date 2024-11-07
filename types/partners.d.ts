@@ -2,22 +2,24 @@ type PartnerTypes = 'partner' | 'community'
 
 type PartnerType = {
     id: string,
-    isActive: boolean,
-    type?: PartnerTypes,
-    createdAt: string,
-    updatedAt: string,
-    title: LocalizedString,
-    description?: LocalizedString,
-    image: ImageProps,
+    active: boolean,
+    title: string,
+    description: string,
+    image: string,
     category: PartnerCategoryType[]
     email: string,
     address?: string,
     website?: string,
-    phone?: string,
+    phone: string,
     social: {
         type: IconTypes,
         url: string
     }[]
+}
+
+type PartnerTypeLocalized = PartnerType & {
+    title: LocalizedString,
+    description: LocalizedString,
 }
 
 type PartnerCategoryType = {
@@ -27,7 +29,6 @@ type PartnerCategoryType = {
 }
 
 interface PartnersListProps {
-    language: LocaleTypes;
     category?: string
 }
 

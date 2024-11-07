@@ -21,7 +21,7 @@ export const getCollectionById = async (
     collectionId: string,
     order?: string,
     page: number = 1,
-    pageSize: number = 10
+    pageSize: number = 100
 ): Promise<ApiResponse<any[]>> => {
     try {
         const collectionRef = collection(db, collectionId);
