@@ -2,7 +2,9 @@ import { SITE } from '@/constants';
 import { getPageByType } from '@/services';
 import { Metadata } from 'next';
 
-export async function generateMetadata(props: PageParamsType): Promise<Metadata> {
+export async function generateMetadata(
+  props: PageParamsType
+): Promise<Metadata> {
   const params = await props.params;
   const data = await getPageByType(
     params.slug || '',

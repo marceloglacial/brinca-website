@@ -1,8 +1,5 @@
-type DictionaryType = {
-    [key: string]: LocalizedString
-}
 
-export const DICTIONARY: DictionaryType = {
+export const DICTIONARY = {
     PARTNERS: {
         en: 'Partners',
         pt_br: 'Parceiros'
@@ -10,5 +7,13 @@ export const DICTIONARY: DictionaryType = {
     COMMUNITY: {
         en: 'Community',
         pt_br: 'Comunidade'
+    },
+    ALL: {
+        en: 'All',
+        pt_br: 'Todas',
+    },
+    CATEGORIES: {
+        en: 'Categories',
+        pt_br: 'Categorias'
     }
 }

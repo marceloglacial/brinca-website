@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import PartnersListMenu from './PartnersListMenu';
 import PartnersSection from './PartnersSection';
-import { getPartners } from '@/services';
+import { getDocumentBySlug, getPartners } from '@/services';
 import { DICTIONARY } from '@/constants';
 
 export const PartnersList: FC<PartnersListProps> = async (
@@ -10,14 +10,14 @@ export const PartnersList: FC<PartnersListProps> = async (
   const members = await getPartners();
   const community = await getPartners({ type: 'community' });
 
-  if (members.status === 'error' || community.status === 'error') {
+  if ([members, community].some(({ status }) => status === 'error')) {
     console.debug(members.message);
     return <>Error</>;
   }
 
   return (
     <div className='partners-list pt-8 grid grid-cols-1 gap-16'>
-      {/* <PartnersListMenu locale={props.language} /> */}
+      <PartnersListMenu />
       <PartnersSection content={members.data} title={DICTIONARY.PARTNERS} />
       <PartnersSection content={community.data} title={DICTIONARY.COMMUNITY} />
     </div>

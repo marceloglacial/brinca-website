@@ -8,22 +8,20 @@ export default async function Home(props: PageParamsType) {
   const pageData = data.data[0].content;
 
   return (
-    <main className='main'>
-      <Section spacing='xl'>
-        {pageData.map((item: any, index: number) => {
-          return (
-            <Block
-              key={index}
-              blockLanguage={params.locale}
-              blockContent={{
-                id: index,
-                type: item.type,
-                data: item.data,
-              }}
-            />
-          );
-        })}
-      </Section>
-    </main>
+    <Section spacing='xl'>
+      {pageData.map((item: any, index: number) => {
+        return (
+          <Block
+            key={index}
+            blockLanguage={params.locale}
+            blockContent={{
+              id: index,
+              type: item.type,
+              data: item.data,
+            }}
+          />
+        );
+      })}
+    </Section>
   );
 }

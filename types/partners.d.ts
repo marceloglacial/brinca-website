@@ -23,7 +23,6 @@ type PartnerTypeLocalized = PartnerType & {
 }
 
 type PartnerCategoryType = {
-    id: string;
     title: LocalizedString;
     slug: LocalizedString;
 }
@@ -37,7 +36,7 @@ interface PartnersCard extends PartnerType {
 }
 
 interface PartnersListMenuProps {
-    locale: LocaleTypes;
+    content: PartnerCategoryType[];
 }
 
 interface PartnersSectionProps {

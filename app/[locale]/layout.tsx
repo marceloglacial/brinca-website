@@ -27,9 +27,9 @@ export default async function RootLayout(props: Readonly<PageProps>) {
             header={<NavBar items={menu} />}
             footer={<NavBar items={menu} variant='bottom' />}
           >
-            {props.children}
+            <main className='main'>{props.children}</main>
           </Layout>
-        </div>{' '}
+        </div>
       </body>
     </html>
   );

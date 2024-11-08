@@ -1,3 +1,4 @@
+export * from './alert/Alert'
 export * from './block/Block'
 export * from './branding/Logo'
 export * from './button-group/ButtonGroup'
