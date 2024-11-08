@@ -1,3 +1,5 @@
+type LocalesType = 'en' | 'pt_br'
+
 type LocaleListType = {
     icon: string;
     slug: string;

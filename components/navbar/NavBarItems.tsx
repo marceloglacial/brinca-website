@@ -10,9 +10,9 @@ export const NavBarItems: FC<NavBarUiProps> = ({ variant, items }) => {
         const linkType = item.type === 'link' ? undefined : item.type;
         const componentStyles = variant === 'bottom' ? 'white' : linkType;
         return (
-          <Link key={index} variant={componentStyles}>
-            <NextLink href={`/${item.slug}`}>{item.title}</NextLink>
-          </Link>
+          <NextLink href={`/${item.slug}`} key={index}>
+            <Link variant={componentStyles}>{item.title}</Link>
+          </NextLink>
         );
       })}
     </NavBar.Items>

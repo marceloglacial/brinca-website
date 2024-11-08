@@ -41,11 +41,8 @@ interface PartnersListMenuProps {
 }
 
 interface PartnersSectionProps {
-    id: string
+    content: PartnerTypeLocalized[]
     title: LocalizedString
-    locale: LocaleTypes;
-    type: PartnerTypes
-    category?: string
 }
 
 interface PartnersListItemProps extends PartnerCategoryType {
