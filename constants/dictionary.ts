@@ -15,5 +15,9 @@ export const DICTIONARY = {
     CATEGORIES: {
         en: 'Categories',
         pt_br: 'Categorias'
+    },
+    EMPTY_PARTNERS: {
+        en: 'No Partners found.',
+        pt_br: 'Nenhum Parceiro cadastrado.'
     }
 }

@@ -7,7 +7,6 @@ const PartnersSection: FC<PartnersSectionProps> = (props): JSX.Element => {
   const params = useParams();
   const locale = params.locale as LocalesType;
 
-  // TODO: add empty state suggesting to fill the form
   if (!props.content.length) return <></>;
 
   return (

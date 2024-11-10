@@ -1,21 +1,24 @@
-import { SITE } from '@/constants';
-import { getPageByType } from '@/services';
+import { COLLECTIONS, SITE } from '@/constants';
+import { getDocumentBySlug } from '@/services';
 import { Metadata } from 'next';
 
 export async function generateMetadata(
   props: PageParamsType
 ): Promise<Metadata> {
   const params = await props.params;
-  const data = await getPageByType(
-    params.slug || '',
-    params.locale,
-    params.id || ''
+
+  const result = await getDocumentBySlug(
+    COLLECTIONS.EVENTS,
+    params.id as string
   );
 
-  const pageData = data.data;
-  const language = params.locale;
+  if (result.status === 'error')
+    return {
+      title: `${SITE.NAME}`,
+    };
+
   return {
-    title: `${SITE.NAME} - ${pageData.title[language]}`,
+    title: `${SITE.NAME} - ${result.data.title[params.locale]}`,
   };
 }
 

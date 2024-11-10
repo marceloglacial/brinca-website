@@ -1,5 +1,7 @@
 export const COLLECTIONS = {
+    CALENDARS: 'calendars',
     CATEGORIES: 'categories',
+    EVENTS: 'events',
     GODFATHERS: 'godfathers',
     MENUS: 'menus',
     PAGES: 'pages',
