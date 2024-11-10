@@ -1,10 +1,10 @@
 type PageParamsType = {
-    params: {
-        slug?: string
+    params: Promise<{
+        slug: string
         locale: LocaleTypes
-        id?: string
-        tag?: string
-    }
+        id: string
+        tag: string
+    }>
 }
 
 interface PageProps extends PageParamsType {

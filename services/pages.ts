@@ -1,42 +1,43 @@
 import { COLLECTIONS, INVALIDATE_INTERVAL } from '@/constants'
 import { getCollectionById, getDocumentBySlug } from './firebase';
 import { localizedContent, localizedData } from '@/utils';
+import { unstable_cache } from 'next/cache';
 
-export async function getSinglePage(locale: string, slug: string): Promise<ApiResponse<ContentType>> {
-    try {
-        const result = await getDocumentBySlug(COLLECTIONS.PAGES, slug, locale);
-        return {
-            ...result,
-            data: localizedContent(result.data, locale),
+export const getSinglePage = unstable_cache(
+    async (slug: string, locale: string): Promise<ApiResponse<ContentType>> => {
+        try {
+            const result = await getDocumentBySlug(COLLECTIONS.PAGES, slug, locale);
+            return {
+                ...result,
+                data: localizedContent(result.data, locale),
+            }
+        } catch (e) {
+            console.error(e)
+            throw Error
         }
-    } catch (e) {
-        console.error(e)
-        throw Error
-    }
-}
+    },
+    ['single-page'],
+    { revalidate: INVALIDATE_INTERVAL }
+);
 
-export async function getPageDataBySlug(type: string, locale?: string): Promise<ApiResponse<any>> {
-    try {
-        const result = await getCollectionById(type);
-        return {
-            ...result,
-            data: localizedData(result.data, locale),
+export const getPageDataBySlug = unstable_cache(
+    async (type: string, locale?: string): Promise<ApiResponse<any>> => {
+        try {
+            const result = await getCollectionById(type);
+            return {
+                ...result,
+                data: localizedData(result.data, locale),
+            }
+        } catch (e) {
+            console.error(e)
+            throw Error
         }
-    } catch (e) {
-        console.error(e)
-        throw Error
-    }
-}
+    },
+    ['page-data'],
+    { revalidate: INVALIDATE_INTERVAL }
+);
 
-export async function getPageByType(pageType: string, locale: string, slug: string): Promise<IPageResponse> {
-    const res = await fetch(`${process.env.API_URL}/${pageType}/${locale}/${slug}`, { next: { revalidate: INVALIDATE_INTERVAL } });
-    return res.json();
-}
 
-export async function getDataByType(type: string): Promise<any> {
-    const res = await fetch(`${process.env.API_URL}/${type}`, { next: { revalidate: INVALIDATE_INTERVAL } });
-    return res.json();
-}
 
 export async function getDataById(type: string, id: string): Promise<any> {
     const res = await fetch(`${process.env.API_URL}/${type}/id/${id}`, { next: { revalidate: INVALIDATE_INTERVAL } });

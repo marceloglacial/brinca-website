@@ -19,7 +19,11 @@ const PartnersListMenu: FC = async (): Promise<JSX.Element> => {
     <div className='partners-list-categories flex flex-col gap-4'>
       <PartnerListTitle />
       <div className='partners-list-categories__menu flex flex-wrap gap-4'>
-        <PartnersListItem title={DICTIONARY.ALL} slug={ROUTES.PARTNERS_ALL} />
+        <PartnersListItem
+          title={DICTIONARY.ALL}
+          slug={ROUTES.PARTNERS_ALL}
+          id={'0'}
+        />
         {categories.map((item, index) => (
           <PartnersListItem key={index} {...item} />
         ))}
