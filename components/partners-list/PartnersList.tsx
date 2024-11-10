@@ -1,14 +1,17 @@
 import { FC } from 'react';
 import PartnersListMenu from './PartnersListMenu';
 import PartnersSection from './PartnersSection';
-import { getDocumentBySlug, getPartners } from '@/services';
+import { getPartners } from '@/services';
 import { DICTIONARY } from '@/constants';
 
 export const PartnersList: FC<PartnersListProps> = async (
   props
 ): Promise<JSX.Element> => {
-  const members = await getPartners();
-  const community = await getPartners({ type: 'community' });
+  const members = await getPartners({ category: props.category });
+  const community = await getPartners({
+    type: 'community',
+    category: props.category,
+  });
 
   if ([members, community].some(({ status }) => status === 'error')) {
     console.debug(members.message);

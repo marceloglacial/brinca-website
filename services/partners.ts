@@ -7,11 +7,13 @@ export const getPartners = async ({
     page = 1,
     pageSize = 100,
     type = 'partners',
+    category
 }: {
     order?: string;
     page?: number;
     pageSize?: number;
     type?: 'partners' | 'community';
+    category?: CategoryType;
 } = {}): Promise<ApiResponse<PartnerTypeLocalized[]>> => {
     try {
         const collectionRef = collection(db, COLLECTIONS.PARTNERS);
@@ -22,6 +24,13 @@ export const getPartners = async ({
             where('active', '==', true),
             where('has_membership', type === 'partners' ? '!=' : '==', ' ')
         );
+
+        if (category) {
+            orderedQuery = query(
+                orderedQuery,
+                where('category.id', '==', category.id)
+            );
+        }
 
         let paginatedQuery = query(orderedQuery, limit(pageSize));
 

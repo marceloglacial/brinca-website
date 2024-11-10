@@ -1,21 +1,18 @@
 import { FC } from 'react';
 import PartnersListItem from './PartnersListItem';
-import { getDocumentBySlug } from '@/services';
+import { getCollectionById } from '@/services';
 import { COLLECTIONS, DICTIONARY, ROUTES } from '@/constants';
 import PartnerListTitle from './PartenerListTitle';
 import Alert from '../alert/Alert';
 
 const PartnersListMenu: FC = async (): Promise<JSX.Element> => {
-  const result = await getDocumentBySlug(
-    COLLECTIONS.CATEGORIES,
-    COLLECTIONS.PARTNERS
-  );
+  const result = await getCollectionById(COLLECTIONS.CATEGORIES);
 
   if (result.status === 'error') {
     return <Alert message={'Error loading categories!'} />;
   }
 
-  const categories = result.data.items as CategoryType[];
+  const categories = result.data as CategoryType[];
   if (!categories.length) return <></>;
 
   return (

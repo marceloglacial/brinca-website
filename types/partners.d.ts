@@ -28,7 +28,7 @@ type PartnerCategoryType = {
 }
 
 interface PartnersListProps {
-    category?: string
+    category?: CategoryType
 }
 
 interface PartnersCard extends PartnerType {
