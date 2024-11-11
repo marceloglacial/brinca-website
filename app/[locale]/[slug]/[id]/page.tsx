@@ -1,8 +1,6 @@
 import { Content, ErrorState } from '@/components';
 import { SITE } from '@/constants';
-import { getDocumentBySlug } from '@/services';
 import { getSingleEvent } from '@/services/events';
-import { localizedContent } from '@/utils';
 import { Heading, Section } from '@marceloglacial/brinca-ui';
 import { Metadata } from 'next';
 
