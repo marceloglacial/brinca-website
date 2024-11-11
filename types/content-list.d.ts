@@ -1,9 +1,8 @@
 type ContentListDataType = {
-    title: string,
+    title?: string,
     type: string
 }
 
 interface ContentListProps {
-    type: ContentListDataType.type
-    title?: ContentListDataType.title
+    data: ContentListDataType
 }

@@ -1,20 +1,19 @@
-import { CardGrid, ErrorState } from '@/components';
+import { CardGrid } from '@/components';
 import { getPageDataBySlug } from '@/services';
 import { FC } from 'react';
 
 export const ContentList: FC<ContentListProps> = async ({
-  type,
-  title,
+  data,
 }): Promise<JSX.Element> => {
-  const data = await getPageDataBySlug(type);
+  const result = await getPageDataBySlug(data.type);
 
-  if (data.status === 'error') return <ErrorState message={data.message} />;
+  if (result.status === 'error') return <>{result.message}</>;
 
-  const content = data.data;
+  const content = result.data;
   const items = content.map((item: CardGridItemType): CardGridItemType => {
     return {
       id: item.id,
-      link: `${type}/${item.slug}`,
+      link: `${data.type}/${item.slug}`,
       slug: item.slug,
       title: item.title,
       image: item.image,
@@ -22,5 +21,7 @@ export const ContentList: FC<ContentListProps> = async ({
     };
   });
 
-  return <CardGrid title={title && title} items={items} />;
+  const hasTitle = Object.values(data.title || {}).some((value) => value);
+
+  return <CardGrid title={hasTitle ? data.title : undefined} items={items} />;
 };

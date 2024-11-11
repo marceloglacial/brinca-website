@@ -14,7 +14,7 @@ export const Block: FC<BlockProps> = (props): JSX.Element => {
     youtube: <Embed url={props.content.value} type={props.content.type} />,
     content: <RichText content={props.content.value} />,
     cloudinary_folder: <CloudinaryGallery path={props.content.value} />,
-    content_list: <ContentList type={props.content.value} />,
+    content_list: <ContentList data={props.content.value} />,
     partners_list: <PartnersList />,
   };
 
