@@ -14,4 +14,8 @@ type LocalizationType = {
     [locale in LocalesType]: string
 }
 
+type LocalizedString = {
+    [k in LocaleTypes]: string
+}
+
 type LocalizedContent = { [key: string]: any };
