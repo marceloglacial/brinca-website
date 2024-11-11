@@ -27,16 +27,21 @@ export const Sponsors: FC<SponsorsProps> = async (
         {sponsors.map((sponsor) => {
           if (!sponsor.active) return <></>;
           return (
-            <div data-sponsor key={sponsor.id} className='relative w-64 h-32'>
-              <a href={sponsor.link} target='_blank'>
-                <Image
-                  src={sponsor.image}
-                  alt={'Sponsor logo'}
-                  fill
-                  className=' object-contain'
-                />
-              </a>
-            </div>
+            <a
+              data-sponsor
+              key={sponsor.id}
+              href={sponsor.link}
+              target='_blank'
+              className='flex relative w-64 h-32'
+            >
+              <Image
+                src={sponsor.image}
+                alt={'Sponsor logo'}
+                fill
+                sizes='150px, 60px'
+                className=' object-contain'
+              />
+            </a>
           );
         })}
       </div>

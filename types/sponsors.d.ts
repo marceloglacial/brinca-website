@@ -11,5 +11,5 @@ interface SponsorsProps {
         active: boolean,
         title: string
     }
-    locale: LocalesType
+    locale?: LocalesType
 }
