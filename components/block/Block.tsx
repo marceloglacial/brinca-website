@@ -6,6 +6,7 @@ import {
   Hero,
   PartnersList,
   RichText,
+  Sponsors,
 } from '@/components';
 
 export const Block: FC<BlockProps> = (props): JSX.Element => {
@@ -13,6 +14,7 @@ export const Block: FC<BlockProps> = (props): JSX.Element => {
 
   const blockType: any = {
     hero: <Hero {...props.content.value} />,
+    sponsors: <Sponsors data={props.content.value} locale={props.locale} />,
     youtube: <Embed url={props.content.value} type={props.content.type} />,
     content: <RichText content={props.content.value} />,
     cloudinary_folder: <CloudinaryGallery path={props.content.value} />,

@@ -8,4 +8,5 @@ export const COLLECTIONS = {
     PARTNERS_CATEGORY: 'partnersCategory',
     PARTNERS_TYPES: 'partnersTypes',
     PARTNERS: 'partners',
+    SPONSORS: 'sponsors'
 }

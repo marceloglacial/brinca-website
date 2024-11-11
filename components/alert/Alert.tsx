@@ -5,7 +5,7 @@ interface AlertProps {
   type?: 'success' | 'error' | 'warning' | 'info';
 }
 
-const Alert: FC<AlertProps> = ({ message, type = 'error' }) => {
+export const Alert: FC<AlertProps> = ({ message, type = 'error' }) => {
   const alertTypes: { [key in NonNullable<AlertProps['type']>]: string } = {
     success: 'bg-green-600',
     error: 'bg-red-600',
@@ -19,5 +19,3 @@ const Alert: FC<AlertProps> = ({ message, type = 'error' }) => {
     </div>
   );
 };
-
-export default Alert;

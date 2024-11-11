@@ -3,7 +3,7 @@ export const SITE = {
     NAME: 'Brinca',
     DESCRIPTION: 'Sua comunidade Brasileira em Ottawa-Gatineau!',
     LOGIN_URL: 'https://brinca-admin.vercel.app',
-    DEFAULT_LOCALE: 'en'
+    DEFAULT_LOCALE: 'pt_br'
 }
 
 export const MESSAGES = {

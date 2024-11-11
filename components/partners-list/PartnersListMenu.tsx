@@ -3,7 +3,7 @@ import PartnersListItem from './PartnersListItem';
 import { getCollectionById } from '@/services';
 import { COLLECTIONS, DICTIONARY, ROUTES } from '@/constants';
 import PartnerListTitle from './PartenerListTitle';
-import Alert from '../alert/Alert';
+import { Alert } from '@/components';
 
 const PartnersListMenu: FC = async (): Promise<JSX.Element> => {
   const result = await getCollectionById(COLLECTIONS.CATEGORIES);
