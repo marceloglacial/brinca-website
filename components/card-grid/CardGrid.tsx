@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { formatDate } from '@/utils';
 
-export const CardGrid: FC<CardGridProps> = ({ title, items }) => {
+export const CardGrid: FC<CardGridProps> = ({ title, items, locale }) => {
   return (
     <Section>
       {title && (
@@ -14,7 +14,7 @@ export const CardGrid: FC<CardGridProps> = ({ title, items }) => {
       )}
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
         {items.map((item) => {
-          const formatedDate = item.date ? formatDate(item.date, 'en') : '';
+          const formatedDate = item.date ? formatDate(item.date, locale) : '';
 
           return (
             <Link key={item.id} href={`/${item.link}`}>

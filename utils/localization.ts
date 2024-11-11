@@ -47,3 +47,8 @@ export const localizedUrl = (pathname: string, newLocale: string): string => {
         ? pathname.replace(localePattern, `/${newLocale}`)
         : `/${newLocale}${pathname}`
 }
+
+
+export const formatLocale = (locale: LocalesType) => {
+    return locale === 'pt_br' ? 'pt-BR' : locale
+}

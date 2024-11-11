@@ -11,4 +11,5 @@ type CardGridItemType = {
 interface CardGridProps {
     title?: string;
     items: CardGridItemType[];
+    locale?: LocalesType
 }

@@ -35,7 +35,7 @@ export default async function Page(props: PageParamsType) {
       <Heading className='mb-4'>
         <h1>{event.title}</h1>
       </Heading>
-      <Content items={event.blocks} />
+      <Content items={event.blocks} locale={params.locale} />
     </Section>
   );
 }

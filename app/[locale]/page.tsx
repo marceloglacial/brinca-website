@@ -12,7 +12,7 @@ export default async function Page(props: PageParamsType) {
 
   return (
     <Section>
-      <Content items={content.blocks} />
+      <Content items={content.blocks} locale={params.locale} />
     </Section>
   );
 }

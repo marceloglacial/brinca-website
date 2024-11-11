@@ -5,4 +5,5 @@ type ContentListDataType = {
 
 interface ContentListProps {
     data: ContentListDataType
+    locale?: LocalesType
 }

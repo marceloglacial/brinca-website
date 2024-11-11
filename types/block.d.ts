@@ -5,4 +5,5 @@ type BlockType = {
 
 interface BlockProps {
     content: BlockType;
+    locale?: LocalesType
 }

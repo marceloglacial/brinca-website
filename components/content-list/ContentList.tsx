@@ -4,8 +4,9 @@ import { FC } from 'react';
 
 export const ContentList: FC<ContentListProps> = async ({
   data,
+  locale,
 }): Promise<JSX.Element> => {
-  const result = await getPageDataBySlug(data.type);
+  const result = await getPageDataBySlug(data.type, locale);
 
   if (result.status === 'error') return <>{result.message}</>;
 
@@ -23,5 +24,11 @@ export const ContentList: FC<ContentListProps> = async ({
 
   const hasTitle = Object.values(data.title || {}).some((value) => value);
 
-  return <CardGrid title={hasTitle ? data.title : undefined} items={items} />;
+  return (
+    <CardGrid
+      title={hasTitle ? data.title : undefined}
+      items={items}
+      locale={locale}
+    />
+  );
 };
