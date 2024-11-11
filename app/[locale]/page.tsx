@@ -11,7 +11,7 @@ export default async function Page(props: PageParamsType) {
   const content = result.data;
 
   return (
-    <Section>
+    <Section spacing='xl'>
       <Content items={content.blocks} locale={params.locale} />
     </Section>
   );
