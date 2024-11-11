@@ -1,6 +1,7 @@
-import { COLLECTIONS } from '@/constants';
-import { db } from '@/services';
+import { COLLECTIONS, INVALIDATE_INTERVAL } from '@/constants';
+import { db, getCollectionById } from '@/services';
 import { collection, query, orderBy, limit, getDocs, startAfter, where } from '@firebase/firestore';
+import { unstable_cache } from 'next/cache';
 
 export const getPartners = async ({
     order,
@@ -16,56 +17,63 @@ export const getPartners = async ({
     category?: CategoryType;
 } = {}): Promise<ApiResponse<PartnerTypeLocalized[]>> => {
     try {
-        const collectionRef = collection(db, COLLECTIONS.PARTNERS);
-        let orderedQuery = order ? query(collectionRef, orderBy(order)) : collectionRef;
+        const cacheKey = `partners-${order}-${page}-${pageSize}-${type}-${category?.id}`;
 
-        orderedQuery = query(
-            orderedQuery,
-            where('active', '==', true),
-            where('has_membership', type === 'partners' ? '!=' : '==', ' ')
-        );
+        return await unstable_cache(
+            async () => {
+                const collectionRef = collection(db, COLLECTIONS.PARTNERS);
+                let orderedQuery = order ? query(collectionRef, orderBy(order)) : collectionRef;
 
-        if (category) {
-            orderedQuery = query(
-                orderedQuery,
-                where('category.id', '==', category.id)
-            );
-        }
+                orderedQuery = query(
+                    orderedQuery,
+                    where('active', '==', true),
+                    where('has_membership', type === 'partners' ? '!=' : '==', ' ')
+                );
 
-        let paginatedQuery = query(orderedQuery, limit(pageSize));
+                if (category) {
+                    orderedQuery = query(
+                        orderedQuery,
+                        where('category.id', '==', category.id)
+                    );
+                }
 
-        if (page > 1) {
-            // Retrieve the last document of the previous page
-            const previousPageQuery = query(orderedQuery, limit((page - 1) * pageSize));
-            const previousPageSnapshot = await getDocs(previousPageQuery);
+                let paginatedQuery = query(orderedQuery, limit(pageSize));
 
-            if (!previousPageSnapshot.empty) {
-                const lastVisible = previousPageSnapshot.docs[previousPageSnapshot.docs.length - 1];
-                paginatedQuery = query(orderedQuery, startAfter(lastVisible), limit(pageSize));
-            }
-        }
+                if (page > 1) {
+                    const previousPageQuery = query(orderedQuery, limit((page - 1) * pageSize));
+                    const previousPageSnapshot = await getDocs(previousPageQuery);
 
-        const querySnapshot = await getDocs(paginatedQuery);
+                    if (!previousPageSnapshot.empty) {
+                        const lastVisible = previousPageSnapshot.docs[previousPageSnapshot.docs.length - 1];
+                        paginatedQuery = query(orderedQuery, startAfter(lastVisible), limit(pageSize));
+                    }
+                }
 
-        const allDocs = querySnapshot.docs.map((doc) => ({
-            ...(doc.data() as PartnerTypeLocalized),
-            id: doc?.id,
-        }));
+                const querySnapshot = await getDocs(paginatedQuery);
 
-        const totalCount = (await getDocs(orderedQuery)).size;
-        const hasNextPage = totalCount > page * pageSize;
+                const allDocs = querySnapshot.docs.map((doc) => ({
+                    ...(doc.data() as PartnerTypeLocalized),
+                    id: doc?.id,
+                }));
 
-        return {
-            status: 'success',
-            message: 'Success',
-            meta: {
-                totalCount,
-                page,
-                pageSize,
-                hasNextPage,
+                const totalCount = (await getDocs(orderedQuery)).size;
+                const hasNextPage = totalCount > page * pageSize;
+
+                return {
+                    status: 'success' as const,
+                    message: 'Success',
+                    meta: {
+                        totalCount,
+                        page,
+                        pageSize,
+                        hasNextPage,
+                    },
+                    data: allDocs,
+                };
             },
-            data: allDocs,
-        };
+            [cacheKey],
+            { revalidate: INVALIDATE_INTERVAL }
+        )();
     } catch (error) {
         return {
             status: 'error',
@@ -80,3 +88,20 @@ export const getPartners = async ({
         };
     }
 };
+
+export const getCategories = unstable_cache(
+    async (): Promise<ApiResponse<CategoryType[]>> => {
+        try {
+            const result = await getCollectionById(COLLECTIONS.CATEGORIES);
+            return {
+                ...result,
+                data: result.data,
+            }
+        } catch (e) {
+            console.error(e)
+            throw Error
+        }
+    },
+    ['partners-category'],
+    { revalidate: INVALIDATE_INTERVAL }
+);
