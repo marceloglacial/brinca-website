@@ -1,12 +1,12 @@
 import { FC } from 'react';
-import { getDataById } from '@/services';
+import { getSingleForm } from '@/services';
 import { FormContainer } from './FormContainer';
+import { Alert } from '../alert/Alert';
 
-export const Form: FC<FormProps> = async ({
-  language,
-  data,
-}): Promise<JSX.Element> => {
-  const allData: FormFieldsProps = await getDataById('forms', data.formId);
+export const Form: FC<FormProps> = async ({ id }): Promise<JSX.Element> => {
+  const result = await getSingleForm(id);
 
-  return <FormContainer data={allData.data} language={language} />;
+  if (result.status === 'error') return <Alert message={result.message} />;
+
+  return <FormContainer data={result.data} />;
 };

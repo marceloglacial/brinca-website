@@ -7,10 +7,3 @@ export const formatAttributes = (props: FormFieldProps) => {
     delete result.label;
     return result;
 };
-
-export const formatOptions = (props: FormFieldProps) => {
-    return props.attributes.options?.map((option: any) => ({
-        label: option.label[props.language],
-        value: option.value,
-    }));
-};

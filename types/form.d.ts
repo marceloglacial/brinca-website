@@ -26,13 +26,28 @@ interface FormFieldsProps {
 }
 
 interface FormProps {
-    language: LocaleTypes
-    data: FormDataContentType
+    id: string
 }
 
-type FieldTypes = {
-    [k: string]: React.ReactNode;
+type FormType = {
+    id: string,
+    show_title: boolean,
+    submit_type: 'email' | 'collection'
+    title: string
+    fields: FieldType[]
+}
+
+type FieldTypes = 'text' | 'textarea' | 'select' | 'submit'
+type FieldType = {
+    type: FieldTypes
+    value: any
 };
+
+type OptionsType = {
+    title: string,
+    value: string
+}
+
 
 interface FormFieldProps {
     language: LocaleTypes;
@@ -40,11 +55,10 @@ interface FormFieldProps {
 }
 
 interface FormContainerProps extends FormFieldsProps {
-    language: LocaleTypes;
+    data: FormType;
 }
 
 
 interface FormTitleProps {
-    title?: LocalizedString;
-    language: LocaleTypes;
+    title?: string;
 }
