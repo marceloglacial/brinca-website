@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "env:open": "npx dotenv-vault@latest open",
+    "env:pull": "npx dotenv-vault@latest pull",
+    "env:push": "npx dotenv-vault@latest open"
   },
   "dependencies": {
     "@firebase/firestore": "^4.7.4",
@@ -20,10 +23,7 @@
     "react-markdown": "^9.0.1",
     "react-spring-lightbox": "^1.8.0",
     "sharp": "^0.33.5",
-    "styled-components": "^6.1.13",
-    "env:open": "npx dotenv-vault@latest open",
-    "env:pull": "npx dotenv-vault@latest pull",
-    "env:push": "npx dotenv-vault@latest open"
+    "styled-components": "^6.1.13"
   },
   "devDependencies": {
     "@types/node": "^22.9.0",
