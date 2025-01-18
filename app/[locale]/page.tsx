@@ -10,8 +10,6 @@ export default async function Page(props: PageParamsType) {
 
   const content = result.data;
 
-  console.log(content);
-
   return (
     <Section spacing='xl'>
       <Content items={content.blocks} locale={params.locale} />
