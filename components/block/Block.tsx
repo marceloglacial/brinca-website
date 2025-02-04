@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import {
+  ButtonGroup,
   CloudinaryGallery,
   ContentList,
   Embed,
@@ -38,6 +39,9 @@ export const Block: FC<BlockProps> = (props): JSX.Element => {
       break;
     case 'form_id':
       block = <Form id={props.content.value} />;
+      break;
+    case 'button_group':
+      block = <ButtonGroup content={props.content.value} />;
       break;
     default:
       block = <></>;
