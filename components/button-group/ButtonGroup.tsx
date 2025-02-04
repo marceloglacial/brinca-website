@@ -18,7 +18,7 @@ export const ButtonGroup: FC<ButtonGroupProps> = (props): JSX.Element => {
           );
 
         return (
-          <NextLink key={index} href={`/${button.link.url}`}>
+          <NextLink key={index} href={`${button.link.url}`}>
             <Link variant='primary'>{button.link.title}</Link>
           </NextLink>
         );
