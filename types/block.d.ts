@@ -1,8 +1,9 @@
 type BlockType = {
-    [k: string]: React.ReactNode;
+    type: string;
+    value: any;
 };
 
 interface BlockProps {
-    blockLanguage: LocaleTypes;
-    blockContent: ContentType;
+    content: BlockType;
+    locale?: LocalesType
 }

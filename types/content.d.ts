@@ -1,10 +1,13 @@
-type ContentType = {
-    id: number,
-    type: string,
-    data: any
-}
 
 interface ContentProps {
-    items: ContentType[];
-    language: LocaleTypes;
+    items: BlockType[];
+    locale?: LocalesType
 }
+
+
+type ContentType = {
+    id: string;
+    title: string;
+    slug: string;
+    blocks: BlockType[];
+};

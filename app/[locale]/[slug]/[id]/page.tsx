@@ -1,24 +1,41 @@
-import { Content } from '@/components';
-import { getPageByType } from '@/services';
+import { Content, ErrorState } from '@/components';
+import { SITE } from '@/constants';
+import { getSingleEvent } from '@/services/events';
 import { Heading, Section } from '@marceloglacial/brinca-ui';
+import { Metadata } from 'next';
 
-export default async function Page({ params }: PageParamsType) {
-  const data = await getPageByType(
-    params.slug || '',
-    params.locale,
-    params.id || ''
-  );
-  const language = params.locale;
-  const pageData = data.data;
+export async function generateMetadata(
+  props: PageParamsType
+): Promise<Metadata> {
+  const params = await props.params;
+  const result = await getSingleEvent(params.slug, params.id, params.locale);
 
-  if (!pageData) return <h1>Not found</h1>;
+  if (result.status === 'error')
+    return {
+      title: SITE.NAME,
+    };
+
+  const page = result.data;
+
+  return {
+    title: `${SITE.NAME} - ${page.title}`,
+  };
+}
+
+export default async function Page(props: PageParamsType) {
+  const params = await props.params;
+  const result = await getSingleEvent(params.slug, params.id, params.locale);
+
+  if (result.status === 'error') return <ErrorState message={result.message} />;
+
+  const event = result.data;
 
   return (
     <Section>
       <Heading className='mb-4'>
-        <h1>{pageData.title[language]}</h1>
+        <h1>{event.title}</h1>
       </Heading>
-      <Content items={pageData.content} language={language} />
+      <Content items={event.blocks} locale={params.locale} />
     </Section>
   );
 }

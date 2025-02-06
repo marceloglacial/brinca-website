@@ -1,24 +1,34 @@
 import { CardGrid } from '@/components';
-import { getDataByType } from '@/services';
+import { getPageDataBySlug } from '@/services';
 import { FC } from 'react';
 
 export const ContentList: FC<ContentListProps> = async ({
-  language,
-  type,
-  title,
+  data,
+  locale,
 }): Promise<JSX.Element> => {
-  const data = await getDataByType(type);
+  const result = await getPageDataBySlug(data.type, locale);
 
-  const items = data.data.map((item: IPageData): CardGridItemType => {
+  if (result.status === 'error') return <>{result.message}</>;
+
+  const content = result.data;
+  const items = content.map((item: CardGridItemType): CardGridItemType => {
     return {
       id: item.id,
-      link: `${type}/${item.slug[language]}`,
-      title: item.title[language],
+      link: `${data.type}/${item.slug}`,
+      slug: item.slug,
+      title: item.title,
       image: item.image,
       date: item.date,
-      locale: language,
     };
   });
 
-  return <CardGrid title={title && title[language]} items={items} />;
+  const hasTitle = Object.values(data.title || {}).some((value) => value);
+
+  return (
+    <CardGrid
+      title={hasTitle ? data.title : undefined}
+      items={items}
+      locale={locale}
+    />
+  );
 };

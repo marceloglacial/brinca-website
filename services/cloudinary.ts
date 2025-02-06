@@ -1,5 +1,7 @@
 'use server'
+import { INVALIDATE_INTERVAL } from '@/constants';
 import { v2 as cloudinary } from 'cloudinary';
+import { unstable_cache } from 'next/cache';
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -13,12 +15,16 @@ function transformToJpg(publicId: string): string {
 
 export async function getCloudinaryImages(folderPath: string): Promise<string[]> {
     try {
-        const result = await cloudinary.api.resources({
-            type: 'upload',
-            prefix: folderPath,
-            max_results: 500,
-            resource_type: 'image',
-        });
+        const result = await unstable_cache(
+            async () => cloudinary.api.resources({
+                type: 'upload',
+                prefix: folderPath,
+                max_results: 500,
+                resource_type: 'image',
+            }),
+            [`cloudinary-${folderPath}`],
+            { revalidate: INVALIDATE_INTERVAL }
+        )();
 
         const imageUrls = result.resources.map((resource: any) => transformToJpg(resource.public_id));
         return imageUrls;

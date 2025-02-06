@@ -1,6 +1,6 @@
 export const filterItemsByCategory = (
     items: any[],
-    language: LocaleTypes,
+    language: LocalesType,
     categorySlug?: string
 ): any[] => {
     if (!categorySlug) return items;

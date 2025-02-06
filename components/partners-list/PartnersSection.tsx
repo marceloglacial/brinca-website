@@ -1,29 +1,20 @@
+'use client';
 import { FC } from 'react';
 import PartnerCard from './PartnerCard';
-import { getDataByType } from '@/services';
-import { COLLECTIONS } from '@/constants';
-import { filterItemsByCategory } from '@/utils';
+import { useParams } from 'next/navigation';
 
-const PartnersSection: FC<PartnersSectionProps> = async (
-  props
-): Promise<JSX.Element> => {
-  const data = await getDataByType(COLLECTIONS.PARTNERS);
-  const filteredData: PartnerType[] = data.data.filter(
-    (partner: PartnerType) => partner.isActive && partner.type === props.type
-  );
-  const items = filterItemsByCategory(
-    filteredData,
-    props.locale,
-    props.category
-  );
-  if (items.length === 0) return <></>;
+const PartnersSection: FC<PartnersSectionProps> = (props): JSX.Element => {
+  const params = useParams();
+  const locale = params.locale as LocalesType;
+
+  if (!props.content.length) return <></>;
 
   return (
     <div className='grid grid-cols-1 gap-8'>
-      <h4>{props.title[props.locale]}</h4>
+      <h4>{props.title[locale]}</h4>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
-        {items.map((item) => (
-          <PartnerCard key={item.id} locale={props.locale} {...item} />
+        {props.content.map((item) => (
+          <PartnerCard key={item.id} {...item} />
         ))}
       </div>
     </div>

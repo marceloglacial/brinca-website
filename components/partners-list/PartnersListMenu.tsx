@@ -1,27 +1,31 @@
 import { FC } from 'react';
 import PartnersListItem from './PartnersListItem';
-import { getDataByType } from '@/services';
-import { sortArray } from '@/utils';
+import { getCategories } from '@/services';
+import { DICTIONARY, ROUTES } from '@/constants';
+import PartnerListTitle from './PartenerListTitle';
+import { Alert } from '@/components';
 
-const PartnersListMenu: FC<PartnersListMenuProps> = async (
-  props
-): Promise<JSX.Element> => {
-  const title: LocalizedString = { en: 'Categories', 'pt-BR': 'Categorias' };
-  const data = await getDataByType('partnersCategory');
-  const items: PartnerCategoryType[] = sortArray(
-    data.data,
-    `title.${props.locale}`,
-    'asc'
-  );
+const PartnersListMenu: FC = async (): Promise<JSX.Element> => {
+  const result = await getCategories();
 
-  if (items.length === 0) return <></>;
+  if (result.status === 'error') {
+    return <Alert message={'Error loading categories!'} />;
+  }
+
+  const categories = result.data as CategoryType[];
+  if (!categories.length) return <></>;
 
   return (
     <div className='partners-list-categories flex flex-col gap-4'>
-      <h4 className='partners-list-categories__title'>{title[props.locale]}</h4>
+      <PartnerListTitle />
       <div className='partners-list-categories__menu flex flex-wrap gap-4'>
-        {items.map((item) => (
-          <PartnersListItem key={item.id} {...item} locale={props.locale} />
+        <PartnersListItem
+          title={DICTIONARY.ALL}
+          slug={ROUTES.PARTNERS_ALL}
+          id={'0'}
+        />
+        {categories.map((item, index) => (
+          <PartnersListItem key={index} {...item} />
         ))}
       </div>
     </div>

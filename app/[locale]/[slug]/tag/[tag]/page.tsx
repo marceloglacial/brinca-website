@@ -1,42 +1,52 @@
-import PartnersListMenu from '@/components/partners-list/PartnersListMenu';
-import PartnersSection from '@/components/partners-list/PartnersSection';
-import { COLLECTIONS } from '@/constants';
-import { getDataByType, getPageByType } from '@/services';
-import { sortArray } from '@/utils';
+import { PartnersList } from '@/components';
+import { COLLECTIONS, SITE } from '@/constants';
+import { getDocumentBySlug } from '@/services';
+import { localizedContent } from '@/utils';
 import { Heading } from '@marceloglacial/brinca-ui';
+import { Metadata } from 'next';
 
-const PartnersPage = async ({
-  params,
-}: PageParamsType): Promise<JSX.Element> => {
-  const data = await getDataByType(COLLECTIONS.PARTNERS_TYPES);
-  const pageData = await getPageByType(
-    COLLECTIONS.PARTNERS_CATEGORY,
-    params.locale,
-    params.tag || ''
+export async function generateMetadata(
+  props: PageParamsType
+): Promise<Metadata> {
+  const params = await props.params;
+  const result = await getDocumentBySlug(
+    COLLECTIONS.CATEGORIES,
+    params.tag,
+    params.locale
   );
 
-  const sections: PartnersSectionProps[] = sortArray(
-    data.data,
-    `title.${params.locale}`
+  if (result.status === 'error')
+    return {
+      title: SITE.NAME,
+    };
+
+  const page = localizedContent(result.data);
+
+  return {
+    title: `${SITE.NAME} - ${page.title}`,
+  };
+}
+
+const PartnersPage = async (props: PageParamsType): Promise<JSX.Element> => {
+  const params = await props.params;
+
+  if (!params.tag) return <>Error loading page</>;
+
+  const result = await getDocumentBySlug(
+    COLLECTIONS.CATEGORIES,
+    params.tag,
+    params.locale
   );
+
+  const category = localizedContent(result, params.locale);
 
   return (
-    <div className='partners-list grid grid-cols-1 gap-16'>
+    <>
       <Heading>
-        <h1 className=' first-letter:uppercase'>
-          {params.slug} - {pageData.data.title[params.locale]}
-        </h1>
+        <h1 className=' first-letter:uppercase'>{category.data.title}</h1>
       </Heading>
-      {sections.map((section) => (
-        <PartnersSection
-          {...section}
-          locale={params.locale}
-          category={params.tag}
-          key={section.id}
-        />
-      ))}
-      <PartnersListMenu locale={params.locale} />
-    </div>
+      <PartnersList category={category.data} />
+    </>
   );
 };
 export default PartnersPage;

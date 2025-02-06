@@ -10,3 +10,17 @@ interface IPageResponse extends IResponse {
     total?: number
     data: IPageData
 }
+
+type Meta = {
+    totalCount: number,
+    page: number,
+    pageSize: number,
+    hasNextPage: boolean,
+}
+
+type ApiResponse<T> = {
+    data: T;
+    status: "success" | "error";
+    message: string;
+    meta: Meta
+};
