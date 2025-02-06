@@ -23,6 +23,7 @@
     "react-markdown": "^9.0.1",
     "react-spring-lightbox": "^1.8.0",
     "sharp": "^0.33.5",
+    "sonner": "^1.7.4",
     "styled-components": "^6.1.13"
   },
   "devDependencies": {

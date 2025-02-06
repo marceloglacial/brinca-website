@@ -1,4 +1,3 @@
-
 type FormDataContentType = {
     title?: LocalizedString,
     formId: string
@@ -62,3 +61,13 @@ interface FormContainerProps extends FormFieldsProps {
 interface FormTitleProps {
     title?: string;
 }
+
+type FormSubmitResponse = {
+    status: 'success' | 'error';
+    message: string;
+}
+
+type FormSubmissionType = {
+    type: string;
+    message: string;
+} | null

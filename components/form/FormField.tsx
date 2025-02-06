@@ -19,6 +19,7 @@ export const FormField: FC<FieldType> = (props): JSX.Element => {
             name={field.name}
             placeholder={hasProp(field.placeholder)}
             required={field.required}
+            disabled={pending}
             full
           />
         );
@@ -28,6 +29,8 @@ export const FormField: FC<FieldType> = (props): JSX.Element => {
             name={field.name}
             placeholder={hasProp(field.placeholder)}
             required={field.required}
+            rows={10}
+            disabled={pending}
             full
           />
         );
@@ -40,11 +43,14 @@ export const FormField: FC<FieldType> = (props): JSX.Element => {
               value: option.value,
             }))}
             required={field.required}
+            disabled={pending}
             full
           />
         );
       case 'submit':
-        return <Form.Input type='submit' value={field.title} />;
+        return (
+          <Form.Input type='submit' value={field.title} disabled={pending} />
+        );
       default:
         return <></>;
     }

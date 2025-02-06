@@ -1,4 +1,4 @@
-
+export const DEFAULT_LOCALE: LocalesType = 'pt_br'
 export const DICTIONARY = {
     PARTNERS: {
         en: 'Partners',
@@ -19,5 +19,17 @@ export const DICTIONARY = {
     EMPTY_PARTNERS: {
         en: 'No Partners found.',
         pt_br: 'Nenhum Parceiro cadastrado.'
-    }
+    },
+    FORM_SUCCESS: {
+        en: 'Form submitted successfully',
+        pt_br: 'Formulário enviado com sucesso',
+    },
+    FORM_ERROR: {
+        en: 'There was an error submitting the form',
+        pt_br: 'Ocorreu um erro ao enviar o formulário',
+    },
+    FORM_INVALID: {
+        en: 'Invalid submit type',
+        pt_br: 'Tipo de envio inválido'
+    },
 }
