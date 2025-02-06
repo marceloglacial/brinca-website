@@ -10,10 +10,8 @@ export const ButtonGroup: FC<ButtonGroupProps> = (props): JSX.Element => {
       {buttons.map((button, index) => {
         if (button.new_page)
           return (
-            <a href={button.link.url} target='_blank'>
-              <Link key={index} variant='primary'>
-                {button.link.title}
-              </Link>
+            <a key={index} href={button.link.url} target='_blank'>
+              <Link variant='primary'>{button.link.title}</Link>
             </a>
           );
 
