@@ -1,52 +1,40 @@
 'use client';
-import { FC, useEffect, useState } from 'react';
-import { FormField } from './FormField';
-import { FormTitle } from './FormTitle';
+import { FC, useState } from 'react';
+import { FormField, FormTitle } from '@/components';
 import { useParams } from 'next/navigation';
 import { localizedContent } from '@/utils';
-import { sendEmail } from '@/app/actions/sendEmail';
-import { Toaster, toast } from 'sonner';
-import { DEFAULT_LOCALE, DICTIONARY } from '@/constants';
+import { DICTIONARY } from '@/constants';
+import { handleSendEmail } from '@/services';
+import { Section } from '@marceloglacial/brinca-ui';
 
 export const FormContainer: FC<FormContainerProps> = (props): JSX.Element => {
   const params = useParams();
+  const [formSubmited, setformSubmited] = useState<FormSubmissionType>(null);
+
   const locale = params.locale as LocalesType;
   const form = localizedContent(props.data, locale) as FormType;
 
-  const [formSubmited, setformSubmited] = useState<FormSubmissionType>(null);
-
-  useEffect(() => {
-    formSubmited && toast.success(formSubmited.message);
-  }, [formSubmited]);
-
-  const handleSendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    try {
-      const res = await sendEmail(formData, locale || DEFAULT_LOCALE);
-      setformSubmited({
-        type: res.status,
-        message: DICTIONARY.FORM_SUCCESS[locale],
-      });
-    } catch (error) {
-      setformSubmited({
-        type: 'error',
-        message: DICTIONARY.FORM_ERROR[locale],
-      });
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     if (form.submit_type === 'email') {
-      await handleSendEmail(e);
+      await handleSendEmail(e, setformSubmited, locale);
     } else {
       return alert('Not email');
     }
   };
 
+  if (formSubmited) {
+    return (
+      <div className='mt-16 text-center'>
+        <Section spacing='s'>
+          <h4>{DICTIONARY.FORM_SUCCESS[locale]}</h4>
+          <p>{DICTIONARY.FORM_RESPONSE[locale]}</p>
+        </Section>
+      </div>
+    );
+  }
+
   return (
     <>
-      <Toaster richColors position='bottom-center' />
       <form onSubmit={handleSubmit}>
         {form.show_title && <FormTitle>{form.title}</FormTitle>}
         <input type='hidden' name='formTitle' value={form.title} />

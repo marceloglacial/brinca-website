@@ -32,4 +32,8 @@ export const DICTIONARY = {
         en: 'Invalid submit type',
         pt_br: 'Tipo de envio inválido'
     },
+    FORM_RESPONSE: {
+        en: 'Thank you! We will contact you as soon as possible!',
+        pt_br: 'Obrigado! Entraremos em contato o mais breve possível!'
+    }
 }
