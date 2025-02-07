@@ -1,6 +1,6 @@
 import { SITE } from '@/constants'
 import { initializeApp, getApps, getApp } from 'firebase/app'
-import { collection, doc, getDoc, getDocs, getFirestore, limit, orderBy, query, startAfter, where } from 'firebase/firestore'
+import { collection, doc, addDoc, getDoc, getDocs, getFirestore, limit, orderBy, query, startAfter, where } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
 
 const firebaseConfig = {
@@ -168,6 +168,39 @@ export const getDocumentBySlug = async (
         return {
             status: 'error',
             message: 'Error retrieving document',
+            data: null,
+            meta: {
+                totalCount: 0,
+                page: 0,
+                pageSize: 0,
+                hasNextPage: false
+            }
+        };
+    }
+};
+
+export const addDocument = async (
+    collectionId: string,
+    data: any
+): Promise<ApiResponse<any>> => {
+    try {
+        const docRef = await addDoc(collection(db, collectionId), data);
+        return {
+            status: 'success',
+            message: 'Document added successfully',
+            data: { id: docRef.id, ...data },
+            meta: {
+                totalCount: 0,
+                page: 0,
+                pageSize: 0,
+                hasNextPage: false
+            }
+        };
+    } catch (error) {
+        console.error(error);
+        return {
+            status: 'error',
+            message: 'Error adding document',
             data: null,
             meta: {
                 totalCount: 0,
