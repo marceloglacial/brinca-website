@@ -11,14 +11,16 @@ export const FormField: FC<FieldType> = (props): JSX.Element => {
   const hasProp = (prop: any) =>
     Object.values(prop || {}).some((value) => value) ? prop : '';
   const getFormField = () => {
+    const isTel = field.input_type === 'tel';
     switch (props.type) {
       case 'text':
         return (
           <Form.Input
             type={field.input_type}
             name={field.name}
-            placeholder={hasProp(field.placeholder)}
+            placeholder={isTel ? `+9 999 999 9999` : hasProp(field.placeholder)}
             required={field.required}
+            pattern={isTel ? '^\\+(?:[0-9] ?){6,14}[0-9]$' : undefined}
             disabled={pending}
             full
           />

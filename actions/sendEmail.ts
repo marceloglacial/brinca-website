@@ -29,7 +29,7 @@ export async function sendEmail(formData: FormData, locale: LocalesType) {
       return { status: 'error', message: DICTIONARY.FORM_SUCCESS[locale] };
     }
 
-    return { status: 'success', message: DICTIONARY.FORM_SUCCESS[locale] };
+    return { status: 'success', message: DICTIONARY.FORM_ERROR[locale] };
   }
 
   return { status: 'error', message: DICTIONARY.FORM_INVALID[locale] };

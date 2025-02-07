@@ -4,7 +4,7 @@ import { FormField, FormTitle } from '@/components';
 import { useParams } from 'next/navigation';
 import { localizedContent } from '@/utils';
 import { DICTIONARY } from '@/constants';
-import { handleSendEmail } from '@/services';
+import { handleFormSubmission } from '@/services';
 import { Section } from '@marceloglacial/brinca-ui';
 
 export const FormContainer: FC<FormContainerProps> = (props): JSX.Element => {
@@ -15,11 +15,7 @@ export const FormContainer: FC<FormContainerProps> = (props): JSX.Element => {
   const form = localizedContent(props.data, locale) as FormType;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    if (form.submit_type === 'email') {
-      await handleSendEmail(e, setformSubmited, locale);
-    } else {
-      return alert('Not email');
-    }
+    await handleFormSubmission(e, setformSubmited);
   };
 
   if (formSubmited) {
@@ -39,7 +35,8 @@ export const FormContainer: FC<FormContainerProps> = (props): JSX.Element => {
         {form.show_title && <FormTitle>{form.title}</FormTitle>}
         <input type='hidden' name='formTitle' value={form.title} />
         <input type='hidden' name='formType' value={form.submit_type} />
-        <input type='hidden' name='formEndpoint' value={'pages'} />
+        <input type='hidden' name='formEndpoint' value={form?.collection_id} />
+        <input type='hidden' name='formLocale' value={locale} />
         <div className='max-w-screen-md mx-auto grid grid-cols-1 gap-4'>
           {form.fields.map((field, index) => (
             <FormField key={index} {...field} />

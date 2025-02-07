@@ -31,7 +31,8 @@ interface FormProps {
 type FormType = {
     id: string,
     show_title: boolean,
-    submit_type: 'email' | 'collection'
+    submit_type: 'email' | 'collection',
+    collection_id?: string,
     title: string
     fields: FieldType[]
 }
