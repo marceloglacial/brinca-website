@@ -72,3 +72,7 @@ type FormSubmissionType = {
     type: string;
     message: string;
 } | null
+
+interface FormPartnersListProps {
+    pending: boolean;
+}

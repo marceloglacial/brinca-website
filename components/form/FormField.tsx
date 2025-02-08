@@ -2,6 +2,7 @@
 import { FC } from 'react';
 import { Form } from '@marceloglacial/brinca-ui';
 import { useFormStatus } from 'react-dom';
+import { FormPartnersList } from './FormPartnersList';
 
 export const FormField: FC<FieldType> = (props): JSX.Element => {
   const { pending } = useFormStatus();
@@ -10,8 +11,13 @@ export const FormField: FC<FieldType> = (props): JSX.Element => {
   const label = field.label;
   const hasProp = (prop: any) =>
     Object.values(prop || {}).some((value) => value) ? prop : '';
+
   const getFormField = () => {
     const isTel = field.input_type === 'tel';
+
+    if (field === 'category_partners')
+      return <FormPartnersList pending={pending} />;
+
     switch (props.type) {
       case 'text':
         return (

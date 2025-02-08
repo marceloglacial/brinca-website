@@ -35,5 +35,9 @@ export const DICTIONARY = {
     FORM_RESPONSE: {
         en: 'Thank you! We will contact you as soon as possible!',
         pt_br: 'Obrigado! Entraremos em contato o mais breve possível!'
+    },
+    FORM_CATEGORIES: {
+        en: 'Categories',
+        pt_br: 'Categorias'
     }
 }
