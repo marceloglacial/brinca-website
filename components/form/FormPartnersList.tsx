@@ -35,15 +35,20 @@ export const FormPartnersList: FC<FormPartnersListProps> = (
     a.title.localeCompare(b.title)
   );
 
+  options.push({
+    value: 'none',
+    title: 'Outra - Entratemos em contato',
+  });
+
   return (
-    <div className='w-full'>
+    <div className={`w-full ${props.pending ? 'opacity-50' : ''}`}>
       <Form.Group>
-        <Form.Label>Categories</Form.Label>
+        <Form.Label>{DICTIONARY.FORM_CATEGORIES[locale]}</Form.Label>
         <Form.Select
-          name={DICTIONARY.FORM_CATEGORIES[locale]}
+          name={'category'}
           options={options.map((option: OptionsType) => ({
             label: option.title,
-            value: option.value,
+            value: option.id,
           }))}
           required={true}
           disabled={props.pending}

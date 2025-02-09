@@ -3,6 +3,7 @@ import PartnersListMenu from './PartnersListMenu';
 import PartnersSection from './PartnersSection';
 import { getPartners } from '@/services';
 import { DICTIONARY } from '@/constants';
+import { Link } from '@marceloglacial/brinca-ui';
 
 export const PartnersList: FC<PartnersListProps> = async (
   props
@@ -17,6 +18,8 @@ export const PartnersList: FC<PartnersListProps> = async (
     console.debug(members.message);
     return <>Error</>;
   }
+
+  if (!members.data.length && !community.data.length) return <></>;
 
   return (
     <div className='partners-list pt-8 grid grid-cols-1 gap-16'>

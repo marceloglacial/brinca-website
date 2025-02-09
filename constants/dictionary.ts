@@ -39,5 +39,5 @@ export const DICTIONARY = {
     FORM_CATEGORIES: {
         en: 'Categories',
         pt_br: 'Categorias'
-    }
+    },
 }
