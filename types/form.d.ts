@@ -46,6 +46,7 @@ type FieldType = {
 type OptionsType = {
     title: string,
     value: string
+    id: string
 }
 
 
@@ -72,3 +73,7 @@ type FormSubmissionType = {
     type: string;
     message: string;
 } | null
+
+interface FormPartnersListProps {
+    pending: boolean;
+}

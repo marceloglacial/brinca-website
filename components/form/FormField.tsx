@@ -2,18 +2,48 @@
 import { FC } from 'react';
 import { Form } from '@marceloglacial/brinca-ui';
 import { useFormStatus } from 'react-dom';
+import { FormPartnersList } from './FormPartnersList';
+import { DICTIONARY } from '@/constants';
+import { localizedContent } from '@/utils';
 
 export const FormField: FC<FieldType> = (props): JSX.Element => {
   const { pending } = useFormStatus();
 
-  const field = props.value;
+  const field = localizedContent(props.value);
+  const multiField = props.value;
   const label = field.label;
   const hasProp = (prop: any) =>
     Object.values(prop || {}).some((value) => value) ? prop : '';
+
   const getFormField = () => {
     const isTel = field.input_type === 'tel';
+
+    if (field === 'category_partners')
+      return <FormPartnersList pending={pending} />;
+
     switch (props.type) {
       case 'text':
+        if (field.localized) {
+          return (
+            <>
+              {Object.keys(DICTIONARY.LOCALES).map((localeKey) => (
+                <Form.Input
+                  key={localeKey}
+                  type={multiField.input_type}
+                  name={`${multiField.name}_${localeKey}`}
+                  placeholder={
+                    DICTIONARY.LOCALES[
+                      localeKey as keyof typeof DICTIONARY.LOCALES
+                    ]
+                  }
+                  required={multiField.required}
+                  disabled={pending}
+                  full
+                />
+              ))}
+            </>
+          );
+        }
         return (
           <Form.Input
             type={field.input_type}
@@ -25,7 +55,29 @@ export const FormField: FC<FieldType> = (props): JSX.Element => {
             full
           />
         );
+
       case 'textarea':
+        if (field.localized) {
+          return (
+            <>
+              {Object.keys(DICTIONARY.LOCALES).map((localeKey) => (
+                <Form.Textarea
+                  key={localeKey}
+                  name={`${multiField.name}_${localeKey}`}
+                  placeholder={
+                    DICTIONARY.LOCALES[
+                      localeKey as keyof typeof DICTIONARY.LOCALES
+                    ]
+                  }
+                  required={multiField.required}
+                  disabled={pending}
+                  rows={10}
+                  full
+                />
+              ))}
+            </>
+          );
+        }
         return (
           <Form.Textarea
             name={field.name}
@@ -36,6 +88,7 @@ export const FormField: FC<FieldType> = (props): JSX.Element => {
             full
           />
         );
+
       case 'select':
         return (
           <Form.Select
@@ -49,6 +102,7 @@ export const FormField: FC<FieldType> = (props): JSX.Element => {
             full
           />
         );
+
       case 'submit':
         return (
           <Form.Input type='submit' value={field.title} disabled={pending} />

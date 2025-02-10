@@ -4,6 +4,7 @@ import { getCategories } from '@/services';
 import { DICTIONARY, ROUTES } from '@/constants';
 import PartnerListTitle from './PartenerListTitle';
 import { Alert } from '@/components';
+import PartnersListItems from './PartnersListItems';
 
 const PartnersListMenu: FC = async (): Promise<JSX.Element> => {
   const result = await getCategories();
@@ -24,9 +25,7 @@ const PartnersListMenu: FC = async (): Promise<JSX.Element> => {
           slug={ROUTES.PARTNERS_ALL}
           id={'0'}
         />
-        {categories.map((item, index) => (
-          <PartnersListItem key={index} {...item} />
-        ))}
+        <PartnersListItems data={categories} />
       </div>
     </div>
   );

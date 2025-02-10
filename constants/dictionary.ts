@@ -1,8 +1,13 @@
 export const DEFAULT_LOCALE: LocalesType = 'pt_br'
 export const DICTIONARY = {
+    LOCALES: {
+        pt_br: 'Português',
+        en: 'English',
+
+    },
     PARTNERS: {
         en: 'Partners',
-        pt_br: 'Parceiros'
+        pt_br: 'Accociados'
     },
     COMMUNITY: {
         en: 'Community',
@@ -35,5 +40,9 @@ export const DICTIONARY = {
     FORM_RESPONSE: {
         en: 'Thank you! We will contact you as soon as possible!',
         pt_br: 'Obrigado! Entraremos em contato o mais breve possível!'
-    }
+    },
+    FORM_CATEGORIES: {
+        en: 'Categories',
+        pt_br: 'Categorias'
+    },
 }
