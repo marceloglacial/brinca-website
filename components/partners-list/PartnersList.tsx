@@ -3,7 +3,6 @@ import PartnersListMenu from './PartnersListMenu';
 import PartnersSection from './PartnersSection';
 import { getPartners } from '@/services';
 import { DICTIONARY } from '@/constants';
-import { Link } from '@marceloglacial/brinca-ui';
 
 export const PartnersList: FC<PartnersListProps> = async (
   props

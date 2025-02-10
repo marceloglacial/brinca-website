@@ -1,5 +1,10 @@
 export const DEFAULT_LOCALE: LocalesType = 'pt_br'
 export const DICTIONARY = {
+    LOCALES: {
+        pt_br: 'Português',
+        en: 'English',
+
+    },
     PARTNERS: {
         en: 'Partners',
         pt_br: 'Parceiros'

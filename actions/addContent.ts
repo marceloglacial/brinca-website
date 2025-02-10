@@ -15,6 +15,19 @@ export async function addContent(collectionId: string, formData: FormData, local
     data[key] = value;
   }
 
+  Object.keys(data).forEach(key => {
+    const match = key.match(/^(.*)_(en|pt_br)$/);
+    if (match) {
+      const baseKey = match[1];
+      const lang = match[2];
+      if (typeof data[baseKey] !== 'object' || !data[baseKey]) {
+        data[baseKey] = {};
+      }
+      data[baseKey][lang] = data[key];
+      delete data[key];
+    }
+  });
+
   try {
     const fileField = formData.get('logo');
     if (fileField instanceof File) {
