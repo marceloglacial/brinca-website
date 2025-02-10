@@ -18,8 +18,6 @@ export const PartnersList: FC<PartnersListProps> = async (
     return <>Error</>;
   }
 
-  if (!members.data.length && !community.data.length) return <></>;
-
   return (
     <div className='partners-list pt-8 grid grid-cols-1 gap-16'>
       <PartnersListMenu />

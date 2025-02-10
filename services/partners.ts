@@ -9,13 +9,8 @@ export const getPartners = async ({
     pageSize = 100,
     type = 'partners',
     category
-}: {
-    order?: string;
-    page?: number;
-    pageSize?: number;
-    type?: 'partners' | 'community';
-    category?: CategoryType;
-} = {}): Promise<ApiResponse<PartnerTypeLocalized[]>> => {
+}: GetPartnersType = {}): Promise<ApiResponse<PartnerTypeLocalized[]>> => {
+
     try {
         const cacheKey = `partners-${order}-${page}-${pageSize}-${type}-${category?.id}`;
 
@@ -27,13 +22,13 @@ export const getPartners = async ({
                 orderedQuery = query(
                     orderedQuery,
                     where('active', '==', true),
-                    where('has_membership', type === 'partners' ? '!=' : '==', ' ')
+                    where('membership_email', type === 'partners' ? '!=' : '==', '')
                 );
 
                 if (category) {
                     orderedQuery = query(
                         orderedQuery,
-                        where('category.id', '==', category.id)
+                        where('category', '==', category.id)
                     );
                 }
 
@@ -53,8 +48,14 @@ export const getPartners = async ({
 
                 const allDocs = querySnapshot.docs.map((doc) => ({
                     ...(doc.data() as PartnerTypeLocalized),
-                    id: doc?.id,
+                    id: doc.id,
                 }));
+
+                // Randomize the order of the results using Fisher-Yates shuffle
+                for (let i = allDocs.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [allDocs[i], allDocs[j]] = [allDocs[j], allDocs[i]];
+                }
 
                 const totalCount = (await getDocs(orderedQuery)).size;
                 const hasNextPage = totalCount > page * pageSize;
@@ -90,12 +91,12 @@ export const getPartners = async ({
 };
 
 export const getCategories = unstable_cache(
-    async (): Promise<ApiResponse<CategoryType[]>> => {
+    async (locale: LocalesType = 'pt_br'): Promise<ApiResponse<CategoryType[]>> => {
         try {
             const result = await getCollectionById(COLLECTIONS.CATEGORIES);
             return {
                 ...result,
-                data: result.data,
+                data: result.data.sort((a, b) => a.title[locale].localeCompare(b.title[locale])),
             }
         } catch (e) {
             console.error(e)

@@ -9,16 +9,17 @@ import { useParams } from 'next/navigation';
 const PartnerCard: FC<PartnerTypeLocalized> = (props): JSX.Element => {
   const params = useParams();
   const content: PartnerType = localizedContent(props, params.locale as string);
+  const showLogo = content.logo && (content.membership_email?.length ?? 0) > 1;
 
   return (
     <Card>
       <Card.Body className='text-center lg:text-left'>
         <div className='flex flex-wrap lg:flex-nowrap gap-4 justify-center lg:justify-start'>
-          {content.image && (
+          {showLogo && (
             <figure className='w-auto h-[200px] md:h-[100px] relative aspect-square'>
               <Image
                 alt={content.title}
-                src={content.image}
+                src={content.logo}
                 sizes='200px 200px'
                 fill
                 className='object-contain'
@@ -47,19 +48,38 @@ const PartnerCard: FC<PartnerTypeLocalized> = (props): JSX.Element => {
             <div>
               <a href={`mailto:${content.email}`}>{content.email}</a>
             </div>
-            <div>
-              <a href={`tel:${content.phone}`}>{content.phone}</a>
-            </div>
+            {content.phone && (
+              <div>
+                <a href={`tel:${content.phone}`}>{content.phone}</a>
+              </div>
+            )}
           </address>
         </div>
         <div className='w-full flex justify-center lg:justify-start gap-4'>
-          {content.social?.map((item, index) => {
-            return (
-              <a href={item.url} target='_blank' key={index}>
-                <Icon type={item.type} />
-              </a>
-            );
-          })}
+          {content.whatsapp && (
+            <a
+              href={`https://wa.me/${content.whatsapp}`}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <Icon type={'whatsapp'} />
+            </a>
+          )}
+          {content.facebook && (
+            <a href={content.facebook} target='_blank'>
+              <Icon type={'facebook'} />
+            </a>
+          )}
+          {content.instagram && (
+            <a href={content.instagram} target='_blank'>
+              <Icon type={'instagram'} />
+            </a>
+          )}
+          {content.linkedin && (
+            <a href={content.linkedin} target='_blank'>
+              <Icon type={'linkedin'} />
+            </a>
+          )}
         </div>
       </Card.Body>
     </Card>

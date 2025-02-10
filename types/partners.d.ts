@@ -5,16 +5,17 @@ type PartnerType = {
     active: boolean,
     title: string,
     description: string,
-    image: string,
+    logo: string,
     category: PartnerCategoryType[]
     email: string,
+    membership_email?: string,
     address?: string,
     website?: string,
-    phone: string,
-    social: {
-        type: IconTypes,
-        url: string
-    }[]
+    phone?: string,
+    whatsapp?: string,
+    instagram?: string,
+    facebook?: string,
+    linkedin?: string
 }
 
 type PartnerTypeLocalized = PartnerType & {
@@ -46,4 +47,12 @@ interface PartnersSectionProps {
 
 interface PartnersListItemProps extends PartnerCategoryType {
     locale: LocaleTypes;
+}
+
+type GetPartnersType = {
+    order?: string;
+    page?: number;
+    pageSize?: number;
+    type?: 'partners' | 'community';
+    category?: CategoryType;
 }

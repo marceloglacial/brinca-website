@@ -8,7 +8,7 @@ export async function addContent(collectionId: string, formData: FormData, local
   const data: { [key: string]: any } = {};
 
   for (const [key, value] of formData.entries()) {
-    const keysToRemove = ['formEndpoint', 'formType', 'formLocale', 'formTitle',].includes(key)
+    const keysToRemove = ['formEndpoint', 'formType', 'formLocale', 'formTitle'].includes(key)
 
     if (keysToRemove) continue;
 
