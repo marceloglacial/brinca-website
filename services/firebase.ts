@@ -19,13 +19,16 @@ export const db = getFirestore(app)
 
 export const getCollectionById = async (
     collectionId: string,
-    order?: string,
+    sortBy?: string,
+    order: 'asc' | 'desc' = 'desc',
     page: number = 1,
     pageSize: number = 100
 ): Promise<ApiResponse<any[]>> => {
     try {
         const collectionRef = collection(db, collectionId);
-        const orderedQuery = order ? query(collectionRef, orderBy(order)) : collectionRef;
+        const orderedQuery = sortBy
+            ? query(collectionRef, orderBy(sortBy, order))
+            : collectionRef;
 
         let paginatedQuery = query(orderedQuery, limit(pageSize));
 
@@ -65,7 +68,7 @@ export const getCollectionById = async (
         console.error(e);
         return {
             status: 'error',
-            message: 'Error to get docs from this collection',
+            message: 'Error retrieving documents from the collection',
             data: [],
             meta: {
                 totalCount: 0,
