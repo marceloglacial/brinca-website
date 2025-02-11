@@ -6,7 +6,7 @@ export const ContentList: FC<ContentListProps> = async ({
   data,
   locale,
 }): Promise<JSX.Element> => {
-  const result = await getPageDataBySlug(data.type, locale);
+  const result = await getPageDataBySlug(data.type, locale, 'date');
 
   if (result.status === 'error') return <>{result.message}</>;
 

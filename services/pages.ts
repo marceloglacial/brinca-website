@@ -21,9 +21,9 @@ export const getSinglePage = unstable_cache(
 );
 
 export const getPageDataBySlug = unstable_cache(
-    async (type: string, locale?: string): Promise<ApiResponse<any>> => {
+    async (type: string, locale?: string, sortBy?: string): Promise<ApiResponse<any>> => {
         try {
-            const result = await getCollectionById(type);
+            const result = await getCollectionById(type, sortBy);
             return {
                 ...result,
                 data: localizedData(result.data, locale),
