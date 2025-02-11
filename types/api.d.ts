@@ -24,3 +24,5 @@ type ApiResponse<T> = {
     message: string;
     meta: Meta
 };
+
+type OrderType = 'asc' | 'desc'

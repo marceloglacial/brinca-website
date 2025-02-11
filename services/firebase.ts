@@ -20,7 +20,7 @@ export const db = getFirestore(app)
 export const getCollectionById = async (
     collectionId: string,
     sortBy?: string,
-    order: 'asc' | 'desc' = 'desc',
+    order: OrderType = 'desc',
     page: number = 1,
     pageSize: number = 100
 ): Promise<ApiResponse<any[]>> => {
