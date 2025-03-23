@@ -1,4 +1,4 @@
 const styles = {
-  container: `ui-layout ui-max-w-screen-xl ui-mx-auto ui-flex ui-flex-col ui-gap-8 md:ui-gap-16 lg:ui-my-8 p-4 md:ui-p-6 2xl:ui-p-0`,
+  container: `layout max-w-screen-xl mx-auto flex flex-col gap-8 md:gap-16 lg:my-8 p-4 md:p-6 2xl:p-0`,
 }
 export default styles

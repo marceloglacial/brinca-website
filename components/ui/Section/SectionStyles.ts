@@ -1,8 +1,8 @@
 const styles = {
-  container: `ui-section`,
-  s: `ui-section--s ui-space-y-3 md:ui-space-y-4`,
-  m: `ui-section--m ui-space-y-4 md:ui-space-y-8`,
-  l: `ui-section--l ui-space-y-8 md:ui-space-y-16`,
-  xl: `ui-section--xl ui-space-y-16 md:ui-space-y-24`,
+  container: `section`,
+  s: `section--s space-y-3 md:space-y-4`,
+  m: `section--m space-y-4 md:space-y-8`,
+  l: `section--l space-y-8 md:space-y-16`,
+  xl: `section--xl space-y-16 md:space-y-24`,
 }
 export default styles

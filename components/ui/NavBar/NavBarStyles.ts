@@ -1,70 +1,70 @@
 const styles = {
-  container: `ui-navbar 
-              ui-flex 
-              ui-gap-8`,
-  top: `ui-navbar--top`,
-  bottom: `ui-navbar--bottom 
-           ui-bg-green-600 
-           ui-px-8 
-           ui-py-4 
-           ui-rounded-2xl 
-           ui-flex-col 
-           lg:ui-flex-row`,
-  brand: `ui-navbar__brand 
-          ui-flex 
-          ui-items-center 
-          ui-justify-center 
-          lg:ui-justify-left`,
+  container: `navbar 
+              flex 
+              gap-8`,
+  top: `navbar--top`,
+  bottom: `navbar--bottom 
+           bg-green-600 
+           px-8 
+           py-4 
+           rounded-2xl 
+           flex-col 
+           lg:flex-row`,
+  brand: `navbar__brand 
+          flex 
+          items-center 
+          justify-center 
+          lg:justify-left`,
   items: {
-    container: `ui-navbar__items 
-                ui-flex 
-                ui-flex-col 
-                xl:ui-flex-row 
-                ui-gap-8 
-                ui-items-center 
-                ui-ml-0 
-                xl:ui-ml-auto`,
-    top: `ui-fixed 
-          xl:ui-static 
-          ui-z-40 
-          ui-overflow-scroll 
-          xl:ui-overflow-auto 
-          ui-scroll-smooth 
-          ui-top-0 
-          ui-right-[100%] 
-          ui-py-16 
-          ui-px-8 
-          xl:ui-p-0 
-          ui-bg-white 
-          xl:ui-bg-transparent 
-          ui-w-screen 
-          md:ui-w-1/2 
-          md:ui-shadow-2xl 
-          xl:ui-shadow-none 
-          xl:ui-w-auto 
-          ui-h-screen 
-          xl:ui-h-auto 
-          ui-transition-all 
-          ui-ease-in-out`,
-    topOpen: `ui-right-0`,
+    container: `navbar__items 
+                flex 
+                flex-col 
+                xl:flex-row 
+                gap-8 
+                items-center 
+                ml-0 
+                xl:ml-auto`,
+    top: `fixed 
+          xl:static 
+          z-40 
+          overflow-scroll 
+          xl:overflow-auto 
+          scroll-smooth 
+          top-0 
+          right-[100%] 
+          py-16 
+          px-8 
+          xl:p-0 
+          bg-white 
+          xl:bg-transparent 
+          w-screen 
+          md:w-1/2 
+          md:shadow-2xl 
+          xl:shadow-none 
+          xl:w-auto 
+          h-screen 
+          xl:h-auto 
+          transition-all 
+          ease-in-out`,
+    topOpen: `right-0`,
     bottom: ``,
   },
-  isOpen: `ui-left-0 
-           md:ui-left-1/2`,
-  isClose: `ui-left-full`,
-  buttonContainer: `ui-navbar__button 
-                    ui-absolute 
-                    ui-z-50 
-                    ui-top-8 
-                    ui-right-6 
-                    ui-flex 
-                    xl:ui-hidden`,
-  closeButton: `ui-bg-green-600 
-                ui-text-white 
-                ui-py-2 
-                ui-px-4 
-                ui-rounded-full`,
-  openButton: `ui-p-2`,
+  isOpen: `left-0 
+           md:left-1/2`,
+  isClose: `left-full`,
+  buttonContainer: `navbar__button 
+                    absolute 
+                    z-50 
+                    top-8 
+                    right-6 
+                    flex 
+                    xl:hidden`,
+  closeButton: `bg-green-600 
+                text-white 
+                py-2 
+                px-4 
+                rounded-full`,
+  openButton: `p-2`,
 }
 
 export default styles

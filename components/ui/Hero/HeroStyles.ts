@@ -1,9 +1,9 @@
 const styles = {
-  hero: `ui-hero ui-w-full ui-flex ui-flex-col-reverse md:ui-flex-row ui-gap-6 md:ui-gap-12 ui-text-center md:ui-text-left`,
-  figure: `ui-hero__image ui-overflow-hidden ui-aspect-4/3 ui-h-56 md:ui-h-72 lg:ui-h-96 md:ui-w-1/2`,
-  body: `ui-hero__body md:ui-w-1/2 ui-space-y-4 ui-my-auto`,
-  shadow: `ui-hero--shadow ui-shadow-2xl`,
-  rounded: `ui-hero--rounded ui-rounded-2xl`,
-  reversed: `ui-hero--reversed md:ui-flex-row-reverse`,
+  hero: `hero w-full flex flex-col-reverse md:flex-row gap-6 md:gap-12 text-center md:text-left`,
+  figure: `hero__image overflow-hidden aspect-4/3 h-56 md:h-72 lg:h-96 md:w-1/2`,
+  body: `hero__body md:w-1/2 space-y-4 my-auto`,
+  shadow: `hero--shadow shadow-2xl`,
+  rounded: `hero--rounded rounded-2xl`,
+  reversed: `hero--reversed md:flex-row-reverse`,
 }
 export default styles

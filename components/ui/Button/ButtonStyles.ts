@@ -1,13 +1,13 @@
 const styles = {
-  button: `ui-button ui-inline-block ui-text-center ui-rounded-full ui-transition-all ui-border-2 ui-font-normal ui-whitespace-nowrap`,
-  primary: `ui-button--primary ui-border-green-600 ui-bg-green-600 ui-text-white hover:ui-bg-white hover:ui-text-green-600`,
-  secondary: `ui-button--secondary ui-border-green-600 ui-text-green-600 hover:ui-bg-green-600 hover:ui-text-white`,
-  disabled: `ui-button--disabled ui-text-gray-400 ui-border-gray-300 ui-bg-gray-50 ui-cursor-not-allowed hover:ui-text-gray-400 hover:ui-border-gray-300 hover:ui-bg-gray-50`,
-  full: `ui-button--full-width ui-w-full`,
+  button: `button inline-block text-center rounded-full transition-all border-2 font-normal whitespace-nowrap`,
+  primary: `button--primary border-green-600 bg-green-600 text-white hover:bg-white hover:text-green-600`,
+  secondary: `button--secondary border-green-600 text-green-600 hover:bg-green-600 hover:text-white`,
+  disabled: `button--disabled text-gray-400 border-gray-300 bg-gray-50 cursor-not-allowed hover:text-gray-400 hover:border-gray-300 hover:bg-gray-50`,
+  full: `button--full-width w-full`,
   size: {
-    sm: `ui-py-1 ui-px-4 `,
-    md: `ui-py-2 ui-px-8 lg:ui-py-3 lg:ui-px-10`,
-    lg: `ui-py-3 ui-px-10 lg:ui-py-4 lg:ui-px-12`,
+    sm: `py-1 px-4 `,
+    md: `py-2 px-8 lg:py-3 lg:px-10`,
+    lg: `py-3 px-10 lg:py-4 lg:px-12`,
   },
 }
 export default styles
