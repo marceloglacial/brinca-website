@@ -38,7 +38,7 @@ export const Embed: FC<IframeProps> = (props) => {
   return (
     <figure>
       <iframe
-        className='w-full aspect-video rounded-2xl shadow-xl'
+        className='aspect-video w-full rounded-2xl shadow-xl'
         allow='autoplay'
         src={embeds[type].url}
       ></iframe>

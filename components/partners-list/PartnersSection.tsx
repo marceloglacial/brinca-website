@@ -12,7 +12,7 @@ const PartnersSection: FC<PartnersSectionProps> = (props) => {
   return (
     <div className='grid grid-cols-1 gap-8'>
       <h4>{props.title[locale]}</h4>
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+      <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
         {props.content.map((item) => (
           <PartnerCard key={item.id} {...item} />
         ))}

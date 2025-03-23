@@ -7,7 +7,7 @@ export const ErrorState = ({ message }: { message: string }) => {
       <Heading className='mb-4'>
         <h1>404: Page Not Found</h1>
       </Heading>
-      <div className=' text-center text-6xl'>😓</div>
+      <div className='text-center text-6xl'>😓</div>
     </Section>
   )
 }

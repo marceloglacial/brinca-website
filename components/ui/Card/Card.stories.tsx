@@ -19,7 +19,7 @@ const content = {
     <img
       src={`https://images.unsplash.com/photo-1600887876365-f7dcf0e5e985?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Zm9ydGFsZXphfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60`}
       alt={`Hero Image`}
-      className='w-full h-full object-cover'
+      className='h-full w-full object-cover'
     />
   ),
   link: (
@@ -102,12 +102,12 @@ export const BusinessCard = (props: CardProps) => {
   return (
     <Card {...props} squared>
       <Card.Body className='text-center lg:text-left'>
-        <div className='flex flex-wrap lg:flex-nowrap gap-8 justify-center lg:justify-start'>
+        <div className='flex flex-wrap justify-center gap-8 lg:flex-nowrap lg:justify-start'>
           <figure className='w-[200px]'>
             <img
               src='https://res.cloudinary.com/brinca/image/upload/v1664060764/brinca-ui/image_qcfpyy.png'
               alt=''
-              className='w-[160px] h-[65px] md:w-[230px] md:h-[95px] object-contain'
+              className='h-[65px] w-[160px] object-contain md:h-[95px] md:w-[230px]'
             />
           </figure>
           <div className='w-full'>
@@ -132,7 +132,7 @@ export const BusinessCard = (props: CardProps) => {
             </div>
           </address>
         </div>
-        <div className='w-full flex justify-center lg:justify-start gap-4'>
+        <div className='flex w-full justify-center gap-4 lg:justify-start'>
           <a href='#'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -184,7 +184,7 @@ export const BusinessCard = (props: CardProps) => {
 }
 
 export const CardGrid = (props: CardProps) => (
-  <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-screen-xl'>
+  <div className='grid max-w-screen-xl gap-8 md:grid-cols-2 lg:grid-cols-3'>
     <Card {...props}>
       <Card.Image>{content.image}</Card.Image>
       <Card.Body>

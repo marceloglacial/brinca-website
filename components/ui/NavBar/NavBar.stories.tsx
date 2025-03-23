@@ -15,7 +15,7 @@ export const Top = (props) => {
           <img
             src='https://res.cloudinary.com/brinca/image/upload/v1664060764/brinca-ui/image_qcfpyy.png'
             alt=''
-            className='w-[160px] h-[65px] md:w-[230px] md:h-[95px] object-contain'
+            className='h-[65px] w-[160px] object-contain md:h-[95px] md:w-[230px]'
           />
         </a>
       </NavBar.Brand>
@@ -54,7 +54,7 @@ export const Bottom = (props) => {
           <img
             src='https://res.cloudinary.com/brinca/image/upload/v1664060777/brinca-ui/image_yfpt9t.png'
             alt=''
-            className='w-[150px] h-[60px] object-contain'
+            className='h-[60px] w-[150px] object-contain'
           />
         </a>
       </NavBar.Brand>

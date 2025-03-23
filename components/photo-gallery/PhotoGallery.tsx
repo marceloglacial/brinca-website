@@ -26,7 +26,7 @@ export const PhotoGallery = (props: { images: any[] }) => {
       {props.images.map((image, index) => {
         return (
           <Animation key={index}>
-            <div className='relative w-full h-full aspect-square rounded-lg shadow-lg overflow-hidden'>
+            <div className='relative aspect-square h-full w-full overflow-hidden rounded-lg shadow-lg'>
               <a
                 href={image.src}
                 data-pswp-width={image.width * 2}
@@ -34,7 +34,7 @@ export const PhotoGallery = (props: { images: any[] }) => {
                 key={'photo-gallery-' + index}
                 target='_blank'
                 rel='noreferrer'
-                className='flex relative w-full h-full'
+                className='relative flex h-full w-full'
               >
                 <Image
                   className='object-cover'

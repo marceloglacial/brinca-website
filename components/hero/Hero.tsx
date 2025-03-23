@@ -6,10 +6,10 @@ export const Hero: React.FC<HeroProps> = (props) => {
   return (
     <HeroUi reversed={props.reversed}>
       <HeroUi.Image rounded={props?.rounded} shadow={props?.shadow}>
-        <figure className='relative w-full h-full'>
+        <figure className='relative h-full w-full'>
           <Image
             alt='Hero Image'
-            className='w-full h-full object-cover'
+            className='h-full w-full object-cover'
             src={props.image}
             sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
             priority

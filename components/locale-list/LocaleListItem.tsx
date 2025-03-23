@@ -4,7 +4,7 @@ export const LocaleListItem: FC<LocaleListType> = (props) => {
     <a
       href={`/${props.slug}`}
       title={props.title}
-      className='flex text-2xl hover:opacity-50 transition-opacity ease-out duration-[0.25s]'
+      className='flex text-2xl transition-opacity duration-[0.25s] ease-out hover:opacity-50'
     >
       {props.icon}
     </a>

@@ -11,5 +11,5 @@ export const Alert = ({ message, type = 'error' }: AlertProps) => {
     info: 'bg-blue-600',
   }
 
-  return <div className={`p-4 rounded-2xl text-white ${alertTypes[type]}`}>{message}</div>
+  return <div className={`rounded-2xl p-4 text-white ${alertTypes[type]}`}>{message}</div>
 }

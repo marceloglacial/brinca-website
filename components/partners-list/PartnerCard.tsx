@@ -15,9 +15,9 @@ const PartnerCard: FC<PartnerTypeLocalized> = (props) => {
     <Animation>
       <Card>
         <Card.Body className='text-center lg:text-left'>
-          <div className='flex flex-wrap lg:flex-nowrap gap-4 justify-center lg:justify-start'>
+          <div className='flex flex-wrap justify-center gap-4 lg:flex-nowrap lg:justify-start'>
             {showLogo && (
-              <figure className='w-auto h-[200px] md:h-[100px] relative aspect-square'>
+              <figure className='relative aspect-square h-[200px] w-auto md:h-[100px]'>
                 <Image
                   alt={content.title}
                   src={content.logo}
@@ -54,7 +54,7 @@ const PartnerCard: FC<PartnerTypeLocalized> = (props) => {
               )}
             </address>
           </div>
-          <div className='w-full flex justify-center lg:justify-start gap-4'>
+          <div className='flex w-full justify-center gap-4 lg:justify-start'>
             {content.whatsapp && (
               <a
                 href={`https://wa.me/${content.whatsapp}`}

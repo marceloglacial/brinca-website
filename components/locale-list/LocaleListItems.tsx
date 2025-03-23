@@ -5,7 +5,7 @@ export const LocaleListItems: FC<LocaleListItemsProps> = (props) => {
   const locales = props.items
 
   return (
-    <div className={'mx-auto flex gap-4 items-center'}>
+    <div className={'mx-auto flex items-center gap-4'}>
       {locales.map((item, index) => (
         <LocaleListItem key={index} {...item} />
       ))}

@@ -19,7 +19,7 @@ const PartnersListItem: FC<CategoryType> = (props) => {
   return (
     <NextLink
       href={`/${params.locale}/${params.slug}/tag/${category.slug}`}
-      className={`border-2 border-green-600 rounded-full py-1 px-3 transition-all ease-in-out duration-200 font-normal ${categoryVariant}`}
+      className={`rounded-full border-2 border-green-600 px-3 py-1 font-normal transition-all duration-200 ease-in-out ${categoryVariant}`}
     >
       {category.title as string}
     </NextLink>

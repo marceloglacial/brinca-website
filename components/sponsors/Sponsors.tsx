@@ -14,9 +14,9 @@ export const Sponsors: FC<SponsorsProps> = async (props) => {
   const sponsors = result.data as SponsorType[]
 
   return (
-    <div className=' flex flex-col gap-2'>
-      <div className=' text-lg font-bold'>{props.data.title}</div>
-      <div className='flex flex-wrap gap-8 justify-evenly'>
+    <div className='flex flex-col gap-2'>
+      <div className='text-lg font-bold'>{props.data.title}</div>
+      <div className='flex flex-wrap justify-evenly gap-8'>
         {sponsors.map((sponsor, index) => {
           if (!sponsor.active) return
           return (
@@ -24,7 +24,7 @@ export const Sponsors: FC<SponsorsProps> = async (props) => {
               key={index}
               href={sponsor.link}
               target='_blank'
-              className='flex relative w-48 h-32'
+              className='relative flex h-32 w-48'
               rel='noreferrer'
             >
               <Image
@@ -32,7 +32,7 @@ export const Sponsors: FC<SponsorsProps> = async (props) => {
                 alt={'Sponsor logo'}
                 fill
                 sizes='150px, 60px'
-                className=' object-contain'
+                className='object-contain'
               />
             </a>
           )

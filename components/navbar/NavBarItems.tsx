@@ -7,7 +7,7 @@ export const NavBarItems: FC<NavBarUiProps> = ({ variant, items, localeList }) =
   const [isOpen, setIsOpen] = useState(false)
   const isTop = variant === 'top' || undefined
   return (
-    <div className={isTop ? `flex items-center ml-auto` : `hidden xl:flex ml-auto`}>
+    <div className={isTop ? `ml-auto flex items-center` : `ml-auto hidden xl:flex`}>
       <NavBar.Items variant={variant} isOpen={isOpen}>
         {items?.map((item, index) => {
           const linkType = item.type === 'link' ? undefined : item.type
@@ -18,7 +18,7 @@ export const NavBarItems: FC<NavBarUiProps> = ({ variant, items, localeList }) =
             </NextLink>
           )
         })}
-        <div className={`transform rotate-90 xl:rotate-0 ${isTop ? `` : `text-white`}`}>|</div>
+        <div className={`rotate-90 transform xl:rotate-0 ${isTop ? `` : `text-white`}`}>|</div>
         {localeList}
       </NavBar.Items>
       <NavBar.Button isOpen={isOpen} setIsOpen={setIsOpen} />

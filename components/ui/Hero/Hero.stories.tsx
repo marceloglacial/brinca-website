@@ -14,7 +14,7 @@ const content = {
     <img
       src={`https://images.unsplash.com/photo-1527374071603-76de89807336?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YnJhemlsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60`}
       alt={`Hero Image`}
-      className='w-full h-full object-cover'
+      className='h-full w-full object-cover'
     />
   ),
   footer: <Button variant='secondary'>Button</Button>,
