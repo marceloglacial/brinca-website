@@ -1,39 +1,27 @@
 {
   "name": "brinca-website",
-  "version": "0.8.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "env:open": "npx dotenv-vault@latest open",
-    "env:pull": "npx dotenv-vault@latest pull",
-    "env:push": "npx dotenv-vault@latest open"
+    "lint": "next lint"
   },
   "dependencies": {
-    "@firebase/firestore": "^4.7.4",
-    "@marceloglacial/brinca-ui": "^1.22.0",
-    "cloudinary": "^2.5.1",
-    "firebase": "^11.0.1",
-    "next": "15.0.2",
-    "next-i18n-router": "^5.4.3",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-markdown": "^9.0.1",
-    "react-spring-lightbox": "^1.8.0",
-    "sharp": "^0.33.5",
-    "sonner": "^1.7.4",
-    "styled-components": "^6.1.13"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "next": "15.2.3"
   },
   "devDependencies": {
-    "@types/node": "^22.9.0",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
-    "eslint": "^9.14.0",
-    "eslint-config-next": "15.0.2",
-    "postcss": "^8.4.47",
-    "tailwindcss": "^3.4.14",
-    "typescript": "^5.6.3"
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@tailwindcss/postcss": "^4",
+    "tailwindcss": "^4",
+    "eslint": "^9",
+    "eslint-config-next": "15.2.3",
+    "@eslint/eslintrc": "^3"
   }
 }

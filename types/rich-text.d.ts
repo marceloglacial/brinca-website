@@ -1,3 +1,0 @@
-interface RichTextProps {
-    content: string;
-}
