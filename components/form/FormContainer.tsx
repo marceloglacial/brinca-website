@@ -20,7 +20,7 @@ export const FormContainer: FC<FormContainerProps> = (props) => {
 
   const file_download = form.fields.find((field) => field.type === 'file_download')
 
-  if (!formSubmited && file_download) {
+  if (formSubmited && file_download) {
     return (
       <div className='mt-16 text-center'>
         <Section spacing='m'>
