@@ -1,7 +1,5 @@
 interface NavBarUiProps {
-    variant?: 'top' | 'bottom';
-    items: {
-        text: string;
-        link: string;
-    }[];
+  variant?: 'top' | 'bottom'
+  items: MenuItemType[]
+  localeList?: ReactElement<any>
 }

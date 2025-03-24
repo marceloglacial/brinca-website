@@ -1,41 +1,65 @@
-'use client';
-import { FC } from 'react';
-import { formServerAction } from '@/actions';
-import { FormField } from './FormField';
-import { FormSubmitButton } from './FormSubmitButton';
-import { useFormState } from 'react-dom';
-import { Form } from '@marceloglacial/brinca-ui';
-import { FormTitle } from './FormTitle';
+'use client'
+import { FormField, FormTitle } from '@/components'
+import { DICTIONARY } from '@/constants'
+import { handleFormSubmission } from '@/lib'
+import { localizedContent } from '@/utils'
+import { Link, Section } from '@/components/ui'
+import { useParams } from 'next/navigation'
+import { FC, useState } from 'react'
 
-export const FormContainer: FC<FormContainerProps> = (props): JSX.Element => {
-  const { data, language } = props;
-  const { fields, action, submitButton, status, title } = data;
-  const [state, formAction] = useFormState(formServerAction, null);
+export const FormContainer: FC<FormContainerProps> = (props) => {
+  const params = useParams()
+  const [formSubmited, setformSubmited] = useState<FormSubmissionType>(null)
 
-  if (state) {
-    const textColor = state.status === 'error' ? 'text-red-600 font-bold' : '';
+  const locale = params.locale as LocalesType
+  const form = localizedContent(props.data, locale) as FormType
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    await handleFormSubmission(e, setformSubmited)
+  }
+
+  const file_download = form.fields.find((field) => field.type === 'file_download')
+
+  if (!formSubmited && file_download) {
     return (
-      <div className='form-feedback'>
-        <FormTitle title={title} language={language} />
-        <div className={`p-8 text-center ${textColor}`}>
-          {status[state.status as FormStatus].message[language]}
-        </div>
+      <div className='mt-16 text-center'>
+        <Section spacing='m'>
+          <h4>{file_download.value.title}</h4>
+          <div>
+            <a href={file_download.value.file_url} target='_blank' rel='noreferrer'>
+              <Link variant='primary'>{DICTIONARY.FORM_FILE_DOWNLOAD[locale]}</Link>
+            </a>
+          </div>
+        </Section>
       </div>
-    );
+    )
+  }
+
+  if (formSubmited) {
+    return (
+      <div className='mt-16 text-center'>
+        <Section spacing='s'>
+          <h4>{DICTIONARY.FORM_SUCCESS[locale]}</h4>
+          <p>{DICTIONARY.FORM_RESPONSE[locale]}</p>
+        </Section>
+      </div>
+    )
   }
 
   return (
-    <Form action={formAction}>
-      <FormTitle title={title} language={language} />
-      <input type='hidden' name='formTitle' value={title[language]} />
-      <input type='hidden' name='formType' value={action.type} />
-      <input type='hidden' name='formEndpoint' value={action.endpoint} />
-      <input type='text' name='full_name' className='hidden' tabIndex={-1} />
-
-      {fields.map((field: any) => (
-        <FormField key={field.id} language={language} attributes={field} />
-      ))}
-      <FormSubmitButton value={submitButton.title[language]} />
-    </Form>
-  );
-};
+    <>
+      <form onSubmit={handleSubmit}>
+        {form.show_title && <FormTitle>{form.title}</FormTitle>}
+        <input type='hidden' name='formTitle' value={form.title} />
+        <input type='hidden' name='formType' value={form.submit_type} />
+        <input type='hidden' name='formEndpoint' value={form?.collection_id} />
+        <input type='hidden' name='formLocale' value={locale} />
+        <div className='mx-auto grid max-w-screen-md grid-cols-1 gap-4'>
+          {form.fields.map((field, index) => (
+            <FormField key={index} {...field} />
+          ))}
+        </div>
+      </form>
+    </>
+  )
+}

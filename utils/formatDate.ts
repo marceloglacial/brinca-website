@@ -1,6 +1,13 @@
-export const formatDate = (d: string, locale?: string): string => new Date(d).toLocaleDateString(locale || 'en', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-})
+import { formatLocale } from './localization'
+
+export const formatDate = (timestamp: any, locale?: LocalesType): string => {
+  return new Date(timestamp.seconds * 1000 + timestamp.nanoseconds / 1e6).toLocaleDateString(
+    formatLocale(locale ?? 'en'),
+    {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    }
+  )
+}

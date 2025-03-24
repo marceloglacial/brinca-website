@@ -1,23 +1,52 @@
-import { Content } from '@/components';
-import { getSinglePage } from '@/services';
-import { Heading, Section } from '@marceloglacial/brinca-ui';
+import { Content, ErrorState } from '@/components'
+import { SITE } from '@/constants'
+import { getAllPages, getSinglePage } from '@/lib'
+import { Heading, Section } from '@/components/ui'
+import { Metadata } from 'next'
 
-export default async function Page({ params }: PageParamsType) {
-  const data = await getSinglePage(params.locale, params.slug || '');
-  const pageData = data.data;
-  const language = params.locale;
+export const revalidate = 60
+export const dynamicParams = true
 
-  if (!pageData) {
-    console.error(data.error);
-    return <h1>Page Not found</h1>;
+export async function generateStaticParams() {
+  const pages = await getAllPages()
+  return pages.data.map((page) => ({
+    id: String(page.id),
+    slug: String(page.slug),
+  }))
+}
+
+export async function generateMetadata(props: PageParamsType): Promise<Metadata> {
+  const params = await props.params
+  const result = await getSinglePage(params.slug, params.locale)
+
+  if (result.status === 'error')
+    return {
+      title: SITE.NAME,
+    }
+
+  const page = result.data
+
+  return {
+    title: `${SITE.NAME} - ${page.title}`,
   }
+}
+
+export default async function Page(props: PageParamsType) {
+  const params = await props.params
+  const result = await getSinglePage(params.slug, params.locale)
+
+  if (result.status === 'error') return <ErrorState message={result.message} />
+
+  const content = result.data
 
   return (
     <Section>
-      <Heading className='mb-4'>
-        <h1>{pageData.title[language]}</h1>
-      </Heading>
-      <Content items={pageData.content} language={language} />
+      <div className='mb-12'>
+        <Heading>
+          <h1>{content.title}</h1>
+        </Heading>
+      </div>
+      <Content items={content.blocks} locale={params.locale} />
     </Section>
-  );
+  )
 }

@@ -1,4 +1,3 @@
 interface RichTextProps {
-    content: LocalizedString;
-    language: LocaleTypes;
+  content: string
 }

@@ -1,13 +1,13 @@
 interface HeroProps {
-    id: number
-    language: LocaleTypes;
-    title: LocalizedString;
-    description: LocalizedString;
-    rounded: boolean
-    shadow: boolean
-    image: ImageProps;
-    link: {
-        link: LocalizedString
-        text: LocalizedString
-    }
+  id: number
+  title: string
+  description: string
+  rounded?: boolean
+  reversed?: boolean
+  shadow?: boolean
+  image: string
+  link: {
+    title: string
+    url: string
+  }
 }

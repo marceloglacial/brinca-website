@@ -1,69 +1,53 @@
-'use client';
-import Image from 'next/image';
-import { useState } from 'react';
-import Lightbox from 'react-spring-lightbox';
-import { ImagesListItem } from 'react-spring-lightbox/dist/types/ImagesList';
+'use client'
+import PhotoSwipeLightbox from 'photoswipe/lightbox'
+import 'photoswipe/style.css'
 
-export const PhotoGallery = ({
-  images,
-}: {
-  images: ImagesListItem[];
-}): JSX.Element => {
-  const [currentImageIndex, setCurrentIndex] = useState(0);
-  const [isOpen, setIsOpen] = useState(false);
+import Image from 'next/image'
+import { useEffect } from 'react'
+import { Animation } from '../animation/Animation'
 
-  const gotoPrevious = () =>
-    currentImageIndex > 0 && setCurrentIndex(currentImageIndex - 1);
+export const PhotoGallery = (props: { images: HTMLImageElement[] }) => {
+  useEffect(() => {
+    let lightbox: PhotoSwipeLightbox | null = new PhotoSwipeLightbox({
+      gallery: '#photo-gallery',
+      children: 'a',
+      pswpModule: () => import('photoswipe'),
+    })
+    lightbox.init()
 
-  const gotoNext = () =>
-    currentImageIndex + 1 < images.length &&
-    setCurrentIndex(currentImageIndex + 1);
-
-  const handleClick = (id: number) => {
-    setIsOpen(true);
-    setCurrentIndex(id);
-  };
-
-  const CloseButton = () => (
-    <div
-      className='absolute top-0 right-0 p-8 text-white font-bold cursor-pointer z-50'
-      onClick={() => setIsOpen(false)}
-    >
-      X
-    </div>
-  );
+    return () => {
+      lightbox?.destroy()
+      lightbox = null
+    }
+  }, [])
 
   return (
-    <>
-      <Lightbox
-        isOpen={isOpen}
-        onPrev={gotoPrevious}
-        onNext={gotoNext}
-        onClose={() => setIsOpen(false)}
-        images={images}
-        currentIndex={currentImageIndex}
-        className='relative'
-        style={{ background: 'rgba(0,0,0,90%' }}
-        renderHeader={() => <CloseButton />}
-      />
-      <div className='gallery grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8'>
-        {images.map((image: ImagesListItem, index: number) => (
-          <figure
-            key={index}
-            className='relative w-full aspect-square shadow-xl cursor-pointer'
-            onClick={() => handleClick(index)}
-          >
-            <Image
-              alt='image'
-              src={image.src}
-              className=' object-cover rounded-lg'
-              sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-              fill
-              priority
-            />
-          </figure>
-        ))}
-      </div>
-    </>
-  );
-};
+    <div className='grid grid-cols-5 gap-8 pt-8' id='photo-gallery'>
+      {props.images.map((image, index) => {
+        return (
+          <Animation key={index}>
+            <div className='relative aspect-square h-full w-full overflow-hidden rounded-lg shadow-lg'>
+              <a
+                href={image.src}
+                data-pswp-width={image.width * 2}
+                data-pswp-height={image.height * 2}
+                key={'photo-gallery-' + index}
+                target='_blank'
+                rel='noreferrer'
+                className='relative flex h-full w-full'
+              >
+                <Image
+                  className='object-cover'
+                  src={image.src}
+                  alt={image.alt || image.src}
+                  fill
+                  sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                />
+              </a>
+            </div>
+          </Animation>
+        )
+      })}
+    </div>
+  )
+}

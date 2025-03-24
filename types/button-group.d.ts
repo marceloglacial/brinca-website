@@ -1,12 +1,11 @@
 interface ButtonGroupProps {
-    locale: LocaleTypes;
-    content: ButtonGroupContent;
+  content: ButtonGroupType[]
 }
 
-interface ButtonGroupContent extends ContentType {
-    data: {
-        id: string;
-        link: LocalizedString;
-        title: LocalizedString;
-    }[];
+type ButtonGroupType = {
+  link: {
+    title: string
+    url: string
+  }
+  new_page: boolean
 }

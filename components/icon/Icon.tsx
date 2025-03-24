@@ -1,14 +1,9 @@
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode } from 'react'
 
-export const Icon: FC<IconProps> = (props): JSX.Element => {
+export const Icon: FC<IconProps> = (props) => {
   const icon: { [k in IconTypes]: ReactNode } = {
     loading: (
-      <svg
-        width='50'
-        height='50'
-        viewBox='0 0 1024 1024'
-        xmlns='http://www.w3.org/2000/svg'
-      >
+      <svg width='50' height='50' viewBox='0 0 1024 1024' xmlns='http://www.w3.org/2000/svg'>
         <path
           fill='#000000'
           d='M512 64a32 32 0 0 1 32 32v192a32 32 0 0 1-64 0V96a32 32 0 0 1 32-32zm0 640a32 32 0 0 1 32 32v192a32 32 0 1 1-64 0V736a32 32 0 0 1 32-32zm448-192a32 32 0 0 1-32 32H736a32 32 0 1 1 0-64h192a32 32 0 0 1 32 32zm-640 0a32 32 0 0 1-32 32H96a32 32 0 0 1 0-64h192a32 32 0 0 1 32 32zM195.2 195.2a32 32 0 0 1 45.248 0L376.32 331.008a32 32 0 0 1-45.248 45.248L195.2 240.448a32 32 0 0 1 0-45.248zm452.544 452.544a32 32 0 0 1 45.248 0L828.8 783.552a32 32 0 0 1-45.248 45.248L647.744 692.992a32 32 0 0 1 0-45.248zM828.8 195.264a32 32 0 0 1 0 45.184L692.992 376.32a32 32 0 0 1-45.248-45.248l135.808-135.808a32 32 0 0 1 45.248 0zm-452.544 452.48a32 32 0 0 1 0 45.248L240.448 828.8a32 32 0 0 1-45.248-45.248l135.808-135.808a32 32 0 0 1 45.248 0z'
@@ -59,6 +54,6 @@ export const Icon: FC<IconProps> = (props): JSX.Element => {
         <path d='M0 0v24h24v-24h-24zm8 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.397-2.586 7-2.777 7 2.476v6.759z' />
       </svg>
     ),
-  };
-  return <div className='icon'>{icon[props.type]}</div>;
-};
+  }
+  return <div className='icon'>{icon[props.type]}</div>
+}

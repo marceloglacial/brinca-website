@@ -1,19 +1,20 @@
-import { FC, lazy } from 'react';
-import { PhotoGallery } from '@/components';
-import { getCloudinaryImages } from '@/services';
+import { getCloudinaryImages } from '@/lib'
+import { FC } from 'react'
+import { PhotoGallery } from '../photo-gallery/PhotoGallery'
 
 interface ICloudinaryGallery {
-  path: string;
+  path: string
 }
 
 export const CloudinaryGallery: FC<ICloudinaryGallery> = async (props) => {
-  const data = await getCloudinaryImages(props.path);
+  const data = await getCloudinaryImages(props.path)
+
   const images = data.map((image) => {
     return {
-      src: image,
+      ...image,
       alt: 'Photo',
-    };
-  });
+    }
+  })
 
-  return <PhotoGallery images={images} />;
-};
+  return <PhotoGallery images={images} />
+}

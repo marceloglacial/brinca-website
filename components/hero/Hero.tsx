@@ -1,19 +1,16 @@
-import { Hero as HeroUi } from '@marceloglacial/brinca-ui';
-import Image from 'next/image';
-import { FC } from 'react';
-import { Link as LinkUI } from '@/components';
-import Link from 'next/link';
+import { Hero as HeroUi, Link } from '@/components/ui'
+import Image from 'next/image'
+import NextLink from 'next/link'
 
-export const Hero: FC<HeroProps> = (props): JSX.Element => {
-  const isReverse = props.id % 2 === 0;
+export const Hero: React.FC<HeroProps> = (props) => {
   return (
-    <HeroUi reversed={isReverse}>
-      <HeroUi.Image rounded={props.rounded} shadow={props.shadow}>
-        <figure className='relative w-full h-full'>
+    <HeroUi reversed={props.reversed}>
+      <HeroUi.Image rounded={props?.rounded} shadow={props?.shadow}>
+        <figure className='relative h-full w-full'>
           <Image
             alt='Hero Image'
-            className='w-full h-full object-cover'
-            src={props.image.src}
+            className='h-full w-full object-cover'
+            src={props.image}
             sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
             priority
             fill
@@ -21,12 +18,12 @@ export const Hero: FC<HeroProps> = (props): JSX.Element => {
         </figure>
       </HeroUi.Image>
       <HeroUi.Body>
-        <h1>{props.title[props.language]}</h1>
-        <p>{props.description[props.language]}</p>
-        <Link className='inline-block' href={props.link.link[props.language]}>
-          <LinkUI variant='secondary'>{props.link.text[props.language]}</LinkUI>
-        </Link>
+        <h1>{props.title}</h1>
+        <p>{props.description}</p>
+        <NextLink className='inline-block' href={props.link.url}>
+          <Link variant='secondary'>{props.link.title}</Link>
+        </NextLink>
       </HeroUi.Body>
     </HeroUi>
-  );
-};
+  )
+}

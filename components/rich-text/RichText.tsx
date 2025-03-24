@@ -1,13 +1,10 @@
-import { FC } from 'react';
+import { FC } from 'react'
+import ReactMarkdown from 'react-markdown'
 
-export const RichText: FC<RichTextProps> = ({
-  content,
-  language,
-}): JSX.Element => {
+export const RichText: FC<RichTextProps> = ({ content }) => {
   return (
-    <article
-      className='grid grid-cols-1 gap-8'
-      dangerouslySetInnerHTML={{ __html: content[language] }}
-    />
-  );
-};
+    <article>
+      <ReactMarkdown>{content}</ReactMarkdown>
+    </article>
+  )
+}

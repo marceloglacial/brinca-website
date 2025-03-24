@@ -1,34 +1,42 @@
 {
   "name": "brinca-website",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write .",
+    "env:open": "pnpm dlx dotenv-vault@latest open",
+    "env:pull": "pnpm dlx dotenv-vault@latest pull",
+    "env:push": "pnpm dlx dotenv-vault@latest open"
   },
   "dependencies": {
-    "@firebase/firestore": "^4.6.5",
-    "@marceloglacial/brinca-ui": "^1.19.0",
-    "cloudinary": "^2.4.0",
-    "firebase": "^10.12.5",
-    "next": "14.2.5",
-    "next-i18n-router": "^5.4.3",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-spring-lightbox": "^1.8.0",
-    "sharp": "^0.33.4",
-    "styled-components": "^6.1.12"
+    "cloudinary": "^2.6.0",
+    "firebase": "^11.5.0",
+    "motion": "^12.5.0",
+    "next": "15.2.3",
+    "next-i18n-router": "^5.5.1",
+    "photoswipe": "^5.4.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hooks": "^1.0.1",
+    "react-markdown": "^10.1.0"
   },
   "devDependencies": {
-    "@types/node": "^22.2.0",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8.56.0",
-    "eslint-config-next": "14.2.5",
-    "postcss": "^8.4.41",
-    "tailwindcss": "^3.4.9",
-    "typescript": "^5.5.4"
+    "@eslint/eslintrc": "^3",
+    "@next/eslint-plugin-next": "15.2.3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.2.3",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }

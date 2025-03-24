@@ -1,14 +1,10 @@
-import { FC } from 'react';
-import { Heading } from '@marceloglacial/brinca-ui';
+import { Heading } from '@/components/ui'
+import { FC, PropsWithChildren } from 'react'
 
-export const FormTitle: FC<FormTitleProps> = ({
-  title,
-  language,
-}): JSX.Element => {
-  if (!title) return <></>;
+export const FormTitle: FC<PropsWithChildren> = (props) => {
   return (
     <Heading>
-      <h2>{title[language]}</h2>
+      <h2>{props.children}</h2>
     </Heading>
-  );
-};
+  )
+}

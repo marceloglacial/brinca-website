@@ -1,10 +1,10 @@
 type ContentListDataType = {
-    title: LocalizedString,
-    type: string
+  title?: string
+  type: string
+  items_per_page?: number
 }
 
 interface ContentListProps {
-    language: LocaleTypes;
-    type: ContentListDataType.type
-    title?: ContentListDataType.title
+  data: ContentListDataType
+  locale?: LocalesType
 }
