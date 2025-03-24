@@ -1,50 +1,43 @@
-import { COLLECTIONS } from '@/constants';
-import { getPageDataBySlug } from '@/services';
-import { FC } from 'react';
-import { Alert } from '@/components';
-import Image from 'next/image';
+import { Alert } from '@/components'
+import { COLLECTIONS } from '@/constants'
+import { getPageDataBySlug } from '@/lib'
+import Image from 'next/image'
+import { FC } from 'react'
 
-export const Sponsors: FC<SponsorsProps> = async (
-  props
-): Promise<JSX.Element> => {
-  if (!props.data.active) return <></>;
+export const Sponsors: FC<SponsorsProps> = async (props) => {
+  if (!props.data.active) return <></>
 
-  const result = await getPageDataBySlug(COLLECTIONS.SPONSORS, props.locale);
+  const result = await getPageDataBySlug(COLLECTIONS.SPONSORS, props.locale, 'title', 'asc')
 
-  if (result.status === 'error') return <Alert message={result.message} />;
+  if (result.status === 'error') return <Alert message={result.message} />
 
-  const sponsors = result.data as SponsorType[];
+  const sponsors = result.data as SponsorType[]
 
   return (
-    <div data-sponsors-container className=' flex flex-col gap-2'>
-      <div data-sponsors-title className=' text-lg font-bold'>
-        {props.data.title}
-      </div>
-      <div
-        data-sponsors-list
-        className='flex flex-wrap gap-8 justify-evenly bg-gray-100 rounded-xl p-8'
-      >
-        {sponsors.map((sponsor) => {
-          if (!sponsor.active) return <></>;
+    <div className='flex flex-col gap-2'>
+      <div className='text-lg font-bold'>{props.data.title}</div>
+      <div className='flex flex-wrap justify-evenly gap-8'>
+        {sponsors.map((sponsor, index) => {
+          if (!sponsor.active) return
           return (
             <a
-              data-sponsor
-              key={sponsor.id}
+              key={index}
               href={sponsor.link}
               target='_blank'
-              className='flex relative w-64 h-32'
+              className='relative flex h-32 w-48'
+              rel='noreferrer'
             >
               <Image
                 src={sponsor.image}
                 alt={'Sponsor logo'}
                 fill
                 sizes='150px, 60px'
-                className=' object-contain'
+                className='object-contain'
               />
             </a>
-          );
+          )
         })}
       </div>
     </div>
-  );
-};
+  )
+}

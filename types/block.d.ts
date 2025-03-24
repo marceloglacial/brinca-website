@@ -1,9 +1,9 @@
 type BlockType = {
-    type: string;
-    value: any;
-};
+  type: string
+  value: any
+}
 
 interface BlockProps {
-    content: BlockType;
-    locale?: LocalesType
+  content: BlockType
+  locale?: LocalesType
 }

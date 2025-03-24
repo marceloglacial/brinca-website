@@ -1,22 +1,20 @@
-'use client';
+'use client'
 
-import { FC } from 'react';
-import PartnersListItem from './PartnersListItem';
-import { useParams } from 'next/navigation';
+import { useParams } from 'next/navigation'
+import { FC } from 'react'
+import PartnersListItem from './PartnersListItem'
 
-const PartnersListItems: FC<{ data: CategoryType[] }> = (
-  props
-): JSX.Element => {
-  const params = useParams();
-  const locale = params.locale as string;
+const PartnersListItems: FC<{ data: CategoryType[] }> = (props) => {
+  const params = useParams()
+  const locale = params.locale as string
 
   const getLocalizedTitle = (title: string | LocalizedString): string => {
-    return typeof title === 'string' ? title : title[locale] || '';
-  };
+    return typeof title === 'string' ? title : title[locale] || ''
+  }
 
   const categories = props.data.sort((a, b) =>
     getLocalizedTitle(a.title).localeCompare(getLocalizedTitle(b.title))
-  );
+  )
 
   return (
     <>
@@ -24,7 +22,7 @@ const PartnersListItems: FC<{ data: CategoryType[] }> = (
         <PartnersListItem key={index} {...item} />
       ))}
     </>
-  );
-};
+  )
+}
 
-export default PartnersListItems;
+export default PartnersListItems

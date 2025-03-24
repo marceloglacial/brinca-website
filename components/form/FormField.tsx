@@ -1,25 +1,23 @@
-'use client';
-import { FC } from 'react';
-import { Form } from '@marceloglacial/brinca-ui';
-import { useFormStatus } from 'react-dom';
-import { FormPartnersList } from './FormPartnersList';
-import { DICTIONARY } from '@/constants';
-import { localizedContent } from '@/utils';
+'use client'
+import { DICTIONARY } from '@/constants'
+import { localizedContent } from '@/utils'
+import { Form } from '@/components/ui'
+import { useParams } from 'next/navigation'
+import { FC, useId } from 'react'
+import { useFormStatus } from 'react-dom'
+import { FormPartnersList } from './FormPartnersList'
 
-export const FormField: FC<FieldType> = (props): JSX.Element => {
-  const { pending } = useFormStatus();
+export const FormField: FC<FieldType> = (props) => {
+  const { pending } = useFormStatus()
+  const id = useId()
+  const params = useParams()
 
-  const field = localizedContent(props.value);
-  const multiField = props.value;
-  const label = field.label;
-  const hasProp = (prop: any) =>
-    Object.values(prop || {}).some((value) => value) ? prop : '';
+  const field = localizedContent(props.value)
+  const multiField = props.value
+  const label = field.label
 
   const getFormField = () => {
-    const isTel = field.input_type === 'tel';
-
-    if (field === 'category_partners')
-      return <FormPartnersList pending={pending} />;
+    if (field === 'category_partners') return <FormPartnersList pending={pending} />
 
     switch (props.type) {
       case 'text':
@@ -28,33 +26,30 @@ export const FormField: FC<FieldType> = (props): JSX.Element => {
             <>
               {Object.keys(DICTIONARY.LOCALES).map((localeKey) => (
                 <Form.Input
+                  id={`${id}-${props.type}-${localeKey}`}
                   key={localeKey}
                   type={multiField.input_type}
                   name={`${multiField.name}_${localeKey}`}
-                  placeholder={
-                    DICTIONARY.LOCALES[
-                      localeKey as keyof typeof DICTIONARY.LOCALES
-                    ]
-                  }
+                  placeholder={DICTIONARY.LOCALES[localeKey as keyof typeof DICTIONARY.LOCALES]}
                   required={multiField.required}
                   disabled={pending}
                   full
                 />
               ))}
             </>
-          );
+          )
         }
         return (
           <Form.Input
+            id={`${id}-${props.type}`}
             type={field.input_type}
             name={field.name}
-            placeholder={isTel ? `+9 999 999 9999` : hasProp(field.placeholder)}
+            placeholder={field.placeholder[params.locale as string]}
             required={field.required}
-            pattern={isTel ? '^\\+(?:[0-9] ?){6,14}[0-9]$' : undefined}
             disabled={pending}
             full
           />
-        );
+        )
 
       case 'textarea':
         if (field.localized) {
@@ -62,13 +57,10 @@ export const FormField: FC<FieldType> = (props): JSX.Element => {
             <>
               {Object.keys(DICTIONARY.LOCALES).map((localeKey) => (
                 <Form.Textarea
+                  id={`${id}-${props.type}-${localeKey}`}
                   key={localeKey}
                   name={`${multiField.name}_${localeKey}`}
-                  placeholder={
-                    DICTIONARY.LOCALES[
-                      localeKey as keyof typeof DICTIONARY.LOCALES
-                    ]
-                  }
+                  placeholder={DICTIONARY.LOCALES[localeKey as keyof typeof DICTIONARY.LOCALES]}
                   required={multiField.required}
                   disabled={pending}
                   rows={10}
@@ -76,22 +68,24 @@ export const FormField: FC<FieldType> = (props): JSX.Element => {
                 />
               ))}
             </>
-          );
+          )
         }
         return (
           <Form.Textarea
+            id={`${id}-${props.type}`}
             name={field.name}
-            placeholder={hasProp(field.placeholder)}
+            placeholder={field.placeholder[params.locale as string]}
             required={field.required}
             rows={10}
             disabled={pending}
             full
           />
-        );
+        )
 
       case 'select':
         return (
           <Form.Select
+            id={`${id}-${props.type}`}
             name={field.name}
             options={field.options.map((option: OptionsType) => ({
               label: option.title,
@@ -101,23 +95,51 @@ export const FormField: FC<FieldType> = (props): JSX.Element => {
             disabled={pending}
             full
           />
-        );
+        )
+
+      case 'plain_text':
+        return <p className='text-sm'>{field.title}</p>
+
+      case 'checkbox':
+        return <Form.Input name={field.name} id={`${id}-${props.type}`} type='checkbox' />
 
       case 'submit':
         return (
-          <Form.Input type='submit' value={field.title} disabled={pending} />
-        );
+          <Form.Input
+            id={`${id}-${props.type}`}
+            type='submit'
+            value={field.title}
+            disabled={pending}
+          />
+        )
       default:
-        return <></>;
+        return <></>
     }
-  };
+  }
+
+  if (props.type === 'checkbox') {
+    const label = localizedContent(props.value.title)
+
+    return (
+      <div className={`relative ${pending ? 'opacity-50' : ''}`}>
+        <Form.Group>
+          {getFormField()}
+          {label && (
+            <Form.Label htmlFor={`${id}-${props.type}`}>
+              <span className='text-sm font-light'>{label}</span>
+            </Form.Label>
+          )}
+        </Form.Group>
+      </div>
+    )
+  }
 
   return (
-    <div className={pending ? 'opacity-50' : ''}>
+    <div className={`relative ${pending ? 'opacity-50' : ''}`}>
       <Form.Group>
-        {label && <Form.Label>{label}</Form.Label>}
+        {label && <Form.Label htmlFor={`${id}-${props.type}`}>{label}</Form.Label>}
         {getFormField()}
       </Form.Group>
     </div>
-  );
-};
+  )
+}

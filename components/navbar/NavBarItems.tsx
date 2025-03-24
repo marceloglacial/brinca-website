@@ -1,20 +1,27 @@
-'use client';
-import { Link, NavBar } from '@marceloglacial/brinca-ui';
-import NextLink from 'next/link';
-import { FC } from 'react';
+'use client'
+import { Link, NavBar } from '@/components/ui'
+import NextLink from 'next/link'
+import { FC, useState } from 'react'
 
-export const NavBarItems: FC<NavBarUiProps> = ({ variant, items }) => {
+export const NavBarItems: FC<NavBarUiProps> = ({ variant, items, localeList }) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const isTop = variant === 'top' || undefined
   return (
-    <NavBar.Items variant={variant}>
-      {items?.map((item, index) => {
-        const linkType = item.type === 'link' ? undefined : item.type;
-        const componentStyles = variant === 'bottom' ? 'white' : linkType;
-        return (
-          <NextLink href={`/${item.slug}`} key={index}>
-            <Link variant={componentStyles}>{item.title}</Link>
-          </NextLink>
-        );
-      })}
-    </NavBar.Items>
-  );
-};
+    <div className={isTop ? `ml-auto flex items-center` : `ml-auto hidden xl:flex`}>
+      <NavBar.Items variant={variant} isOpen={isOpen}>
+        {items?.map((item, index) => {
+          const linkType = item.type === 'link' ? undefined : item.type
+          const componentStyles = variant === 'bottom' ? 'white' : linkType
+          return (
+            <NextLink onClick={() => setIsOpen(false)} href={`/${item.slug}`} key={index}>
+              <Link variant={componentStyles}>{item.title}</Link>
+            </NextLink>
+          )
+        })}
+        <div className={`rotate-90 transform xl:rotate-0 ${isTop ? `` : `text-white`}`}>|</div>
+        {localeList}
+      </NavBar.Items>
+      <NavBar.Button isOpen={isOpen} setIsOpen={setIsOpen} />
+    </div>
+  )
+}

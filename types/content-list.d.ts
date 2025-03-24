@@ -1,10 +1,10 @@
 type ContentListDataType = {
-    title?: string,
-    type: string
-    items_per_page?: number
+  title?: string
+  type: string
+  items_per_page?: number
 }
 
 interface ContentListProps {
-    data: ContentListDataType
-    locale?: LocalesType
+  data: ContentListDataType
+  locale?: LocalesType
 }

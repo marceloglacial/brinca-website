@@ -1,21 +1,21 @@
 type LocalesType = 'en' | 'pt_br'
 
 type LocaleListType = {
-    icon: string;
-    slug: string;
-    title: string;
-};
+  icon: string
+  slug: string
+  title: string
+}
 
 interface LocaleListItemsProps {
-    items: LocaleListType[];
+  items: LocaleListType[]
 }
 
 type LocalizationType = {
-    [locale in LocalesType]: string
+  [locale in LocalesType]: string
 }
 
 type LocalizedString = {
-    [k in LocaleTypes]: string
+  [k in LocaleTypes]: string
 }
 
-type LocalizedContent = { [key: string]: any };
+type LocalizedContent = { [key: string]: any }

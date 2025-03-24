@@ -1,28 +1,14 @@
-'use client';
-import { FC } from 'react';
-import { LocaleListItem } from './LocaleListItem';
-import { useParams } from 'next/navigation';
+import { FC } from 'react'
+import { LocaleListItem } from './LocaleListItem'
 
-export const LocaleListItems: FC<LocaleListItemsProps> = (
-  props
-): JSX.Element => {
-  const locales = props.items;
-  const params = useParams();
-  const selectedLocale = locales.find(
-    (locale) => locale.slug === params.locale
-  );
-  const remainLocales = locales.filter(
-    (locale) => locale.slug !== params.locale
-  );
-
-  const styles = `locale-list fixed bottom-[50%] -right-12 hover:right-0 transition-all flex gap-4 px-4 py-2 bg-white shadow-2xl border border-r-none rounded-full rounded-tr-none rounded-br-none`;
+export const LocaleListItems: FC<LocaleListItemsProps> = (props) => {
+  const locales = props.items
 
   return (
-    <div className={styles}>
-      {selectedLocale && <LocaleListItem {...selectedLocale} />}
-      {remainLocales.map((item, index) => (
+    <div className={'mx-auto flex items-center gap-4'}>
+      {locales.map((item, index) => (
         <LocaleListItem key={index} {...item} />
       ))}
     </div>
-  );
-};
+  )
+}
