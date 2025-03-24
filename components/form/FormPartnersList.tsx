@@ -7,7 +7,7 @@ import { useParams } from 'next/navigation'
 import { FC, useEffect, useState } from 'react'
 
 export const FormPartnersList: FC<FormPartnersListProps> = (props) => {
-  const [data, setData] = useState<ApiResponse<CategoryType[]> | null>(null)
+  const [data, setData] = useState<ApiResponse<unknown[]> | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const params = useParams()
 
@@ -29,8 +29,8 @@ export const FormPartnersList: FC<FormPartnersListProps> = (props) => {
 
   if (isLoading) return <>loading ...</>
 
-  const options = localizedData(data?.data, locale).sort((a: any, b: any) =>
-    a.title.localeCompare(b.title)
+  const options = localizedData(data?.data, locale).sort((a: CategoryType, b: CategoryType) =>
+    String(a.title).localeCompare(String(b.title))
   )
 
   options.push({

@@ -1,5 +1,5 @@
 import { COLLECTIONS, INVALIDATE_INTERVAL } from '@/constants'
-import { db, getCollectionById } from '@/lib'
+import { db, FirestoreDocument, getCollectionById } from '@/lib'
 import { collection, getDocs, limit, orderBy, query, startAfter, where } from 'firebase/firestore'
 import { unstable_cache } from 'next/cache'
 
@@ -50,7 +50,7 @@ export const getPartners = async ({
         // Randomize the order of the results using Fisher-Yates shuffle
         for (let i = allDocs.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1))
-          ;[allDocs[i] as any, allDocs[j] as any] = [allDocs[j], allDocs[i]]
+          ;[allDocs[i] as unknown, allDocs[j] as unknown] = [allDocs[j], allDocs[i]]
         }
 
         const totalCount = (await getDocs(orderedQuery)).size
@@ -87,12 +87,12 @@ export const getPartners = async ({
 }
 
 export const getCategories = unstable_cache(
-  async (locale: LocalesType = 'pt_br'): Promise<ApiResponse<CategoryType[]>> => {
+  async (locale: LocalesType = 'pt_br'): Promise<ApiResponse<FirestoreDocument[]>> => {
     try {
       const result = await getCollectionById(COLLECTIONS.CATEGORIES)
       return {
         ...result,
-        data: result.data.sort((a, b) => a.title[locale].localeCompare(b.title[locale])),
+        data: (result.data ?? []).sort((a, b) => a.title[locale].localeCompare(b.title[locale])),
       }
     } catch (e) {
       console.error(e)

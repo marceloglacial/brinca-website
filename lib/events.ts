@@ -8,7 +8,7 @@ export const getEvents = unstable_cache(
       const result = await getCollectionById(COLLECTIONS.EVENTS)
       return {
         ...result,
-        data: result.data,
+        data: result.data as EventType[],
       }
     } catch (e) {
       console.error(e)

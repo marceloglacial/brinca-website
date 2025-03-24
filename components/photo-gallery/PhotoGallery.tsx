@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { useEffect } from 'react'
 import { Animation } from '../animation/Animation'
 
-export const PhotoGallery = (props: { images: any[] }) => {
+export const PhotoGallery = (props: { images: HTMLImageElement[] }) => {
   useEffect(() => {
     let lightbox: PhotoSwipeLightbox | null = new PhotoSwipeLightbox({
       gallery: '#photo-gallery',
@@ -39,7 +39,7 @@ export const PhotoGallery = (props: { images: any[] }) => {
                 <Image
                   className='object-cover'
                   src={image.src}
-                  alt={image.src}
+                  alt={image.alt || image.src}
                   fill
                   sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                 />

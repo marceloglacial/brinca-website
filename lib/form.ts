@@ -9,7 +9,7 @@ export const getSingleForm = unstable_cache(
       const result = await getDocumentById(COLLECTIONS.FORMS, id)
       return {
         ...result,
-        data: result.data,
+        data: result.data as FormType,
       }
     } catch (e) {
       console.error(e)

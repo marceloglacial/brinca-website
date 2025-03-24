@@ -28,7 +28,7 @@ export const getPageDataBySlug = unstable_cache(
     order?: OrderType,
     page?: number,
     pageSize?: number
-  ): Promise<ApiResponse<any>> => {
+  ): Promise<ApiResponse<unknown>> => {
     try {
       const result = await getCollectionById(type, sortBy, order, page, pageSize)
       return {
@@ -44,7 +44,7 @@ export const getPageDataBySlug = unstable_cache(
   { revalidate: INVALIDATE_INTERVAL }
 )
 
-export async function getDataById(type: string, id: string): Promise<any> {
+export async function getDataById(type: string, id: string): Promise<unknown> {
   const res = await fetch(`${process.env.API_URL}/${type}/id/${id}`, {
     next: { revalidate: INVALIDATE_INTERVAL },
   })

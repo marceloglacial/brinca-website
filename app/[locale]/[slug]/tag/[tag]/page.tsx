@@ -10,7 +10,7 @@ export const dynamicParams = true
 
 export async function generateStaticParams() {
   const pages = await getCollectionById('partners')
-  return pages.data.map((page) => ({
+  return (pages.data ?? []).map((page) => ({
     id: String(page.id),
   }))
 }

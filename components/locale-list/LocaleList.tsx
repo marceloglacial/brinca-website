@@ -10,5 +10,5 @@ export const LocaleList: FC = async () => {
     return <></>
   }
 
-  return <LocaleListItems items={data.data} />
+  return <LocaleListItems items={data.data as LocaleListType[]} />
 }

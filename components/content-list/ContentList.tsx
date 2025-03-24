@@ -14,7 +14,7 @@ export const ContentList: FC<ContentListProps> = async ({ data, locale }) => {
 
   if (result.status === 'error') return <>{result.message}</>
 
-  const content = result.data
+  const content = result.data as CardGridItemType[]
   const items = content.map((item: CardGridItemType): CardGridItemType => {
     return {
       id: item.id,

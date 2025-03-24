@@ -12,8 +12,27 @@ import {
   query,
   startAfter,
   where,
+  DocumentData,
+  OrderByDirection,
 } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
+
+// Define missing types
+export type OrderType = OrderByDirection; // 'asc' | 'desc'
+
+export interface ApiResponseMeta {
+  totalCount: number;
+  page: number;
+  pageSize: number;
+  hasNextPage: boolean;
+}
+
+export interface ApiResponse<T> {
+  status: 'success' | 'error';
+  message: string;
+  data: T | null;
+  meta: ApiResponseMeta;
+}
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -26,16 +45,21 @@ const firebaseConfig = {
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
 
+// Define a base document type that all Firestore documents will have
+export interface FirestoreDocument extends DocumentData {
+  id: string;
+}
+
 export const storage = getStorage(app)
 export const db = getFirestore(app)
 
-export const getCollectionById = async (
+export const getCollectionById = async <T extends FirestoreDocument = FirestoreDocument>(
   collectionId: string,
   sortBy?: string,
   order: OrderType = 'desc',
   page: number = 1,
   pageSize: number = 100
-): Promise<ApiResponse<any[]>> => {
+): Promise<ApiResponse<T[]>> => {
   try {
     const collectionRef = collection(db, collectionId)
     const orderedQuery = sortBy ? query(collectionRef, orderBy(sortBy, order)) : collectionRef
@@ -58,7 +82,7 @@ export const getCollectionById = async (
     const allDocs = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
-    }))
+    })) as T[]
 
     const totalCount = (await getDocs(orderedQuery)).size
     const hasNextPage = totalCount > page * pageSize
@@ -90,10 +114,10 @@ export const getCollectionById = async (
   }
 }
 
-export const getDocumentById = async (
+export const getDocumentById = async <T extends FirestoreDocument = FirestoreDocument>(
   collectionId: string,
   docId: string
-): Promise<ApiResponse<any>> => {
+): Promise<ApiResponse<T>> => {
   try {
     const docRef = doc(db, collectionId, docId)
     const docSnapshot = await getDoc(docRef)
@@ -102,7 +126,7 @@ export const getDocumentById = async (
       return {
         status: 'success',
         message: 'Success',
-        data: { id: docSnapshot.id, ...docSnapshot.data() },
+        data: { id: docSnapshot.id, ...docSnapshot.data() } as T,
         meta: {
           totalCount: 0,
           page: 0,
@@ -139,11 +163,11 @@ export const getDocumentById = async (
   }
 }
 
-export const getDocumentBySlug = async (
+export const getDocumentBySlug = async <T extends FirestoreDocument = FirestoreDocument>(
   collectionId: string,
   slug: string,
   locale?: string
-): Promise<ApiResponse<any>> => {
+): Promise<ApiResponse<T>> => {
   try {
     const collectionRef = collection(db, collectionId)
     const slugField = `slug.${locale || SITE.DEFAULT_LOCALE}`
@@ -155,7 +179,7 @@ export const getDocumentBySlug = async (
       return {
         message: 'Success',
         status: 'success',
-        data: { id: docData?.id, ...docData?.data() },
+        data: { id: docData?.id, ...docData?.data() } as T,
         meta: {
           totalCount: querySnapshot.size,
           page: 0,
@@ -192,13 +216,16 @@ export const getDocumentBySlug = async (
   }
 }
 
-export const addDocument = async (collectionId: string, data: any): Promise<ApiResponse<any>> => {
+export const addDocument = async <T extends FirestoreDocument = FirestoreDocument>(
+  collectionId: string, 
+  data: Omit<T, 'id'>
+): Promise<ApiResponse<T>> => {
   try {
     const docRef = await addDoc(collection(db, collectionId), data)
     return {
       status: 'success',
       message: 'Document added successfully',
-      data: { id: docRef.id, ...data },
+      data: { id: docRef.id, ...data } as T,
       meta: {
         totalCount: 0,
         page: 0,
