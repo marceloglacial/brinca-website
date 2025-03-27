@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Brinca Website
 
-## Getting Started
+Brazil Canada Community Association Website
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Setup local development
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Follow these steps to set up the project:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Requirements**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- [Node.js 20+](https://nodejs.org/)
+- [PNPM 10+](https://pnpm.io/)
 
-## Learn More
+1. **Clone the repository:**
 
-To learn more about Next.js, take a look at the following resources:
+   ```sh
+   git clone https://github.com/marceloglacial/brinca-website.git
+   cd brinca-website
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Install dependencies:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```sh
+   pnpm install
+   ```
 
-## Deploy on Vercel
+3. **Set up environment variables:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   Use [dotenv.org](https://dotenv.org/) to manage your environment variables.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   Open the environment variables configuration:
+
+   ```sh
+   pnpm env:open
+   ```
+
+   Pull the latest environment variables:
+
+   ```sh
+   pnpm env:pull
+   ```
+
+   If you need update your local environment variables:
+
+   ```sh
+   pnpm env:push
+   ```
+
+4. **Build the project:**
+
+   ```sh
+   pnpm build
+   ```
+
+5. **Run the development server:**
+
+   ```sh
+   pnpm dev
+   ```
+
+## Useful Scripts
+
+- `pnpm lint`: Lint the codebase.
+- `pnpm format`: Format the codebase.
+- `pnpm env:open`: Open the environment variables configuration.
+- `pnpm env:pull`: Pull the latest environment variables.
+- `pnpm env:push`: Push your local environment variables.
+
+## Stack
+
+- [ESLint](https://eslint.org/)
+- [Husky](https://typicode.github.io/husky/)
+- [Next.js](https://nextjs.org/)
+- [Prettier](https://prettier.io/)
+- [React Server Components](https://react.dev/reference/rsc/server-components)
+- [Tailwind CSS](https://tailwindcss.com/)
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
