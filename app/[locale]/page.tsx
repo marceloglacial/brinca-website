@@ -7,9 +7,11 @@ export const dynamicParams = true
 
 export async function generateStaticParams() {
   const pages = await getCollectionById('locales')
-  return pages.data?.map((page) => ({
-    id: String(page.id),
-  })) || []
+  return (
+    pages.data?.map((page) => ({
+      id: String(page.id),
+    })) || []
+  )
 }
 
 export default async function Page(props: PageParamsType) {
