@@ -2,7 +2,6 @@
 
 Brazil Canada Community Association Website
 
-
 ## Setup local development
 
 Follow these steps to set up the project:
@@ -75,7 +74,6 @@ Follow these steps to set up the project:
 - [Prettier](https://prettier.io/)
 - [React Server Components](https://react.dev/reference/rsc/server-components)
 - [Tailwind CSS](https://tailwindcss.com/)
-
 
 ## License
 

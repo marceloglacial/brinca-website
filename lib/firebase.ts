@@ -18,20 +18,20 @@ import {
 import { getStorage } from 'firebase/storage'
 
 // Define missing types
-export type OrderType = OrderByDirection; // 'asc' | 'desc'
+export type OrderType = OrderByDirection // 'asc' | 'desc'
 
 export interface ApiResponseMeta {
-  totalCount: number;
-  page: number;
-  pageSize: number;
-  hasNextPage: boolean;
+  totalCount: number
+  page: number
+  pageSize: number
+  hasNextPage: boolean
 }
 
 export interface ApiResponse<T> {
-  status: 'success' | 'error';
-  message: string;
-  data: T | null;
-  meta: ApiResponseMeta;
+  status: 'success' | 'error'
+  message: string
+  data: T | null
+  meta: ApiResponseMeta
 }
 
 const firebaseConfig = {
@@ -47,7 +47,7 @@ const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
 
 // Define a base document type that all Firestore documents will have
 export interface FirestoreDocument extends DocumentData {
-  id: string;
+  id: string
 }
 
 export const storage = getStorage(app)
@@ -217,7 +217,7 @@ export const getDocumentBySlug = async <T extends FirestoreDocument = FirestoreD
 }
 
 export const addDocument = async <T extends FirestoreDocument = FirestoreDocument>(
-  collectionId: string, 
+  collectionId: string,
   data: Omit<T, 'id'>
 ): Promise<ApiResponse<T>> => {
   try {
