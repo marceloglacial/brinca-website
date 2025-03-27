@@ -26,7 +26,7 @@ export async function getCloudinaryImages(folderPath: string): Promise<HTMLImage
       [`cloudinary-${folderPath}`],
       { revalidate: INVALIDATE_INTERVAL }
     )()
-    
+
     const imageUrls = result.resources.map((resource: ResourceApiOptions) => {
       return {
         src: transformToJpg(resource.public_id),
