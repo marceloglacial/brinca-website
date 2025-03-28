@@ -57,17 +57,17 @@ export const Icon: FC<IconProps> = (props) => {
     ),
     brazilFlag: (
       <Image
-        src='/assets/images/icons8-brazil-96.png'
-        width={32}
-        height={32}
+        src='/assets/images/icons8-brazil-48.png'
+        width={48}
+        height={48}
         alt={props.alt || ''}
       />
     ),
     canadaFlag: (
       <Image
-        src='/assets/images/icons8-canada-96.png'
-        width={32}
-        height={32}
+        src='/assets/images/icons8-canada-48.png'
+        width={48}
+        height={48}
         alt={props.alt || ''}
       />
     ),
