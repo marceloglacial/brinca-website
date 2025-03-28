@@ -15,7 +15,7 @@ export const NavBar: FC<NavBarUiProps> = ({ variant = 'top', items }) => {
         </Link>
         {isBottom && (
           <div className='flex gap-2 pl-4'>
-            <a href='https://www.instagram.com/brinca_ottawa/' target='_blank' rel='noreferrer'>
+            <a href='https://www.facebook.com/ottawa.brinca' target='_blank' rel='noreferrer'>
               <Icon variant={componentStyles} type='facebook' />
             </a>
             <a href='https://www.instagram.com/brinca_ottawa/' target='_blank' rel='noreferrer'>
