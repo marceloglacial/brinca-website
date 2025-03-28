@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { Icon } from '../icon/Icon'
 export const LocaleListItem: FC<LocaleListType> = (props) => {
   return (
     <a
@@ -6,7 +7,7 @@ export const LocaleListItem: FC<LocaleListType> = (props) => {
       title={props.title}
       className='flex text-2xl transition-opacity duration-[0.25s] ease-out hover:opacity-50'
     >
-      {props.icon}
+      <Icon type={props.slug === 'en' ? 'canadaFlag' : 'brazilFlag'} alt={props.title} />
     </a>
   )
 }
