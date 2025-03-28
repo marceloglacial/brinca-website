@@ -9,9 +9,11 @@ export const dynamicParams = true
 
 export async function generateStaticParams({ params: { slug } }: { params: { slug: string } }) {
   const pages = await getCollectionById(`${slug}`)
-  return pages.data?.map((page) => ({
-    id: String(page.id),
-  })) || []
+  return (
+    pages.data?.map((page) => ({
+      id: String(page.id),
+    })) || []
+  )
 }
 
 export async function generateMetadata(props: PageParamsType): Promise<Metadata> {
