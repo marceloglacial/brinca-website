@@ -5,7 +5,7 @@ import { FC } from 'react'
 import { NavBarItems } from './NavBarItems'
 
 export const NavBar: FC<NavBarUiProps> = ({ variant = 'top', items }) => {
-  const isBottom = variant === 'bottom';
+  const isBottom = variant === 'bottom'
   const componentStyles = isBottom ? 'white' : undefined
   return (
     <NavBarUi variant={variant}>
@@ -14,12 +14,12 @@ export const NavBar: FC<NavBarUiProps> = ({ variant = 'top', items }) => {
           <Logo variant={componentStyles} />
         </Link>
         {isBottom && (
-          <div className='pl-6 flex w-full justify-center gap-2 lg:justify-start'>
+          <div className='flex gap-2 pl-4'>
             <a href='https://www.instagram.com/brinca_ottawa/' target='_blank' rel='noreferrer'>
-              <Icon variant='white' type='facebook' />
+              <Icon variant={componentStyles} type='facebook' />
             </a>
             <a href='https://www.instagram.com/brinca_ottawa/' target='_blank' rel='noreferrer'>
-              <Icon variant='white' type='instagram' />
+              <Icon variant={componentStyles} type='instagram' />
             </a>
           </div>
         )}
