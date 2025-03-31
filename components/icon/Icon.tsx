@@ -59,8 +59,8 @@ export const Icon: FC<IconProps> = (props) => {
       <svg
         xmlns='http://www.w3.org/2000/svg'
         id='flag-icons-br'
-        width='24'
-        height='24'
+        width='20'
+        height='20'
         viewBox='0 0 640 480'
       >
         <g stroke-width='1pt'>
@@ -190,8 +190,8 @@ export const Icon: FC<IconProps> = (props) => {
       <svg
         xmlns='http://www.w3.org/2000/svg'
         id='flag-icons-ca'
-        width='24'
-        height='24'
+        width='20'
+        height='20'
         viewBox='0 0 640 480'
       >
         <path fill='#fff' d='M150.1 0h339.7v480H150z' />
