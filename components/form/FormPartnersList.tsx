@@ -35,7 +35,7 @@ export const FormPartnersList: FC<FormPartnersListProps> = (props) => {
 
   options.push({
     value: 'none',
-    title: 'Outra - Entratemos em contato',
+    title: 'Outra - Entraremos em contato',
   })
 
   return (
