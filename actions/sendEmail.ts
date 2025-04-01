@@ -6,7 +6,7 @@ export async function sendEmail(formData: FormData, locale: LocalesType) {
   const submitType = formData.get('formType')
 
   if (submitType === 'email') {
-    const data: { [key: string]: any } = {}
+    const data: { [key: string]: unknown } = {}
     for (const [key, value] of formData.entries()) {
       if (!key.startsWith('ACTION_ID_')) {
         data[key] = value
