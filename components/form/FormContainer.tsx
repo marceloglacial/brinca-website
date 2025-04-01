@@ -9,18 +9,18 @@ import { FC, useState } from 'react'
 
 export const FormContainer: FC<FormContainerProps> = (props) => {
   const params = useParams()
-  const [formSubmited, setformSubmited] = useState<FormSubmissionType>(null)
+  const [formSubmitted, setformSubmitted] = useState<FormSubmissionType>(null)
 
   const locale = params.locale as LocalesType
   const form = localizedContent(props.data, locale) as FormType
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    await handleFormSubmission(e, setformSubmited)
+    await handleFormSubmission(e, setformSubmitted)
   }
 
   const file_download = form.fields.find((field) => field.type === 'file_download')
 
-  if (formSubmited && file_download) {
+  if (formSubmitted && file_download) {
     return (
       <div className='mt-16 text-center'>
         <Section spacing='m'>
@@ -35,7 +35,7 @@ export const FormContainer: FC<FormContainerProps> = (props) => {
     )
   }
 
-  if (formSubmited) {
+  if (formSubmitted) {
     return (
       <div className='mt-16 text-center'>
         <Section spacing='s'>
