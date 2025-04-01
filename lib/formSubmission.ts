@@ -1,4 +1,4 @@
-import { addContent, sendEmail } from '@/actions'
+import { addContent, sendCollectionCreatedEmail, sendEmail } from '@/actions'
 import { DEFAULT_LOCALE, DICTIONARY } from '@/constants'
 
 export const handleFormSubmission = async (
@@ -19,6 +19,9 @@ export const handleFormSubmission = async (
         break
       case 'collection':
         res = await addContent(collectionId, formData, locale || DEFAULT_LOCALE)
+        if (res.status === 'success') {
+          await sendCollectionCreatedEmail(formData)
+        }
         break
       default:
         throw new Error(`Unsupported form submission type: ${submissionType}`)

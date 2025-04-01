@@ -2,18 +2,23 @@
 
 import { DICTIONARY } from '@/constants'
 
+function getData(formData: FormData) {
+  const data: { [key: string]: unknown } = {}
+  for (const [key, value] of formData.entries()) {
+    if (!key.startsWith('ACTION_ID_')) {
+      data[key] = value
+    }
+  }
+  return data
+}
+
 export async function sendEmail(formData: FormData, locale: LocalesType) {
   const submitType = formData.get('formType')
 
   if (submitType === 'email') {
-    const data: { [key: string]: unknown } = {}
-    for (const [key, value] of formData.entries()) {
-      if (!key.startsWith('ACTION_ID_')) {
-        data[key] = value
-      }
-    }
+    const data = getData(formData)
 
-    const response = await fetch('https://api.staticforms.xyz/submit', {
+    const response = await fetch(process.env.FORMS_URL!, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -33,4 +38,19 @@ export async function sendEmail(formData: FormData, locale: LocalesType) {
   }
 
   return { status: 'error', message: DICTIONARY.FORM_INVALID[locale] }
+}
+
+export async function sendCollectionCreatedEmail(formData: FormData) {
+  const data = getData(formData)
+  await fetch(process.env.FORMS_URL!, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      accessKey: process.env.FORMS_API_KEY,
+      subject: `Novo "${data.formTitle}" registro adicionado`,
+      ...data,
+    }),
+  })
 }
