@@ -42,6 +42,16 @@ export async function sendEmail(formData: FormData, locale: LocalesType) {
 
 export async function sendCollectionCreatedEmail(formData: FormData) {
   const data = getData(formData)
+  // Remove no meaningful keys
+  delete data.logo
+  delete data.formType
+  delete data.formEndpoint
+  delete data.category
+
+  const message = Object.entries(data)
+    .map(([key, value]) => `${key}: ${value}`)
+    .join('\n')
+
   await fetch(process.env.FORMS_URL!, {
     method: 'POST',
     headers: {
@@ -50,7 +60,7 @@ export async function sendCollectionCreatedEmail(formData: FormData) {
     body: JSON.stringify({
       accessKey: process.env.FORMS_API_KEY,
       subject: `Novo "${data.formTitle}" registro adicionado`,
-      ...data,
+      message,
     }),
   })
 }
