@@ -3,7 +3,7 @@ import { DEFAULT_LOCALE, DICTIONARY } from '@/constants'
 
 export const handleFormSubmission = async (
   e: React.FormEvent<HTMLFormElement>,
-  setformSubmited: React.Dispatch<React.SetStateAction<FormSubmissionType>>
+  setformSubmitted: React.Dispatch<React.SetStateAction<FormSubmissionType>>
 ) => {
   e.preventDefault()
   const formData = new FormData(e.currentTarget)
@@ -23,13 +23,13 @@ export const handleFormSubmission = async (
       default:
         throw new Error(`Unsupported form submission type: ${submissionType}`)
     }
-    setformSubmited({
+    setformSubmitted({
       type: res.status,
       message: DICTIONARY.FORM_SUCCESS[locale],
     })
   } catch (error) {
     console.error(error)
-    setformSubmited({
+    setformSubmitted({
       type: 'error',
       message: DICTIONARY.FORM_ERROR[locale],
     })
