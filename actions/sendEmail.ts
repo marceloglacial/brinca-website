@@ -12,7 +12,7 @@ const getData = (formData: FormData) => {
   return data
 }
 
-export async function sendEmail(formData: FormData, locale: LocalesType) {
+export const sendEmail = async (formData: FormData, locale: LocalesType) => {
   const submitType = formData.get('formType')
 
   if (submitType === 'email') {
@@ -40,7 +40,7 @@ export async function sendEmail(formData: FormData, locale: LocalesType) {
   return { status: 'error', message: DICTIONARY.FORM_INVALID[locale] }
 }
 
-export async function sendCollectionCreatedEmail(formData: FormData) {
+export const sendCollectionCreatedEmail = async (formData: FormData) => {
   const data = getData(formData)
   // Remove no meaningful keys
   delete data.logo
