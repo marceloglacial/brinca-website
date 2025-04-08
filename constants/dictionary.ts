@@ -48,4 +48,8 @@ export const DICTIONARY = {
     en: 'Download the file',
     pt_br: 'Baixar arquivo',
   },
+  FORM_OTHER_CATEGORY_OPTION: {
+    en: 'Other - We will contact you',
+    pt_br: 'Outra - Entraremos em contato',
+  },
 }
