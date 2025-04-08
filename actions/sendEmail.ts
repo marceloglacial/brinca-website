@@ -2,7 +2,7 @@
 
 import { DICTIONARY } from '@/constants'
 
-function getData(formData: FormData) {
+const getData = (formData: FormData) => {
   const data: { [key: string]: unknown } = {}
   for (const [key, value] of formData.entries()) {
     if (!key.startsWith('ACTION_ID_')) {
