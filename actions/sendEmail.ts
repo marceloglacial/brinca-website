@@ -50,7 +50,7 @@ export const sendCollectionCreatedEmail = async (formData: FormData) => {
 
   const message = Object.entries(data)
     .map(([key, value]) => `${key}: ${value}`)
-    .join('\n')
+    .join('\r\n')
 
   await fetch(process.env.FORMS_URL!, {
     method: 'POST',
