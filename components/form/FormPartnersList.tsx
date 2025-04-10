@@ -35,7 +35,7 @@ export const FormPartnersList: FC<FormPartnersListProps> = (props) => {
 
   options.push({
     value: 'none',
-    title: 'Outra - Entratemos em contato',
+    title: DICTIONARY.FORM_OTHER_CATEGORY_OPTION[locale],
   })
 
   return (
