@@ -1,9 +1,9 @@
-import { addContent, sendEmail } from '@/actions'
+import { addContent, sendCollectionCreatedEmail, sendEmail } from '@/actions'
 import { DEFAULT_LOCALE, DICTIONARY } from '@/constants'
 
 export const handleFormSubmission = async (
   e: React.FormEvent<HTMLFormElement>,
-  setformSubmited: React.Dispatch<React.SetStateAction<FormSubmissionType>>
+  setFormSubmitted: React.Dispatch<React.SetStateAction<FormSubmissionType>>
 ) => {
   e.preventDefault()
   const formData = new FormData(e.currentTarget)
@@ -19,17 +19,20 @@ export const handleFormSubmission = async (
         break
       case 'collection':
         res = await addContent(collectionId, formData, locale || DEFAULT_LOCALE)
+        if (res.status === 'success') {
+          await sendCollectionCreatedEmail(formData)
+        }
         break
       default:
         throw new Error(`Unsupported form submission type: ${submissionType}`)
     }
-    setformSubmited({
+    setFormSubmitted({
       type: res.status,
       message: DICTIONARY.FORM_SUCCESS[locale],
     })
   } catch (error) {
     console.error(error)
-    setformSubmited({
+    setFormSubmitted({
       type: 'error',
       message: DICTIONARY.FORM_ERROR[locale],
     })
