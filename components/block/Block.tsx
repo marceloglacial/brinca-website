@@ -6,6 +6,7 @@ import {
   Embed,
   Form,
   Hero,
+  Instagram,
   PartnersList,
   RichText,
   Sponsors,
@@ -43,6 +44,9 @@ export const Block: FC<BlockProps> = (props) => {
       break
     case 'button_group':
       block = <ButtonGroup content={props.content.value} />
+      break
+    case 'instagram':
+      block = <Instagram {...props.content.value} />
       break
     default:
       block = <></>
