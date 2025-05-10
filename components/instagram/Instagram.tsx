@@ -12,13 +12,14 @@ export const Instagram: FC<InstagramProps> = (props): JSX.Element => {
       document.body.appendChild(script)
     }
   }, [props.url])
+  const showCaptions = props.showText ? { 'data-instgrm-captioned': true } : {}
 
   return (
     <div className='instagram-embed'>
       <blockquote
         className='instagram-media'
         data-instgrm-permalink={props.url}
-        data-instgrm-captioned={props.showText}
+        {...showCaptions}
         style={{
           background: '#FFF',
           border: 0,
