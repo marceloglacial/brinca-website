@@ -10,7 +10,9 @@
     "format": "prettier --write .",
     "env:open": "pnpm dlx dotenv-vault@latest open",
     "env:pull": "pnpm dlx dotenv-vault@latest pull",
-    "env:push": "pnpm dlx dotenv-vault@latest open",
+    "env:pull-staging": "pnpm dlx dotenv-vault@latest pull staging .env",
+    "env:pull-prod": "pnpm dlx dotenv-vault@latest pull production .env",
+    "env:push": "pnpm dlx dotenv-vault@latest push",
     "prepare": "husky"
   },
   "dependencies": {
