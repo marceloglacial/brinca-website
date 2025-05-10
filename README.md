@@ -37,13 +37,15 @@ Follow these steps to set up the project:
    Pull the latest environment variables:
 
    ```sh
+   # Local development using brinca-api running
    pnpm env:pull
-   ```
 
-   If you need update your local environment variables:
+   # Use staging database
+   pnpm env:pull-staging
 
-   ```sh
-   pnpm env:push
+   # Use prod database
+   pnpm env:pull-prod
+
    ```
 
 4. **Build the project:**
