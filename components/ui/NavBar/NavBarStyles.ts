@@ -28,7 +28,7 @@ const styles = {
           xl:static 
           z-40 
           overflow-scroll 
-          xl:overflow-auto 
+          xl:overflow-visible 
           scroll-smooth 
           top-0 
           right-[100%] 

@@ -1,9 +1,12 @@
 export const INVALIDATE_INTERVAL: number = 3600
 export const SITE = {
   NAME: 'Brinca',
-  DESCRIPTION: 'Sua comunidade Brasileira em Ottawa-Gatineau!',
+  DESCRIPTION: {
+    en: 'Your Brazilian community in Ottawa-Gatineau!',
+    pt_br: 'Sua comunidade Brasileira em Ottawa-Gatineau!',
+  },
   LOGIN_URL: 'https://brinca-admin.vercel.app',
-  DEFAULT_LOCALE: 'pt_br',
+  DEFAULT_LOCALE: 'en',
 }
 
 export const MESSAGES = {

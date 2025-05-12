@@ -8,9 +8,19 @@ import '../globals.css'
 
 const inter = Mulish({ subsets: ['latin'] })
 
-export const metadata: Metadata = {
-  title: `${SITE.NAME} - ${SITE.DESCRIPTION}`,
-  description: SITE.DESCRIPTION,
+export async function generateMetadata({
+  params: rawParams,
+}: {
+  params: Promise<{ locale: LocalesType }>
+}): Promise<Metadata> {
+  const params = await rawParams
+  return {
+    title: `${SITE.NAME} - ${SITE.DESCRIPTION[params.locale]}`,
+    description: SITE.DESCRIPTION[params.locale],
+    alternates: {
+      canonical: `/${params.locale}`,
+    },
+  }
 }
 
 export default async function RootLayout(props: Readonly<PageProps>) {
