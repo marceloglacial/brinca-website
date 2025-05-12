@@ -9,10 +9,11 @@ import '../globals.css'
 const inter = Mulish({ subsets: ['latin'] })
 
 export async function generateMetadata({
-  params,
+  params: rawParams,
 }: {
-  params: { locale: LocalesType }
+  params: Promise<{ locale: LocalesType }>
 }): Promise<Metadata> {
+  const params = await rawParams
   return {
     title: `${SITE.NAME} - ${SITE.DESCRIPTION[params.locale]}`,
     description: SITE.DESCRIPTION[params.locale],
