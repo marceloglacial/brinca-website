@@ -1,6 +1,6 @@
 type ContentListDataType = {
   title?: string
-  type: string
+  type: CollectionKey
   items_per_page?: number
 }
 

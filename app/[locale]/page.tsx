@@ -24,7 +24,7 @@ export default async function Page(props: PageParamsType) {
     return <ErrorState message={result.message} />
   }
 
-  const content = result.data[0]
+  const content = result.data?.[0]
 
   return (
     <Section spacing='xl'>

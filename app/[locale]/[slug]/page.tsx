@@ -25,10 +25,10 @@ export async function generateMetadata(props: PageParamsType): Promise<Metadata>
       title: SITE.NAME,
     }
 
-  const page = result.data[0]
+  const page = result.data?.[0]
 
   return {
-    title: `${SITE.NAME} - ${page.title}`,
+    title: `${SITE.NAME} - ${page?.title}`,
   }
 }
 
@@ -39,16 +39,16 @@ export default async function Page(props: PageParamsType) {
   if (result.status >= HttpStatusSchema.enum.BAD_REQUEST)
     return <ErrorState message={result.message} />
 
-  const content = result.data[0]
+  const content = result.data?.[0]
 
   return (
     <Section>
       <div className='mb-12'>
         <Heading>
-          <h1>{content.title}</h1>
+          <h1>{content?.title}</h1>
         </Heading>
       </div>
-      <Content items={content.blocks} locale={params.locale} />
+      <Content items={content?.blocks} locale={params.locale} />
     </Section>
   )
 }

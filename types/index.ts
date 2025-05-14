@@ -1,3 +1,4 @@
+import { COLLECTIONS } from '@/constants'
 import { ApiResponseSchema, ParamsSchema, HttpStatusSchema, PaginationSchema } from '@/schemas/api'
 import { CollectionSchema } from '@/schemas/collections'
 import { SearchResultSchema } from '@/schemas/search'
@@ -11,6 +12,7 @@ export type Pagination = z.infer<typeof PaginationSchema>
 
 // Components
 export type Collection = z.infer<typeof CollectionSchema>
+export type CollectionKey = (typeof COLLECTIONS)[keyof typeof COLLECTIONS]
 export type Block = Collection['blocks']
 
 // Search

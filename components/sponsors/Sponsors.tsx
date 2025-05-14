@@ -1,6 +1,6 @@
 import { Alert } from '@/components'
 import { COLLECTIONS } from '@/constants'
-import { getPageBySlug } from '@/lib/api'
+import { getCollection } from '@/lib/api'
 import { HttpStatusSchema } from '@/schemas/api'
 import Image from 'next/image'
 import { FC } from 'react'
@@ -8,7 +8,7 @@ import { FC } from 'react'
 export const Sponsors: FC<SponsorsProps> = async (props) => {
   if (!props.data.active) return <></>
 
-  const result = await getPageBySlug(COLLECTIONS.SPONSORS, {
+  const result = await getCollection(COLLECTIONS.SPONSORS, {
     locale: props.locale,
     sortBy: 'title',
     order: 'asc',

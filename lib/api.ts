@@ -2,12 +2,12 @@ import { COLLECTIONS } from '@/constants'
 import { ApiResponse, GetDataParams } from '@/types'
 import { ApiResponseSchema, ParamsSchema } from '@/schemas/api'
 
-const customFetch = async (baseUrl: string, params?: GetDataParams): Promise<ApiResponse> => {
+const customFetch = async (baseUrl: string, params: GetDataParams = {}): Promise<ApiResponse> => {
   try {
     ParamsSchema.parse(params)
 
     const searchParams = new URLSearchParams()
-    Object.entries(params ?? {}).forEach(([key, value]) => {
+    Object.entries(params).forEach(([key, value]) => {
       if (value) searchParams.append(key, value.toString())
     })
     const url = `${baseUrl}${searchParams.toString() ? '?' + searchParams.toString() : ''}`
@@ -41,7 +41,10 @@ export const getPageById = async (id: string, params?: GetDataParams) => {
   return customFetch(baseUrl, params)
 }
 
-export const getCollection = async (collection: string, params?: GetDataParams) => {
+export const getCollection = async (
+  collection: (typeof COLLECTIONS)[keyof typeof COLLECTIONS],
+  params?: GetDataParams
+) => {
   const baseUrl = `${process.env.API_URL!}/${collection}/`
   return customFetch(baseUrl, params)
 }
