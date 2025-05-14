@@ -18,7 +18,7 @@ export async function generateStaticParams() {
 
 export default async function Page(props: PageParamsType) {
   const params = await props.params
-  const result = await getPageBySlug('homepage', params)
+  const result = await getPageBySlug('homepage', { locale: params.locale })
 
   if (result.status >= HttpStatusSchema.enum.BAD_REQUEST) {
     return <ErrorState message={result.message} />
