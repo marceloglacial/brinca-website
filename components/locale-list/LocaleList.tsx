@@ -5,7 +5,7 @@ import { HttpStatusSchema } from '@/schemas/api'
 import { COLLECTIONS } from '@/constants'
 
 export const LocaleList: FC = async () => {
-  const data = await getCollection(COLLECTIONS.LOCALES)
+  const data = await getCollection(COLLECTIONS.LOCALES, {})
 
   if (data.status >= HttpStatusSchema.enum.BAD_REQUEST) {
     console.error(`Error: ${data.message}`)

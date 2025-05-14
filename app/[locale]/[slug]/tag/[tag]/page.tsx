@@ -10,7 +10,7 @@ export const revalidate = 60
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const pages = await getCollection('partners')
+  const pages = await getCollection('partners', {})
   return (pages.data ?? []).map((page) => ({
     id: String(page.id),
   }))

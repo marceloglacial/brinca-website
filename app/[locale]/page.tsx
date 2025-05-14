@@ -8,7 +8,7 @@ export const revalidate = 60
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const pages = await getCollection(COLLECTIONS.LOCALES)
+  const pages = await getCollection(COLLECTIONS.LOCALES, {})
   return (
     pages.data?.map((page) => ({
       id: String(page.id),

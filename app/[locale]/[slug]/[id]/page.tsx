@@ -14,7 +14,7 @@ export async function generateStaticParams({
 }: {
   params: { slug: CollectionKey }
 }) {
-  const pages = await getCollection(slug)
+  const pages = await getCollection(slug, {})
   return (
     pages.data?.map((page) => ({
       id: String(page.id),

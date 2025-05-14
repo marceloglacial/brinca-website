@@ -1,8 +1,8 @@
 import { COLLECTIONS } from '@/constants'
-import { ApiResponse, GetDataParams } from '@/types'
+import { ApiResponse, CollectionKey, GetDataParams } from '@/types'
 import { ApiResponseSchema, ParamsSchema } from '@/schemas/api'
 
-const customFetch = async (baseUrl: string, params: GetDataParams = {}): Promise<ApiResponse> => {
+const customFetch = async (baseUrl: string, params: GetDataParams): Promise<ApiResponse> => {
   try {
     ParamsSchema.parse(params)
 
@@ -26,25 +26,22 @@ const customFetch = async (baseUrl: string, params: GetDataParams = {}): Promise
   }
 }
 
-export const getAllPages = async (params?: GetDataParams) => {
+export const getAllPages = async (params: GetDataParams) => {
   const baseUrl = `${process.env.API_URL!}/${COLLECTIONS.PAGES}/`
   return customFetch(baseUrl, params)
 }
 
-export const getPageBySlug = async (slug: string, params?: GetDataParams) => {
+export const getPageBySlug = async (slug: string, params: GetDataParams) => {
   const baseUrl = `${process.env.API_URL!}/${COLLECTIONS.PAGES}/slug/${slug}/`
   return customFetch(baseUrl, params)
 }
 
-export const getPageById = async (id: string, params?: GetDataParams) => {
+export const getPageById = async (id: string, params: GetDataParams) => {
   const baseUrl = `${process.env.API_URL!}/${COLLECTIONS.PAGES}/${id}`
   return customFetch(baseUrl, params)
 }
 
-export const getCollection = async (
-  collection: (typeof COLLECTIONS)[keyof typeof COLLECTIONS],
-  params?: GetDataParams
-) => {
+export const getCollection = async (collection: CollectionKey, params: GetDataParams) => {
   const baseUrl = `${process.env.API_URL!}/${collection}/`
   return customFetch(baseUrl, params)
 }

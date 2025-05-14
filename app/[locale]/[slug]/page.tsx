@@ -9,7 +9,7 @@ export const revalidate = 60
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const pages = await getAllPages()
+  const pages = await getAllPages({})
   return pages.data?.map((page) => ({
     id: String(page.id),
     slug: String(page.slug),

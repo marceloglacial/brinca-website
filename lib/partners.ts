@@ -89,7 +89,7 @@ export const getPartners = async ({
 
 export const getCategories = async (locale: LocalesType = 'pt_br') => {
   try {
-    const result = await getCollection(COLLECTIONS.CATEGORIES)
+    const result = await getCollection(COLLECTIONS.CATEGORIES, { locale })
     return {
       ...result,
       //@ts-expect-error title type is defined as string, so it could not use a locale as key as an object. Check this.
