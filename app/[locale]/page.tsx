@@ -1,6 +1,8 @@
 import { Content, ErrorState } from '@/components'
-import { getCollectionById, getSinglePage } from '@/lib'
+import { getCollectionById } from '@/lib'
 import { Section } from '@/components/ui'
+import { HttpStatusSchema } from '@/schemas/api'
+import { getPageBySlug } from '@/lib/api'
 
 export const revalidate = 60
 export const dynamicParams = true
@@ -16,15 +18,17 @@ export async function generateStaticParams() {
 
 export default async function Page(props: PageParamsType) {
   const params = await props.params
-  const result = await getSinglePage('homepage', params.locale)
+  const result = await getPageBySlug('homepage', params)
 
-  if (result.status === 'error') return <ErrorState message={result.message} />
+  if (result.status >= HttpStatusSchema.enum.BAD_REQUEST) {
+    return <ErrorState message={result.message} />
+  }
 
-  const content = result.data
+  const content = result.data[0]
 
   return (
     <Section spacing='xl'>
-      <Content items={content.blocks} locale={params.locale} />
+      <Content items={content?.blocks} locale={params.locale} />
     </Section>
   )
 }

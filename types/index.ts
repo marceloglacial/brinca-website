@@ -1,0 +1,17 @@
+import { ApiResponseSchema, ParamsSchema, HttpStatusSchema, PaginationSchema } from '@/schemas/api'
+import { CollectionSchema } from '@/schemas/collections'
+import { SearchResultSchema } from '@/schemas/search'
+import { z } from 'zod'
+
+// Api
+export type ApiResponse = z.infer<typeof ApiResponseSchema>
+export type GetDataParams = z.infer<typeof ParamsSchema>
+export type HttpStatus = z.infer<typeof HttpStatusSchema>
+export type Pagination = z.infer<typeof PaginationSchema>
+
+// Components
+export type Collection = z.infer<typeof CollectionSchema>
+export type Block = Collection['blocks']
+
+// Search
+export type SearchResultsType = z.infer<typeof SearchResultSchema>

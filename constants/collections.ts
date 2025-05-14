@@ -10,4 +10,4 @@ export const COLLECTIONS = {
   PARTNERS_TYPES: 'partnersTypes',
   PARTNERS: 'partners',
   SPONSORS: 'sponsors',
-}
+} as const

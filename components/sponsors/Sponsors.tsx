@@ -1,15 +1,20 @@
 import { Alert } from '@/components'
 import { COLLECTIONS } from '@/constants'
-import { getPageDataBySlug } from '@/lib'
+import { getPageBySlug } from '@/lib/api'
+import { HttpStatusSchema } from '@/schemas/api'
 import Image from 'next/image'
 import { FC } from 'react'
 
 export const Sponsors: FC<SponsorsProps> = async (props) => {
   if (!props.data.active) return <></>
 
-  const result = await getPageDataBySlug(COLLECTIONS.SPONSORS, props.locale, 'title', 'asc')
+  const result = await getPageBySlug(COLLECTIONS.SPONSORS, {
+    locale: props.locale,
+    sortBy: 'title',
+    order: 'asc',
+  })
 
-  if (result.status === 'error') return <Alert message={result.message} />
+  if (result.status >= HttpStatusSchema.enum.BAD_REQUEST) return <Alert message={result.message} />
 
   const sponsors = result.data as SponsorType[]
 
