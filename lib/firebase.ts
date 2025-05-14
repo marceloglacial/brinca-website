@@ -7,10 +7,7 @@ import {
   getDoc,
   getDocs,
   getFirestore,
-  limit,
-  orderBy,
   query,
-  startAfter,
   where,
   DocumentData,
   OrderByDirection,
@@ -52,67 +49,6 @@ export interface FirestoreDocument extends DocumentData {
 
 export const storage = getStorage(app)
 export const db = getFirestore(app)
-
-export const getCollectionById = async <T extends FirestoreDocument = FirestoreDocument>(
-  collectionId: string,
-  sortBy?: string,
-  order: OrderType = 'desc',
-  page: number = 1,
-  pageSize: number = 100
-): Promise<ApiResponse<T[]>> => {
-  try {
-    const collectionRef = collection(db, collectionId)
-    const orderedQuery = sortBy ? query(collectionRef, orderBy(sortBy, order)) : collectionRef
-
-    let paginatedQuery = query(orderedQuery, limit(pageSize))
-
-    if (page > 1) {
-      // Retrieve the last document of the previous page
-      const previousPageQuery = query(orderedQuery, limit((page - 1) * pageSize))
-      const previousPageSnapshot = await getDocs(previousPageQuery)
-
-      if (!previousPageSnapshot.empty) {
-        const lastVisible = previousPageSnapshot.docs[previousPageSnapshot.docs.length - 1]
-        paginatedQuery = query(orderedQuery, startAfter(lastVisible), limit(pageSize))
-      }
-    }
-
-    const querySnapshot = await getDocs(paginatedQuery)
-
-    const allDocs = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as T[]
-
-    const totalCount = (await getDocs(orderedQuery)).size
-    const hasNextPage = totalCount > page * pageSize
-
-    return {
-      status: 'success',
-      message: 'Success',
-      meta: {
-        totalCount,
-        page,
-        pageSize,
-        hasNextPage,
-      },
-      data: allDocs,
-    }
-  } catch (e) {
-    console.error(e)
-    return {
-      status: 'error',
-      message: 'Error retrieving documents from the collection',
-      data: [],
-      meta: {
-        totalCount: 0,
-        page: 0,
-        pageSize: 0,
-        hasNextPage: false,
-      },
-    }
-  }
-}
 
 export const getDocumentById = async <T extends FirestoreDocument = FirestoreDocument>(
   collectionId: string,

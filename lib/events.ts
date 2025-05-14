@@ -1,20 +1,15 @@
-import { COLLECTIONS, INVALIDATE_INTERVAL } from '@/constants'
-import { getCollectionById } from './firebase'
-import { unstable_cache } from 'next/cache'
+import { COLLECTIONS } from '@/constants'
+import { getCollection } from './api'
 
-export const getEvents = unstable_cache(
-  async (): Promise<ApiResponse<EventType[]>> => {
-    try {
-      const result = await getCollectionById(COLLECTIONS.EVENTS)
-      return {
-        ...result,
-        data: result.data as EventType[],
-      }
-    } catch (e) {
-      console.error(e)
-      throw Error
+export const getEvents = async () => {
+  try {
+    const result = await getCollection(COLLECTIONS.EVENTS)
+    return {
+      ...result,
+      data: result.data as unknown as EventType[],
     }
-  },
-  ['event-by-slug'],
-  { revalidate: INVALIDATE_INTERVAL }
-)
+  } catch (e) {
+    console.error(e)
+    throw Error
+  }
+}

@@ -5,9 +5,11 @@ import { localizedData } from '@/utils'
 import { Form } from '@/components/ui'
 import { useParams } from 'next/navigation'
 import { FC, useEffect, useState } from 'react'
+import { HttpStatusSchema } from '@/schemas/api'
+import { ApiResponse } from '@/types'
 
 export const FormPartnersList: FC<FormPartnersListProps> = (props) => {
-  const [data, setData] = useState<ApiResponse<unknown[]> | null>(null)
+  const [data, setData] = useState<ApiResponse | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const params = useParams()
 
@@ -17,7 +19,7 @@ export const FormPartnersList: FC<FormPartnersListProps> = (props) => {
     async function fetchData() {
       const result = await getSelectFieldData()
 
-      if (result?.status === 'error') {
+      if (result?.status >= HttpStatusSchema.enum.BAD_REQUEST) {
         throw new Error(DICTIONARY.FORM_ERROR[locale])
       }
       setData(result)

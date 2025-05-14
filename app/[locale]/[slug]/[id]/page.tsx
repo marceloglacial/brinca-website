@@ -1,14 +1,20 @@
 import { Content, ErrorState } from '@/components'
 import { SITE } from '@/constants'
-import { getCollectionById, getSingleData } from '@/lib'
+import { getSingleData } from '@/lib'
 import { Heading, Section } from '@/components/ui'
 import { Metadata } from 'next'
+import { getCollection } from '@/lib/api'
+import { CollectionKey } from '@/types'
 
 export const revalidate = 60
 export const dynamicParams = true
 
-export async function generateStaticParams({ params: { slug } }: { params: { slug: string } }) {
-  const pages = await getCollectionById(`${slug}`)
+export async function generateStaticParams({
+  params: { slug },
+}: {
+  params: { slug: CollectionKey }
+}) {
+  const pages = await getCollection(slug)
   return (
     pages.data?.map((page) => ({
       id: String(page.id),

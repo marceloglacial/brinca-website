@@ -5,11 +5,12 @@ import { FC } from 'react'
 import PartnerListTitle from './PartenerListTitle'
 import PartnersListItem from './PartnersListItem'
 import PartnersListItems from './PartnersListItems'
+import { HttpStatusSchema } from '@/schemas/api'
 
 const PartnersListMenu: FC = async () => {
   const result = await getCategories()
 
-  if (result.status === 'error') {
+  if (result.status >= HttpStatusSchema.enum.BAD_REQUEST) {
     return <Alert message={'Error loading categories!'} />
   }
 

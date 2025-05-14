@@ -1,7 +1,8 @@
 import { COLLECTIONS, INVALIDATE_INTERVAL } from '@/constants'
-import { db, FirestoreDocument, getCollectionById } from '@/lib'
+import { db } from '@/lib'
 import { collection, getDocs, limit, orderBy, query, startAfter, where } from 'firebase/firestore'
 import { unstable_cache } from 'next/cache'
+import { getCollection } from './api'
 
 export const getPartners = async ({
   order,
@@ -9,7 +10,7 @@ export const getPartners = async ({
   pageSize = 100,
   type = 'partners',
   category,
-}: GetPartnersType = {}): Promise<ApiResponse<PartnerTypeLocalized[]>> => {
+}: GetPartnersType = {}): Promise<DeprecatedApiResponse<PartnerTypeLocalized[]>> => {
   try {
     const cacheKey = `partners-${order}-${page}-${pageSize}-${type}-${category?.id}`
 
@@ -86,19 +87,16 @@ export const getPartners = async ({
   }
 }
 
-export const getCategories = unstable_cache(
-  async (locale: LocalesType = 'pt_br'): Promise<ApiResponse<FirestoreDocument[]>> => {
-    try {
-      const result = await getCollectionById(COLLECTIONS.CATEGORIES)
-      return {
-        ...result,
-        data: (result.data ?? []).sort((a, b) => a.title[locale].localeCompare(b.title[locale])),
-      }
-    } catch (e) {
-      console.error(e)
-      throw Error
+export const getCategories = async (locale: LocalesType = 'pt_br') => {
+  try {
+    const result = await getCollection(COLLECTIONS.CATEGORIES)
+    return {
+      ...result,
+      //@ts-expect-error title type is defined as string, so it could not use a locale as key as an object. Check this.
+      data: (result.data ?? []).sort((a, b) => a.title[locale].localeCompare(b.title[locale])),
     }
-  },
-  ['partners-category'],
-  { revalidate: INVALIDATE_INTERVAL }
-)
+  } catch (e) {
+    console.error(e)
+    throw Error
+  }
+}

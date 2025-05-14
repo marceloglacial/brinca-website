@@ -1,21 +1,17 @@
-import { COLLECTIONS, INVALIDATE_INTERVAL } from '@/constants'
-import { getCollectionById } from './firebase'
+import { COLLECTIONS } from '@/constants'
 import { localizedData } from '@/utils'
-import { unstable_cache } from 'next/cache'
+import { getCollection } from './api'
+import { GetDataParams } from '@/types'
 
-export const getMenus = unstable_cache(
-  async (locale: string): Promise<ApiResponse<MenusType>> => {
-    try {
-      const result = await getCollectionById(COLLECTIONS.MENUS)
-      return {
-        ...result,
-        data: localizedData(result.data, locale),
-      }
-    } catch (e) {
-      console.error(e)
-      throw Error
+export const getMenus = async (locale: GetDataParams['locale']) => {
+  try {
+    const result = await getCollection(COLLECTIONS.MENUS, { locale })
+    return {
+      ...result,
+      data: localizedData(result.data, locale),
     }
-  },
-  ['menus'],
-  { revalidate: INVALIDATE_INTERVAL }
-)
+  } catch (e) {
+    console.error(e)
+    throw Error
+  }
+}

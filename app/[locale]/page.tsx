@@ -1,14 +1,14 @@
 import { Content, ErrorState } from '@/components'
-import { getCollectionById } from '@/lib'
 import { Section } from '@/components/ui'
 import { HttpStatusSchema } from '@/schemas/api'
-import { getPageBySlug } from '@/lib/api'
+import { getCollection, getPageBySlug } from '@/lib/api'
+import { COLLECTIONS } from '@/constants'
 
 export const revalidate = 60
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const pages = await getCollectionById('locales')
+  const pages = await getCollection(COLLECTIONS.LOCALES)
   return (
     pages.data?.map((page) => ({
       id: String(page.id),

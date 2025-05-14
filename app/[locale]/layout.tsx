@@ -26,16 +26,15 @@ export async function generateMetadata({
 export default async function RootLayout(props: Readonly<PageProps>) {
   const params = await props.params
   const result = await getMenus(params.locale)
-
-  const menu = result.status === 'error' ? [] : result.data[0]?.items
+  const menu = result.data?.[0]?.items
 
   return (
     <html lang={params.locale}>
       <body className={inter.className}>
         <div className='lg:px-8'>
           <Layout
-            header={<NavBar items={menu || []} />}
-            footer={<NavBar items={menu || []} variant='bottom' />}
+            header={<NavBar items={menu} />}
+            footer={<NavBar items={menu} variant='bottom' />}
           >
             <main className='main'>{props.children}</main>
           </Layout>

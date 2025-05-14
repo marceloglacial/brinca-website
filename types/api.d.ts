@@ -18,7 +18,8 @@ type Meta = {
   hasNextPage: boolean
 }
 
-type ApiResponse<T> = {
+/** @deprecated */
+type DeprecatedApiResponse<T> = {
   data: T
   status: 'success' | 'error'
   message: string
