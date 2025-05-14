@@ -3,6 +3,7 @@ import { Section } from '@/components/ui'
 import { HttpStatusSchema } from '@/schemas/api'
 import { getCollection, getPageBySlug } from '@/lib/api'
 import { COLLECTIONS } from '@/constants'
+import { PageParamsType } from '@/types/page'
 
 export const revalidate = 60
 export const dynamicParams = true

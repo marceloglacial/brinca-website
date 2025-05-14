@@ -5,6 +5,7 @@ import { Layout } from '@/components/ui'
 import type { Metadata } from 'next'
 import { Mulish } from 'next/font/google'
 import '../globals.css'
+import { PageProps } from '@/types/page'
 
 const inter = Mulish({ subsets: ['latin'] })
 

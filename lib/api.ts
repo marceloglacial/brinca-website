@@ -45,3 +45,12 @@ export const getCollection = async (collection: CollectionKey, params: GetDataPa
   const baseUrl = `${process.env.API_URL!}/${collection}/`
   return customFetch(baseUrl, params)
 }
+
+export const getCollectionById = async (
+  collection: CollectionKey,
+  id: string,
+  params: GetDataParams
+) => {
+  const baseUrl = `${process.env.API_URL!}/${collection}/${id}`
+  return customFetch(baseUrl, params)
+}
