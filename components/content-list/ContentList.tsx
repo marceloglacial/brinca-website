@@ -14,16 +14,10 @@ export const ContentList: FC<ContentListProps> = async ({ data, locale }) => {
   if (result.status >= HttpStatusSchema.enum.BAD_REQUEST) return <>{result.message}</>
 
   const content = result.data as CardGridItemType[]
-  const items = content.map((item: CardGridItemType): CardGridItemType => {
-    return {
-      id: item.id,
-      link: `${data.type}/${item.slug}`,
-      slug: item.slug,
-      title: item.title,
-      image: item.image,
-      date: item.date,
-    }
-  })
+  const items = content.map<CardGridItemType>((item) => ({
+    ...item,
+    link: `${data.type}/${item.slug}`,
+  }))
 
   const hasTitle = Object.values(data.title || {}).some((value) => value)
 

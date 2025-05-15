@@ -15,7 +15,7 @@ export const CardGrid: FC<CardGridProps> = ({ title, items, locale }) => {
       )}
       <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
         {items.map((item, index) => {
-          const formatedDate = item.date ? formatDate(item.date, locale) : ''
+          const formattedDate = item.date ? formatDate(item.date, locale) : ''
 
           return (
             <Animation key={index}>
@@ -35,7 +35,7 @@ export const CardGrid: FC<CardGridProps> = ({ title, items, locale }) => {
                   <Card.Body>
                     <p className='text-xl font-bold'>{item.title}</p>
                     {item.content && <p className='line-clamp-3'>{item.content}</p>}
-                    {formatedDate && <p className='first-letter:uppercase'>{formatedDate}</p>}
+                    {formattedDate && <p className='first-letter:uppercase'>{formattedDate}</p>}
                   </Card.Body>
                 </Card>
               </Link>

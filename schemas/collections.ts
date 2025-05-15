@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-const TimeStampSchema = z.object({
+export const TimeStampSchema = z.object({
   _seconds: z.number(),
   _nanoseconds: z.number(),
 })

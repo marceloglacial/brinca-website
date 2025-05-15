@@ -34,6 +34,7 @@ export const Block: FC<BlockProps> = (props) => {
       block = <CloudinaryGallery path={props.content.value} />
       break
     case 'content_list':
+    case 'calendar_list':
       block = <ContentList data={props.content.value} locale={props.locale} />
       break
     case 'partners_list':
