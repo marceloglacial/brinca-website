@@ -26,9 +26,9 @@ const customFetch = async (baseUrl: string, params: GetDataParams): Promise<ApiR
   }
 }
 
-export const getAllPages = async (params: GetDataParams) => {
+export const getAllPages = async () => {
   const baseUrl = `${process.env.API_URL!}/${COLLECTIONS.PAGES}/`
-  return customFetch(baseUrl, params)
+  return customFetch(baseUrl, {})
 }
 
 export const getPageBySlug = async (slug: string, params: GetDataParams) => {
