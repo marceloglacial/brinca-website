@@ -1,5 +1,4 @@
 'use client'
-
 import { getSelectCategoriesData } from '@/actions'
 import { DICTIONARY } from '@/constants'
 import { Form } from '@/components/ui'
@@ -7,6 +6,7 @@ import { useParams } from 'next/navigation'
 import { FC, useEffect, useState } from 'react'
 import { HttpStatusSchema } from '@/schemas/api'
 import { Collection } from '@/types'
+import { OptionsType } from '../ui/Form/FormSelect'
 
 export const FormPartnersList: FC<FormPartnersListProps> = (props) => {
   const [data, setData] = useState<Collection[]>([])
@@ -31,7 +31,7 @@ export const FormPartnersList: FC<FormPartnersListProps> = (props) => {
 
   if (isLoading) return <>loading ...</>
 
-  const options = data.map<{ label: string; value: string }>((d) => ({
+  const options = data.map<OptionsType>((d) => ({
     label: d.title,
     value: d.id,
   }))
