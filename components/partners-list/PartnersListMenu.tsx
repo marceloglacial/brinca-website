@@ -1,11 +1,11 @@
 import { Alert } from '@/components'
 import { DICTIONARY, ROUTES } from '@/constants'
-import { getCategories } from '@/lib'
 import { FC } from 'react'
 import PartnerListTitle from './PartenerListTitle'
 import PartnersListItem from './PartnersListItem'
 import PartnersListItems from './PartnersListItems'
 import { HttpStatusSchema } from '@/schemas/api'
+import { getCategories } from '@/lib/api'
 
 const PartnersListMenu: FC = async () => {
   const result = await getCategories()

@@ -1,7 +1,5 @@
 'use server'
 
-import { getCategories } from '@/lib'
+import { getCategories } from '@/lib/api'
 
-export const getSelectFieldData = async () => {
-  return await getCategories()
-}
+export const getSelectFieldData = getCategories

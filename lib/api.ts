@@ -54,3 +54,7 @@ export const getCollectionById = async (
   const baseUrl = `${process.env.API_URL!}/${collection}/${id}`
   return customFetch(baseUrl, params)
 }
+
+export const getCategories = async () => {
+  return getCollection(COLLECTIONS.CATEGORIES, { locale: 'pt_br', sortBy: 'title' })
+}
