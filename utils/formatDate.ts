@@ -1,7 +1,7 @@
-import { TimeStamp } from '@/types'
+import { Timestamp } from '@/types'
 import { formatLocale } from './localization'
 
-export const formatDate = (timestamp: TimeStamp | string | undefined, locale?: LocalesType) => {
+export const formatDate = (timestamp: Timestamp | string | undefined, locale?: LocalesType) => {
   if (!timestamp) return ''
   const date =
     typeof timestamp === 'string'

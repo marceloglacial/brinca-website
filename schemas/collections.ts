@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const TimeStampSchema = z.object({
+export const TimestampSchema = z.object({
   _seconds: z.number(),
   _nanoseconds: z.number(),
 })
@@ -90,7 +90,7 @@ export const CollectionSchema = z
     icon: z.string().optional(),
     blocks: z.array(BlockSchema).optional(),
     publishedAt: z.object({}).optional(), // TODO: Update the database to make it required
-    createdAt: TimeStampSchema.optional(), // TODO: Update the database to make it required
-    updatedAt: TimeStampSchema.optional(), // TODO: Update the database to make it required
+    createdAt: TimestampSchema.optional(), // TODO: Update the database to make it required
+    updatedAt: TimestampSchema.optional(), // TODO: Update the database to make it required
   })
   .passthrough()
