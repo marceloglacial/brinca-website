@@ -17,7 +17,7 @@ export const FormPartnersList: FC<FormPartnersListProps> = (props) => {
 
   useEffect(() => {
     async function fetchData() {
-      const result = await getSelectFieldData()
+      const result = await getSelectFieldData(locale)
 
       if (result?.status >= HttpStatusSchema.enum.BAD_REQUEST) {
         throw new Error(DICTIONARY.FORM_ERROR[locale])

@@ -49,7 +49,7 @@ const PartnersPage = async (props: PageParamsType) => {
           <h1 className='first-letter:uppercase'>{category.data.title}</h1>
         </Heading>
       </div>
-      <PartnersList category={category.data} />
+      <PartnersList category={category.data} locale={params.locale} />
     </>
   )
 }

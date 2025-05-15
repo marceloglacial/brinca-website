@@ -1,6 +1,6 @@
 interface ContentProps {
   items?: Block[]
-  locale?: LocalesType
+  locale: LocalesType
 }
 
 type ContentType = {

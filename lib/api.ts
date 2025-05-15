@@ -55,6 +55,6 @@ export const getCollectionById = async (
   return customFetch(baseUrl, params)
 }
 
-export const getCategories = async () => {
-  return getCollection(COLLECTIONS.CATEGORIES, { locale: 'pt_br', sortBy: 'title' })
+export const getCategories = async (locale: LocalesType) => {
+  return getCollection(COLLECTIONS.CATEGORIES, { locale, sortBy: 'title' })
 }

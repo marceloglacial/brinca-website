@@ -30,6 +30,7 @@ type PartnerCategoryType = {
 
 interface PartnersListProps {
   category?: CategoryType
+  locale: LocalesType
 }
 
 interface PartnersCard extends PartnerType {
