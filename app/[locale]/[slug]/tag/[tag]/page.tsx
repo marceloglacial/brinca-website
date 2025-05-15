@@ -5,13 +5,13 @@ import { localizedContent } from '@/utils'
 import { Heading } from '@/components/ui'
 import { Metadata } from 'next'
 import { PageParamsType } from '@/types/page'
-import { getAllPartners } from '@/lib/api'
+import { getCollection } from '@/lib/api'
 
 export const revalidate = 60
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const partners = await getAllPartners()
+  const partners = await getCollection(COLLECTIONS.PARTNERS, {})
   return (partners.data ?? []).map((partner) => ({
     id: String(partner.id),
   }))
