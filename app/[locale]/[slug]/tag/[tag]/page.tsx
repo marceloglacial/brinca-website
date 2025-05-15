@@ -4,16 +4,16 @@ import { getDocumentBySlug } from '@/lib'
 import { localizedContent } from '@/utils'
 import { Heading } from '@/components/ui'
 import { Metadata } from 'next'
-import { getCollection } from '@/lib/api'
 import { PageParamsType } from '@/types/page'
+import { getAllPartners } from '@/lib/api'
 
 export const revalidate = 60
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const pages = await getCollection('partners', {})
-  return (pages.data ?? []).map((page) => ({
-    id: String(page.id),
+  const partners = await getAllPartners()
+  return (partners.data ?? []).map((partner) => ({
+    id: String(partner.id),
   }))
 }
 

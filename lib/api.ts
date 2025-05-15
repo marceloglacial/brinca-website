@@ -58,3 +58,8 @@ export const getCollectionById = async (
 export const getCategories = async (locale: LocalesType) => {
   return getCollection(COLLECTIONS.CATEGORIES, { locale, sortBy: 'title' })
 }
+
+export const getAllPartners = async () => {
+  const baseUrl = `${process.env.API_URL!}/${COLLECTIONS.PARTNERS}/`
+  return customFetch(baseUrl, {})
+}
