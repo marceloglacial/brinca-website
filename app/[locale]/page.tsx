@@ -18,8 +18,8 @@ export async function generateStaticParams() {
 }
 
 export default async function Page(props: PageParamsType) {
-  const params = await props.params
-  const result = await getPageBySlug('homepage', { locale: params.locale })
+  const { locale } = await props.params
+  const result = await getPageBySlug('homepage', { locale })
 
   if (result.status >= HttpStatusSchema.enum.BAD_REQUEST) {
     return <ErrorState message={result.message} />
@@ -29,7 +29,7 @@ export default async function Page(props: PageParamsType) {
 
   return (
     <Section spacing='xl'>
-      <Content items={content?.blocks} locale={params.locale} />
+      <Content items={content?.blocks} locale={locale} />
     </Section>
   )
 }
