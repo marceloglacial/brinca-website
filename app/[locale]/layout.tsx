@@ -1,10 +1,10 @@
 import { NavBar } from '@/components'
-import { SITE } from '@/constants'
-import { getMenus } from '@/lib'
+import { COLLECTIONS, SITE } from '@/constants'
 import { Layout } from '@/components/ui'
 import type { Metadata } from 'next'
 import { Mulish } from 'next/font/google'
 import '../globals.css'
+import { getCollection } from '@/lib/api'
 import { PageProps } from '@/types/page'
 
 const inter = Mulish({ subsets: ['latin'] })
@@ -25,12 +25,12 @@ export async function generateMetadata({
 }
 
 export default async function RootLayout(props: Readonly<PageProps>) {
-  const params = await props.params
-  const result = await getMenus(params.locale)
-  const menu = result.data?.[0]?.items
+  const { locale } = await props.params
+  const result = await getCollection(COLLECTIONS.MENUS, { locale })
+  const menu = result.data?.[0]?.items as MenuItemType[]
 
   return (
-    <html lang={params.locale}>
+    <html lang={locale}>
       <body className={inter.className}>
         <div className='lg:px-8'>
           <Layout
