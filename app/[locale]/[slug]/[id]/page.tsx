@@ -24,8 +24,8 @@ export async function generateStaticParams({
 }
 
 export async function generateMetadata(props: PageParamsType): Promise<Metadata> {
-  const params = await props.params
-  const result = await getCollectionById(params.slug, params.id, { locale: params.locale })
+  const { slug, id, locale } = await props.params
+  const result = await getCollectionById(slug, id, { locale })
 
   if (result.status >= HttpStatusSchema.enum.BAD_REQUEST)
     return {
@@ -40,9 +40,8 @@ export async function generateMetadata(props: PageParamsType): Promise<Metadata>
 }
 
 export default async function Page(props: PageParamsType) {
-  const params = await props.params
-  // const result = await getSingleData(params.slug, params.id, params.locale)
-  const result = await getCollectionById(params.slug, params.id, { locale: params.locale })
+  const { slug, id, locale } = await props.params
+  const result = await getCollectionById(slug, id, { locale })
 
   if (result.status >= HttpStatusSchema.enum.BAD_REQUEST)
     return <ErrorState message={result.message} />
@@ -56,7 +55,7 @@ export default async function Page(props: PageParamsType) {
           <h1>{event?.title}</h1>
         </Heading>
       </div>
-      <Content items={event?.blocks} locale={params.locale} />
+      <Content items={event?.blocks} locale={locale} />
     </Section>
   )
 }
