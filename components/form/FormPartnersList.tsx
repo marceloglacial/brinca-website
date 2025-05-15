@@ -1,15 +1,14 @@
 'use client'
 import { getSelectFieldData } from '@/actions'
 import { DICTIONARY } from '@/constants'
-import { localizedData } from '@/utils'
 import { Form } from '@/components/ui'
 import { useParams } from 'next/navigation'
 import { FC, useEffect, useState } from 'react'
 import { HttpStatusSchema } from '@/schemas/api'
-import { ApiResponse } from '@/types'
+import { Collection } from '@/types'
 
 export const FormPartnersList: FC<FormPartnersListProps> = (props) => {
-  const [data, setData] = useState<ApiResponse | null>(null)
+  const [data, setData] = useState<Collection[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const params = useParams()
 
@@ -22,7 +21,7 @@ export const FormPartnersList: FC<FormPartnersListProps> = (props) => {
       if (result?.status >= HttpStatusSchema.enum.BAD_REQUEST) {
         throw new Error(DICTIONARY.FORM_ERROR[locale])
       }
-      setData(result)
+      setData(result.data ?? [])
       setIsLoading(false)
     }
 
@@ -31,13 +30,13 @@ export const FormPartnersList: FC<FormPartnersListProps> = (props) => {
 
   if (isLoading) return <>loading ...</>
 
-  const options = localizedData(data?.data, locale).sort((a: CategoryType, b: CategoryType) =>
-    String(a.title).localeCompare(String(b.title))
-  )
-
+  const options = data.map<{ label: string; value: string }>((d) => ({
+    label: d.title,
+    value: d.id,
+  }))
   options.push({
+    label: DICTIONARY.FORM_OTHER_CATEGORY_OPTION[locale],
     value: 'none',
-    title: DICTIONARY.FORM_OTHER_CATEGORY_OPTION[locale],
   })
 
   return (
@@ -46,10 +45,7 @@ export const FormPartnersList: FC<FormPartnersListProps> = (props) => {
         <Form.Label>{DICTIONARY.FORM_CATEGORIES[locale]}</Form.Label>
         <Form.Select
           name={'category'}
-          options={options.map((option: OptionsType) => ({
-            label: option.title,
-            value: option.id,
-          }))}
+          options={options}
           required={true}
           disabled={props.pending}
           full
