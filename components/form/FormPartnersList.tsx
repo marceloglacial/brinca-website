@@ -1,5 +1,6 @@
 'use client'
-import { getSelectFieldData } from '@/actions'
+
+import { getSelectCategoriesData } from '@/actions'
 import { DICTIONARY } from '@/constants'
 import { Form } from '@/components/ui'
 import { useParams } from 'next/navigation'
@@ -16,7 +17,7 @@ export const FormPartnersList: FC<FormPartnersListProps> = (props) => {
 
   useEffect(() => {
     async function fetchData() {
-      const result = await getSelectFieldData(locale)
+      const result = await getSelectCategoriesData(locale)
 
       if (result?.status >= HttpStatusSchema.enum.BAD_REQUEST) {
         throw new Error(DICTIONARY.FORM_ERROR[locale])

@@ -2,4 +2,4 @@
 
 import { getCategories } from '@/lib/api'
 
-export const getSelectFieldData = getCategories
+export const getSelectCategoriesData = getCategories
