@@ -52,4 +52,8 @@ export const DICTIONARY = {
     en: 'Other - We will contact you',
     pt_br: 'Outra - Entraremos em contato',
   },
+  PAST_EVENTS: {
+    en: 'Past Events',
+    pt_br: 'Eventos Anteriores',
+  },
 }

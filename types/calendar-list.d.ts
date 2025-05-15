@@ -1,0 +1,3 @@
+interface CalendarListProps {
+  locale?: LocalesType
+}
