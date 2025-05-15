@@ -13,6 +13,5 @@ export const formatDate = (timestamp: TimeStamp | string | undefined, locale?: L
     month: 'long',
     day: 'numeric',
   }
-  const formattedDate = date.toLocaleDateString(formatLocale(locale ?? 'en'), options)
-  return formattedDate
+  return date.toLocaleDateString(formatLocale(locale ?? 'en'), options)
 }
