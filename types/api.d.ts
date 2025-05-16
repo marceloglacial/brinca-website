@@ -18,7 +18,6 @@ type Meta = {
   hasNextPage: boolean
 }
 
-/** @deprecated */
 type ApiResponse<T> = {
   data: T
   status: 'success' | 'error'

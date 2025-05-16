@@ -1,7 +1,24 @@
-import { INVALIDATE_INTERVAL } from '@/constants'
-import { getCollectionById } from './firebase'
-import { localizedData } from '@/utils'
+import { COLLECTIONS, INVALIDATE_INTERVAL } from '@/constants'
+import { getCollectionById, getDocumentBySlug } from './firebase'
+import { localizedContent, localizedData } from '@/utils'
 import { unstable_cache } from 'next/cache'
+
+export const getSinglePage = unstable_cache(
+  async (slug: string, locale: string): Promise<ApiResponse<ContentType>> => {
+    try {
+      const result = await getDocumentBySlug(COLLECTIONS.PAGES, slug, locale)
+      return {
+        ...result,
+        data: localizedContent(result.data, locale),
+      }
+    } catch (e) {
+      console.error(e)
+      throw Error
+    }
+  },
+  ['single-page'],
+  { revalidate: INVALIDATE_INTERVAL }
+)
 
 export const getPageDataBySlug = unstable_cache(
   async (
@@ -33,3 +50,20 @@ export async function getDataById(type: string, id: string): Promise<unknown> {
   })
   return res.json()
 }
+
+export const getAllPages = unstable_cache(
+  async (locale?: string): Promise<ApiResponse<ContentType[]>> => {
+    try {
+      const result = await getCollectionById(COLLECTIONS.PAGES)
+      return {
+        ...result,
+        data: localizedData(result.data, locale),
+      }
+    } catch (e) {
+      console.error(e)
+      throw Error
+    }
+  },
+  ['all-pages'],
+  { revalidate: INVALIDATE_INTERVAL }
+)
