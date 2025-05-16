@@ -10,7 +10,7 @@ export const CalendarList: FC<CalendarListProps> = async (props) => {
   if (result.status === 'error') return <>{result.message}</>
 
   const content = result.data as CardGridItemType[]
-  const items = content.map((item: CardGridItemType): CardGridItemType => {
+  const items = content.map<CardGridItemType>((item: CardGridItemType) => {
     return {
       id: item.id,
       link: `${COLLECTIONS.CALENDARS}/${item.slug}`,
