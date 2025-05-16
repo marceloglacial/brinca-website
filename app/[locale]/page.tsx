@@ -20,7 +20,7 @@ export default async function Page(props: PageParamsType) {
   const { locale } = await props.params
   const result = await getPageBySlug('homepage', { locale })
 
-  if (result.status >= HttpStatusSchema.enum.BAD_REQUEST) {
+  if (result.status >= HttpStatusSchema.enum.BAD_REQUEST && result.data) {
     return <ErrorState message={result.message} />
   }
 
