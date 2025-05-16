@@ -12,7 +12,6 @@ import {
   Sponsors,
 } from '@/components'
 import { FC } from 'react'
-import { CalendarList } from '@/components/calendar-list/CalendarList'
 
 export const Block: FC<BlockProps> = (props) => {
   if (!props.content) return <></>
@@ -36,9 +35,6 @@ export const Block: FC<BlockProps> = (props) => {
       break
     case 'content_list':
       block = <ContentList data={props.content.value} locale={props.locale} />
-      break
-    case 'calendar_list':
-      block = <CalendarList locale={props.locale} />
       break
     case 'partners_list':
       block = <PartnersList />

@@ -1,9 +1,8 @@
 import { Content, ErrorState } from '@/components'
 import { SITE } from '@/constants'
+import { getAllPages, getSinglePage } from '@/lib'
 import { Heading, Section } from '@/components/ui'
 import { Metadata } from 'next'
-import { getAllPages, getPageBySlug } from '@/lib/api'
-import { HttpStatusSchema } from '@/schemas/api'
 
 export const revalidate = 60
 export const dynamicParams = true
@@ -17,10 +16,10 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata(props: PageParamsType): Promise<Metadata> {
-  const { slug, locale } = await props.params
-  const result = await getPageBySlug(slug, { locale })
+  const params = await props.params
+  const result = await getSinglePage(params.slug, params.locale)
 
-  if (result.status >= HttpStatusSchema.enum.BAD_REQUEST && result.data)
+  if (result.status === 'error')
     return {
       title: SITE.NAME,
     }
@@ -33,12 +32,10 @@ export async function generateMetadata(props: PageParamsType): Promise<Metadata>
 }
 
 export default async function Page(props: PageParamsType) {
-  const { slug, locale } = await props.params
-  const result = await getPageBySlug(slug, { locale })
+  const params = await props.params
+  const result = await getSinglePage(params.slug, params.locale)
 
-  if (result.status >= HttpStatusSchema.enum.BAD_REQUEST && result.data) {
-    return <ErrorState message={result.message} />
-  }
+  if (result.status === 'error') return <ErrorState message={result.message} />
 
   const content = result.data
 
@@ -49,7 +46,7 @@ export default async function Page(props: PageParamsType) {
           <h1>{content.title}</h1>
         </Heading>
       </div>
-      <Content items={content.blocks} locale={locale} />
+      <Content items={content.blocks} locale={params.locale} />
     </Section>
   )
 }
