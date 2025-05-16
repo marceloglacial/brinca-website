@@ -1,24 +1,7 @@
-import { COLLECTIONS, INVALIDATE_INTERVAL } from '@/constants'
-import { getCollectionById, getDocumentBySlug } from './firebase'
-import { localizedContent, localizedData } from '@/utils'
+import { INVALIDATE_INTERVAL } from '@/constants'
+import { getCollectionById } from './firebase'
+import { localizedData } from '@/utils'
 import { unstable_cache } from 'next/cache'
-
-export const getSinglePage = unstable_cache(
-  async (slug: string, locale: string): Promise<ApiResponse<ContentType>> => {
-    try {
-      const result = await getDocumentBySlug(COLLECTIONS.PAGES, slug, locale)
-      return {
-        ...result,
-        data: localizedContent(result.data, locale),
-      }
-    } catch (e) {
-      console.error(e)
-      throw Error
-    }
-  },
-  ['single-page'],
-  { revalidate: INVALIDATE_INTERVAL }
-)
 
 export const getPageDataBySlug = unstable_cache(
   async (

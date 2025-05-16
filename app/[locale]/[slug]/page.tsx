@@ -1,28 +1,26 @@
 import { Content, ErrorState } from '@/components'
 import { SITE } from '@/constants'
-import { getSinglePage } from '@/lib'
 import { Heading, Section } from '@/components/ui'
 import { Metadata } from 'next'
-import { getAllPages } from '@/lib/api'
+import { getAllPages, getPageBySlug } from '@/lib/api'
+import { HttpStatusSchema } from '@/schemas/api'
 
 export const revalidate = 60
 export const dynamicParams = true
 
 export async function generateStaticParams() {
   const pages = await getAllPages()
-  return (
-    pages.data?.map((page) => ({
-      id: String(page.id),
-      slug: String(page.slug),
-    })) ?? []
-  )
+  return pages.data.map((page) => ({
+    id: String(page.id),
+    slug: String(page.slug),
+  }))
 }
 
 export async function generateMetadata(props: PageParamsType): Promise<Metadata> {
-  const params = await props.params
-  const result = await getSinglePage(params.slug, params.locale)
+  const { slug, locale } = await props.params
+  const result = await getPageBySlug(slug, { locale })
 
-  if (result.status === 'error')
+  if (result.status >= HttpStatusSchema.enum.BAD_REQUEST && result.data)
     return {
       title: SITE.NAME,
     }
@@ -35,10 +33,12 @@ export async function generateMetadata(props: PageParamsType): Promise<Metadata>
 }
 
 export default async function Page(props: PageParamsType) {
-  const params = await props.params
-  const result = await getSinglePage(params.slug, params.locale)
+  const { slug, locale } = await props.params
+  const result = await getPageBySlug(slug, { locale })
 
-  if (result.status === 'error') return <ErrorState message={result.message} />
+  if (result.status >= HttpStatusSchema.enum.BAD_REQUEST && result.data) {
+    return <ErrorState message={result.message} />
+  }
 
   const content = result.data
 
@@ -49,7 +49,7 @@ export default async function Page(props: PageParamsType) {
           <h1>{content.title}</h1>
         </Heading>
       </div>
-      <Content items={content.blocks} locale={params.locale} />
+      <Content items={content.blocks} locale={locale} />
     </Section>
   )
 }
