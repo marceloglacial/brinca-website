@@ -1,5 +1,5 @@
 interface ContentProps {
-  items: BlockType[]
+  items?: Block[]
   locale?: LocalesType
 }
 
