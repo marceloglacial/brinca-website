@@ -50,20 +50,3 @@ export async function getDataById(type: string, id: string): Promise<unknown> {
   })
   return res.json()
 }
-
-export const getAllPages = unstable_cache(
-  async (locale?: string): Promise<ApiResponse<ContentType[]>> => {
-    try {
-      const result = await getCollectionById(COLLECTIONS.PAGES)
-      return {
-        ...result,
-        data: localizedData(result.data, locale),
-      }
-    } catch (e) {
-      console.error(e)
-      throw Error
-    }
-  },
-  ['all-pages'],
-  { revalidate: INVALIDATE_INTERVAL }
-)
