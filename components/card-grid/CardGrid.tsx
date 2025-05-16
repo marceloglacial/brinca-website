@@ -7,7 +7,7 @@ import { Animation } from '../animation/Animation'
 
 export const CardGrid: FC<CardGridProps> = ({ title, items, locale }) => {
   return (
-    <Section>
+    <Section spacing='l'>
       {title && (
         <Heading>
           <h2>{title}</h2>

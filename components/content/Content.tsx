@@ -2,7 +2,7 @@ import { Block } from '@/components'
 import { FC } from 'react'
 
 export const Content: FC<ContentProps> = ({ items, locale }) => {
-  if (!items.length) return <></>
+  if (!items || items.length === 0) return <></>
 
   return (
     <>
