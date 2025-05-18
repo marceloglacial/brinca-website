@@ -1,5 +1,5 @@
 import { COLLECTIONS } from '@/constants'
-import { ApiResponseSchema, ParamsSchema } from '@/schemas/api'
+import { ApiResponseSchema, HttpStatusSchema, ParamsSchema } from '@/schemas/api'
 import { GetDataParams, NewApiResponse } from '@/types/new-api'
 
 const customFetch = async (baseUrl: string, params: GetDataParams): Promise<NewApiResponse> => {
@@ -35,4 +35,15 @@ export const getPageBySlug = async (slug: string, params: GetDataParams) => {
   const baseUrl = `${process.env.API_URL!}/${COLLECTIONS.PAGES}/slug/${slug}/`
   const response = await customFetch(baseUrl, params)
   return { ...response, data: response.data[0] }
+}
+
+export const getMenus = async (params: GetDataParams): Promise<MenuItemType[]> => {
+  const baseUrl = `${process.env.API_URL!}/${COLLECTIONS.MENUS}/`
+  const response = await customFetch(baseUrl, params)
+
+  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST || !response.data) {
+    return []
+  }
+
+  return (response.data[0]?.items ?? []) as MenuItemType[]
 }

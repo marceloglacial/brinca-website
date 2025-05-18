@@ -1,10 +1,10 @@
 import { NavBar } from '@/components'
 import { SITE } from '@/constants'
-import { getMenus } from '@/lib'
 import { Layout } from '@/components/ui'
 import type { Metadata } from 'next'
 import { Mulish } from 'next/font/google'
 import '../globals.css'
+import { getMenus } from '@/lib/api'
 
 const inter = Mulish({ subsets: ['latin'] })
 
@@ -24,18 +24,16 @@ export async function generateMetadata({
 }
 
 export default async function RootLayout(props: Readonly<PageProps>) {
-  const params = await props.params
-  const result = await getMenus(params.locale)
-
-  const menu = result.status === 'error' ? [] : result.data[0]?.items
+  const { locale } = await props.params
+  const menuItems = await getMenus({ locale })
 
   return (
-    <html lang={params.locale}>
+    <html lang={locale}>
       <body className={inter.className}>
         <div className='lg:px-8'>
           <Layout
-            header={<NavBar items={menu || []} />}
-            footer={<NavBar items={menu || []} variant='bottom' />}
+            header={<NavBar items={menuItems} />}
+            footer={<NavBar items={menuItems} variant='bottom' />}
           >
             <main className='main'>{props.children}</main>
           </Layout>
