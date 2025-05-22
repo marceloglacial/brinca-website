@@ -47,3 +47,14 @@ export const getMenus = async (params: GetDataParams): Promise<MenuItemType[]> =
 
   return (response.data[0]?.items ?? []) as MenuItemType[]
 }
+
+export const getLocales = async () => {
+  const baseUrl = `${process.env.API_URL!}/${COLLECTIONS.LOCALES}/`
+  const response = await customFetch(baseUrl, {})
+
+  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST || !response.data) {
+    return []
+  }
+
+  return response.data
+}
