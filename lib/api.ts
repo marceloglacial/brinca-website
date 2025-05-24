@@ -58,7 +58,7 @@ export const getLocales = async () => {
   return response.data
 }
 
-export const getCollection = async (slug: CollectionKey) => {
+export const getAllByCollection = async (slug: CollectionKey) => {
   const baseUrl = `${process.env.API_URL!}/${slug}/`
   const response = await customFetch(baseUrl, {})
 
@@ -69,7 +69,11 @@ export const getCollection = async (slug: CollectionKey) => {
   return response.data
 }
 
-export const getCollectionById = async (slug: CollectionKey, id: string, params: GetDataParams) => {
+export const getSingleByCollectionById = async (
+  slug: CollectionKey,
+  id: string,
+  params: GetDataParams
+) => {
   const baseUrl = `${process.env.API_URL!}/${slug}/${id}`
   return customFetch(baseUrl, params)
 }

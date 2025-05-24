@@ -2,7 +2,7 @@ import { Content, ErrorState } from '@/components'
 import { SITE } from '@/constants'
 import { Heading, Section } from '@/components/ui'
 import { Metadata } from 'next'
-import { getCollection, getCollectionById } from '@/lib/api'
+import { getAllByCollection, getSingleByCollectionById } from '@/lib/api'
 import { CollectionKey } from '@/types/new-api'
 import { PageParamsType } from '@/types/page'
 import { HttpStatusSchema } from '@/schemas/api'
@@ -15,7 +15,7 @@ export async function generateStaticParams({
 }: {
   params: { slug: CollectionKey }
 }) {
-  const data = await getCollection(slug)
+  const data = await getAllByCollection(slug)
   return data.map((d) => ({
     id: String(d.id),
   }))
@@ -23,7 +23,7 @@ export async function generateStaticParams({
 
 export async function generateMetadata(props: PageParamsType): Promise<Metadata> {
   const { slug, id, locale } = await props.params
-  const response = await getCollectionById(slug, id, { locale })
+  const response = await getSingleByCollectionById(slug, id, { locale })
 
   if (response.status >= HttpStatusSchema.enum.BAD_REQUEST || !response.data) {
     return {
@@ -40,7 +40,7 @@ export async function generateMetadata(props: PageParamsType): Promise<Metadata>
 
 export default async function Page(props: PageParamsType) {
   const { slug, id, locale } = await props.params
-  const response = await getCollectionById(slug, id, { locale })
+  const response = await getSingleByCollectionById(slug, id, { locale })
 
   if (response.status >= HttpStatusSchema.enum.BAD_REQUEST || !response.data) {
     return <ErrorState message={response.message} />
