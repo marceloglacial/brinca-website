@@ -5,6 +5,7 @@ import { Heading, Section } from '@/components/ui'
 import { Metadata } from 'next'
 import { getPageBySlug } from '@/lib/api'
 import { HttpStatusSchema } from '@/schemas/api'
+import { PageParamsType } from '@/types/page'
 
 export const revalidate = 60
 export const dynamicParams = true
