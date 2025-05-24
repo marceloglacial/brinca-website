@@ -26,10 +26,3 @@ export const getPageDataBySlug = unstable_cache(
   ['page-data'],
   { revalidate: INVALIDATE_INTERVAL }
 )
-
-export async function getDataById(type: string, id: string): Promise<unknown> {
-  const res = await fetch(`${process.env.API_URL}/${type}/id/${id}`, {
-    next: { revalidate: INVALIDATE_INTERVAL },
-  })
-  return res.json()
-}
