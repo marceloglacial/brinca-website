@@ -1,5 +1,6 @@
 import { Content, ErrorState } from '@/components'
 import { Section } from '@/components/ui'
+import { COLLECTIONS } from '@/constants'
 import { getLocales, getPageBySlug } from '@/lib/api'
 import { HttpStatusSchema } from '@/schemas/api'
 
@@ -15,13 +16,12 @@ export async function generateStaticParams() {
 
 export default async function Page(props: PageParamsType) {
   const { locale } = await props.params
-  const result = await getPageBySlug('homepage', { locale })
+  const response = await getPageBySlug(COLLECTIONS.PAGES, 'homepage', { locale })
+  const content = response.data[0]
 
-  if (result.status >= HttpStatusSchema.enum.BAD_REQUEST && result.data) {
-    return <ErrorState message={result.message} />
+  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST || !content) {
+    return <ErrorState message={response.message} />
   }
-
-  const content = result.data
 
   return (
     <Section spacing='xl'>

@@ -31,10 +31,13 @@ export const getAllPages = async () => {
   return customFetch(baseUrl, {})
 }
 
-export const getPageBySlug = async (slug: string, params: GetDataParams) => {
-  const baseUrl = `${process.env.API_URL!}/${COLLECTIONS.PAGES}/slug/${slug}`
-  const response = await customFetch(baseUrl, params)
-  return { ...response, data: response.data[0] }
+export const getPageBySlug = async (
+  collection: CollectionKey,
+  slug: string,
+  params: GetDataParams
+) => {
+  const baseUrl = `${process.env.API_URL!}/${collection}/slug/${slug}`
+  return await customFetch(baseUrl, params)
 }
 
 export const getMenus = async (params: GetDataParams): Promise<MenuItemType[]> => {
@@ -57,9 +60,4 @@ export const getLocales = async () => {
   }
 
   return response.data
-}
-
-export const getSingleData = async (slug: CollectionKey, id: string, params: GetDataParams) => {
-  const baseUrl = `${process.env.API_URL!}/${slug}/slug/${id}`
-  return await customFetch(baseUrl, params)
 }

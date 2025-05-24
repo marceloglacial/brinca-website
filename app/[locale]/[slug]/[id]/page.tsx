@@ -3,55 +3,58 @@ import { SITE } from '@/constants'
 import { getCollectionById } from '@/lib'
 import { Heading, Section } from '@/components/ui'
 import { Metadata } from 'next'
-import { getSingleData } from '@/lib/api'
+import { getPageBySlug } from '@/lib/api'
 import { HttpStatusSchema } from '@/schemas/api'
 
 export const revalidate = 60
 export const dynamicParams = true
 
-export async function generateStaticParams({ params: { slug } }: { params: { slug: string } }) {
-  const pages = await getCollectionById(`${slug}`)
+export async function generateStaticParams({
+  params: { slug: collection },
+}: {
+  params: { slug: string }
+}) {
+  const response = await getCollectionById(collection)
   return (
-    pages.data?.map((page) => ({
+    response.data?.map((page) => ({
       id: String(page.id),
     })) || []
   )
 }
 
 export async function generateMetadata(props: PageParamsType): Promise<Metadata> {
-  const { slug, id, locale } = await props.params
-  const response = await getSingleData(slug, id, { locale })
+  const { slug: collection, id: slug, locale } = await props.params
+  const response = await getPageBySlug(collection, slug, { locale })
+  const content = response.data[0]
 
-  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST)
+  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST || !content) {
     return {
       title: SITE.NAME,
     }
-
-  const page = response.data[0]
+  }
 
   return {
-    title: `${SITE.NAME} - ${page.title}`,
+    title: `${SITE.NAME} - ${content.title}`,
   }
 }
 
 export default async function Page(props: PageParamsType) {
-  const { slug, id, locale } = await props.params
-  const response = await getSingleData(slug, id, { locale })
+  const { slug: collection, id: slug, locale } = await props.params
+  const response = await getPageBySlug(collection, slug, { locale })
+  const content = response.data[0]
 
-  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST) {
+  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST || !content) {
     return <ErrorState message={response.message} />
   }
-
-  const event = response.data[0]
 
   return (
     <Section>
       <div className='mb-12'>
         <Heading>
-          <h1>{event.title}</h1>
+          <h1>{content.title}</h1>
         </Heading>
       </div>
-      <Content items={event.blocks} locale={locale} />
+      <Content items={content.blocks} locale={locale} />
     </Section>
   )
 }

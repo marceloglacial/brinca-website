@@ -1,5 +1,5 @@
 import { Content, ErrorState } from '@/components'
-import { SITE } from '@/constants'
+import { COLLECTIONS, SITE } from '@/constants'
 import { Heading, Section } from '@/components/ui'
 import { Metadata } from 'next'
 import { getAllPages, getPageBySlug } from '@/lib/api'
@@ -18,29 +18,28 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: PageParamsType): Promise<Metadata> {
   const { slug, locale } = await props.params
-  const result = await getPageBySlug(slug, { locale })
+  const response = await getPageBySlug(COLLECTIONS.PAGES, slug, { locale })
+  const content = response.data[0]
 
-  if (result.status >= HttpStatusSchema.enum.BAD_REQUEST && result.data)
+  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST || !content) {
     return {
       title: SITE.NAME,
     }
-
-  const page = result.data
+  }
 
   return {
-    title: `${SITE.NAME} - ${page.title}`,
+    title: `${SITE.NAME} - ${content.title}`,
   }
 }
 
 export default async function Page(props: PageParamsType) {
   const { slug, locale } = await props.params
-  const result = await getPageBySlug(slug, { locale })
+  const response = await getPageBySlug(COLLECTIONS.PAGES, slug, { locale })
+  const content = response.data[0]
 
-  if (result.status >= HttpStatusSchema.enum.BAD_REQUEST && result.data) {
-    return <ErrorState message={result.message} />
+  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST || !content) {
+    return <ErrorState message={response.message} />
   }
-
-  const content = result.data
 
   return (
     <Section>
