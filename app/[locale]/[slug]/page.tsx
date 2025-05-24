@@ -35,9 +35,9 @@ export async function generateMetadata(props: PageParamsType): Promise<Metadata>
 export default async function Page(props: PageParamsType) {
   const { slug, locale } = await props.params
   const response = await getPageBySlug(slug, { locale })
-  const content = response.data[0]
+  const page = response.data[0]
 
-  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST || !content) {
+  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST || !page) {
     return <ErrorState message={response.message} />
   }
 
@@ -45,10 +45,10 @@ export default async function Page(props: PageParamsType) {
     <Section>
       <div className='mb-12'>
         <Heading>
-          <h1>{content.title}</h1>
+          <h1>{page.title}</h1>
         </Heading>
       </div>
-      <Content items={content.blocks} locale={locale} />
+      <Content items={page.blocks} locale={locale} />
     </Section>
   )
 }
