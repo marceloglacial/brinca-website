@@ -28,6 +28,7 @@ export async function generateMetadata(props: PageParamsType): Promise<Metadata>
     }
 
   const page = response.data[0]
+
   return {
     title: `${SITE.NAME} - ${page.title}`,
   }
