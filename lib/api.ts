@@ -33,8 +33,7 @@ export const getAllPages = async () => {
 
 export const getPageBySlug = async (slug: string, params: GetDataParams) => {
   const baseUrl = `${process.env.API_URL!}/${COLLECTIONS.PAGES}/slug/${slug}`
-  const response = await customFetch(baseUrl, params)
-  return { ...response, data: response.data[0] }
+  return await customFetch(baseUrl, params)
 }
 
 export const getMenus = async (params: GetDataParams): Promise<MenuItemType[]> => {
