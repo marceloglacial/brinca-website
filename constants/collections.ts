@@ -4,6 +4,7 @@ export const COLLECTIONS = {
   EVENTS: 'events',
   FORMS: 'forms',
   GODFATHERS: 'godfathers',
+  LOCALES: 'locales',
   MENUS: 'menus',
   PAGES: 'pages',
   PARTNERS_CATEGORY: 'partnersCategory',
