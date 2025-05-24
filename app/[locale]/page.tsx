@@ -2,6 +2,7 @@ import { Content, ErrorState } from '@/components'
 import { Section } from '@/components/ui'
 import { getLocales, getPageBySlug } from '@/lib/api'
 import { HttpStatusSchema } from '@/schemas/api'
+import { PageParamsType } from '@/types/page'
 
 export const revalidate = 60
 export const dynamicParams = true

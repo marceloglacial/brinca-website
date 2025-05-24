@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
+    "tsc": "tsc --noEmit",
     "env:open": "pnpm dlx dotenv-vault@latest open",
     "env:pull": "pnpm dlx dotenv-vault@latest pull",
     "env:pull-staging": "pnpm dlx dotenv-vault@latest pull staging .env",

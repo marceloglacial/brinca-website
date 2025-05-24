@@ -1,6 +1,8 @@
+import { CollectionKey } from './new-api'
+
 type PageParamsType = {
   params: Promise<{
-    slug: string
+    slug: CollectionKey
     locale: LocaleTypes
     id: string
     tag: string
