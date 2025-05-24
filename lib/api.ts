@@ -1,6 +1,6 @@
 import { COLLECTIONS } from '@/constants'
 import { ApiResponseSchema, HttpStatusSchema, ParamsSchema } from '@/schemas/api'
-import { GetDataParams, NewApiResponse } from '@/types/new-api'
+import { CollectionKey, GetDataParams, NewApiResponse } from '@/types/new-api'
 
 const customFetch = async (baseUrl: string, params: GetDataParams): Promise<NewApiResponse> => {
   try {
@@ -57,4 +57,9 @@ export const getLocales = async () => {
   }
 
   return response.data
+}
+
+export const getSingleData = async (slug: CollectionKey, id: string, params: GetDataParams) => {
+  const baseUrl = `${process.env.API_URL!}/${slug}/slug/${id}`
+  return await customFetch(baseUrl, params)
 }
