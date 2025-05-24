@@ -1,5 +1,4 @@
 export * from './cloudinary'
-export * from './data'
 export * from './firebase'
 export * from './form'
 export * from './formSubmission'
