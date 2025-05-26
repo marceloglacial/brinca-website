@@ -1,5 +1,5 @@
 import { COLLECTIONS, INVALIDATE_INTERVAL } from '@/constants'
-import { db, FirestoreDocument, getCollectionById } from '@/lib'
+import { db } from '@/lib'
 import { collection, getDocs, limit, orderBy, query, startAfter, where } from 'firebase/firestore'
 import { unstable_cache } from 'next/cache'
 
@@ -85,20 +85,3 @@ export const getPartners = async ({
     }
   }
 }
-
-export const getCategories = unstable_cache(
-  async (locale: LocalesType = 'pt_br'): Promise<ApiResponse<FirestoreDocument[]>> => {
-    try {
-      const result = await getCollectionById(COLLECTIONS.CATEGORIES)
-      return {
-        ...result,
-        data: (result.data ?? []).sort((a, b) => a.title[locale].localeCompare(b.title[locale])),
-      }
-    } catch (e) {
-      console.error(e)
-      throw Error
-    }
-  },
-  ['partners-category'],
-  { revalidate: INVALIDATE_INTERVAL }
-)

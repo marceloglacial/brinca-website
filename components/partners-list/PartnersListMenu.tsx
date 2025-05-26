@@ -1,19 +1,20 @@
 import { Alert } from '@/components'
-import { DICTIONARY, ROUTES } from '@/constants'
-import { getCategories } from '@/lib'
+import { COLLECTIONS, DICTIONARY, ROUTES } from '@/constants'
 import { FC } from 'react'
 import PartnerListTitle from './PartenerListTitle'
 import PartnersListItem from './PartnersListItem'
 import PartnersListItems from './PartnersListItems'
+import { getAllByCollection } from '@/lib/api'
+import { HttpStatusSchema } from '@/schemas/api'
 
 const PartnersListMenu: FC = async () => {
-  const result = await getCategories()
+  const response = await getAllByCollection(COLLECTIONS.CATEGORIES, {})
 
-  if (result.status === 'error') {
+  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST) {
     return <Alert message={'Error loading categories!'} />
   }
 
-  const categories = result.data as CategoryType[]
+  const categories = response.data as CategoryType[]
   if (!categories.length) return <></>
 
   return (
