@@ -6,7 +6,7 @@ export const Content: FC<ContentProps> = ({ items, locale }) => {
 
   return (
     <>
-      {items.map((item: BlockType, index: number) => {
+      {items.map((item, index) => {
         return <Block key={index} content={item} locale={locale} />
       })}
     </>
