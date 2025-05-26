@@ -1,7 +1,7 @@
 import { Alert } from '@/components'
 import { COLLECTIONS, DICTIONARY, ROUTES } from '@/constants'
 import { FC } from 'react'
-import PartnerListTitle from './PartenerListTitle'
+import PartnerListTitle from './PartnerListTitle'
 import PartnersListItem from './PartnersListItem'
 import PartnersListItems from './PartnersListItems'
 import { getAllByCollection } from '@/lib/api'
