@@ -11,9 +11,7 @@ import { Collection } from '@/types/new-api'
 export const FormPartnersList: FC<FormPartnersListProps> = (props) => {
   const [data, setData] = useState<Collection[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const params = useParams()
-
-  const locale = params.locale as LocalesType
+  const { locale } = useParams<{ locale: LocalesType }>()
 
   useEffect(() => {
     async function fetchData() {
