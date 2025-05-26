@@ -1,5 +1,4 @@
-import { COLLECTIONS } from '@/constants'
-import { ApiResponseSchema, HttpStatusSchema, ParamsSchema } from '@/schemas/api'
+import { ApiResponseSchema, ParamsSchema } from '@/schemas/api'
 import { CollectionKey, GetDataParams, NewApiResponse } from '@/types/new-api'
 
 const customFetch = async (baseUrl: string, params: GetDataParams): Promise<NewApiResponse> => {
@@ -38,15 +37,4 @@ export const getPageBySlug = async (
 ) => {
   const baseUrl = `${process.env.API_URL!}/${collection}/slug/${slug}`
   return await customFetch(baseUrl, params)
-}
-
-export const getLocales = async () => {
-  const baseUrl = `${process.env.API_URL!}/${COLLECTIONS.LOCALES}`
-  const response = await customFetch(baseUrl, {})
-
-  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST || !response.data) {
-    return []
-  }
-
-  return response.data
 }

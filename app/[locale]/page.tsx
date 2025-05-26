@@ -1,7 +1,7 @@
 import { Content, ErrorState } from '@/components'
 import { Section } from '@/components/ui'
 import { COLLECTIONS } from '@/constants'
-import { getLocales, getPageBySlug } from '@/lib/api'
+import { getAllByCollection, getPageBySlug } from '@/lib/api'
 import { HttpStatusSchema } from '@/schemas/api'
 import { PageParamsType } from '@/types/page'
 
@@ -9,8 +9,8 @@ export const revalidate = 60
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const locales = await getLocales()
-  return locales.map((locale) => ({
+  const response = await getAllByCollection(COLLECTIONS.LOCALES, {})
+  return response.data.map((locale) => ({
     id: String(locale.id),
   }))
 }
