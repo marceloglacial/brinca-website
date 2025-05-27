@@ -1,15 +1,16 @@
 import { CardGrid } from '@/components'
 import { COLLECTIONS, DICTIONARY, SITE } from '@/constants'
-import { getPageDataBySlug } from '@/lib'
+import { getAllByCollection } from '@/lib/api'
+import { HttpStatusSchema } from '@/schemas/api'
 import { formatDate } from '@/utils'
 import { FC } from 'react'
 
-export const CalendarList: FC<CalendarListProps> = async (props) => {
-  const result = await getPageDataBySlug(COLLECTIONS.CALENDARS, props.locale, 'date')
+export const CalendarList: FC<CalendarListProps> = async ({ locale }) => {
+  const response = await getAllByCollection(COLLECTIONS.CALENDARS, { locale, sortBy: 'date' })
 
-  if (result.status === 'error') return <>{result.message}</>
+  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST) return <>{response.message}</>
 
-  const content = result.data as CardGridItemType[]
+  const content = response.data as CardGridItemType[]
   const items = content.map<CardGridItemType>((item) => {
     return {
       id: item.id,
@@ -34,16 +35,16 @@ export const CalendarList: FC<CalendarListProps> = async (props) => {
 
   return (
     <div className='grid grid-cols-1 gap-16'>
-      {upcomingItems.length > 0 && <CardGrid items={upcomingItems} locale={props.locale} />}
+      {upcomingItems.length > 0 && <CardGrid items={upcomingItems} locale={locale} />}
       {pastItems.length > 0 && (
         <CardGrid
           title={
             DICTIONARY.PAST_EVENTS[
-              (props.locale || SITE.DEFAULT_LOCALE) as keyof typeof DICTIONARY.PAST_EVENTS
+              (locale || SITE.DEFAULT_LOCALE) as keyof typeof DICTIONARY.PAST_EVENTS
             ]
           }
           items={pastItems}
-          locale={props.locale}
+          locale={locale}
         />
       )}
     </div>
