@@ -56,4 +56,4 @@ export const DICTIONARY = {
     en: 'Past Events',
     pt_br: 'Eventos Anteriores',
   },
-}
+} as const

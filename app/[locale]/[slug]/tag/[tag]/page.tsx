@@ -1,7 +1,5 @@
 import { PartnersList } from '@/components'
 import { COLLECTIONS, SITE } from '@/constants'
-import { getDocumentBySlug } from '@/lib'
-import { localizedContent } from '@/utils'
 import { Heading } from '@/components/ui'
 import { Metadata } from 'next'
 import { PageParamsType } from '@/types/page'
@@ -34,22 +32,21 @@ export async function generateMetadata(props: PageParamsType): Promise<Metadata>
 }
 
 const PartnersPage = async (props: PageParamsType) => {
-  const params = await props.params
+  const { tag: slug, locale } = await props.params
 
-  if (!params.tag) return <>Error loading page</>
+  if (!slug) return <>Error loading page</>
 
-  const result = await getDocumentBySlug(COLLECTIONS.CATEGORIES, params.tag, params.locale)
-
-  const category = localizedContent(result, params.locale)
+  const response = await getCollectionBySlug(COLLECTIONS.CATEGORIES, slug, { locale })
+  const category = response.data[0] as CategoryType
 
   return (
     <>
       <div className='mb-12'>
         <Heading>
-          <h1 className='first-letter:uppercase'>{category.data.title}</h1>
+          <h1 className='first-letter:uppercase'>{category.title}</h1>
         </Heading>
       </div>
-      <PartnersList category={category.data} locale={params.locale} />
+      <PartnersList category={category} locale={locale} />
     </>
   )
 }

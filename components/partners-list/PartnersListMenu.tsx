@@ -21,7 +21,11 @@ const PartnersListMenu: FC<{ locale: LocalesType }> = async ({ locale }) => {
     <div className='partners-list-categories flex flex-col gap-4'>
       <PartnerListTitle />
       <div className='partners-list-categories__menu flex flex-wrap gap-4'>
-        <PartnersListItem title={DICTIONARY.ALL} slug={ROUTES.PARTNERS_ALL} id={'0'} />
+        <PartnersListItem
+          title={DICTIONARY.ALL[locale]}
+          slug={ROUTES.PARTNERS_ALL[locale]}
+          id={'0'}
+        />
         <PartnersListItems data={categories} />
       </div>
     </div>
