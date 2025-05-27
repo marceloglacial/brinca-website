@@ -1,3 +1,5 @@
+'use server'
+
 import { ApiResponseSchema, ParamsSchema } from '@/schemas/api'
 import { CollectionKey, GetDataParams, NewApiResponse } from '@/types/new-api'
 
@@ -25,12 +27,16 @@ const customFetch = async (baseUrl: string, params: GetDataParams): Promise<NewA
   }
 }
 
-export const getAllByCollection = (collection: CollectionKey, params: GetDataParams) => {
+export const getAllByCollection = async (collection: CollectionKey, params: GetDataParams) => {
   const baseUrl = `${process.env.API_URL!}/${collection}`
-  return customFetch(baseUrl, params)
+  return await customFetch(baseUrl, params)
 }
 
-export const getPageBySlug = (collection: CollectionKey, slug: string, params: GetDataParams) => {
+export const getPageBySlug = async (
+  collection: CollectionKey,
+  slug: string,
+  params: GetDataParams
+) => {
   const baseUrl = `${process.env.API_URL!}/${collection}/slug/${slug}`
-  return customFetch(baseUrl, params)
+  return await customFetch(baseUrl, params)
 }
