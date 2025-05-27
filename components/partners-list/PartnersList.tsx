@@ -9,8 +9,6 @@ export const PartnersList: FC<PartnersListProps> = async ({ locale }) => {
   const response = await getAllByCollection(COLLECTIONS.PARTNERS, {
     locale,
     sortBy: 'title',
-    limit: 100,
-    active: true,
   })
 
   if (response.status >= HttpStatusSchema.enum.BAD_REQUEST) {

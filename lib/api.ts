@@ -6,6 +6,9 @@ import { CollectionKey, GetDataParams, NewApiResponse } from '@/types/new-api'
 const customFetch = async (baseUrl: string, params: GetDataParams): Promise<NewApiResponse> => {
   try {
     ParamsSchema.parse(params)
+    if (params.limit === undefined) {
+      params.limit = Number.MAX_SAFE_INTEGER
+    }
 
     const searchParams = new URLSearchParams()
     Object.entries(params).forEach(([key, value]) => {
