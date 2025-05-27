@@ -5,7 +5,8 @@ import { localizedContent } from '@/utils'
 import { Heading } from '@/components/ui'
 import { Metadata } from 'next'
 import { PageParamsType } from '@/types/page'
-import { getAllByCollection } from '@/lib/api'
+import { getAllByCollection, getCollectionBySlug } from '@/lib/api'
+import { HttpStatusSchema } from '@/schemas/api'
 
 export const revalidate = 60
 export const dynamicParams = true
@@ -18,18 +19,17 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata(props: PageParamsType): Promise<Metadata> {
-  const params = await props.params
-  const result = await getDocumentBySlug(COLLECTIONS.CATEGORIES, params.tag, params.locale)
+  const { tag: slug, locale } = await props.params
+  const response = await getCollectionBySlug(COLLECTIONS.CATEGORIES, slug, { locale })
+  const content = response.data[0]
 
-  if (result.status === 'error')
+  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST)
     return {
       title: SITE.NAME,
     }
 
-  const page = localizedContent(result.data)
-
   return {
-    title: `${SITE.NAME} - ${page.title}`,
+    title: `${SITE.NAME} - ${content.title}`,
   }
 }
 
