@@ -8,7 +8,7 @@ import { FC } from 'react'
 export const Sponsors: FC<SponsorsProps> = async ({ locale, data }) => {
   if (!data.active) return <></>
 
-  const response = await getAllByCollection(COLLECTIONS.SPONSORS, { locale, sortBy: 'title' })
+  const response = await getAllByCollection(COLLECTIONS.SPONSORS, { locale })
 
   if (response.status >= HttpStatusSchema.enum.BAD_REQUEST)
     return <Alert message={response.message} />

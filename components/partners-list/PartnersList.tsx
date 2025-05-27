@@ -6,10 +6,7 @@ import { getAllByCollection } from '@/lib/api'
 import { HttpStatusSchema } from '@/schemas/api'
 
 export const PartnersList: FC<PartnersListProps> = async ({ locale, category }) => {
-  const response = await getAllByCollection(COLLECTIONS.PARTNERS, {
-    locale,
-    sortBy: 'title',
-  })
+  const response = await getAllByCollection(COLLECTIONS.PARTNERS, { locale })
 
   if (response.status >= HttpStatusSchema.enum.BAD_REQUEST) {
     return <>Error</>
