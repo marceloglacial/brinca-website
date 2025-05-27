@@ -9,6 +9,7 @@ export const ContentList: FC<ContentListProps> = async ({ data, locale }) => {
   const response = await getAllByCollection(collection, {
     locale,
     sortBy: 'date',
+    order: 'desc',
     limit,
   })
 
