@@ -3,7 +3,7 @@ import { SITE } from '@/constants'
 import { getCollectionById } from '@/lib'
 import { Heading, Section } from '@/components/ui'
 import { Metadata } from 'next'
-import { getPageBySlug } from '@/lib/api'
+import { getCollectionBySlug } from '@/lib/api'
 import { HttpStatusSchema } from '@/schemas/api'
 import { PageParamsType } from '@/types/page'
 
@@ -25,7 +25,7 @@ export async function generateStaticParams({
 
 export async function generateMetadata(props: PageParamsType): Promise<Metadata> {
   const { slug: collection, id: slug, locale } = await props.params
-  const response = await getPageBySlug(collection, slug, { locale })
+  const response = await getCollectionBySlug(collection, slug, { locale })
   const content = response.data[0]
 
   if (response.status >= HttpStatusSchema.enum.BAD_REQUEST || !content) {
@@ -41,7 +41,7 @@ export async function generateMetadata(props: PageParamsType): Promise<Metadata>
 
 export default async function Page(props: PageParamsType) {
   const { slug: collection, id: slug, locale } = await props.params
-  const response = await getPageBySlug(collection, slug, { locale })
+  const response = await getCollectionBySlug(collection, slug, { locale })
   const content = response.data[0]
 
   if (response.status >= HttpStatusSchema.enum.BAD_REQUEST || !content) {

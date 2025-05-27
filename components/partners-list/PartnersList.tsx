@@ -1,26 +1,29 @@
-import { DICTIONARY } from '@/constants'
-import { getPartners } from '@/lib'
+import { COLLECTIONS, DICTIONARY } from '@/constants'
 import { FC } from 'react'
 import PartnersListMenu from './PartnersListMenu'
 import PartnersSection from './PartnersSection'
+import { getAllByCollection } from '@/lib/api'
+import { HttpStatusSchema } from '@/schemas/api'
 
-export const PartnersList: FC<PartnersListProps> = async (props) => {
-  const members = await getPartners({ category: props.category })
-  const community = await getPartners({
-    type: 'community',
-    category: props.category,
+export const PartnersList: FC<PartnersListProps> = async ({ locale }) => {
+  const response = await getAllByCollection(COLLECTIONS.PARTNERS, {
+    locale,
+    sortBy: 'title',
+    limit: 100,
+    active: true,
   })
 
-  if ([members, community].some(({ status }) => status === 'error')) {
-    console.debug(members.message)
+  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST) {
     return <>Error</>
   }
 
   return (
     <div className='partners-list grid grid-cols-1 gap-16 pt-8'>
       <PartnersListMenu />
-      <PartnersSection content={members.data} title={DICTIONARY.PARTNERS} />
-      <PartnersSection content={community.data} title={DICTIONARY.COMMUNITY} />
+      <PartnersSection
+        content={response.data as PartnerTypeLocalized[]}
+        title={DICTIONARY.PARTNERS}
+      />
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import { Content, ErrorState } from '@/components'
 import { Section } from '@/components/ui'
 import { COLLECTIONS } from '@/constants'
-import { getAllByCollection, getPageBySlug } from '@/lib/api'
+import { getAllByCollection, getCollectionBySlug } from '@/lib/api'
 import { HttpStatusSchema } from '@/schemas/api'
 import { PageParamsType } from '@/types/page'
 
@@ -17,7 +17,7 @@ export async function generateStaticParams() {
 
 export default async function Page(props: PageParamsType) {
   const { locale } = await props.params
-  const response = await getPageBySlug(COLLECTIONS.PAGES, 'homepage', { locale })
+  const response = await getCollectionBySlug(COLLECTIONS.PAGES, 'homepage', { locale })
   const content = response.data[0]
 
   if (response.status >= HttpStatusSchema.enum.BAD_REQUEST || !content) {

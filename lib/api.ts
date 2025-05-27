@@ -32,7 +32,7 @@ export const getAllByCollection = async (collection: CollectionKey, params: GetD
   return await customFetch(baseUrl, params)
 }
 
-export const getPageBySlug = async (
+export const getCollectionBySlug = async (
   collection: CollectionKey,
   slug: string,
   params: GetDataParams
