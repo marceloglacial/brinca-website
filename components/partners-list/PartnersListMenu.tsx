@@ -7,8 +7,8 @@ import PartnersListItems from './PartnersListItems'
 import { getAllByCollection } from '@/lib/api'
 import { HttpStatusSchema } from '@/schemas/api'
 
-const PartnersListMenu: FC = async () => {
-  const response = await getAllByCollection(COLLECTIONS.CATEGORIES, {})
+const PartnersListMenu: FC<{ locale: LocalesType }> = async ({ locale }) => {
+  const response = await getAllByCollection(COLLECTIONS.CATEGORIES, { locale })
 
   if (response.status >= HttpStatusSchema.enum.BAD_REQUEST) {
     return <Alert message={'Error loading categories!'} />

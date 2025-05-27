@@ -19,7 +19,7 @@ export const PartnersList: FC<PartnersListProps> = async ({ locale }) => {
 
   return (
     <div className='partners-list grid grid-cols-1 gap-16 pt-8'>
-      <PartnersListMenu />
+      <PartnersListMenu locale={locale} />
       <PartnersSection
         content={response.data as PartnerTypeLocalized[]}
         title={DICTIONARY.PARTNERS}
