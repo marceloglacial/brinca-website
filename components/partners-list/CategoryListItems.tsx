@@ -3,7 +3,7 @@
 import { FC } from 'react'
 import CategoryListItem from './CategoryListItem'
 
-const PartnersListItems: FC<{ data: CategoryType[] }> = (props) => {
+const CategoryListItems: FC<{ data: CategoryType[] }> = (props) => {
   return (
     <>
       {props.data.map((item, index) => (
@@ -13,4 +13,4 @@ const PartnersListItems: FC<{ data: CategoryType[] }> = (props) => {
   )
 }
 
-export default PartnersListItems
+export default CategoryListItems

@@ -3,7 +3,7 @@ import { COLLECTIONS, DICTIONARY, ROUTES } from '@/constants'
 import { FC } from 'react'
 import PartnerListTitle from './PartnerListTitle'
 import CategoryListItem from './CategoryListItem'
-import PartnersListItems from './PartnersListItems'
+import CategoryListItems from './CategoryListItems'
 import { getAllByCollection } from '@/lib/api'
 import { HttpStatusSchema } from '@/schemas/api'
 
@@ -26,7 +26,7 @@ const PartnersListMenu: FC<{ locale: LocalesType }> = async ({ locale }) => {
           slug={ROUTES.PARTNERS_ALL[locale]}
           id={'0'}
         />
-        <PartnersListItems data={categories} />
+        <CategoryListItems data={categories} />
       </div>
     </div>
   )
