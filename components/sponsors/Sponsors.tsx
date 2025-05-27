@@ -1,21 +1,23 @@
 import { Alert } from '@/components'
 import { COLLECTIONS } from '@/constants'
-import { getPageDataBySlug } from '@/lib'
+import { getAllByCollection } from '@/lib/api'
+import { HttpStatusSchema } from '@/schemas/api'
 import Image from 'next/image'
 import { FC } from 'react'
 
-export const Sponsors: FC<SponsorsProps> = async (props) => {
-  if (!props.data.active) return <></>
+export const Sponsors: FC<SponsorsProps> = async ({ locale, data }) => {
+  if (!data.active) return <></>
 
-  const result = await getPageDataBySlug(COLLECTIONS.SPONSORS, props.locale, 'title', 'asc')
+  const response = await getAllByCollection(COLLECTIONS.SPONSORS, { locale, sortBy: 'title' })
 
-  if (result.status === 'error') return <Alert message={result.message} />
+  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST)
+    return <Alert message={response.message} />
 
-  const sponsors = result.data as SponsorType[]
+  const sponsors = response.data as SponsorType[]
 
   return (
     <div className='flex flex-col gap-2'>
-      <div className='text-lg font-bold'>{props.data.title}</div>
+      <div className='text-lg font-bold'>{data.title}</div>
       <div className='flex flex-wrap justify-evenly gap-8'>
         {sponsors.map((sponsor, index) => {
           if (!sponsor.active) return
