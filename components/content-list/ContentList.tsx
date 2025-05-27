@@ -25,5 +25,7 @@ export const ContentList: FC<ContentListProps> = async ({ data, locale }) => {
     }
   })
 
-  return <CardGrid title={data.title} items={items} locale={locale} />
+  const hasTitle = Object.values(data.title || {}).some((value) => value)
+
+  return <CardGrid title={hasTitle ? data.title : undefined} items={items} locale={locale} />
 }
