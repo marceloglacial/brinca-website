@@ -15,7 +15,7 @@ export const FormPartnersList: FC<FormPartnersListProps> = (props) => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await getAllByCollection(COLLECTIONS.CATEGORIES, { locale })
+      const response = await getAllByCollection(COLLECTIONS.CATEGORIES, { locale, sortBy: 'title' })
 
       if (response.status >= HttpStatusSchema.enum.BAD_REQUEST) {
         throw new Error(DICTIONARY.FORM_ERROR[locale])
