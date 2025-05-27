@@ -1,24 +1,23 @@
 import { CardGrid } from '@/components'
-import { getPageDataBySlug } from '@/lib'
+import { getAllByCollection } from '@/lib/api'
+import { HttpStatusSchema } from '@/schemas/api'
+import { ContentListProps } from '@/types/content-list'
 import { FC } from 'react'
 
 export const ContentList: FC<ContentListProps> = async ({ data, locale }) => {
-  const result = await getPageDataBySlug(
-    data.type,
+  const { type: collection, items_per_page: limit } = data
+  const response = await getAllByCollection(collection, {
     locale,
-    'date',
-    undefined,
-    undefined,
-    data.items_per_page
-  )
+    sortBy: 'date',
+    limit,
+  })
 
-  if (result.status === 'error') return <>{result.message}</>
+  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST) return <>{response.message}</>
 
-  const content = result.data as CardGridItemType[]
-  const items = content.map((item: CardGridItemType): CardGridItemType => {
+  const items = response.data.map<CardGridItemType>((item) => {
     return {
       id: item.id,
-      link: `${data.type}/${item.slug}`,
+      link: `${collection}/${item.slug}`,
       slug: item.slug,
       title: item.title,
       image: item.image,
@@ -26,7 +25,5 @@ export const ContentList: FC<ContentListProps> = async ({ data, locale }) => {
     }
   })
 
-  const hasTitle = Object.values(data.title || {}).some((value) => value)
-
-  return <CardGrid title={hasTitle ? data.title : undefined} items={items} locale={locale} />
+  return <CardGrid title={data.title} items={items} locale={locale} />
 }

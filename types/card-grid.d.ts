@@ -1,11 +1,11 @@
 type CardGridItemType = {
   id: string | number
   link: string
-  slug: string
-  image: string
+  slug?: string
+  image?: string
   title: string
   content?: string
-  date?: string
+  date?: Timestamp
 }
 
 interface CardGridProps {
