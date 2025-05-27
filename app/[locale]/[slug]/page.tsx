@@ -10,8 +10,8 @@ export const revalidate = 60
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const pages = await getAllByCollection(COLLECTIONS.PAGES, {})
-  return pages.data.map((page) => ({
+  const response = await getAllByCollection(COLLECTIONS.PAGES, {})
+  return response.data.map((page) => ({
     id: String(page.id),
     slug: String(page.slug),
   }))
