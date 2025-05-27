@@ -2,16 +2,19 @@ import { CardGrid } from '@/components'
 import { COLLECTIONS, DICTIONARY, SITE } from '@/constants'
 import { getAllByCollection } from '@/lib/api'
 import { HttpStatusSchema } from '@/schemas/api'
-import { formatDate } from '@/utils'
 import { FC } from 'react'
+import { convertTimestampToDate } from '@/utils'
 
 export const CalendarList: FC<CalendarListProps> = async ({ locale }) => {
-  const response = await getAllByCollection(COLLECTIONS.CALENDARS, { locale, sortBy: 'date' })
+  const response = await getAllByCollection(COLLECTIONS.CALENDARS, {
+    locale,
+    sortBy: 'date',
+    order: 'desc',
+  })
 
   if (response.status >= HttpStatusSchema.enum.BAD_REQUEST) return <>{response.message}</>
 
-  const content = response.data as CardGridItemType[]
-  const items = content.map<CardGridItemType>((item) => {
+  const items = response.data.map<CardGridItemType>((item) => {
     return {
       id: item.id,
       link: `${COLLECTIONS.CALENDARS}/${item.slug}`,
@@ -24,13 +27,13 @@ export const CalendarList: FC<CalendarListProps> = async ({ locale }) => {
 
   const today = new Date()
   today.setHours(0, 0, 0, 0)
-  const pastItems = items.filter((item, idx) => {
+  const pastItems = items.filter((item) => {
     if (!item.date) return false
-    return new Date(formatDate(content[idx].date)) < today
+    return convertTimestampToDate(item.date) < today
   })
-  const upcomingItems = items.filter((item, idx) => {
+  const upcomingItems = items.filter((item) => {
     if (!item.date) return false
-    return new Date(formatDate(content[idx].date)) >= today
+    return convertTimestampToDate(item.date) >= today
   })
 
   return (
