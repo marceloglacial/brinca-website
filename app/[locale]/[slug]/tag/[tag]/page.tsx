@@ -1,18 +1,19 @@
 import { PartnersList } from '@/components'
 import { COLLECTIONS, SITE } from '@/constants'
-import { getCollectionById, getDocumentBySlug } from '@/lib'
+import { getDocumentBySlug } from '@/lib'
 import { localizedContent } from '@/utils'
 import { Heading } from '@/components/ui'
 import { Metadata } from 'next'
 import { PageParamsType } from '@/types/page'
+import { getAllByCollection } from '@/lib/api'
 
 export const revalidate = 60
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const pages = await getCollectionById('partners')
-  return (pages.data ?? []).map((page) => ({
-    id: String(page.id),
+  const response = await getAllByCollection(COLLECTIONS.PARTNERS, {})
+  return response.data.map((partner) => ({
+    id: String(partner.id),
   }))
 }
 
