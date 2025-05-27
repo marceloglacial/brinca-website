@@ -7,7 +7,7 @@ import CategoryListItems from './CategoryListItems'
 import { getAllByCollection } from '@/lib/api'
 import { HttpStatusSchema } from '@/schemas/api'
 
-const PartnersListMenu: FC<{ locale: LocalesType }> = async ({ locale }) => {
+const CategoryListMenu: FC<{ locale: LocalesType }> = async ({ locale }) => {
   const response = await getAllByCollection(COLLECTIONS.CATEGORIES, { locale, sortBy: 'title' })
 
   if (response.status >= HttpStatusSchema.enum.BAD_REQUEST) {
@@ -32,4 +32,4 @@ const PartnersListMenu: FC<{ locale: LocalesType }> = async ({ locale }) => {
   )
 }
 
-export default PartnersListMenu
+export default CategoryListMenu

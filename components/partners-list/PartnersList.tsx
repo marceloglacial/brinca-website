@@ -1,6 +1,6 @@
 import { COLLECTIONS, DICTIONARY } from '@/constants'
 import { FC } from 'react'
-import PartnersListMenu from './PartnersListMenu'
+import CategoryListMenu from './CategoryListMenu'
 import PartnersSection from './PartnersSection'
 import { getAllByCollection } from '@/lib/api'
 import { HttpStatusSchema } from '@/schemas/api'
@@ -17,7 +17,7 @@ export const PartnersList: FC<PartnersListProps> = async ({ locale }) => {
 
   return (
     <div className='partners-list grid grid-cols-1 gap-16 pt-8'>
-      <PartnersListMenu locale={locale} />
+      <CategoryListMenu locale={locale} />
       <PartnersSection
         content={response.data as PartnerTypeLocalized[]}
         title={DICTIONARY.PARTNERS}
