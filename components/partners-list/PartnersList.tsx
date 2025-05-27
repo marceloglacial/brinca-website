@@ -5,7 +5,7 @@ import PartnersSection from './PartnersSection'
 import { getAllByCollection } from '@/lib/api'
 import { HttpStatusSchema } from '@/schemas/api'
 
-export const PartnersList: FC<PartnersListProps> = async ({ locale }) => {
+export const PartnersList: FC<PartnersListProps> = async ({ locale, category }) => {
   const response = await getAllByCollection(COLLECTIONS.PARTNERS, {
     locale,
     sortBy: 'title',
@@ -15,13 +15,15 @@ export const PartnersList: FC<PartnersListProps> = async ({ locale }) => {
     return <>Error</>
   }
 
+  const partners = (response.data as PartnerTypeLocalized[]).filter((partner) => {
+    if (!category) return true
+    return partner.category === category.id
+  })
+
   return (
     <div className='partners-list grid grid-cols-1 gap-16 pt-8'>
       <CategoryListMenu locale={locale} />
-      <PartnersSection
-        content={response.data as PartnerTypeLocalized[]}
-        title={DICTIONARY.PARTNERS}
-      />
+      <PartnersSection content={partners} title={DICTIONARY.PARTNERS} />
     </div>
   )
 }

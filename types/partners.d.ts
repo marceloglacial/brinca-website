@@ -6,7 +6,8 @@ type PartnerType = {
   title: string
   description: string
   logo: string
-  category: PartnerCategoryType[]
+  //** It is the category id */
+  category: string
   email: string
   membership_email?: string
   address?: string
