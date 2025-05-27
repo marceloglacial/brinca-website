@@ -2,7 +2,7 @@ import { Alert } from '@/components'
 import { COLLECTIONS, DICTIONARY, ROUTES } from '@/constants'
 import { FC } from 'react'
 import PartnerListTitle from './PartnerListTitle'
-import PartnersListItem from './PartnersListItem'
+import CategoryListItem from './CategoryListItem'
 import PartnersListItems from './PartnersListItems'
 import { getAllByCollection } from '@/lib/api'
 import { HttpStatusSchema } from '@/schemas/api'
@@ -21,7 +21,7 @@ const PartnersListMenu: FC<{ locale: LocalesType }> = async ({ locale }) => {
     <div className='partners-list-categories flex flex-col gap-4'>
       <PartnerListTitle />
       <div className='partners-list-categories__menu flex flex-wrap gap-4'>
-        <PartnersListItem
+        <CategoryListItem
           title={DICTIONARY.ALL[locale]}
           slug={ROUTES.PARTNERS_ALL[locale]}
           id={'0'}
