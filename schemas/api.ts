@@ -36,10 +36,7 @@ export const ApiResponseSchema = z.object({
   timestamp: z.coerce.date(),
   message: z.string(),
   pagination: PaginationSchema.optional(),
-  data: z.preprocess(
-    (val) => (Array.isArray(val) ? val : val ? [val] : []),
-    z.array(CollectionSchema)
-  ),
+  data: z.array(CollectionSchema),
   error: z.string().optional(),
   documentId: z.string().optional(),
 })
