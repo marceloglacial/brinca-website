@@ -4,7 +4,7 @@ import NextLink from 'next/link'
 import { useParams } from 'next/navigation'
 import { FC } from 'react'
 
-const PartnersListItem: FC<CategoryType> = (props) => {
+const CategoryListItem: FC<CategoryType> = (props) => {
   const params = useParams()
 
   const category = localizedContent(props, params.locale as string) as CategoryType
@@ -26,4 +26,4 @@ const PartnersListItem: FC<CategoryType> = (props) => {
   )
 }
 
-export default PartnersListItem
+export default CategoryListItem
