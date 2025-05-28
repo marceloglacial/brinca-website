@@ -1,4 +1,5 @@
-export const INVALIDATE_INTERVAL: number = 3600
+export const INVALIDATE_INTERVAL = 3600
+
 export const SITE = {
   NAME: 'Brinca',
   DESCRIPTION: {
@@ -7,16 +8,16 @@ export const SITE = {
   },
   LOGIN_URL: 'https://brinca-admin.vercel.app',
   DEFAULT_LOCALE: 'en',
-}
+} as const
 
 export const MESSAGES = {
   NEW_DOCUMENT: `Um novo cadastro foi adicionado ao website. Favor conferir os dados na <a href='https://brinca.ca/login/'>área de admnistradores</a>.`,
   EMAIL_TITLE: `Brinca Website Alert`,
-}
+} as const
 
 export const ROUTES = {
   PARTNERS_ALL: {
     en: '../',
     pt_br: '../',
   },
-}
+} as const

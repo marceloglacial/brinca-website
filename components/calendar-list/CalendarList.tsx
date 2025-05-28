@@ -41,11 +41,7 @@ export const CalendarList: FC<CalendarListProps> = async ({ locale }) => {
       {upcomingItems.length > 0 && <CardGrid items={upcomingItems} locale={locale} />}
       {pastItems.length > 0 && (
         <CardGrid
-          title={
-            DICTIONARY.PAST_EVENTS[
-              (locale || SITE.DEFAULT_LOCALE) as keyof typeof DICTIONARY.PAST_EVENTS
-            ]
-          }
+          title={DICTIONARY.PAST_EVENTS[locale || SITE.DEFAULT_LOCALE]}
           items={pastItems}
           locale={locale}
         />
