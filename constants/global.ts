@@ -1,4 +1,4 @@
-export const INVALIDATE_INTERVAL: number = 3600
+export const INVALIDATE_INTERVAL: number = 120
 export const SITE = {
   NAME: 'Brinca',
   DESCRIPTION: {
