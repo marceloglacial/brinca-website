@@ -17,10 +17,22 @@ export const PartnersList: FC<PartnersListProps> = async ({ locale, category }) 
     return partner.category === category.id
   })
 
+  const members: PartnerTypeLocalized[] = []
+  const communities: PartnerTypeLocalized[] = []
+
+  for (const partner of partners) {
+    if (partner.membership_email) {
+      members.push(partner)
+    } else {
+      communities.push(partner)
+    }
+  }
+
   return (
     <div className='partners-list grid grid-cols-1 gap-16 pt-8'>
       <CategoryListMenu locale={locale} />
-      <PartnersSection content={partners} title={DICTIONARY.PARTNERS} />
+      <PartnersSection content={members} title={DICTIONARY.PARTNERS} />
+      <PartnersSection content={communities} title={DICTIONARY.COMMUNITY} />
     </div>
   )
 }
