@@ -1,16 +1,20 @@
 import { CardGrid } from '@/components'
 import { COLLECTIONS, DICTIONARY, SITE } from '@/constants'
-import { getPageDataBySlug } from '@/lib'
-import { formatDate } from '@/utils'
+import { getAllByCollection } from '@/lib/api'
+import { HttpStatusSchema } from '@/schemas/api'
 import { FC } from 'react'
+import { convertTimestampToDate } from '@/utils'
 
-export const CalendarList: FC<CalendarListProps> = async (props) => {
-  const result = await getPageDataBySlug(COLLECTIONS.CALENDARS, props.locale, 'date')
+export const CalendarList: FC<CalendarListProps> = async ({ locale }) => {
+  const response = await getAllByCollection(COLLECTIONS.CALENDARS, {
+    locale,
+    sortBy: 'date',
+    order: 'desc',
+  })
 
-  if (result.status === 'error') return <>{result.message}</>
+  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST) return <>{response.message}</>
 
-  const content = result.data as CardGridItemType[]
-  const items = content.map<CardGridItemType>((item) => {
+  const items = response.data.map<CardGridItemType>((item) => {
     return {
       id: item.id,
       link: `${COLLECTIONS.CALENDARS}/${item.slug}`,
@@ -23,27 +27,23 @@ export const CalendarList: FC<CalendarListProps> = async (props) => {
 
   const today = new Date()
   today.setHours(0, 0, 0, 0)
-  const pastItems = items.filter((item, idx) => {
+  const pastItems = items.filter((item) => {
     if (!item.date) return false
-    return new Date(formatDate(content[idx].date)) < today
+    return convertTimestampToDate(item.date) < today
   })
-  const upcomingItems = items.filter((item, idx) => {
+  const upcomingItems = items.filter((item) => {
     if (!item.date) return false
-    return new Date(formatDate(content[idx].date)) >= today
+    return convertTimestampToDate(item.date) >= today
   })
 
   return (
     <div className='grid grid-cols-1 gap-16'>
-      {upcomingItems.length > 0 && <CardGrid items={upcomingItems} locale={props.locale} />}
+      {upcomingItems.length > 0 && <CardGrid items={upcomingItems} locale={locale} />}
       {pastItems.length > 0 && (
         <CardGrid
-          title={
-            DICTIONARY.PAST_EVENTS[
-              (props.locale || SITE.DEFAULT_LOCALE) as keyof typeof DICTIONARY.PAST_EVENTS
-            ]
-          }
+          title={DICTIONARY.PAST_EVENTS[locale || SITE.DEFAULT_LOCALE]}
           items={pastItems}
-          locale={props.locale}
+          locale={locale}
         />
       )}
     </div>

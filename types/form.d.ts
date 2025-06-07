@@ -51,9 +51,10 @@ type FieldType = {
 }
 
 type OptionsType = {
-  title: string
+  label: string
   value: string
-  id: string
+  /** @deprecated */
+  title?: string
 }
 
 interface FormFieldProps {
