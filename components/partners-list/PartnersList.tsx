@@ -1,26 +1,38 @@
-import { DICTIONARY } from '@/constants'
-import { getPartners } from '@/lib'
+import { COLLECTIONS, DICTIONARY } from '@/constants'
 import { FC } from 'react'
-import PartnersListMenu from './PartnersListMenu'
+import CategoryListMenu from './CategoryListMenu'
 import PartnersSection from './PartnersSection'
+import { getAllByCollection } from '@/lib/api'
+import { HttpStatusSchema } from '@/schemas/api'
 
-export const PartnersList: FC<PartnersListProps> = async (props) => {
-  const members = await getPartners({ category: props.category })
-  const community = await getPartners({
-    type: 'community',
-    category: props.category,
+export const PartnersList: FC<PartnersListProps> = async ({ locale, category }) => {
+  const response = await getAllByCollection(COLLECTIONS.PARTNERS, { locale })
+
+  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST) {
+    return <>Error</>
+  }
+
+  const partners = (response.data as PartnerTypeLocalized[]).filter((partner) => {
+    if (!category) return true
+    return partner.category === category.id
   })
 
-  if ([members, community].some(({ status }) => status === 'error')) {
-    console.debug(members.message)
-    return <>Error</>
+  const members: PartnerTypeLocalized[] = []
+  const communities: PartnerTypeLocalized[] = []
+
+  for (const partner of partners) {
+    if (partner.membership_email) {
+      members.push(partner)
+    } else {
+      communities.push(partner)
+    }
   }
 
   return (
     <div className='partners-list grid grid-cols-1 gap-16 pt-8'>
-      <PartnersListMenu />
-      <PartnersSection content={members.data} title={DICTIONARY.PARTNERS} />
-      <PartnersSection content={community.data} title={DICTIONARY.COMMUNITY} />
+      <CategoryListMenu locale={locale} />
+      <PartnersSection content={members} title={DICTIONARY.PARTNERS} />
+      <PartnersSection content={communities} title={DICTIONARY.COMMUNITY} />
     </div>
   )
 }
