@@ -6,7 +6,7 @@ export const DICTIONARY = {
   },
   PARTNERS: {
     en: 'Partners',
-    pt_br: 'Accociados',
+    pt_br: 'Associados',
   },
   COMMUNITY: {
     en: 'Community',
