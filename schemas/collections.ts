@@ -79,6 +79,8 @@ export const CollectionSchema = z
     title: z.string(),
     slug: z.string().optional(),
     icon: z.string().optional(),
+    image: z.string().optional(),
+    date: TimestampSchema.optional(),
     blocks: z.array(BlockSchema).optional(),
     publishedAt: z.object({}).optional(), // TODO: Update the database to make it required
     createdAt: TimestampSchema.optional(), // TODO: Update the database to make it required
