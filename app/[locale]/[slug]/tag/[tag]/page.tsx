@@ -1,54 +1,52 @@
 import { PartnersList } from '@/components'
 import { COLLECTIONS, SITE } from '@/constants'
-import { getCollectionById, getDocumentBySlug } from '@/lib'
-import { localizedContent } from '@/utils'
 import { Heading } from '@/components/ui'
 import { Metadata } from 'next'
 import { PageParamsType } from '@/types/page'
+import { getAllByCollection, getCollectionBySlug } from '@/lib/api'
+import { HttpStatusSchema } from '@/schemas/api'
 
 export const revalidate = 60
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const pages = await getCollectionById('partners')
-  return (pages.data ?? []).map((page) => ({
-    id: String(page.id),
+  const response = await getAllByCollection(COLLECTIONS.PARTNERS, {})
+  return response.data.map((partner) => ({
+    id: String(partner.id),
   }))
 }
 
 export async function generateMetadata(props: PageParamsType): Promise<Metadata> {
-  const params = await props.params
-  const result = await getDocumentBySlug(COLLECTIONS.CATEGORIES, params.tag, params.locale)
+  const { tag: slug, locale } = await props.params
+  const response = await getCollectionBySlug(COLLECTIONS.CATEGORIES, slug, { locale })
+  const content = response.data[0]
 
-  if (result.status === 'error')
+  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST)
     return {
       title: SITE.NAME,
     }
 
-  const page = localizedContent(result.data)
-
   return {
-    title: `${SITE.NAME} - ${page.title}`,
+    title: `${SITE.NAME} - ${content.title}`,
   }
 }
 
 const PartnersPage = async (props: PageParamsType) => {
-  const params = await props.params
+  const { tag: slug, locale } = await props.params
 
-  if (!params.tag) return <>Error loading page</>
+  if (!slug) return <>Error loading page</>
 
-  const result = await getDocumentBySlug(COLLECTIONS.CATEGORIES, params.tag, params.locale)
-
-  const category = localizedContent(result, params.locale)
+  const response = await getCollectionBySlug(COLLECTIONS.CATEGORIES, slug, { locale })
+  const category = response.data[0] as CategoryType
 
   return (
     <>
       <div className='mb-12'>
         <Heading>
-          <h1 className='first-letter:uppercase'>{category.data.title}</h1>
+          <h1 className='first-letter:uppercase'>{category.title}</h1>
         </Heading>
       </div>
-      <PartnersList category={category.data} />
+      <PartnersList category={category} locale={locale} />
     </>
   )
 }

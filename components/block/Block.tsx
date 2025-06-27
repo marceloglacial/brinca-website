@@ -41,7 +41,7 @@ export const Block: FC<BlockProps> = (props) => {
       block = <CalendarList locale={props.locale} />
       break
     case 'partners_list':
-      block = <PartnersList />
+      block = <PartnersList locale={props.locale} />
       break
     case 'form_id':
       block = <Form id={props.content.value} />

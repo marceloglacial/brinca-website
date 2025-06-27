@@ -2,7 +2,7 @@ import { Content, ErrorState } from '@/components'
 import { COLLECTIONS, SITE } from '@/constants'
 import { Heading, Section } from '@/components/ui'
 import { Metadata } from 'next'
-import { getAllPages, getPageBySlug } from '@/lib/api'
+import { getAllByCollection, getCollectionBySlug } from '@/lib/api'
 import { HttpStatusSchema } from '@/schemas/api'
 import { PageParamsType } from '@/types/page'
 
@@ -10,8 +10,8 @@ export const revalidate = 60
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const pages = await getAllPages()
-  return pages.data.map((page) => ({
+  const response = await getAllByCollection(COLLECTIONS.PAGES, {})
+  return response.data.map((page) => ({
     id: String(page.id),
     slug: String(page.slug),
   }))
@@ -19,7 +19,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: PageParamsType): Promise<Metadata> {
   const { slug, locale } = await props.params
-  const response = await getPageBySlug(COLLECTIONS.PAGES, slug, { locale })
+  const response = await getCollectionBySlug(COLLECTIONS.PAGES, slug, { locale })
   const content = response.data[0]
 
   if (response.status >= HttpStatusSchema.enum.BAD_REQUEST || !content) {
@@ -35,7 +35,7 @@ export async function generateMetadata(props: PageParamsType): Promise<Metadata>
 
 export default async function Page(props: PageParamsType) {
   const { slug, locale } = await props.params
-  const response = await getPageBySlug(COLLECTIONS.PAGES, slug, { locale })
+  const response = await getCollectionBySlug(COLLECTIONS.PAGES, slug, { locale })
   const content = response.data[0]
 
   if (response.status >= HttpStatusSchema.enum.BAD_REQUEST || !content) {

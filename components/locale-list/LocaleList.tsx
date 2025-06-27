@@ -1,14 +1,16 @@
-import { getPageDataBySlug } from '@/lib'
 import { FC } from 'react'
 import { LocaleListItems } from './LocaleListItems'
+import { getAllByCollection } from '@/lib/api'
+import { COLLECTIONS } from '@/constants'
+import { HttpStatusSchema } from '@/schemas/api'
 
 export const LocaleList: FC = async () => {
-  const data = await getPageDataBySlug('locales')
+  const response = await getAllByCollection(COLLECTIONS.LOCALES, {})
 
-  if (data.status === 'error') {
-    console.error(`Error: ${data.message}`)
+  if (response.status >= HttpStatusSchema.enum.BAD_REQUEST) {
+    console.error(`Error: ${response.message}`)
     return <></>
   }
 
-  return <LocaleListItems items={data.data as LocaleListType[]} />
+  return <LocaleListItems items={response.data as LocaleListType[]} />
 }
