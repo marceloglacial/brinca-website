@@ -2,17 +2,14 @@
 import { FormField, FormTitle } from '@/components'
 import { DICTIONARY } from '@/constants'
 import { handleFormSubmission } from '@/lib'
-import { localizedContent } from '@/utils'
 import { Link, Section } from '@/components/ui'
 import { useParams } from 'next/navigation'
 import { FC, useState } from 'react'
 
 export const FormContainer: FC<FormContainerProps> = (props) => {
-  const params = useParams()
+  const { locale } = useParams<{ locale: LocalesType }>()
   const [formSubmitted, setFormSubmitted] = useState<FormSubmissionType>(null)
-
-  const locale = params.locale as LocalesType
-  const form = localizedContent(props.data, locale) as FormType
+  const form = props.data
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     await handleFormSubmission(e, setFormSubmitted)
@@ -21,12 +18,13 @@ export const FormContainer: FC<FormContainerProps> = (props) => {
   const file_download = form.fields.find((field) => field.type === 'file_download')
 
   if (formSubmitted && file_download) {
+    const value = file_download.value as FieldValue
     return (
       <div className='mt-16 text-center'>
         <Section spacing='m'>
-          <h4>{file_download.value.title}</h4>
+          <h4>{value.title}</h4>
           <div>
-            <a href={file_download.value.file_url} target='_blank' rel='noreferrer'>
+            <a href={value.file_url} target='_blank' rel='noreferrer'>
               <Link variant='primary'>{DICTIONARY.FORM_FILE_DOWNLOAD[locale]}</Link>
             </a>
           </div>
