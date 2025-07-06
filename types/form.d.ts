@@ -26,6 +26,7 @@ interface FormFieldsProps {
 
 interface FormProps {
   id: string
+  locale: LocaleTypes
 }
 
 type FormType = {

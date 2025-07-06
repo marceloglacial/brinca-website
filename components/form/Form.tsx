@@ -7,8 +7,8 @@ import { getCollectionById } from '@/lib/api'
 import { COLLECTIONS } from '@/constants'
 import { HttpStatusSchema } from '@/schemas/api'
 
-export const Form: FC<FormProps> = async ({ id }) => {
-  const response = await getCollectionById(COLLECTIONS.FORMS, id, {})
+export const Form: FC<FormProps> = async ({ id, locale }) => {
+  const response = await getCollectionById(COLLECTIONS.FORMS, id, { locale })
 
   if (response.status >= HttpStatusSchema.enum.BAD_REQUEST) {
     return <Alert message={response.message} />
