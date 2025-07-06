@@ -1,11 +1,11 @@
 import { Content, ErrorState } from '@/components'
 import { SITE } from '@/constants'
-import { getCollectionById } from '@/lib'
 import { Heading, Section } from '@/components/ui'
 import { Metadata } from 'next'
-import { getCollectionBySlug } from '@/lib/api'
+import { getAllByCollection, getCollectionBySlug } from '@/lib/api'
 import { HttpStatusSchema } from '@/schemas/api'
 import { PageParamsType } from '@/types/page'
+import { CollectionKey } from '@/types/new-api'
 
 export const revalidate = 60
 export const dynamicParams = true
@@ -13,11 +13,11 @@ export const dynamicParams = true
 export async function generateStaticParams({
   params: { slug: collection },
 }: {
-  params: { slug: string }
+  params: { slug: CollectionKey }
 }) {
-  const response = await getCollectionById(collection)
+  const response = await getAllByCollection(collection, {})
   return (
-    response.data?.map((page) => ({
+    response.data.map((page) => ({
       id: String(page.id),
     })) || []
   )
