@@ -1,5 +1,3 @@
-'use server'
-
 import { FC } from 'react'
 import { Alert } from '../alert/Alert'
 import { FormContainer } from './FormContainer'
