@@ -50,7 +50,7 @@ export const FormContainer: FC<FormContainerProps> = (props) => {
         {form.show_title && <FormTitle>{form.title}</FormTitle>}
         <input type='hidden' name='formTitle' value={form.title} />
         <input type='hidden' name='formType' value={form.submit_type} />
-        <input type='hidden' name='formEndpoint' value={form?.collection_id} />
+        <input type='hidden' name='formEndpoint' value={form.collection_id} />
         <input type='hidden' name='formLocale' value={locale} />
         <div className='mx-auto grid max-w-screen-md grid-cols-1 gap-4'>
           {form.fields.map((field, index) => (
