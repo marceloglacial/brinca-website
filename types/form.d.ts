@@ -26,6 +26,7 @@ interface FormFieldsProps {
 
 interface FormProps {
   id: string
+  locale: LocaleTypes
 }
 
 type FormType = {
@@ -45,16 +46,27 @@ type FieldTypes =
   | 'plain_text'
   | 'checkbox'
   | 'file_download'
+
+type FieldValue = {
+  file_url: string | undefined
+  title: string
+  options?: { title: string; value: string }[]
+  localized: boolean
+  input_type: string
+  placeholder: string | undefined
+  name: string
+  required: boolean
+  label: string
+}
+
 type FieldType = {
   type: FieldTypes
-  value: any
+  value: string | FieldValue
 }
 
 type OptionsType = {
   label: string
   value: string
-  /** @deprecated */
-  title?: string
 }
 
 interface FormFieldProps {
