@@ -15,12 +15,11 @@ export async function generateStaticParams({
 }: {
   params: { slug: CollectionKey }
 }) {
+  if (!collection) return []
   const response = await getAllByCollection(collection, {})
-  return (
-    response.data.map((page) => ({
-      id: String(page.id),
-    })) || []
-  )
+  return response.data.map((page) => ({
+    id: String(page.id),
+  }))
 }
 
 export async function generateMetadata(props: PageParamsType): Promise<Metadata> {
