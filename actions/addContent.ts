@@ -1,17 +1,20 @@
 'use server'
-import { DICTIONARY } from '@/constants'
-import { db, storage } from '@/lib/firebase'
-import { addDoc, collection } from 'firebase/firestore'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 
-export async function addContent(collectionId: string, formData: FormData, locale: LocalesType) {
-  const data: { [key: string]: any } = {}
+import { DICTIONARY } from '@/constants'
+import { addCollection } from '@/lib/api'
+import { CollectionKey } from '@/types/new-api'
+import { fileToBase64 } from '@/utils/helpers'
+
+export async function addContent(
+  collectionId: CollectionKey,
+  formData: FormData,
+  locale: LocalesType
+) {
+  const data: Record<string, unknown> = {}
 
   for (const [key, value] of formData.entries()) {
     const keysToRemove = ['formEndpoint', 'formType', 'formLocale', 'formTitle'].includes(key)
-
     if (keysToRemove) continue
-
     data[key] = value
   }
 
@@ -23,7 +26,7 @@ export async function addContent(collectionId: string, formData: FormData, local
       if (typeof data[baseKey] !== 'object' || !data[baseKey]) {
         data[baseKey] = {}
       }
-      data[baseKey][lang] = data[key]
+      ;(data[baseKey] as Record<string, unknown>)[lang] = data[key]
       delete data[key]
     }
   })
@@ -32,11 +35,13 @@ export async function addContent(collectionId: string, formData: FormData, local
     const fileField = formData.get('logo')
     if (fileField instanceof File) {
       const fileName = `${Date.now()}_${fileField.name}`
-      const storageRef = ref(storage, `partners/${fileName}`)
-      await uploadBytes(storageRef, fileField)
-      data.logo = await getDownloadURL(storageRef)
+      const file = new File([fileField], fileName, {
+        type: fileField.type,
+        lastModified: fileField.lastModified,
+      })
+      data.logo = await fileToBase64(file)
     }
-    await addDoc(collection(db, collectionId), data)
+    await addCollection(collectionId, data)
 
     return {
       status: 'success',

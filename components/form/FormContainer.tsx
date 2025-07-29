@@ -1,10 +1,10 @@
 'use client'
 import { FormField, FormTitle } from '@/components'
 import { DICTIONARY } from '@/constants'
-import { handleFormSubmission } from '@/lib'
 import { Link, Section } from '@/components/ui'
 import { useParams } from 'next/navigation'
 import { FC, useState } from 'react'
+import { handleFormSubmission } from '@/lib/formSubmission'
 
 export const FormContainer: FC<FormContainerProps> = (props) => {
   const { locale } = useParams<{ locale: LocalesType }>()
