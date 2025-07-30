@@ -2,16 +2,21 @@
 
 import { DICTIONARY } from '@/constants'
 import { addCollection } from '@/lib/api'
+import { HttpStatusSchema } from '@/schemas/api'
 import { CollectionKey } from '@/types/new-api'
 
 export async function addContent(formData: FormData) {
+  const locale = formData.get('formLocale') as LocalesType
   try {
     const collectionId = formData.get('formEndpoint') as CollectionKey
-    await addCollection(collectionId, formData)
-    return { status: 'success' }
+    const response = await addCollection(collectionId, formData)
+    if (response.status === HttpStatusSchema.enum.CREATED) {
+      return { status: 'success' }
+    } else {
+      return { status: 'error', message: DICTIONARY.FORM_ERROR[locale] }
+    }
   } catch (error) {
     console.error('Error adding document:', error)
-    const locale = formData.get('formLocale') as LocalesType
-    return { status: 'error', message: DICTIONARY.FORM_SUCCESS[locale] }
+    return { status: 'error', message: DICTIONARY.FORM_ERROR[locale] }
   }
 }
