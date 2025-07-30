@@ -63,7 +63,7 @@ export const FormContainer: FC<FormContainerProps> = (props) => {
           ))}
         </div>
       </form>
-      {loading && <Loader />}
+      {loading && <Loader fullscreen={false} />}
     </>
   )
 }

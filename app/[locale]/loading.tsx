@@ -1,7 +1,7 @@
 import { Loader } from '@/components'
 
 const Loading = () => {
-  return <Loader />
+  return <Loader fullscreen={true} />
 }
 
 export default Loading
