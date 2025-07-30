@@ -1,6 +1,5 @@
 import { addContent, sendCollectionCreatedEmail, sendEmail } from '@/actions'
 import { DEFAULT_LOCALE, DICTIONARY } from '@/constants'
-import { CollectionKey } from '@/types/new-api'
 
 export const handleFormSubmission = async (
   e: React.FormEvent<HTMLFormElement>,
@@ -9,7 +8,6 @@ export const handleFormSubmission = async (
   e.preventDefault()
   const formData = new FormData(e.currentTarget)
   const submissionType = formData.get('formType') as string
-  const collectionId = formData.get('formEndpoint') as CollectionKey
   const locale = formData.get('formLocale') as LocalesType
 
   try {
@@ -19,7 +17,7 @@ export const handleFormSubmission = async (
         res = await sendEmail(formData, locale || DEFAULT_LOCALE)
         break
       case 'collection':
-        res = await addContent(collectionId, formData, locale || DEFAULT_LOCALE)
+        res = await addContent(formData)
         if (res.status === 'success') {
           await sendCollectionCreatedEmail(formData)
         }

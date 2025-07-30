@@ -3,11 +3,7 @@
 import { ApiResponseSchema, ParamsSchema } from '@/schemas/api'
 import { CollectionKey, GetDataParams, NewApiResponse } from '@/types/new-api'
 
-const customFetch = async (
-  baseUrl: string,
-  params: GetDataParams,
-  body?: Record<string, unknown>
-): Promise<NewApiResponse> => {
+const customFetch = async (baseUrl: string, params: GetDataParams): Promise<NewApiResponse> => {
   try {
     ParamsSchema.parse(params)
 
@@ -17,12 +13,11 @@ const customFetch = async (
     })
     const url = `${baseUrl}${searchParams.toString() ? '?' + searchParams.toString() : ''}`
     const response = await fetch(url, {
-      method: body ? 'POST' : 'GET',
+      method: 'GET',
       headers: new Headers({
         'x-api-key': process.env.API_KEY!,
         'Content-Type': 'application/json',
       }),
-      body: body ? JSON.stringify(body) : undefined,
     })
     const data = await response.json()
 
@@ -56,7 +51,20 @@ export const getCollectionById = async (
   return await customFetch(baseUrl, params)
 }
 
-export const addCollection = async (collection: CollectionKey, record: Record<string, unknown>) => {
-  const baseUrl = `${process.env.API_URL!}/add/${collection}`
-  return await customFetch(baseUrl, {}, record)
+export const addCollection = async (collection: CollectionKey, formData: FormData) => {
+  try {
+    const url = `${process.env.API_URL!}/${collection}`
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: new Headers({
+        'x-api-key': process.env.API_KEY!,
+      }),
+      body: formData,
+    })
+    const data = await response.json()
+    return ApiResponseSchema.parse(data)
+  } catch (error) {
+    console.error('Error posting form:', error)
+    throw error
+  }
 }
