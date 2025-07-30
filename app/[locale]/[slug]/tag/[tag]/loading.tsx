@@ -1,12 +1,7 @@
-import { Icon } from '@/components'
+import { Loader } from '@/components/loader/loader'
 
 const Loading = () => {
-  return (
-    <div className='flex h-screen items-start justify-center pt-12'>
-      <div className='animate-spin'>
-        <Icon type={'loading'} />
-      </div>
-    </div>
-  )
+  return <Loader />
 }
+
 export default Loading
