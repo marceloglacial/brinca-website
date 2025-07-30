@@ -1,18 +1,23 @@
 'use client'
+
 import { FormField, FormTitle } from '@/components'
 import { DICTIONARY } from '@/constants'
 import { Link, Section } from '@/components/ui'
 import { useParams } from 'next/navigation'
 import { FC, useState } from 'react'
 import { handleFormSubmission } from '@/lib/formSubmission'
+import { Loader } from '@/components'
 
 export const FormContainer: FC<FormContainerProps> = (props) => {
   const { locale } = useParams<{ locale: LocalesType }>()
+  const [loading, setLoading] = useState<boolean>(false)
   const [formSubmitted, setFormSubmitted] = useState<FormSubmissionType>(null)
   const form = props.data
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true)
     await handleFormSubmission(e, setFormSubmitted)
+    setLoading(false)
   }
 
   const file_download = form.fields.find((field) => field.type === 'file_download')
@@ -58,6 +63,7 @@ export const FormContainer: FC<FormContainerProps> = (props) => {
           ))}
         </div>
       </form>
+      {loading && <Loader />}
     </>
   )
 }
