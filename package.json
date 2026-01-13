@@ -19,7 +19,7 @@
     "cloudinary": "^2.6.0",
     "firebase": "^11.5.0",
     "motion": "^12.5.0",
-    "next": "15.2.3",
+    "next": "15.2.8",
     "next-i18n-router": "^5.5.1",
     "photoswipe": "^5.4.4",
     "react": "^19.0.0",
