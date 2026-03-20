@@ -1,6 +1,6 @@
-import { getCloudinaryImages } from '@/lib'
 import { FC } from 'react'
 import { PhotoGallery } from '../photo-gallery/PhotoGallery'
+import { getCloudinaryImages } from '@/lib/cloudinary'
 
 interface ICloudinaryGallery {
   path: string
