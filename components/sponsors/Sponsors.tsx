@@ -1,5 +1,3 @@
-import { s } from 'motion/react-client'
-
 export const Sponsors = async () => {
   const sponsorsGold = [
     {
