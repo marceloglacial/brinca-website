@@ -22,7 +22,7 @@ export const Block: FC<BlockProps> = (props) => {
       block = <Hero {...props.content.value} />
       break
     case 'sponsors':
-      block = <Sponsors data={props.content.value} locale={props.locale} />
+      block = <Sponsors />
       break
     case 'youtube':
       block = <Embed url={props.content.value} type={props.content.type} />
