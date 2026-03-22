@@ -1,6 +1,0 @@
-node_modules
-dist
-# Ignore artifacts:
-build
-coverage
-pnpm-lock.yaml
