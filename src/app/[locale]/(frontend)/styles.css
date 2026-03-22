@@ -63,6 +63,12 @@ h1 {
   }
 }
 
+h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 28px;
+}
+
 p {
   margin: 24px 0;
 
@@ -159,6 +165,58 @@ svg {
       padding: 0 0.5rem;
       background: rgb(60, 60, 60);
       border-radius: 4px;
+    }
+  }
+}
+
+.pages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 800px;
+
+  .page-item {
+    border: 1px solid rgb(100, 100, 100);
+    padding: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background: rgb(20, 20, 20);
+      border-color: rgb(150, 150, 150);
+    }
+
+    h3 {
+      margin: 0 0 8px 0;
+      font-size: 20px;
+    }
+
+    p {
+      margin: 0;
+      font-size: 14px;
+      color: rgb(150, 150, 150);
+    }
+  }
+}
+
+.locale-switcher {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+
+  a {
+    padding: 6px 12px;
+    border: 1px solid rgb(100, 100, 100);
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+
+    &:hover,
+    &.active {
+      background: rgb(1000, 1000, 1000);
+      color: rgb(0, 0, 0);
     }
   }
 }
