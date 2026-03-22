@@ -1035,7 +1035,7 @@ export const myPlugin =
 
 ## Additional Context Files
 
-For deeper exploration of specific topics, refer to the context files located in `.cursor/rules/`:
+For deeper exploration of specific topics, refer to the context files located in `.agents/rules/`:
 
 ### Available Context Files
 

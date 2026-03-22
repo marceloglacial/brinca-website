@@ -4,6 +4,22 @@ import { getPayload } from 'payload'
 import { getLocalizedValue, renderLexical } from '@/lib/lexical'
 import config from '@/payload.config'
 
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { locale, slug } = await params
+  const payloadConfig = await config
+  const payload = await getPayload({ config: payloadConfig })
+  const { docs } = await payload.find({
+    collection: 'pages',
+    where: { slug: { equals: slug } },
+    locale: locale as any,
+    limit: 1,
+  })
+  const page = docs[0]
+  const pageTitle = page ? getLocalizedValue(page.title, locale) : 'Page'
+  const title = `${pageTitle} | Brinca`
+  return { title }
+}
+
 export default async function PageRoute(props: {
   params: Promise<{ locale: string; slug: string }>
 }) {

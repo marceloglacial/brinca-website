@@ -9,9 +9,11 @@ export async function generateStaticParams() {
   }))
 }
 
+export const SITE_NAME = 'Brinca'
+
 export const metadata = {
   description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+  title: SITE_NAME,
 }
 
 export default async function RootLayout(props: {
