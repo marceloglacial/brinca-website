@@ -18,6 +18,14 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
+  localization: {
+    locales: [
+      { code: 'en', label: 'English' },
+      { code: 'pt-BR', label: 'Português (Brasil)' },
+    ],
+    defaultLocale: 'en',
+    fallback: true,
+  },
   collections: [Users, Media],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
