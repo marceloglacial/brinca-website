@@ -9,24 +9,30 @@ type GalleryProps = {
 
 export default function Gallery({ images }: GalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+  const [isFullImageLoading, setIsFullImageLoading] = useState(false)
+  const [loadedThumbnails, setLoadedThumbnails] = useState<Record<string, boolean>>({})
 
   const openLightbox = (index: number) => {
     setSelectedIndex(index)
+    setIsFullImageLoading(true)
     document.body.style.overflow = 'hidden'
   }
 
   const closeLightbox = useCallback(() => {
     setSelectedIndex(null)
+    setIsFullImageLoading(false)
     document.body.style.overflow = ''
   }, [])
 
   const showNext = useCallback(() => {
     if (selectedIndex === null) return
+    setIsFullImageLoading(true)
     setSelectedIndex((selectedIndex + 1) % images.length)
   }, [selectedIndex, images.length])
 
   const showPrev = useCallback(() => {
     if (selectedIndex === null) return
+    setIsFullImageLoading(true)
     setSelectedIndex((selectedIndex - 1 + images.length) % images.length)
   }, [selectedIndex, images.length])
 
@@ -44,12 +50,15 @@ export default function Gallery({ images }: GalleryProps) {
   }, [selectedIndex, closeLightbox, showNext, showPrev])
 
   const getThumbnailUrl = (url: string) => {
-    // Basic Cloudinary transformation insertion
     return url.replace('/upload/', '/upload/c_fill,w_400,h_400,g_auto,f_auto,q_auto/')
   }
 
   const getFullUrl = (url: string) => {
     return url.replace('/upload/', '/upload/f_auto,q_auto/')
+  }
+
+  const handleThumbnailLoad = (id: string) => {
+    setLoadedThumbnails(prev => ({ ...prev, [id]: true }))
   }
 
   return (
@@ -58,13 +67,19 @@ export default function Gallery({ images }: GalleryProps) {
         {images.map((image, index) => (
           <div
             key={image.id}
-            className="gallery-item"
+            className={`gallery-item ${loadedThumbnails[image.id] ? 'loaded' : 'loading'}`}
             onClick={() => openLightbox(index)}
             role="button"
             tabIndex={0}
             onKeyDown={(e) => e.key === 'Enter' && openLightbox(index)}
           >
-            <img src={getThumbnailUrl(image.src)} alt={image.alt} loading="lazy" />
+            <img 
+              src={getThumbnailUrl(image.src)} 
+              alt={image.alt} 
+              loading="lazy" 
+              onLoad={() => handleThumbnailLoad(image.id)}
+            />
+            {!loadedThumbnails[image.id] && <div className="thumbnail-skeleton" />}
           </div>
         ))}
       </div>
@@ -72,9 +87,16 @@ export default function Gallery({ images }: GalleryProps) {
       {selectedIndex !== null && (
         <div className="lightbox" onClick={closeLightbox}>
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            {isFullImageLoading && (
+              <div className="lightbox-loader">
+                <div className="spinner"></div>
+              </div>
+            )}
             <img
               src={getFullUrl(images[selectedIndex].src)}
               alt={images[selectedIndex].alt}
+              onLoad={() => setIsFullImageLoading(false)}
+              style={{ opacity: isFullImageLoading ? 0 : 1, transition: 'opacity 0.3s ease' }}
             />
             <button className="close-button" onClick={closeLightbox} aria-label="Close">
               ×
@@ -97,34 +119,48 @@ export default function Gallery({ images }: GalleryProps) {
           margin-top: 1.5rem;
         }
         @media (max-width: 1024px) {
-          .gallery-grid {
-            grid-template-columns: repeat(3, 1fr);
-          }
+          .gallery-grid { grid-template-columns: repeat(3, 1fr); }
         }
         @media (max-width: 768px) {
-          .gallery-grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
+          .gallery-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 480px) {
-          .gallery-grid {
-            grid-template-columns: 1fr;
-          }
+          .gallery-grid { grid-template-columns: 1fr; }
         }
         .gallery-item {
+          position: relative;
           cursor: pointer;
           overflow: hidden;
           border-radius: 8px;
           aspect-ratio: 1 / 1;
+          background: #222;
         }
         .gallery-item img {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          transition: transform 0.3s ease;
+          transition: transform 0.3s ease, opacity 0.3s ease;
+          opacity: 0;
+        }
+        .gallery-item.loaded img {
+          opacity: 1;
         }
         .gallery-item:hover img {
           transform: scale(1.05);
+        }
+        .thumbnail-skeleton {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, #222 25%, #333 50%, #222 75%);
+          background-size: 200% 100%;
+          animation: skeleton-loading 1.5s infinite;
+        }
+        @keyframes skeleton-loading {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
         }
         .lightbox {
           position: fixed;
@@ -142,12 +178,30 @@ export default function Gallery({ images }: GalleryProps) {
           position: relative;
           max-width: 90%;
           max-height: 90%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         .lightbox-content img {
           max-width: 100%;
           max-height: 90vh;
           object-fit: contain;
           border-radius: 4px;
+        }
+        .lightbox-loader {
+          position: absolute;
+          z-index: 1002;
+        }
+        .spinner {
+          width: 50px;
+          height: 50px;
+          border: 3px solid rgba(255,255,255,0.3);
+          border-radius: 50%;
+          border-top-color: #fff;
+          animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+          to { transform: rotate(360deg); }
         }
         .close-button {
           position: fixed;
@@ -176,18 +230,12 @@ export default function Gallery({ images }: GalleryProps) {
         .nav-button:hover {
           background: rgba(255, 255, 255, 0.2);
         }
-        .prev {
-          left: -80px;
-        }
-        .next {
-          right: -80px;
-        }
+        .prev { left: -80px; }
+        .next { right: -80px; }
         @media (max-width: 1200px) {
           .prev { left: 10px; }
           .next { right: 10px; }
-          .nav-button {
-            background: rgba(0, 0, 0, 0.3);
-          }
+          .nav-button { background: rgba(0, 0, 0, 0.3); }
         }
       `}</style>
     </div>
