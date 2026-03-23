@@ -5,6 +5,7 @@ import { getLocalizedValue, renderLexical } from '@/lib/lexical'
 import { extractYouTubeId, getYouTubeEmbedUrl } from '@/lib/youtube'
 import config from '@/payload.config'
 import EventsList from '@/components/EventsList'
+import { SetSlug } from '@/components/SlugProvider'
 
 export async function generateMetadata({
   params,
@@ -33,6 +34,7 @@ export default async function PageRoute(props: {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
 
+  // First find the page to get its ID
   const { docs } = await payload.find({
     collection: 'pages',
     where: {
@@ -48,6 +50,22 @@ export default async function PageRoute(props: {
     notFound()
   }
 
+  // Fetch all localized slugs for this page
+  const slugMap: Record<string, string> = {}
+  const locales = ['en', 'pt-BR']
+  
+  for (const l of locales) {
+    const { docs: localizedDocs } = await payload.find({
+      collection: 'pages',
+      where: { id: { equals: page.id } },
+      locale: l as any,
+      limit: 1,
+    })
+    if (localizedDocs[0]?.slug) {
+      slugMap[l] = localizedDocs[0].slug
+    }
+  }
+
   const contentValue =
     typeof page.content === 'object' && page.content !== null
       ? locale in (page.content as Record<string, any>)
@@ -60,6 +78,7 @@ export default async function PageRoute(props: {
 
   return (
     <div className="page-view">
+      <SetSlug slugs={slugMap} />
       <div className="page-header">
         <h1>{getLocalizedValue(page.title, locale)}</h1>
       </div>
