@@ -84,7 +84,7 @@ export default async function EventPageRoute(props: {
       limit: 1,
     })
     if (localizedDocs[0]?.slug) {
-      slugMap[l] = localizedDocs[0].slug
+      slugMap[l] = `events/${localizedDocs[0].slug}`
     }
   }
 

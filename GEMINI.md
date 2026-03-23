@@ -54,7 +54,7 @@ Brinca is a CMS-driven website built with **Next.js 16** and **Payload CMS 3.80*
 ### Frontend
 - **React 19:** Use modern React patterns, including Server Components where appropriate.
 - **Localization:** Routes are prefixed with `[locale]`. Use the `LOCALES` constant for consistency.
-- **Translated Slugs:** The `PageRoute` fetches all localized versions of a slug and passes them to `SiteHeader` via `SlugProvider` (using the `SetSlug` helper component). This ensures the language switcher correctly maps to the translated URL (e.g., `/en/about-us` to `/pt-BR/quem-somos`).
+- **Translated Slugs:** The `PageRoute` and `EventPageRoute` fetch all localized versions of a slug and pass them to `SiteHeader` via `SlugProvider` (using the `SetSlug` helper component). The values in `slugMap` should be the full path after the locale (e.g., `events/translated-slug` or just `translated-slug` for root pages). This ensures the language switcher correctly maps to the translated URL (e.g., `/en/about-us` to `/pt-BR/quem-somos` or `/en/events/gathering` to `/pt-BR/events/encontro`).
 - **Components:** Place shared UI components in `src/components/` and follow the guidelines in `.agents/rules/components.md`.
 
 ### Code Quality
