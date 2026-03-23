@@ -221,6 +221,45 @@ svg {
   }
 }
 
+.site-header {
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  padding: 16px 0;
+}
+
+.site-header-inner {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 45px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 18px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.header-actions {
+  margin-right: 16px;
+}
+
+.header-actions .admin,
+.site-header-inner .admin {
+  color: rgb(0, 0, 0);
+  background: rgb(1000, 1000, 1000);
+  border: 1px solid rgb(0, 0, 0);
+  padding: 6px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+@media (max-width: 400px) {
+  .site-header-inner { padding: 0 24px }
+}
+
 .page-view {
   display: flex;
   flex-direction: column;

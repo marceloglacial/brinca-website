@@ -61,7 +61,6 @@ export default async function PageRoute(props: {
   return (
     <div className="page-view">
       <div className="page-header">
-        <a href={`/${locale}`}>← Back</a>
         <h1>{getLocalizedValue(page.title, locale)}</h1>
       </div>
 

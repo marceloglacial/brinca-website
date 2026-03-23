@@ -27,28 +27,6 @@ export default async function HomePage(props: { params: Promise<{ locale: string
   return (
     <div className="home">
       <div className="content">
-        <picture>
-          <source srcSet="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg" />
-          <Image
-            alt="Payload Logo"
-            height={65}
-            src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg"
-            width={65}
-          />
-        </picture>
-
-        {/* Locale Switcher */}
-        <div className="locale-switcher">
-          {LOCALES.map((loc) => (
-            <a key={loc.code} className={locale === loc.code ? 'active' : ''} href={`/${loc.code}`}>
-              {loc.label}
-            </a>
-          ))}
-        </div>
-
-        {!user && <h1>Welcome to your new project.</h1>}
-        {user && <h1>Welcome back, {user.email}</h1>}
-
         {/* Pages List */}
         {pages.length > 0 && (
           <div className="pages-list">
@@ -66,25 +44,6 @@ export default async function HomePage(props: { params: Promise<{ locale: string
             })}
           </div>
         )}
-
-        <div className="links">
-          <a
-            className="admin"
-            href={payloadConfig.routes.admin}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Go to admin panel
-          </a>
-          <a
-            className="docs"
-            href="https://payloadcms.com/docs"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Documentation
-          </a>
-        </div>
       </div>
     </div>
   )
