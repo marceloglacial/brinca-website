@@ -20,6 +20,19 @@ export const Pages: CollectionConfig = {
       type: 'richText',
       localized: true,
     },
+    {
+      name: 'youtube',
+      type: 'group',
+      fields: [
+        {
+          name: 'url',
+          type: 'text',
+          admin: {
+            description: 'YouTube video URL or ID (paste full URL or the video id)',
+          },
+        },
+      ],
+    },
   ],
   timestamps: true,
 }

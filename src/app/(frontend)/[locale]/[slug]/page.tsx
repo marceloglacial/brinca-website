@@ -2,9 +2,14 @@ import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 
 import { getLocalizedValue, renderLexical } from '@/lib/lexical'
+import { extractYouTubeId, getYouTubeEmbedUrl } from '@/lib/youtube'
 import config from '@/payload.config'
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>
+}) {
   const { locale, slug } = await params
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
@@ -49,12 +54,16 @@ export default async function PageRoute(props: {
         : page.content
       : page.content
 
+  const videoId = extractYouTubeId(page.youtube?.url)
+  const embedUrl = getYouTubeEmbedUrl(videoId)
+
   return (
     <div className="page-view">
       <div className="page-header">
         <a href={`/${locale}`}>← Back</a>
         <h1>{getLocalizedValue(page.title, locale)}</h1>
       </div>
+
       <div className="page-content">
         {contentValue && typeof contentValue === 'object' && contentValue.root ? (
           <div>{renderLexical(contentValue.root.children)}</div>
@@ -64,6 +73,19 @@ export default async function PageRoute(props: {
           <p>No content available</p>
         )}
       </div>
+
+      {embedUrl ? (
+        <div className="page-video">
+          <iframe
+            width="100%"
+            height="480"
+            src={embedUrl}
+            title={getLocalizedValue(page.title, locale)}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+      ) : null}
     </div>
   )
 }

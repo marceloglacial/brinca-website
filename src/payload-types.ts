@@ -190,6 +190,12 @@ export interface Page {
     };
     [k: string]: unknown;
   } | null;
+  youtube?: {
+    /**
+     * YouTube video URL or ID (paste full URL or the video id)
+     */
+    url?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -320,6 +326,11 @@ export interface PagesSelect<T extends boolean = true> {
   generateSlug?: T;
   slug?: T;
   content?: T;
+  youtube?:
+    | T
+    | {
+        url?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
