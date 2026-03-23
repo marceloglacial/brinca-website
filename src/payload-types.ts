@@ -198,6 +198,9 @@ export interface Page {
      */
     url?: string | null;
   };
+  events?: {
+    showEvents?: boolean | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -236,6 +239,9 @@ export interface Event {
     [k: string]: unknown;
   } | null;
   gallery?: {
+    /**
+     * Paste the Cloudinary folder path for this event gallery.
+     */
     cloudinaryFolder?: string | null;
   };
   updatedAt: string;
@@ -376,6 +382,11 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         url?: T;
+      };
+  events?:
+    | T
+    | {
+        showEvents?: T;
       };
   updatedAt?: T;
   createdAt?: T;

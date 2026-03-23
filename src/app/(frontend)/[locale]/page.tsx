@@ -24,8 +24,6 @@ export default async function HomePage(props: { params: Promise<{ locale: string
     limit: 100,
   })
 
-  const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
-
   return (
     <div className="home">
       <div className="content">
@@ -87,13 +85,6 @@ export default async function HomePage(props: { params: Promise<{ locale: string
             Documentation
           </a>
         </div>
-      </div>
-
-      <div className="footer">
-        <p>Update this page by editing</p>
-        <a className="codeLink" href={fileURL}>
-          <code>app/(frontend)/[locale]/page.tsx</code>
-        </a>
       </div>
     </div>
   )

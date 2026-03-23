@@ -33,6 +33,18 @@ export const Pages: CollectionConfig = {
         },
       ],
     },
+    {
+      name: 'events',
+      type: 'group',
+      fields: [
+        {
+          name: 'showEvents',
+          type: 'checkbox',
+          label: 'Show Events List',
+          defaultValue: false,
+        },
+      ],
+    },
   ],
   timestamps: true,
 }

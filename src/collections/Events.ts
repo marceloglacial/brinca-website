@@ -39,9 +39,7 @@ export const Events: CollectionConfig = {
           name: 'cloudinaryFolder',
           type: 'text',
           admin: {
-            components: {
-              Field: '/components/CloudinaryFolderPicker',
-            },
+            description: 'Paste the Cloudinary folder path for this event gallery.',
           },
         },
       ],

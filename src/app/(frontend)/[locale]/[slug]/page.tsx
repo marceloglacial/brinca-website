@@ -4,6 +4,7 @@ import { getPayload } from 'payload'
 import { getLocalizedValue, renderLexical } from '@/lib/lexical'
 import { extractYouTubeId, getYouTubeEmbedUrl } from '@/lib/youtube'
 import config from '@/payload.config'
+import EventsList from '@/components/EventsList'
 
 export async function generateMetadata({
   params,
@@ -84,6 +85,8 @@ export default async function PageRoute(props: {
           />
         </div>
       ) : null}
+
+      {page.events?.showEvents && <EventsList locale={locale} />}
     </div>
   )
 }
