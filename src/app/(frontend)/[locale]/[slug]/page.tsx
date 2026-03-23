@@ -69,9 +69,7 @@ export default async function PageRoute(props: {
           <div>{renderLexical(contentValue.root.children)}</div>
         ) : contentValue ? (
           <div>{contentValue}</div>
-        ) : (
-          <p>No content available</p>
-        )}
+        ) : null}
       </div>
 
       {embedUrl ? (
