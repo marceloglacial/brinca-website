@@ -247,6 +247,12 @@ export interface Event {
      */
     cloudinaryFolder?: string | null;
   };
+  instagram?: {
+    /**
+     * Paste the instagram link.
+     */
+    InstagramEmbed?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -289,6 +295,12 @@ export interface Calendar {
      * Paste the Cloudinary folder path for this event gallery.
      */
     cloudinaryFolder?: string | null;
+  };
+  instagram?: {
+    /**
+     * Paste the instagram link.
+     */
+    InstagramEmbed?: string | null;
   };
   updatedAt: string;
   createdAt: string;
@@ -457,6 +469,11 @@ export interface EventsSelect<T extends boolean = true> {
     | {
         cloudinaryFolder?: T;
       };
+  instagram?:
+    | T
+    | {
+        InstagramEmbed?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -474,6 +491,11 @@ export interface CalendarsSelect<T extends boolean = true> {
     | T
     | {
         cloudinaryFolder?: T;
+      };
+  instagram?:
+    | T
+    | {
+        InstagramEmbed?: T;
       };
   updatedAt?: T;
   createdAt?: T;

@@ -6,6 +6,7 @@ import config from '@/payload.config'
 import { formatDate } from '@/lib/formatDate'
 import { SetSlug } from '@/components/SlugProvider'
 import CloudinaryGallery from '@/components/CloudinaryGallery'
+import InstagramEmbed from '@/components/InstagramEmbed'
 import { LOCALE_CODES } from '@/constants/locales'
 
 export async function generateStaticParams() {
@@ -124,6 +125,10 @@ export default async function CalendarPageRoute(props: {
           folderPath={item.gallery.cloudinaryFolder}
           title={locale === 'pt-BR' ? 'Galeria' : 'Gallery'}
         />
+      )}
+
+      {item.instagram?.InstagramEmbed && (
+        <InstagramEmbed url={item.instagram.InstagramEmbed} />
       )}
 
       <style>{`

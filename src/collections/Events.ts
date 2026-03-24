@@ -44,6 +44,19 @@ export const Events: CollectionConfig = {
         },
       ],
     },
+    {
+      name: 'instagram',
+      type: 'group',
+      fields: [
+        {
+          name: 'InstagramEmbed',
+          type: 'text',
+          admin: {
+            description: 'Paste the instagram link.',
+          },
+        },
+      ],
+    },
   ],
   timestamps: true,
 }
