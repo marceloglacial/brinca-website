@@ -18,7 +18,6 @@ export default async function EventsList({ locale }: { locale: string }) {
 
   return (
     <div className="events-list-section">
-      <h2>Events</h2>
       <div className="events-grid">
         {events.map((event) => {
           const slug = typeof event.slug === 'string' ? event.slug : event.slug?.[locale]
@@ -26,9 +25,16 @@ export default async function EventsList({ locale }: { locale: string }) {
 
           return (
             <div key={event.id} className="event-card">
-              <h3>
-                <Link href={href}>{getLocalizedValue(event.title, locale)}</Link>
-              </h3>
+              {event.thumbnail ? (
+                <div className="event-thumb-wrap">
+                  <img src={event.thumbnail} alt={getLocalizedValue(event.title, locale)} className="event-thumb" />
+                </div>
+              ) : null}
+
+              <div className="event-card-body">
+                <h3>
+                  <Link href={href}>{getLocalizedValue(event.title, locale)}</Link>
+                </h3>
                 <p className="event-date">
                   <Link href={href}>
                     {formatDate(event.date, locale, {
@@ -38,6 +44,7 @@ export default async function EventsList({ locale }: { locale: string }) {
                     })}
                   </Link>
                 </p>
+              </div>
             </div>
           )
         })}
@@ -45,9 +52,6 @@ export default async function EventsList({ locale }: { locale: string }) {
 
       <style>{`
         .events-list-section {
-          margin-top: 4rem;
-          padding-top: 2rem;
-          border-top: 1px solid #eaeaea;
         }
         .events-grid {
           display: grid;
@@ -56,7 +60,17 @@ export default async function EventsList({ locale }: { locale: string }) {
         }
         .event-card {
           padding: 0.75rem 0;
+          display: flex;
+          gap: 1rem;
+          align-items: center;
         }
+        .event-thumb {
+          width: 120px;
+          height: 80px;
+          object-fit: cover;
+          border-radius: 6px;
+        }
+        .event-card-body { flex: 1 }
         .event-date {
           color: #666;
           font-weight: 500;

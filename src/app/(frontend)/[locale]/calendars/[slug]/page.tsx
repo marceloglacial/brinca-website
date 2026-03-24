@@ -101,41 +101,56 @@ export default async function CalendarPageRoute(props: {
     <div className="calendar-item-view">
       <SetSlug slugs={slugMap} />
 
-      <div className="calendar-item-header">
-        <h1>{getLocalizedValue(item.title, locale)}</h1>
-        <p className="calendar-date">
-          {formatDate(item.date, locale, {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-          })}
-        </p>
+      <div className="calendar-grid">
+        <main className="calendar-main">
+          <div className="calendar-item-header">
+            <h1>{getLocalizedValue(item.title, locale)}</h1>
+            <p className="calendar-date">
+              {formatDate(item.date, locale, {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              })}
+            </p>
+          </div>
+
+          <div className="calendar-item-description">
+            {descriptionValue && typeof descriptionValue === 'object' && (descriptionValue as any).root ? (
+              <div>{renderLexical((descriptionValue as any).root.children)}</div>
+            ) : descriptionValue ? (
+              <div>{descriptionValue as any}</div>
+            ) : null}
+          </div>
+
+          {item.gallery?.cloudinaryFolder && (
+            <CloudinaryGallery
+              folderPath={item.gallery.cloudinaryFolder}
+              title={locale === 'pt-BR' ? 'Galeria' : 'Gallery'}
+            />
+          )}
+
+          {item.instagram?.InstagramEmbed && (
+            <InstagramEmbed url={item.instagram.InstagramEmbed} />
+          )}
+        </main>
+
+        <aside className="calendar-sidebar">
+          {item.thumbnail ? (
+            <img src={item.thumbnail} alt={getLocalizedValue(item.title, locale)} style={{ width: '100%', borderRadius: 6 }} />
+          ) : null}
+        </aside>
       </div>
-
-      <div className="calendar-item-description">
-        {descriptionValue && typeof descriptionValue === 'object' && (descriptionValue as any).root ? (
-          <div>{renderLexical((descriptionValue as any).root.children)}</div>
-        ) : descriptionValue ? (
-          <div>{descriptionValue as any}</div>
-        ) : null}
-      </div>
-
-      {item.gallery?.cloudinaryFolder && (
-        <CloudinaryGallery
-          folderPath={item.gallery.cloudinaryFolder}
-          title={locale === 'pt-BR' ? 'Galeria' : 'Gallery'}
-        />
-      )}
-
-      {item.instagram?.InstagramEmbed && (
-        <InstagramEmbed url={item.instagram.InstagramEmbed} />
-      )}
 
       <style>{`
         .calendar-item-view {
-          max-width: 800px;
+          max-width: 1100px;
           margin: 0 auto;
           padding: 2rem 1rem;
+        }
+        .calendar-grid {
+          display: grid;
+          grid-template-columns: 1fr 320px;
+          gap: 2rem;
         }
         .calendar-item-header {
           margin-bottom: 2rem;
@@ -149,6 +164,7 @@ export default async function CalendarPageRoute(props: {
           line-height: 1.6;
           font-size: 1.1rem;
         }
+        .calendar-sidebar img { max-width: 100%; height: auto; display: block; }
       `}</style>
     </div>
   )

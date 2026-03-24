@@ -51,12 +51,13 @@ export default async function CalendarList({ locale }: { locale: string }) {
                 const href = `/${locale}/calendars/${slug}`
                 return (
                   <li key={event.id} className="calendar-event">
-                    <Link href={href}>
-                      {formatDate(event.date, locale, {
-                        day: 'numeric',
-                        month: 'short',
-                      })}{' '}
-                      - {getLocalizedValue(event.title, locale)}
+                    <Link href={href} className="calendar-event-link">
+                      {event.thumbnail ? (
+                        <img src={event.thumbnail} alt={getLocalizedValue(event.title, locale)} className="calendar-thumb" />
+                      ) : null}
+                      <span className="calendar-event-text">
+                        {formatDate(event.date, locale, { day: 'numeric', month: 'short' })} - {getLocalizedValue(event.title, locale)}
+                      </span>
                     </Link>
                   </li>
                 )
@@ -78,6 +79,10 @@ export default async function CalendarList({ locale }: { locale: string }) {
         .calendar-event {
           margin: 0.25rem 0;
         }
+        .calendar-event-link { display: flex; align-items: center; gap: 0.5rem }
+        .calendar-thumb { width: 48px; height: 48px; object-fit: cover; border-radius: 6px }
+        .calendar-event-text { display: inline-block }
+        
       `}</style>
     </div>
   )

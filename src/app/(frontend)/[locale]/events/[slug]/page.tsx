@@ -101,42 +101,55 @@ export default async function EventPageRoute(props: {
   return (
     <div className="event-view">
       <SetSlug slugs={slugMap} />
-      
-      <div className="event-header">
-        <h1>{getLocalizedValue(event.title, locale)}</h1>
-        <p className="event-date">
-          {formatDate(event.date, locale, {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-          })}
-        </p>
+
+      <div className="event-grid">
+        <main className="event-main">
+          <div className="event-header">
+            <h1>{getLocalizedValue(event.title, locale)}</h1>
+            <p className="event-date">{formatDate(event.date, locale, {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            })}</p>
+          </div>
+
+          <div className="event-description">
+            {descriptionValue && typeof descriptionValue === 'object' && (descriptionValue as any).root ? (
+              <div>{renderLexical((descriptionValue as any).root.children)}</div>
+            ) : descriptionValue ? (
+              <div>{descriptionValue as any}</div>
+            ) : null}
+          </div>
+
+          {event.gallery?.cloudinaryFolder && (
+            <CloudinaryGallery 
+              folderPath={event.gallery.cloudinaryFolder} 
+              title={locale === 'pt-BR' ? 'Galeria' : 'Gallery'}
+            />
+          )}
+
+          {event.instagram?.InstagramEmbed && (
+            <InstagramEmbed url={event.instagram.InstagramEmbed} />
+          )}
+        </main>
+
+        <aside className="event-sidebar">
+          {event.thumbnail ? (
+            <img src={event.thumbnail} alt={getLocalizedValue(event.title, locale)} style={{ width: '100%', borderRadius: 6 }} />
+          ) : null}
+        </aside>
       </div>
-
-      <div className="event-description">
-        {descriptionValue && typeof descriptionValue === 'object' && (descriptionValue as any).root ? (
-          <div>{renderLexical((descriptionValue as any).root.children)}</div>
-        ) : descriptionValue ? (
-          <div>{descriptionValue as any}</div>
-        ) : null}
-      </div>
-
-      {event.gallery?.cloudinaryFolder && (
-        <CloudinaryGallery 
-          folderPath={event.gallery.cloudinaryFolder} 
-          title={locale === 'pt-BR' ? 'Galeria' : 'Gallery'}
-        />
-      )}
-
-      {event.instagram?.InstagramEmbed && (
-        <InstagramEmbed url={event.instagram.InstagramEmbed} />
-      )}
 
       <style>{`
         .event-view {
-          max-width: 800px;
+          max-width: 1100px;
           margin: 0 auto;
           padding: 2rem 1rem;
+        }
+        .event-grid {
+          display: grid;
+          grid-template-columns: 1fr 320px;
+          gap: 2rem;
         }
         .event-header {
           margin-bottom: 2rem;
@@ -150,6 +163,7 @@ export default async function EventPageRoute(props: {
           line-height: 1.6;
           font-size: 1.1rem;
         }
+        .event-sidebar img { max-width: 100%; height: auto; display: block; }
       `}</style>
     </div>
   )

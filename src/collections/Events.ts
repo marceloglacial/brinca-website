@@ -16,6 +16,14 @@ export const Events: CollectionConfig = {
     },
     slugField({ fieldToUse: 'title', localized: true }),
     {
+      name: 'thumbnail',
+      type: 'text',
+      admin: {
+        description: 'Paste full Cloudinary image URL (https://res.cloudinary.com/...)',
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'date',
       type: 'date',
       required: true,
