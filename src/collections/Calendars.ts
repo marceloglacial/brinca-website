@@ -1,8 +1,31 @@
 import { slugField } from 'payload'
 import type { CollectionConfig } from 'payload'
+import { normalizeCTAValue } from '@/lib/normalizeCta'
 
 export const Calendars: CollectionConfig = {
   slug: 'calendars',
+  hooks: {
+    beforeValidate: [
+      ({ data }) => {
+        if (data && typeof data === 'object' && 'cta' in data) {
+          const dataRecord = data as Record<string, unknown>
+          dataRecord.cta = normalizeCTAValue(dataRecord.cta)
+        }
+
+        return data
+      },
+    ],
+    afterRead: [
+      ({ doc }) => {
+        if (doc && typeof doc === 'object' && 'cta' in doc) {
+          const docRecord = doc as Record<string, unknown>
+          docRecord.cta = normalizeCTAValue(docRecord.cta)
+        }
+
+        return doc
+      },
+    ],
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'createdAt'],
@@ -65,17 +88,25 @@ export const Calendars: CollectionConfig = {
         },
       ],
     },
-    // Call-to-action button
-    ({
+    {
       name: 'cta',
-      type: 'group',
-      label: 'Call to action',
+      type: 'array',
+      label: 'Call to action buttons',
+      labels: {
+        singular: 'Button',
+        plural: 'Buttons',
+      },
       fields: [
         { name: 'title', type: 'text', localized: true, required: false },
         { name: 'url', type: 'text', localized: true, required: false },
-        { name: 'openInNewWindow', type: 'checkbox', label: 'Open in new window', defaultValue: false },
+        {
+          name: 'openInNewWindow',
+          type: 'checkbox',
+          label: 'Open in new window',
+          defaultValue: false,
+        },
       ],
-    } as any),
+    },
   ],
   timestamps: true,
 }

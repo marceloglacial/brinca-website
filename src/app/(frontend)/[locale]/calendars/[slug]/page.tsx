@@ -97,6 +97,7 @@ export default async function CalendarPageRoute(props: {
         ? (item.description as Record<string, any>)[locale]
         : item.description
       : item.description
+  const ctaButtons = (item.cta ?? []).filter((button) => Boolean(button?.url))
 
   return (
     <div className="calendar-item-view">
@@ -116,7 +117,9 @@ export default async function CalendarPageRoute(props: {
           </div>
 
           <div className="calendar-item-description">
-            {descriptionValue && typeof descriptionValue === 'object' && (descriptionValue as any).root ? (
+            {descriptionValue &&
+            typeof descriptionValue === 'object' &&
+            (descriptionValue as any).root ? (
               <div>{renderLexical((descriptionValue as any).root.children)}</div>
             ) : descriptionValue ? (
               <div>{descriptionValue as any}</div>
@@ -130,19 +133,26 @@ export default async function CalendarPageRoute(props: {
             />
           )}
 
-          {item.instagram?.InstagramEmbed && (
-            <InstagramEmbed url={item.instagram.InstagramEmbed} />
-          )}
+          {item.instagram?.InstagramEmbed && <InstagramEmbed url={item.instagram.InstagramEmbed} />}
         </main>
 
         <aside className="calendar-sidebar">
           {item.thumbnail ? (
             <>
-              <img src={item.thumbnail} alt={getLocalizedValue(item.title, locale)} style={{ width: '100%', borderRadius: 6 }} />
-              {/* CTA button */}
-              {item.cta?.url ? (
-                <div style={{ marginTop: 12 }}>
-                  <ActionButton button={item.cta} locale={locale} />
+              <img
+                src={item.thumbnail}
+                alt={getLocalizedValue(item.title, locale)}
+                style={{ width: '100%', borderRadius: 6 }}
+              />
+              {ctaButtons.length > 0 ? (
+                <div style={{ marginTop: 12, display: 'grid', gap: '0.75rem' }}>
+                  {ctaButtons.map((button, index) => (
+                    <ActionButton
+                      key={`${button?.url ?? 'cta'}-${index}`}
+                      button={button}
+                      locale={locale}
+                    />
+                  ))}
                 </div>
               ) : null}
             </>

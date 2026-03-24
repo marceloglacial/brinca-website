@@ -77,6 +77,7 @@ export default async function PageRoute(props: {
 
   const videoId = extractYouTubeId(page.youtube?.url)
   const embedUrl = getYouTubeEmbedUrl(videoId)
+  const ctaButtons = (page.cta ?? []).filter((button) => Boolean(button?.url))
 
   return (
     <div className="page-view">
@@ -93,9 +94,15 @@ export default async function PageRoute(props: {
         ) : null}
       </div>
 
-      {page.cta?.url ? (
-        <div className="page-cta" style={{ margin: '2rem 0' }}>
-          <ActionButton button={page.cta} locale={locale} />
+      {ctaButtons.length > 0 ? (
+        <div className="page-cta" style={{ margin: '2rem 0', display: 'grid', gap: '0.75rem' }}>
+          {ctaButtons.map((button, index) => (
+            <ActionButton
+              key={`${button?.url ?? 'cta'}-${index}`}
+              button={button}
+              locale={locale}
+            />
+          ))}
         </div>
       ) : null}
 

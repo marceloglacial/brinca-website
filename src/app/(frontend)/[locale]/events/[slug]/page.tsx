@@ -97,7 +97,7 @@ export default async function EventPageRoute(props: {
         ? (event.description as Record<string, any>)[locale]
         : event.description
       : event.description
-
+  const ctaButtons = (event.cta ?? []).filter((button) => Boolean(button?.url))
 
   return (
     <div className="event-view">
@@ -107,15 +107,19 @@ export default async function EventPageRoute(props: {
         <main className="event-main">
           <div className="event-header">
             <h1>{getLocalizedValue(event.title, locale)}</h1>
-            <p className="event-date">{formatDate(event.date, locale, {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
-            })}</p>
+            <p className="event-date">
+              {formatDate(event.date, locale, {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              })}
+            </p>
           </div>
 
           <div className="event-description">
-            {descriptionValue && typeof descriptionValue === 'object' && (descriptionValue as any).root ? (
+            {descriptionValue &&
+            typeof descriptionValue === 'object' &&
+            (descriptionValue as any).root ? (
               <div>{renderLexical((descriptionValue as any).root.children)}</div>
             ) : descriptionValue ? (
               <div>{descriptionValue as any}</div>
@@ -123,8 +127,8 @@ export default async function EventPageRoute(props: {
           </div>
 
           {event.gallery?.cloudinaryFolder && (
-            <CloudinaryGallery 
-              folderPath={event.gallery.cloudinaryFolder} 
+            <CloudinaryGallery
+              folderPath={event.gallery.cloudinaryFolder}
               title={locale === 'pt-BR' ? 'Galeria' : 'Gallery'}
             />
           )}
@@ -137,11 +141,20 @@ export default async function EventPageRoute(props: {
         <aside className="event-sidebar">
           {event.thumbnail ? (
             <>
-              <img src={event.thumbnail} alt={getLocalizedValue(event.title, locale)} style={{ width: '100%', borderRadius: 6 }} />
-              {/* CTA button */}
-              {event.cta?.url ? (
-                <div style={{ marginTop: 12 }}>
-                  <ActionButton button={event.cta} locale={locale} />
+              <img
+                src={event.thumbnail}
+                alt={getLocalizedValue(event.title, locale)}
+                style={{ width: '100%', borderRadius: 6 }}
+              />
+              {ctaButtons.length > 0 ? (
+                <div style={{ marginTop: 12, display: 'grid', gap: '0.75rem' }}>
+                  {ctaButtons.map((button, index) => (
+                    <ActionButton
+                      key={`${button?.url ?? 'cta'}-${index}`}
+                      button={button}
+                      locale={locale}
+                    />
+                  ))}
                 </div>
               ) : null}
             </>

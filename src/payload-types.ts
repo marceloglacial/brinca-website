@@ -204,11 +204,14 @@ export interface Page {
      */
     url?: string | null;
   };
-  cta?: {
-    title?: string | null;
-    url?: string | null;
-    openInNewWindow?: boolean | null;
-  };
+  cta?:
+    | {
+        title?: string | null;
+        url?: string | null;
+        openInNewWindow?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
   lists?: {
     showEvents?: boolean | null;
     showCalendars?: boolean | null;
@@ -266,11 +269,14 @@ export interface Event {
      */
     InstagramEmbed?: string | null;
   };
-  cta?: {
-    title?: string | null;
-    url?: string | null;
-    openInNewWindow?: boolean | null;
-  };
+  cta?:
+    | {
+        title?: string | null;
+        url?: string | null;
+        openInNewWindow?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -324,11 +330,14 @@ export interface Calendar {
      */
     InstagramEmbed?: string | null;
   };
-  cta?: {
-    title?: string | null;
-    url?: string | null;
-    openInNewWindow?: boolean | null;
-  };
+  cta?:
+    | {
+        title?: string | null;
+        url?: string | null;
+        openInNewWindow?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -479,6 +488,7 @@ export interface PagesSelect<T extends boolean = true> {
         title?: T;
         url?: T;
         openInNewWindow?: T;
+        id?: T;
       };
   lists?:
     | T
@@ -516,6 +526,7 @@ export interface EventsSelect<T extends boolean = true> {
         title?: T;
         url?: T;
         openInNewWindow?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -547,6 +558,7 @@ export interface CalendarsSelect<T extends boolean = true> {
         title?: T;
         url?: T;
         openInNewWindow?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;
