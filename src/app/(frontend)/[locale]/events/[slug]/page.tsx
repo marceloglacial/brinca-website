@@ -3,6 +3,7 @@ import { getPayload } from 'payload'
 
 import { getLocalizedValue, renderLexical } from '@/lib/lexical'
 import config from '@/payload.config'
+import { formatDate } from '@/lib/formatDate'
 import { SetSlug } from '@/components/SlugProvider'
 import CloudinaryGallery from '@/components/CloudinaryGallery'
 import { LOCALE_CODES } from '@/constants/locales'
@@ -95,7 +96,7 @@ export default async function EventPageRoute(props: {
         : event.description
       : event.description
 
-  const formattedDate = new Date(event.date).toLocaleDateString(locale, {
+  const formattedDate = formatDate(event.date, locale, {
     day: 'numeric',
     month: 'long',
     year: 'numeric',

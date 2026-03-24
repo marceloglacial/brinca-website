@@ -1,6 +1,7 @@
 import React from 'react'
 import SiteHeader from '@/components/SiteHeader'
 import { SlugProvider } from '@/components/SlugProvider'
+import SiteFooter from '@/components/Footer'
 import './styles.css'
 
 const LOCALES = ['en', 'pt-BR']
@@ -31,6 +32,7 @@ export default async function RootLayout(props: {
         <SlugProvider>
           <SiteHeader locale={locale} />
           <main>{children}</main>
+          <SiteFooter />
         </SlugProvider>
       </body>
     </html>

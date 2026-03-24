@@ -17,6 +17,25 @@ export default function SiteHeader({ locale }: { locale: string }) {
   const segments = pathname.split('/').filter(Boolean)
   const hasLocale = segments.length > 0 && LOCALES.includes(segments[0])
 
+  // client-side pages fetch
+  const [pages, setPages] = React.useState<any[]>([])
+  React.useEffect(() => {
+    let mounted = true
+    ;(async () => {
+      try {
+        const res = await fetch(`/api/pages?locale=${encodeURIComponent(locale)}`)
+        if (!res.ok) return
+        const json = await res.json()
+        if (mounted) setPages(json.pages || [])
+      } catch (e) {
+        // ignore
+      }
+    })()
+    return () => {
+      mounted = false
+    }
+  }, [locale])
+
   return (
     <header className="site-header">
       <div className="site-header-inner">
@@ -25,7 +44,20 @@ export default function SiteHeader({ locale }: { locale: string }) {
         </Link>
 
         <div className="header-actions">
-          <a className="admin" href="/admin">Dashboard</a>
+          <div className="pages-list" aria-hidden={!locale}>
+            {pages.length > 0 && (
+              <div className="pages-scroll">
+                {pages.map((p: any) => {
+                  const slug = typeof p.slug === 'string' ? p.slug : p.slug?.[locale]
+                  return (
+                    <Link key={p.id} href={`/${locale}/${slug}`} className="page-link">
+                      {p.title?.[locale] ?? p.title ?? 'Page'}
+                    </Link>
+                  )
+                })}
+              </div>
+            )}
+          </div>
         </div>
 
         <nav className="locale-switcher" aria-label="Language switcher">
@@ -58,6 +90,30 @@ export default function SiteHeader({ locale }: { locale: string }) {
           })}
         </nav>
       </div>
+
+      <style>{`
+        .pages-list {
+          display: flex;
+          align-items: center;
+          margin-right: 1rem;
+        }
+        .pages-scroll {
+          display: flex;
+          gap: 0.5rem;
+          overflow-x: auto;
+          padding: 0.25rem 0;
+        }
+        .page-link {
+          white-space: nowrap;
+          padding: 0.25rem 0.5rem;
+          color: #333;
+          text-decoration: none;
+          border-radius: 4px;
+        }
+        .page-link:hover {
+          background: rgba(0,0,0,0.03);
+        }
+      `}</style>
     </header>
   )
 }

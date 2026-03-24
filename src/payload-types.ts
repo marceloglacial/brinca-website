@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     pages: Page;
     events: Event;
+    calendars: Calendar;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,6 +83,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
+    calendars: CalendarsSelect<false> | CalendarsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -198,8 +200,9 @@ export interface Page {
      */
     url?: string | null;
   };
-  events?: {
+  lists?: {
     showEvents?: boolean | null;
+    showCalendars?: boolean | null;
   };
   updatedAt: string;
   createdAt: string;
@@ -209,6 +212,49 @@ export interface Page {
  * via the `definition` "events".
  */
 export interface Event {
+  id: string;
+  title: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  /**
+   * Event date (non-localized)
+   */
+  date: string;
+  /**
+   * Event description (localized rich text)
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  gallery?: {
+    /**
+     * Paste the Cloudinary folder path for this event gallery.
+     */
+    cloudinaryFolder?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "calendars".
+ */
+export interface Calendar {
   id: string;
   title: string;
   /**
@@ -286,6 +332,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'events';
         value: string | Event;
+      } | null)
+    | ({
+        relationTo: 'calendars';
+        value: string | Calendar;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -383,10 +433,11 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         url?: T;
       };
-  events?:
+  lists?:
     | T
     | {
         showEvents?: T;
+        showCalendars?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -396,6 +447,24 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "events_select".
  */
 export interface EventsSelect<T extends boolean = true> {
+  title?: T;
+  generateSlug?: T;
+  slug?: T;
+  date?: T;
+  description?: T;
+  gallery?:
+    | T
+    | {
+        cloudinaryFolder?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "calendars_select".
+ */
+export interface CalendarsSelect<T extends boolean = true> {
   title?: T;
   generateSlug?: T;
   slug?: T;

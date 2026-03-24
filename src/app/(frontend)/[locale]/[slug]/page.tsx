@@ -5,6 +5,7 @@ import { getLocalizedValue, renderLexical } from '@/lib/lexical'
 import { extractYouTubeId, getYouTubeEmbedUrl } from '@/lib/youtube'
 import config from '@/payload.config'
 import EventsList from '@/components/EventsList'
+import CalendarList from '@/components/CalendarList'
 import { SetSlug } from '@/components/SlugProvider'
 
 export async function generateMetadata({
@@ -53,7 +54,7 @@ export default async function PageRoute(props: {
   // Fetch all localized slugs for this page
   const slugMap: Record<string, string> = {}
   const locales = ['en', 'pt-BR']
-  
+
   for (const l of locales) {
     const { docs: localizedDocs } = await payload.find({
       collection: 'pages',
@@ -104,7 +105,8 @@ export default async function PageRoute(props: {
         </div>
       ) : null}
 
-      {page.events?.showEvents && <EventsList locale={locale} />}
+      {page.lists?.showEvents && <EventsList locale={locale} />}
+      {page.lists?.showCalendars && <CalendarList locale={locale} />}
     </div>
   )
 }

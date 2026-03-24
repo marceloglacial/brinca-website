@@ -2,6 +2,7 @@ import { getPayload } from 'payload'
 import Link from 'next/link'
 import config from '@/payload.config'
 import { getLocalizedValue } from '@/lib/lexical'
+import { formatDate } from '@/lib/formatDate'
 
 export default async function EventsList({ locale }: { locale: string }) {
   const payloadConfig = await config
@@ -30,7 +31,7 @@ export default async function EventsList({ locale }: { locale: string }) {
               </h3>
               <p className="event-date">
                 <Link href={href}>
-                  {new Date(event.date).toLocaleDateString(locale, {
+                  {formatDate(event.date, locale, {
                     day: 'numeric',
                     month: 'long',
                     year: 'numeric',

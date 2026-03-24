@@ -9,6 +9,7 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Events } from './collections/Events'
+import { Calendars } from './collections/Calendars'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -28,7 +29,7 @@ export default buildConfig({
     defaultLocale: 'en',
     fallback: true,
   },
-  collections: [Users, Media, Pages, Events],
+  collections: [Users, Media, Pages, Events, Calendars],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
