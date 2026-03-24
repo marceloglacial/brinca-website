@@ -1,13 +1,14 @@
 import React from 'react'
+import { notFound } from 'next/navigation'
 import SiteHeader from '@/components/SiteHeader'
 import { SlugProvider } from '@/components/SlugProvider'
 import SiteFooter from '@/components/Footer'
+import { LOCALE_CODES } from '@/constants/locales'
+import { isSupportedLocale } from '@/lib/locales'
 import './styles.css'
 
-const LOCALES = ['en', 'pt-BR']
-
 export async function generateStaticParams() {
-  return LOCALES.map((locale) => ({
+  return LOCALE_CODES.map((locale) => ({
     locale,
   }))
 }
@@ -25,6 +26,10 @@ export default async function RootLayout(props: {
 }) {
   const { children, params } = props
   const { locale } = await params
+
+  if (!isSupportedLocale(locale)) {
+    notFound()
+  }
 
   return (
     <html lang={locale}>

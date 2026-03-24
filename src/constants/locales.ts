@@ -4,3 +4,5 @@ export const LOCALES = [
 ]
 
 export const LOCALE_CODES = LOCALES.map((locale) => locale.code)
+
+export type LocaleCode = (typeof LOCALE_CODES)[number]

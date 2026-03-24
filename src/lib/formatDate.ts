@@ -5,16 +5,23 @@ export function formatDate(
 ) {
   const date = typeof dateInput === 'string' ? new Date(dateInput) : dateInput
 
-  const supportedLocales =
-    typeof Intl !== 'undefined' && locale
-      ? Intl.DateTimeFormat.supportedLocalesOf(locale)
-      : []
-  const safeLocale = supportedLocales.length > 0 ? locale : undefined
+  let safeLocale: string | undefined
+
+  if (typeof Intl !== 'undefined' && locale) {
+    try {
+      const [canonicalLocale] = Intl.getCanonicalLocales(locale)
+
+      if (canonicalLocale && Intl.DateTimeFormat.supportedLocalesOf(canonicalLocale).length > 0) {
+        safeLocale = canonicalLocale
+      }
+    } catch {
+      safeLocale = undefined
+    }
+  }
 
   try {
-    // Node may throw if locale is not supported; safeLocale guards against that.
-    return date.toLocaleDateString(safeLocale || undefined, options)
-  } catch (e) {
+    return date.toLocaleDateString(safeLocale, options)
+  } catch {
     return date.toLocaleDateString(undefined, options)
   }
 }
