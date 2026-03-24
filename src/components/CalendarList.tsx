@@ -16,24 +16,37 @@ export default async function CalendarList({ locale }: { locale: string }) {
 
   if (!events || events.length === 0) return null
 
-  // Group events by month/year
-  const groups: Record<string, any[]> = {}
+  const groups: Record<
+    string,
+    {
+      label: string
+      events: any[]
+    }
+  > = {}
+
   for (const event of events) {
     const d = new Date(event.date)
-    const key = formatDate(d, locale, { month: 'long', year: 'numeric' })
-    if (!groups[key]) groups[key] = []
-    groups[key].push(event)
+    const key = `${d.getFullYear()}-${d.getMonth()}`
+    if (!groups[key]) {
+      const label = formatDate(new Date(d.getFullYear(), d.getMonth(), 1), locale, {
+        month: 'long',
+        year: 'numeric',
+      })
+      groups[key] = { label: label || `${d.getFullYear()}-${d.getMonth()}`, events: [] }
+    }
+
+    groups[key].events.push(event)
   }
 
   return (
     <div className="calendar-list-section">
       <h2>Calendar</h2>
       <div className="calendar-grid">
-        {Object.keys(groups).map((month) => (
-          <div key={month} className="calendar-month">
-            <h3>{month}</h3>
+        {Object.entries(groups).map(([key, { label, events }]) => (
+          <div key={key} className="calendar-month">
+            <h3>{label}</h3>
             <ul>
-              {groups[month].map((event) => {
+              {events.map((event) => {
                 const slug = typeof event.slug === 'string' ? event.slug : event.slug?.[locale]
                 const href = `/${locale}/calendars/${slug}`
                 return (

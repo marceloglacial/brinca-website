@@ -29,15 +29,15 @@ export default async function EventsList({ locale }: { locale: string }) {
               <h3>
                 <Link href={href}>{getLocalizedValue(event.title, locale)}</Link>
               </h3>
-              <p className="event-date">
-                <Link href={href}>
-                  {formatDate(event.date, locale, {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                  })}
-                </Link>
-              </p>
+                <p className="event-date">
+                  <Link href={href}>
+                    {formatDate(event.date, locale, {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                    })}
+                  </Link>
+                </p>
             </div>
           )
         })}

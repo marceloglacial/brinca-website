@@ -15,14 +15,14 @@ export async function generateStaticParams() {
   const params: Array<{ locale: string; slug: string }> = []
 
   for (const locale of LOCALE_CODES) {
-    const { docs: events } = await payload.find({
-      collection: 'events',
+    const { docs: items } = await payload.find({
+      collection: 'calendars',
       locale: locale as any,
       limit: 100,
     })
 
-    events.forEach((event) => {
-      const slug = typeof event.slug === 'string' ? event.slug : event.slug?.[locale]
+    items.forEach((item) => {
+      const slug = typeof item.slug === 'string' ? item.slug : item.slug?.[locale]
       if (slug) {
         params.push({ locale, slug })
       }
@@ -41,27 +41,27 @@ export async function generateMetadata({
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
   const { docs } = await payload.find({
-    collection: 'events',
+    collection: 'calendars',
     where: { slug: { equals: slug } },
     locale: locale as any,
     limit: 1,
   })
-  const event = docs[0]
-  const eventTitle = event ? getLocalizedValue(event.title, locale) : 'Event'
-  const title = `${eventTitle} | Brinca`
+  const item = docs[0]
+  const titleValue = item ? getLocalizedValue(item.title, locale) : 'Calendar'
+  const title = `${titleValue} | Brinca`
   return { title }
 }
 
-export default async function EventPageRoute(props: {
+export default async function CalendarPageRoute(props: {
   params: Promise<{ locale: string; slug: string }>
 }) {
   const { locale, slug } = await props.params
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
 
-  // Find the event by slug
+  // Find the calendar item by slug
   const { docs } = await payload.find({
-    collection: 'events',
+    collection: 'calendars',
     where: {
       slug: { equals: slug },
     },
@@ -69,42 +69,41 @@ export default async function EventPageRoute(props: {
     limit: 1,
   })
 
-  const event = docs[0]
+  const item = docs[0]
 
-  if (!event) {
+  if (!item) {
     notFound()
   }
 
-  // Fetch all localized slugs for this event
+  // Fetch all localized slugs for this item
   const slugMap: Record<string, string> = {}
   for (const l of LOCALE_CODES) {
     const { docs: localizedDocs } = await payload.find({
-      collection: 'events',
-      where: { id: { equals: event.id } },
+      collection: 'calendars',
+      where: { id: { equals: item.id } },
       locale: l as any,
       limit: 1,
     })
     if (localizedDocs[0]?.slug) {
-      slugMap[l] = `events/${localizedDocs[0].slug}`
+      slugMap[l] = `calendars/${localizedDocs[0].slug}`
     }
   }
 
   const descriptionValue =
-    typeof event.description === 'object' && event.description !== null
-      ? locale in (event.description as Record<string, any>)
-        ? (event.description as Record<string, any>)[locale]
-        : event.description
-      : event.description
-
+    typeof item.description === 'object' && item.description !== null
+      ? locale in (item.description as Record<string, any>)
+        ? (item.description as Record<string, any>)[locale]
+        : item.description
+      : item.description
 
   return (
-    <div className="event-view">
+    <div className="calendar-item-view">
       <SetSlug slugs={slugMap} />
-      
-      <div className="event-header">
-        <h1>{getLocalizedValue(event.title, locale)}</h1>
-        <p className="event-date">
-          {formatDate(event.date, locale, {
+
+      <div className="calendar-item-header">
+        <h1>{getLocalizedValue(item.title, locale)}</h1>
+        <p className="calendar-date">
+          {formatDate(item.date, locale, {
             day: 'numeric',
             month: 'long',
             year: 'numeric',
@@ -112,7 +111,7 @@ export default async function EventPageRoute(props: {
         </p>
       </div>
 
-      <div className="event-description">
+      <div className="calendar-item-description">
         {descriptionValue && typeof descriptionValue === 'object' && (descriptionValue as any).root ? (
           <div>{renderLexical((descriptionValue as any).root.children)}</div>
         ) : descriptionValue ? (
@@ -120,28 +119,28 @@ export default async function EventPageRoute(props: {
         ) : null}
       </div>
 
-      {event.gallery?.cloudinaryFolder && (
-        <CloudinaryGallery 
-          folderPath={event.gallery.cloudinaryFolder} 
+      {item.gallery?.cloudinaryFolder && (
+        <CloudinaryGallery
+          folderPath={item.gallery.cloudinaryFolder}
           title={locale === 'pt-BR' ? 'Galeria' : 'Gallery'}
         />
       )}
 
       <style>{`
-        .event-view {
+        .calendar-item-view {
           max-width: 800px;
           margin: 0 auto;
           padding: 2rem 1rem;
         }
-        .event-header {
+        .calendar-item-header {
           margin-bottom: 2rem;
         }
-        .event-date {
+        .calendar-date {
           font-size: 1.2rem;
           color: #666;
           margin-top: 0.5rem;
         }
-        .event-description {
+        .calendar-item-description {
           line-height: 1.6;
           font-size: 1.1rem;
         }
