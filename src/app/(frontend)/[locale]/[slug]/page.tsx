@@ -6,6 +6,7 @@ import { extractYouTubeId, getYouTubeEmbedUrl } from '@/lib/youtube'
 import config from '@/payload.config'
 import EventsList from '@/components/EventsList'
 import CalendarList from '@/components/CalendarList'
+import ActionButton from '@/components/ActionButton'
 import { SetSlug } from '@/components/SlugProvider'
 
 export async function generateMetadata({
@@ -91,6 +92,12 @@ export default async function PageRoute(props: {
           <div>{contentValue}</div>
         ) : null}
       </div>
+
+      {page.cta?.url ? (
+        <div className="page-cta" style={{ margin: '2rem 0' }}>
+          <ActionButton button={page.cta} locale={locale} />
+        </div>
+      ) : null}
 
       {embedUrl ? (
         <div className="page-video">

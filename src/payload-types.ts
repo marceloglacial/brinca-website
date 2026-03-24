@@ -204,6 +204,11 @@ export interface Page {
      */
     url?: string | null;
   };
+  cta?: {
+    title?: string | null;
+    url?: string | null;
+    openInNewWindow?: boolean | null;
+  };
   lists?: {
     showEvents?: boolean | null;
     showCalendars?: boolean | null;
@@ -261,6 +266,11 @@ export interface Event {
      */
     InstagramEmbed?: string | null;
   };
+  cta?: {
+    title?: string | null;
+    url?: string | null;
+    openInNewWindow?: boolean | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -313,6 +323,11 @@ export interface Calendar {
      * Paste the instagram link.
      */
     InstagramEmbed?: string | null;
+  };
+  cta?: {
+    title?: string | null;
+    url?: string | null;
+    openInNewWindow?: boolean | null;
   };
   updatedAt: string;
   createdAt: string;
@@ -458,6 +473,13 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         url?: T;
       };
+  cta?:
+    | T
+    | {
+        title?: T;
+        url?: T;
+        openInNewWindow?: T;
+      };
   lists?:
     | T
     | {
@@ -488,6 +510,13 @@ export interface EventsSelect<T extends boolean = true> {
     | {
         InstagramEmbed?: T;
       };
+  cta?:
+    | T
+    | {
+        title?: T;
+        url?: T;
+        openInNewWindow?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -511,6 +540,13 @@ export interface CalendarsSelect<T extends boolean = true> {
     | T
     | {
         InstagramEmbed?: T;
+      };
+  cta?:
+    | T
+    | {
+        title?: T;
+        url?: T;
+        openInNewWindow?: T;
       };
   updatedAt?: T;
   createdAt?: T;

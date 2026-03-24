@@ -65,6 +65,17 @@ export const Calendars: CollectionConfig = {
         },
       ],
     },
+    // Call-to-action button
+    ({
+      name: 'cta',
+      type: 'group',
+      label: 'Call to action',
+      fields: [
+        { name: 'title', type: 'text', localized: true, required: false },
+        { name: 'url', type: 'text', localized: true, required: false },
+        { name: 'openInNewWindow', type: 'checkbox', label: 'Open in new window', defaultValue: false },
+      ],
+    } as any),
   ],
   timestamps: true,
 }

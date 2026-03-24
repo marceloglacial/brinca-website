@@ -7,6 +7,7 @@ import { formatDate } from '@/lib/formatDate'
 import { SetSlug } from '@/components/SlugProvider'
 import CloudinaryGallery from '@/components/CloudinaryGallery'
 import InstagramEmbed from '@/components/InstagramEmbed'
+import ActionButton from '@/components/ActionButton'
 import { LOCALE_CODES } from '@/constants/locales'
 
 export async function generateStaticParams() {
@@ -136,7 +137,15 @@ export default async function CalendarPageRoute(props: {
 
         <aside className="calendar-sidebar">
           {item.thumbnail ? (
-            <img src={item.thumbnail} alt={getLocalizedValue(item.title, locale)} style={{ width: '100%', borderRadius: 6 }} />
+            <>
+              <img src={item.thumbnail} alt={getLocalizedValue(item.title, locale)} style={{ width: '100%', borderRadius: 6 }} />
+              {/* CTA button */}
+              {item.cta?.url ? (
+                <div style={{ marginTop: 12 }}>
+                  <ActionButton button={item.cta} locale={locale} />
+                </div>
+              ) : null}
+            </>
           ) : null}
         </aside>
       </div>

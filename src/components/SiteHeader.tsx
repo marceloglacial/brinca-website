@@ -23,7 +23,7 @@ export default function SiteHeader({ locale }: { locale: string }) {
     let mounted = true
     ;(async () => {
       try {
-        const res = await fetch(`/api/pages?locale=${encodeURIComponent(locale)}`)
+        const res = await fetch(`/api/public/pages?locale=${encodeURIComponent(locale)}`)
         if (!res.ok) return
         const json = await res.json()
         if (mounted) setPages(json.pages || [])

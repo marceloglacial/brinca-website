@@ -7,6 +7,7 @@ import { formatDate } from '@/lib/formatDate'
 import { SetSlug } from '@/components/SlugProvider'
 import CloudinaryGallery from '@/components/CloudinaryGallery'
 import InstagramEmbed from '@/components/InstagramEmbed'
+import ActionButton from '@/components/ActionButton'
 import { LOCALE_CODES } from '@/constants/locales'
 
 export async function generateStaticParams() {
@@ -135,7 +136,15 @@ export default async function EventPageRoute(props: {
 
         <aside className="event-sidebar">
           {event.thumbnail ? (
-            <img src={event.thumbnail} alt={getLocalizedValue(event.title, locale)} style={{ width: '100%', borderRadius: 6 }} />
+            <>
+              <img src={event.thumbnail} alt={getLocalizedValue(event.title, locale)} style={{ width: '100%', borderRadius: 6 }} />
+              {/* CTA button */}
+              {event.cta?.url ? (
+                <div style={{ marginTop: 12 }}>
+                  <ActionButton button={event.cta} locale={locale} />
+                </div>
+              ) : null}
+            </>
           ) : null}
         </aside>
       </div>
