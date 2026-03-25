@@ -1,31 +1,8 @@
 import { slugField } from 'payload'
 import type { CollectionConfig } from 'payload'
-import { normalizeCTAValue } from '@/lib/normalizeCta'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
-  hooks: {
-    beforeValidate: [
-      ({ data }) => {
-        if (data && typeof data === 'object' && 'cta' in data) {
-          const dataRecord = data as Record<string, unknown>
-          dataRecord.cta = normalizeCTAValue(dataRecord.cta)
-        }
-
-        return data
-      },
-    ],
-    afterRead: [
-      ({ doc }) => {
-        if (doc && typeof doc === 'object' && 'cta' in doc) {
-          const docRecord = doc as Record<string, unknown>
-          docRecord.cta = normalizeCTAValue(docRecord.cta)
-        }
-
-        return doc
-      },
-    ],
-  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'createdAt'],
