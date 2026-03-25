@@ -216,6 +216,7 @@ export interface Page {
     showEvents?: boolean | null;
     showCalendars?: boolean | null;
   };
+  showInNavbar?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -496,6 +497,7 @@ export interface PagesSelect<T extends boolean = true> {
         showEvents?: T;
         showCalendars?: T;
       };
+  showInNavbar?: T;
   updatedAt?: T;
   createdAt?: T;
 }

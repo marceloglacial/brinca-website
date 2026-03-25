@@ -24,6 +24,15 @@ export const Pages: CollectionConfig = {
       },
     },
     {
+      name: 'showInNavbar',
+      type: 'checkbox',
+      label: 'Show in Navbar',
+      defaultValue: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'content',
       type: 'richText',
       localized: true,

@@ -12,6 +12,11 @@ export async function GET(req: Request) {
   const { docs: pages } = await payload.find({
     collection: 'pages',
     locale: locale as any,
+    where: {
+      showInNavbar: {
+        equals: true,
+      },
+    },
     limit: 100,
     sort: 'title',
   })
