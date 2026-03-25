@@ -255,9 +255,76 @@ svg {
   text-decoration: none;
 }
 
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: inherit;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+}
+
+.mobile-menu {
+  padding: 12px 45px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mobile-pages {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mobile-locale-switcher {
+  display: flex;
+  gap: 8px;
+
+  a {
+    padding: 6px 12px;
+    border: 1px solid rgb(100, 100, 100);
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+
+    &:hover,
+    &.active {
+      background: rgb(1000, 1000, 1000);
+      color: rgb(0, 0, 0);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header-actions,
+  .locale-switcher {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
+
 @media (max-width: 400px) {
   .site-header-inner {
     padding: 0 24px;
+  }
+
+  .mobile-menu {
+    padding: 12px 24px 16px;
   }
 }
 
