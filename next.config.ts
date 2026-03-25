@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
     serverActions: {
       allowedOrigins: [
         'localhost:3000',
+        'home-server:3000',
         'localhost:3001',
         'special-funicular-pjjg47gxpvwc6jqp-3000.app.github.dev',
         '*.app.github.dev',
