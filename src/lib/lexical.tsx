@@ -23,6 +23,32 @@ export function renderLexical(node: any, index: number = 0): any {
     return node.text
   }
 
+  if (node.type === 'link' || node.type === 'autolink') {
+    const href = node.fields?.url || node.url
+    const openInNewTab = Boolean(node.fields?.newTab || node.newTab)
+
+    if (typeof href !== 'string' || !href) {
+      return (
+        <>
+          {Array.isArray(node.children) &&
+            node.children.map((child: any, i: number) => renderLexical(child, i))}
+        </>
+      )
+    }
+
+    return (
+      <a
+        key={nodeKey}
+        href={href}
+        target={openInNewTab ? '_blank' : undefined}
+        rel={openInNewTab ? 'noopener noreferrer' : undefined}
+      >
+        {Array.isArray(node.children) &&
+          node.children.map((child: any, i: number) => renderLexical(child, i))}
+      </a>
+    )
+  }
+
   if (node.type === 'paragraph') {
     return (
       <p key={nodeKey}>
