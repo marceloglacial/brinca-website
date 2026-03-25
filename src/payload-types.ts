@@ -183,6 +183,7 @@ export interface Page {
    * Paste full Cloudinary image URL (https://res.cloudinary.com/...)
    */
   thumbnail?: string | null;
+  showInNavbar?: boolean | null;
   content?: {
     root: {
       type: string;
@@ -216,7 +217,6 @@ export interface Page {
     showEvents?: boolean | null;
     showCalendars?: boolean | null;
   };
-  showInNavbar?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -477,6 +477,7 @@ export interface PagesSelect<T extends boolean = true> {
   generateSlug?: T;
   slug?: T;
   thumbnail?: T;
+  showInNavbar?: T;
   content?: T;
   youtube?:
     | T
@@ -497,7 +498,6 @@ export interface PagesSelect<T extends boolean = true> {
         showEvents?: T;
         showCalendars?: T;
       };
-  showInNavbar?: T;
   updatedAt?: T;
   createdAt?: T;
 }
