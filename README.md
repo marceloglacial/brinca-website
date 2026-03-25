@@ -1,67 +1,95 @@
-# Payload Blank Template
+# Brinca Website
 
-This template comes configured with the bare minimum to get started on anything you need.
+Brinca is a multilingual website powered by **Payload CMS 3** and **Next.js 16**.
 
-## Quick start
+It includes a public frontend and a Payload admin for managing pages, events, calendars, and media.
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+## Stack
 
-## Quick Start - local setup
+- Next.js 16 + React 19
+- Payload CMS 3
+- MongoDB (`@payloadcms/db-mongodb`)
+- Lexical rich text (`@payloadcms/richtext-lexical`)
+- Playwright + Vitest for testing
 
-To spin up this template locally, follow these steps:
+## Core Features
 
-### Clone
+- Multilingual content (`en`, `pt-BR`) with localized fields
+- Dynamic content collections:
+  - `pages` (rich content, optional YouTube embed, CTA buttons, list toggles)
+  - `events` (date, localized description, optional Cloudinary gallery + Instagram embed)
+  - `calendars` (date, localized description, optional Cloudinary gallery + Instagram embed)
+  - `media` (uploads with localized alt text)
+  - `users` (Payload auth)
+- Locale-aware routing and slug switching
+- Public API endpoint for navbar pages (`/api/public/pages?locale=<locale>`)
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+## Local Development
 
-### Development
+### 1) Prerequisites
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URL` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+- Node.js `^18.20.2 || >=20.9.0`
+- pnpm `^9 || ^10`
+- MongoDB
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+### 2) Environment Variables
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
+Create a `.env` file in the project root:
 
-#### Docker (Optional)
+```bash
+PAYLOAD_SECRET=replace-with-a-long-random-secret
+DATABASE_URL=mongodb://127.0.0.1/brinca
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
+# Required only if you use Cloudinary gallery fields
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
+```
 
-To do so, follow these steps:
+### 3) Install and run
 
-- Modify the `MONGODB_URL` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URL` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
+```bash
+pnpm install
+pnpm dev
+```
 
-## How it works
+Open:
 
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
+- Frontend: `http://localhost:3000`
+- Admin: `http://localhost:3000/admin`
 
-### Collections
+On first run, create your initial admin user in the Payload admin UI.
 
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
+## Scripts
 
-- #### Users (Authentication)
+- `pnpm dev` – start development server
+- `pnpm build` – production build
+- `pnpm start` – run production server
+- `pnpm lint` – run ESLint
+- `pnpm generate:types` – regenerate Payload TypeScript types
+- `pnpm generate:importmap` – regenerate Payload admin import map
+- `pnpm test:int` – integration tests (Vitest)
+- `pnpm test:e2e` – end-to-end tests (Playwright)
+- `pnpm test` – run integration + e2e tests
 
-  Users are auth-enabled collections that have access to the admin panel.
+## Docker (Optional)
 
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/main/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
+Use Docker Compose for local development:
 
-- #### Media
+```bash
+docker-compose up
+```
 
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
+The compose setup starts:
 
-### Docker
+- `payload` service on port `3000`
+- `mongo` service on port `27017`
 
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
+Make sure `DATABASE_URL` in `.env` points to MongoDB in the compose network when using containers (for example `mongodb://mongo/brinca`).
 
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
+## Project Notes
 
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
-
-## Questions
-
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+- Payload config lives in `src/payload.config.ts`
+- Generated types are in `src/payload-types.ts`
+- Frontend routes are under `src/app/(frontend)/[locale]`
+- Payload admin and API routes are under `src/app/(payload)`
