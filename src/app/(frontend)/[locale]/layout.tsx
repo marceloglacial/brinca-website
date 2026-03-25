@@ -35,7 +35,9 @@ export default async function RootLayout(props: {
     <html lang={locale}>
       <body>
         <SlugProvider>
-          <SiteHeader locale={locale} />
+          <React.Suspense fallback={null}>
+            <SiteHeader locale={locale} />
+          </React.Suspense>
           <main>{children}</main>
           <SiteFooter />
         </SlugProvider>
