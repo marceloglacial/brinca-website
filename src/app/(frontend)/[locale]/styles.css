@@ -222,12 +222,11 @@ svg {
 }
 
 .site-header {
-  border-bottom: 1px solid rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
   padding: 16px 0;
 }
 
 .site-header-inner {
-  max-width: 1024px;
   margin: 0 auto;
   padding: 0 45px;
   display: flex;
@@ -257,7 +256,9 @@ svg {
 }
 
 @media (max-width: 400px) {
-  .site-header-inner { padding: 0 24px }
+  .site-header-inner {
+    padding: 0 24px;
+  }
 }
 
 .page-view {
