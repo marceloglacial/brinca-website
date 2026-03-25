@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
+import { defaultJSXConverters, RichText } from '@payloadcms/richtext-lexical/react'
 
-import { getLocalizedValue, renderLexical } from '@/lib/lexical'
+import { getLocalizedData, getLocalizedValue } from '@/lib/locales'
 import config from '@/payload.config'
 import { formatDate } from '@/lib/formatDate'
 import { SetSlug } from '@/components/SlugProvider'
@@ -91,12 +92,7 @@ export default async function EventPageRoute(props: {
     }
   }
 
-  const descriptionValue =
-    typeof event.description === 'object' && event.description !== null
-      ? locale in (event.description as Record<string, any>)
-        ? (event.description as Record<string, any>)[locale]
-        : event.description
-      : event.description
+  const descriptionValue = getLocalizedData(event.description, locale)
   const ctaButtons = (event.cta ?? []).filter((button) => Boolean(button?.url))
 
   return (
@@ -120,7 +116,9 @@ export default async function EventPageRoute(props: {
             {descriptionValue &&
             typeof descriptionValue === 'object' &&
             (descriptionValue as any).root ? (
-              <div>{renderLexical((descriptionValue as any).root.children)}</div>
+              <div>
+                <RichText data={descriptionValue as any} converters={defaultJSXConverters} />
+              </div>
             ) : descriptionValue ? (
               <div>{descriptionValue as any}</div>
             ) : null}

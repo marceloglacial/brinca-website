@@ -5,7 +5,7 @@ import { usePathname, useSearchParams } from 'next/navigation'
 import React from 'react'
 import { useSlug } from '@/components/SlugProvider'
 
-const LOCALE_LABELS: Record<string, string> = { 'en': 'English', 'pt-BR': 'Português' }
+const LOCALE_LABELS: Record<string, string> = { en: 'English', 'pt-BR': 'Português' }
 const LOCALES = Object.keys(LOCALE_LABELS)
 
 export default function SiteHeader({ locale }: { locale: string }) {
@@ -61,12 +61,12 @@ export default function SiteHeader({ locale }: { locale: string }) {
         </div>
 
         <nav className="locale-switcher" aria-label="Language switcher">
-          {LOCALES.map((l) => {
+          {LOCALES.map((l, index) => {
             let href = `/${l}${pathname}`
 
             if (hasLocale) {
               const localizedSlug = slugMap[l]
-              // If we have a mapped slug for this locale, use it. 
+              // If we have a mapped slug for this locale, use it.
               // Otherwise, just replace the locale prefix if it's more than just the locale (i.e. not the homepage)
               if (localizedSlug) {
                 href = `/${l}/${localizedSlug}${search}`
@@ -83,7 +83,7 @@ export default function SiteHeader({ locale }: { locale: string }) {
             const isActive = l === locale
 
             return (
-              <Link key={l} href={href} className={isActive ? 'active' : ''}>
+              <Link key={index} href={href} className={isActive ? 'active' : ''}>
                 {LOCALE_LABELS[l] ?? l}
               </Link>
             )

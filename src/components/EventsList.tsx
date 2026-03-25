@@ -1,7 +1,7 @@
 import { getPayload } from 'payload'
 import Link from 'next/link'
 import config from '@/payload.config'
-import { getLocalizedValue } from '@/lib/lexical'
+import { getLocalizedValue } from '@/lib/locales'
 import { formatDate } from '@/lib/formatDate'
 
 export default async function EventsList({ locale }: { locale: string }) {
@@ -27,7 +27,11 @@ export default async function EventsList({ locale }: { locale: string }) {
             <div key={event.id} className="event-card">
               {event.thumbnail ? (
                 <div className="event-thumb-wrap">
-                  <img src={event.thumbnail} alt={getLocalizedValue(event.title, locale)} className="event-thumb" />
+                  <img
+                    src={event.thumbnail}
+                    alt={getLocalizedValue(event.title, locale)}
+                    className="event-thumb"
+                  />
                 </div>
               ) : null}
 

@@ -2,7 +2,7 @@ import { headers as getHeaders } from 'next/headers.js'
 import Link from 'next/link'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
-import { getLocalizedValue } from '@/lib/lexical'
+import { getLocalizedValue } from '@/lib/locales'
 import { formatDate } from '@/lib/formatDate'
 import './styles.css'
 
@@ -32,7 +32,11 @@ export default async function HomePage(props: { params: Promise<{ locale: string
                   <Link key={event.id} href={`/${locale}/events/${eventSlug}`}>
                     <div className="card">
                       {event.thumbnail ? (
-                        <img className="card-thumb" src={event.thumbnail} alt={getLocalizedValue(event.title, locale)} />
+                        <img
+                          className="card-thumb"
+                          src={event.thumbnail}
+                          alt={getLocalizedValue(event.title, locale)}
+                        />
                       ) : null}
                       <h3>{getLocalizedValue(event.title, locale)}</h3>
                       <p className="date">

@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
+import { defaultJSXConverters, RichText } from '@payloadcms/richtext-lexical/react'
 
-import { getLocalizedValue, renderLexical } from '@/lib/lexical'
+import { getLocalizedData, getLocalizedValue } from '@/lib/locales'
 import { extractYouTubeId, getYouTubeEmbedUrl } from '@/lib/youtube'
 import config from '@/payload.config'
 import EventsList from '@/components/EventsList'
@@ -68,12 +69,7 @@ export default async function PageRoute(props: {
     }
   }
 
-  const contentValue =
-    typeof page.content === 'object' && page.content !== null
-      ? locale in (page.content as Record<string, any>)
-        ? (page.content as Record<string, any>)[locale]
-        : page.content
-      : page.content
+  const contentValue = getLocalizedData(page.content, locale)
 
   const videoId = extractYouTubeId(page.youtube?.url)
   const embedUrl = getYouTubeEmbedUrl(videoId)
@@ -88,8 +84,10 @@ export default async function PageRoute(props: {
 
       <div className="page-content">
         {contentValue && typeof contentValue === 'object' && contentValue.root ? (
-          <div>{renderLexical(contentValue.root.children)}</div>
-        ) : contentValue ? (
+          <div>
+            <RichText data={contentValue as any} converters={defaultJSXConverters} />
+          </div>
+        ) : typeof contentValue === 'string' ? (
           <div>{contentValue}</div>
         ) : null}
       </div>

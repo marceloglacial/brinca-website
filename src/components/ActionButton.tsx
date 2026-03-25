@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { FC } from 'react'
-import { getLocalizedValue } from '@/lib/lexical'
+import { getLocalizedValue } from '@/lib/locales'
 
 type ButtonGroup = {
   title?: any
@@ -16,7 +16,8 @@ type Props = {
 const ActionButton: FC<Props> = ({ button, locale }) => {
   if (!button) return null
 
-  const title = getLocalizedValue(button.title, locale) || getLocalizedValue(button.url, locale) || ''
+  const title =
+    getLocalizedValue(button.title, locale) || getLocalizedValue(button.url, locale) || ''
   const href = getLocalizedValue(button.url, locale) || button.url || ''
   if (!href) return null
 
