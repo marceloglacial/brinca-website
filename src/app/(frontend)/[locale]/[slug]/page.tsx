@@ -8,6 +8,7 @@ import config from '@/payload.config'
 import EventsList from '@/components/EventsList'
 import CalendarList from '@/components/CalendarList'
 import PartnersList from '@/components/PartnersList'
+import PartnersFilter from '@/components/PartnersFilter'
 import ActionButton from '@/components/ActionButton'
 import { SetSlug } from '@/components/SlugProvider'
 
@@ -120,7 +121,16 @@ export default async function PageRoute(props: {
 
       {page.lists?.showEvents && <EventsList locale={locale} />}
       {page.lists?.showCalendars && <CalendarList locale={locale} />}
-      {page.lists?.showPartners && <PartnersList locale={locale} />}
+      {page.lists?.showPartners && (
+        <div className="mt-8 flex flex-col gap-8 md:flex-row">
+          <aside className="w-full flex-shrink-0 md:w-56">
+            <PartnersFilter locale={locale} />
+          </aside>
+          <div className="flex-1">
+            <PartnersList locale={locale} />
+          </div>
+        </div>
+      )}
     </div>
   )
 }
