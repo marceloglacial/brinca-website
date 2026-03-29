@@ -85,6 +85,12 @@ export const Pages: CollectionConfig = {
           label: 'Show Calendar List',
           defaultValue: false,
         },
+        {
+          name: 'showPartners',
+          type: 'checkbox',
+          label: 'Show Partners List',
+          defaultValue: false,
+        },
       ],
     },
   ],

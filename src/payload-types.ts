@@ -72,6 +72,8 @@ export interface Config {
     pages: Page;
     events: Event;
     calendars: Calendar;
+    'partner-categories': PartnerCategory;
+    partners: Partner;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -84,6 +86,8 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     calendars: CalendarsSelect<false> | CalendarsSelect<true>;
+    'partner-categories': PartnerCategoriesSelect<false> | PartnerCategoriesSelect<true>;
+    partners: PartnersSelect<false> | PartnersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -216,6 +220,7 @@ export interface Page {
   lists?: {
     showEvents?: boolean | null;
     showCalendars?: boolean | null;
+    showPartners?: boolean | null;
   };
   updatedAt: string;
   createdAt: string;
@@ -344,6 +349,54 @@ export interface Calendar {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partner-categories".
+ */
+export interface PartnerCategory {
+  id: string;
+  title: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partners".
+ */
+export interface Partner {
+  id: string;
+  title: string;
+  description: string;
+  /**
+   * Paste full Cloudinary or image URL
+   */
+  logo?: string | null;
+  category: string | PartnerCategory;
+  active?: boolean | null;
+  contact?: {
+    email?: string | null;
+    phone?: string | null;
+    whatsapp?: string | null;
+    address?: string | null;
+  };
+  website?: string | null;
+  social?: {
+    facebook?: string | null;
+    instagram?: string | null;
+    linkedin?: string | null;
+  };
+  /**
+   * Email registered as a BRINCA member
+   */
+  membershipEmail?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -385,6 +438,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'calendars';
         value: string | Calendar;
+      } | null)
+    | ({
+        relationTo: 'partner-categories';
+        value: string | PartnerCategory;
+      } | null)
+    | ({
+        relationTo: 'partners';
+        value: string | Partner;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -497,6 +558,7 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         showEvents?: T;
         showCalendars?: T;
+        showPartners?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -562,6 +624,47 @@ export interface CalendarsSelect<T extends boolean = true> {
         openInNewWindow?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partner-categories_select".
+ */
+export interface PartnerCategoriesSelect<T extends boolean = true> {
+  title?: T;
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partners_select".
+ */
+export interface PartnersSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  logo?: T;
+  category?: T;
+  active?: T;
+  contact?:
+    | T
+    | {
+        email?: T;
+        phone?: T;
+        whatsapp?: T;
+        address?: T;
+      };
+  website?: T;
+  social?:
+    | T
+    | {
+        facebook?: T;
+        instagram?: T;
+        linkedin?: T;
+      };
+  membershipEmail?: T;
   updatedAt?: T;
   createdAt?: T;
 }

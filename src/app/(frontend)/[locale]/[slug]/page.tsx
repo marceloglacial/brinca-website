@@ -7,6 +7,7 @@ import { extractYouTubeId, getYouTubeEmbedUrl } from '@/lib/youtube'
 import config from '@/payload.config'
 import EventsList from '@/components/EventsList'
 import CalendarList from '@/components/CalendarList'
+import PartnersList from '@/components/PartnersList'
 import ActionButton from '@/components/ActionButton'
 import { SetSlug } from '@/components/SlugProvider'
 
@@ -119,6 +120,7 @@ export default async function PageRoute(props: {
 
       {page.lists?.showEvents && <EventsList locale={locale} />}
       {page.lists?.showCalendars && <CalendarList locale={locale} />}
+      {page.lists?.showPartners && <PartnersList locale={locale} />}
     </div>
   )
 }
