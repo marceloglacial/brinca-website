@@ -2,15 +2,16 @@ import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import { defaultJSXConverters, RichText } from '@payloadcms/richtext-lexical/react'
 
+import ActionButton from '@/components/ActionButton'
+import CalendarList from '@/components/CalendarList'
+import EventsList from '@/components/EventsList'
+import PartnersFilter from '@/components/PartnersFilter'
+import PartnersList from '@/components/PartnersList'
+import PartnerSubmissionBlockComponent from '@/components/PartnerSubmissionBlockComponent'
+import { SetSlug } from '@/components/SlugProvider'
 import { getLocalizedData, getLocalizedValue } from '@/lib/locales'
 import { extractYouTubeId, getYouTubeEmbedUrl } from '@/lib/youtube'
 import config from '@/payload.config'
-import EventsList from '@/components/EventsList'
-import CalendarList from '@/components/CalendarList'
-import PartnersList from '@/components/PartnersList'
-import PartnersFilter from '@/components/PartnersFilter'
-import ActionButton from '@/components/ActionButton'
-import { SetSlug } from '@/components/SlugProvider'
 
 export async function generateMetadata({
   params,
@@ -26,10 +27,13 @@ export async function generateMetadata({
     locale: locale as any,
     limit: 1,
   })
+
   const page = docs[0]
   const pageTitle = page ? getLocalizedValue(page.title, locale) : 'Page'
-  const title = `${pageTitle} | Brinca`
-  return { title }
+
+  return {
+    title: `${pageTitle} | Brinca`,
+  }
 }
 
 export default async function PageRoute(props: {
@@ -39,7 +43,6 @@ export default async function PageRoute(props: {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
 
-  // First find the page to get its ID
   const { docs } = await payload.find({
     collection: 'pages',
     where: {
@@ -55,7 +58,6 @@ export default async function PageRoute(props: {
     notFound()
   }
 
-  // Fetch all localized slugs for this page
   const slugMap: Record<string, string> = {}
   const locales = ['en', 'pt-BR']
 
@@ -66,12 +68,18 @@ export default async function PageRoute(props: {
       locale: l as any,
       limit: 1,
     })
+
     if (localizedDocs[0]?.slug) {
       slugMap[l] = localizedDocs[0].slug
     }
   }
 
   const contentValue = getLocalizedData(page.content, locale)
+
+  // Get partner submission blocks
+  const partnerSubmissionBlocks = (page.components ?? []).filter(
+    (block) => block.blockType === 'partnerSubmissionBlock',
+  )
 
   const videoId = extractYouTubeId(page.youtube?.url)
   const embedUrl = getYouTubeEmbedUrl(videoId)
@@ -80,6 +88,7 @@ export default async function PageRoute(props: {
   return (
     <div className="page-view">
       <SetSlug slugs={slugMap} />
+
       <div className="page-header">
         <h1>{getLocalizedValue(page.title, locale)}</h1>
       </div>
@@ -93,6 +102,13 @@ export default async function PageRoute(props: {
           <div>{contentValue}</div>
         ) : null}
       </div>
+
+      {partnerSubmissionBlocks.map((block, index) => (
+        <PartnerSubmissionBlockComponent
+          key={block.id ?? `partner-submission-${index}`}
+          block={block}
+        />
+      ))}
 
       {ctaButtons.length > 0 ? (
         <div className="page-cta" style={{ margin: '2rem 0', display: 'grid', gap: '0.75rem' }}>

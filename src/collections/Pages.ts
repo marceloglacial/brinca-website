@@ -1,5 +1,6 @@
 import { slugField } from 'payload'
 import type { CollectionConfig } from 'payload'
+import { PartnerSubmissionBlock } from '../blocks/PartnerSubmissionBlock'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -36,6 +37,15 @@ export const Pages: CollectionConfig = {
       name: 'content',
       type: 'richText',
       localized: true,
+    },
+    {
+      name: 'components',
+      type: 'blocks',
+      labels: {
+        singular: 'Component',
+        plural: 'Components',
+      },
+      blocks: [PartnerSubmissionBlock],
     },
     {
       name: 'youtube',

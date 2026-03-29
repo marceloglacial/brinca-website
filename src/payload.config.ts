@@ -12,6 +12,7 @@ import { Events } from './collections/Events'
 import { Calendars } from './collections/Calendars'
 import { Partners } from './collections/Partners'
 import { PartnerCategories } from './collections/PartnerCategories'
+import { PartnerSubmissions } from './collections/PartnerSubmissions'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -31,7 +32,7 @@ export default buildConfig({
     defaultLocale: 'en',
     fallback: true,
   },
-  collections: [Users, Media, Pages, Events, Calendars, PartnerCategories, Partners],
+  collections: [Users, Media, Pages, Events, Calendars, PartnerCategories, Partners, PartnerSubmissions],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -41,5 +42,4 @@ export default buildConfig({
     url: process.env.DATABASE_URL || '',
   }),
   sharp,
-  plugins: [],
 })
