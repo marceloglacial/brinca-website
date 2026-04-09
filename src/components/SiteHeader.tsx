@@ -12,7 +12,11 @@ export default function SiteHeader({ locale }: { locale: string }) {
   const pathname = usePathname() || `/${locale}`
   const searchParams = useSearchParams()
   const search = searchParams && searchParams.toString() ? `?${searchParams.toString()}` : ''
-  const { slugMap } = useSlug()
+  const { slugMap: rawSlugMap } = useSlug()
+  const [isMounted, setIsMounted] = React.useState(false)
+  React.useEffect(() => { setIsMounted(true) }, [])
+  // Only use slugMap after mount to avoid server/client mismatch
+  const slugMap = isMounted ? rawSlugMap : {}
 
   const segments = pathname.split('/').filter(Boolean)
   const hasLocale = segments.length > 0 && LOCALES.includes(segments[0])
