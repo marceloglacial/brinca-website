@@ -1,5 +1,6 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { sendEmailToAdmins } from '@/lib/email'
 
 export const POST = async (request: Request) => {
   try {
@@ -32,6 +33,19 @@ export const POST = async (request: Request) => {
         status: 'pending',
       },
     })
+
+    await sendEmailToAdmins(
+      `New Mentor Application: ${body.name.trim()}`,
+      `
+        <h2>New Mentor Application</h2>
+        <p><strong>Name:</strong> ${body.name.trim()}</p>
+        <p><strong>Email:</strong> ${body.email.trim()}</p>
+        <p><strong>Phone:</strong> ${body.phone.trim()}</p>
+        <p><strong>In Canada since:</strong> ${body.inCanadaSince}</p>
+        <p><strong>School-age children:</strong> ${body.hasChildren.trim()}</p>
+        <p><strong>Profile:</strong> ${body.profile.trim()}</p>
+      `,
+    )
 
     return Response.json(
       { success: true, message: 'Mentor application received. Thank you!' },

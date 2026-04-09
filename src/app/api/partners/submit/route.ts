@@ -1,5 +1,6 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { sendEmailToAdmins } from '@/lib/email'
 
 export const POST = async (request: Request) => {
   try {
@@ -66,6 +67,16 @@ export const POST = async (request: Request) => {
         description: ptDescription,
       },
     })
+
+    await sendEmailToAdmins(
+      `New Partner Submission: ${enTitle}`,
+      `
+        <h2>New Partner Submission</h2>
+        <p><strong>Name:</strong> ${enTitle}</p>
+        <p><strong>Contact Email:</strong> ${body.contact.email}</p>
+        <p><strong>Description:</strong> ${enDescription}</p>
+      `,
+    )
 
     return Response.json(
       {
