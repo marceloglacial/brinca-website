@@ -13,6 +13,7 @@ import { Calendars } from './collections/Calendars'
 import { Partners } from './collections/Partners'
 import { PartnerCategories } from './collections/PartnerCategories'
 import { Mentors } from './collections/Mentors'
+import { MentorRequests } from './collections/MentorRequests'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -32,7 +33,7 @@ export default buildConfig({
     defaultLocale: 'en',
     fallback: true,
   },
-  collections: [Users, Media, Pages, Events, Calendars, PartnerCategories, Partners, Mentors],
+  collections: [Users, Media, Pages, Events, Calendars, PartnerCategories, Partners, Mentors, MentorRequests],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

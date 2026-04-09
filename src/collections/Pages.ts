@@ -2,6 +2,7 @@ import { slugField } from 'payload'
 import type { CollectionConfig } from 'payload'
 import { PartnerSubmissionBlock } from '../blocks/PartnerSubmissionBlock'
 import { MentorSubmissionBlock } from '../blocks/MentorSubmissionBlock'
+import { MentorRequestBlock } from '../blocks/MentorRequestBlock'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -46,7 +47,7 @@ export const Pages: CollectionConfig = {
         singular: 'Component',
         plural: 'Components',
       },
-      blocks: [PartnerSubmissionBlock, MentorSubmissionBlock],
+      blocks: [PartnerSubmissionBlock, MentorSubmissionBlock, MentorRequestBlock],
     },
     {
       name: 'youtube',

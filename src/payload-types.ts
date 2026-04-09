@@ -75,6 +75,7 @@ export interface Config {
     'partner-categories': PartnerCategory;
     partners: Partner;
     mentors: Mentor;
+    'mentor-requests': MentorRequest;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -90,6 +91,7 @@ export interface Config {
     'partner-categories': PartnerCategoriesSelect<false> | PartnerCategoriesSelect<true>;
     partners: PartnersSelect<false> | PartnersSelect<true>;
     mentors: MentorsSelect<false> | MentorsSelect<true>;
+    'mentor-requests': MentorRequestsSelect<false> | MentorRequestsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -252,6 +254,29 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'mentorSubmissionBlock';
+          }
+        | {
+            /**
+             * Optional intro content to display above the form (supports localization)
+             */
+            introText?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'mentorRequestBlock';
           }
       )[]
     | null;
@@ -472,6 +497,28 @@ export interface Mentor {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mentor-requests".
+ */
+export interface MentorRequest {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  plannedTravelDate: string;
+  /**
+   * How long do you plan to stay in Ottawa?
+   */
+  stayDuration: string;
+  /**
+   * Briefly describe your family, your immigration status (student, PR, etc.), and what you expect from a sponsor
+   */
+  familyDescription: string;
+  status: 'pending' | 'active' | 'rejected';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -525,6 +572,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'mentors';
         value: string | Mentor;
+      } | null)
+    | ({
+        relationTo: 'mentor-requests';
+        value: string | MentorRequest;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -630,6 +681,13 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
         mentorSubmissionBlock?:
+          | T
+          | {
+              introText?: T;
+              id?: T;
+              blockName?: T;
+            };
+        mentorRequestBlock?:
           | T
           | {
               introText?: T;
@@ -777,6 +835,21 @@ export interface MentorsSelect<T extends boolean = true> {
   inCanadaSince?: T;
   hasChildren?: T;
   profile?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mentor-requests_select".
+ */
+export interface MentorRequestsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  plannedTravelDate?: T;
+  stayDuration?: T;
+  familyDescription?: T;
   status?: T;
   updatedAt?: T;
   createdAt?: T;
