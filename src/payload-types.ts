@@ -74,7 +74,6 @@ export interface Config {
     calendars: Calendar;
     'partner-categories': PartnerCategory;
     partners: Partner;
-    'partner-submissions': PartnerSubmission;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -89,7 +88,6 @@ export interface Config {
     calendars: CalendarsSelect<false> | CalendarsSelect<true>;
     'partner-categories': PartnerCategoriesSelect<false> | PartnerCategoriesSelect<true>;
     partners: PartnersSelect<false> | PartnersSelect<true>;
-    'partner-submissions': PartnerSubmissionsSelect<false> | PartnerSubmissionsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -402,6 +400,7 @@ export interface Partner {
    */
   logo?: string | null;
   category: string | PartnerCategory;
+  status: 'pending' | 'active' | 'rejected';
   active?: boolean | null;
   contact?: {
     email?: string | null;
@@ -419,53 +418,6 @@ export interface Partner {
    * Email registered as a BRINCA member
    */
   membershipEmail?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "partner-submissions".
- */
-export interface PartnerSubmission {
-  id: string;
-  title: string;
-  description: string;
-  /**
-   * Paste full Cloudinary or image URL
-   */
-  logo?: string | null;
-  category: string | PartnerCategory;
-  contact: {
-    email: string;
-    phone?: string | null;
-    whatsapp?: string | null;
-    address?: string | null;
-  };
-  website?: string | null;
-  social?: {
-    facebook?: string | null;
-    instagram?: string | null;
-    linkedin?: string | null;
-  };
-  /**
-   * Email registered as a BRINCA member
-   */
-  membershipEmail?: string | null;
-  status: 'pending' | 'approved' | 'rejected';
-  /**
-   * Admin notes about the submission
-   */
-  reviewerNotes?: string | null;
-  /**
-   * Reason for rejection (visible to submitter if notified)
-   */
-  rejectionReason?: string | null;
-  /**
-   * Links to the Partner record created after approval
-   */
-  approvedPartner?: (string | null) | Partner;
-  submittedBy?: string | null;
-  submittedAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -520,10 +472,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'partners';
         value: string | Partner;
-      } | null)
-    | ({
-        relationTo: 'partner-submissions';
-        value: string | PartnerSubmission;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -736,6 +684,7 @@ export interface PartnersSelect<T extends boolean = true> {
   description?: T;
   logo?: T;
   category?: T;
+  status?: T;
   active?: T;
   contact?:
     | T
@@ -754,41 +703,6 @@ export interface PartnersSelect<T extends boolean = true> {
         linkedin?: T;
       };
   membershipEmail?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "partner-submissions_select".
- */
-export interface PartnerSubmissionsSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  logo?: T;
-  category?: T;
-  contact?:
-    | T
-    | {
-        email?: T;
-        phone?: T;
-        whatsapp?: T;
-        address?: T;
-      };
-  website?: T;
-  social?:
-    | T
-    | {
-        facebook?: T;
-        instagram?: T;
-        linkedin?: T;
-      };
-  membershipEmail?: T;
-  status?: T;
-  reviewerNotes?: T;
-  rejectionReason?: T;
-  approvedPartner?: T;
-  submittedBy?: T;
-  submittedAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }

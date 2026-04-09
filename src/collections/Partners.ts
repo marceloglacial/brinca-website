@@ -4,7 +4,7 @@ export const Partners: CollectionConfig = {
   slug: 'partners',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'category', 'active', 'createdAt'],
+    defaultColumns: ['title', 'category', 'status', 'active', 'createdAt'],
   },
   fields: [
     {
@@ -35,6 +35,20 @@ export const Partners: CollectionConfig = {
       relationTo: 'partner-categories',
       required: true,
       hasMany: false,
+    },
+    {
+      name: 'status',
+      type: 'select',
+      defaultValue: 'active',
+      required: true,
+      options: [
+        { label: 'Pending Review', value: 'pending' },
+        { label: 'Active', value: 'active' },
+        { label: 'Rejected', value: 'rejected' },
+      ],
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
       name: 'active',

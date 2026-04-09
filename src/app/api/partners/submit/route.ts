@@ -7,37 +7,42 @@ export const POST = async (request: Request) => {
 
     const payload = await getPayload({ config })
 
+    // Validate: at least one language for title
+    if (!body.title_en?.trim() && !body.title_pt?.trim()) {
+      return Response.json({ error: 'Missing required field: title' }, { status: 400 })
+    }
+
+    // Validate: at least one language for description
+    if (!body.description_en?.trim() && !body.description_pt?.trim()) {
+      return Response.json({ error: 'Missing required field: description' }, { status: 400 })
+    }
+
     // Validate required fields
-    const requiredFields = ['title', 'description', 'category', 'contact']
-    for (const field of requiredFields) {
-      if (!body[field]) {
-        return Response.json(
-          { error: `Missing required field: ${field}` },
-          { status: 400 },
-        )
-      }
+    if (!body.category) {
+      return Response.json({ error: 'Missing required field: category' }, { status: 400 })
+    }
+    if (!body.contact) {
+      return Response.json({ error: 'Missing required field: contact' }, { status: 400 })
     }
 
     // Validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(body.contact?.email)) {
-      return Response.json(
-        { error: 'Invalid email address' },
-        { status: 400 },
-      )
+      return Response.json({ error: 'Invalid email address' }, { status: 400 })
     }
 
-    // Get submitter info from headers or use anonymous
-    const submittedBy = body.contact?.email || 'Anonymous'
-    const submittedAtDate = new Date()
-    const submittedAt = submittedAtDate.toISOString().split('T')[0] // Convert to date string
+    const enTitle = body.title_en?.trim() || body.title_pt?.trim()
+    const ptTitle = body.title_pt?.trim() || body.title_en?.trim()
+    const enDescription = body.description_en?.trim() || body.description_pt?.trim()
+    const ptDescription = body.description_pt?.trim() || body.description_en?.trim()
 
-    // Create submission record
-    const submission = await payload.create({
-      collection: 'partner-submissions',
+    // Create partner record with English locale, status pending, inactive until approved
+    const partner = await payload.create({
+      collection: 'partners',
+      locale: 'en',
       data: {
-        title: body.title,
-        description: body.description,
+        title: enTitle,
+        description: enDescription,
         logo: body.logo || '',
         category: body.category,
         contact: body.contact,
@@ -45,8 +50,18 @@ export const POST = async (request: Request) => {
         social: body.social || {},
         membershipEmail: body.membershipEmail || '',
         status: 'pending',
-        submittedBy,
-        submittedAt,
+        active: false,
+      },
+    })
+
+    // Set Portuguese locale data
+    await payload.update({
+      collection: 'partners',
+      id: partner.id,
+      locale: 'pt-BR',
+      data: {
+        title: ptTitle,
+        description: ptDescription,
       },
     })
 
@@ -54,7 +69,7 @@ export const POST = async (request: Request) => {
       {
         success: true,
         message: 'Partner submission received. Thank you for your interest!',
-        id: submission.id,
+        id: partner.id,
       },
       { status: 201 },
     )
