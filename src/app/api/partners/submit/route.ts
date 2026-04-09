@@ -39,6 +39,7 @@ export const POST = async (request: Request) => {
     // Create partner record with English locale, status pending, inactive until approved
     const partner = await payload.create({
       collection: 'partners',
+      overrideAccess: true,
       locale: 'en',
       data: {
         title: enTitle,
@@ -58,6 +59,7 @@ export const POST = async (request: Request) => {
     await payload.update({
       collection: 'partners',
       id: partner.id,
+      overrideAccess: true,
       locale: 'pt-BR',
       data: {
         title: ptTitle,

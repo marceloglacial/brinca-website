@@ -74,6 +74,7 @@ export interface Config {
     calendars: Calendar;
     'partner-categories': PartnerCategory;
     partners: Partner;
+    mentors: Mentor;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -88,6 +89,7 @@ export interface Config {
     calendars: CalendarsSelect<false> | CalendarsSelect<true>;
     'partner-categories': PartnerCategoriesSelect<false> | PartnerCategoriesSelect<true>;
     partners: PartnersSelect<false> | PartnersSelect<true>;
+    mentors: MentorsSelect<false> | MentorsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -204,29 +206,54 @@ export interface Page {
     [k: string]: unknown;
   } | null;
   components?:
-    | {
-        /**
-         * Optional intro content to display above the form (supports localization)
-         */
-        introText?: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
+    | (
+        | {
+            /**
+             * Optional intro content to display above the form (supports localization)
+             */
+            introText?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
               [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'partnerSubmissionBlock';
-      }[]
+            } | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'partnerSubmissionBlock';
+          }
+        | {
+            /**
+             * Optional intro content to display above the form (supports localization)
+             */
+            introText?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'mentorSubmissionBlock';
+          }
+      )[]
     | null;
   youtube?: {
     /**
@@ -423,6 +450,28 @@ export interface Partner {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mentors".
+ */
+export interface Mentor {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  inCanadaSince: string;
+  /**
+   * Do you have school-age children? How many and what age?
+   */
+  hasChildren: string;
+  /**
+   * Briefly describe your professional profile and why you would like to be a mentor/sponsor for a newcomer
+   */
+  profile: string;
+  status: 'pending' | 'active' | 'rejected';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -472,6 +521,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'partners';
         value: string | Partner;
+      } | null)
+    | ({
+        relationTo: 'mentors';
+        value: string | Mentor;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -570,6 +623,13 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         partnerSubmissionBlock?:
+          | T
+          | {
+              introText?: T;
+              id?: T;
+              blockName?: T;
+            };
+        mentorSubmissionBlock?:
           | T
           | {
               introText?: T;
@@ -703,6 +763,21 @@ export interface PartnersSelect<T extends boolean = true> {
         linkedin?: T;
       };
   membershipEmail?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mentors_select".
+ */
+export interface MentorsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  inCanadaSince?: T;
+  hasChildren?: T;
+  profile?: T;
+  status?: T;
   updatedAt?: T;
   createdAt?: T;
 }

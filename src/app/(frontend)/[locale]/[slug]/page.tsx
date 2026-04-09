@@ -8,6 +8,7 @@ import EventsList from '@/components/EventsList'
 import PartnersFilter from '@/components/PartnersFilter'
 import PartnersList from '@/components/PartnersList'
 import PartnerSubmissionBlockComponent from '@/components/PartnerSubmissionBlockComponent'
+import MentorSubmissionBlockComponent from '@/components/MentorSubmissionBlockComponent'
 import { SetSlug } from '@/components/SlugProvider'
 import { getLocalizedData, getLocalizedValue } from '@/lib/locales'
 import { extractYouTubeId, getYouTubeEmbedUrl } from '@/lib/youtube'
@@ -81,6 +82,10 @@ export default async function PageRoute(props: {
     (block) => block.blockType === 'partnerSubmissionBlock',
   )
 
+  const mentorSubmissionBlocks = (page.components ?? []).filter(
+    (block) => block.blockType === 'mentorSubmissionBlock',
+  )
+
   const videoId = extractYouTubeId(page.youtube?.url)
   const embedUrl = getYouTubeEmbedUrl(videoId)
   const ctaButtons = (page.cta ?? []).filter((button) => Boolean(button?.url))
@@ -106,6 +111,13 @@ export default async function PageRoute(props: {
       {partnerSubmissionBlocks.map((block, index) => (
         <PartnerSubmissionBlockComponent
           key={block.id ?? `partner-submission-${index}`}
+          block={block}
+        />
+      ))}
+
+      {mentorSubmissionBlocks.map((block, index) => (
+        <MentorSubmissionBlockComponent
+          key={block.id ?? `mentor-submission-${index}`}
           block={block}
         />
       ))}
