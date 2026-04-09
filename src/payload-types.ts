@@ -278,6 +278,29 @@ export interface Page {
             blockName?: string | null;
             blockType: 'mentorRequestBlock';
           }
+        | {
+            /**
+             * Optional intro content to display above the form (supports localization)
+             */
+            introText?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'contactFormBlock';
+          }
       )[]
     | null;
   youtube?: {
@@ -688,6 +711,13 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
         mentorRequestBlock?:
+          | T
+          | {
+              introText?: T;
+              id?: T;
+              blockName?: T;
+            };
+        contactFormBlock?:
           | T
           | {
               introText?: T;

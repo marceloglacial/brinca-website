@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { PartnerSubmissionBlock } from '../blocks/PartnerSubmissionBlock'
 import { MentorSubmissionBlock } from '../blocks/MentorSubmissionBlock'
 import { MentorRequestBlock } from '../blocks/MentorRequestBlock'
+import { ContactFormBlock } from '../blocks/ContactFormBlock'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -47,7 +48,7 @@ export const Pages: CollectionConfig = {
         singular: 'Component',
         plural: 'Components',
       },
-      blocks: [PartnerSubmissionBlock, MentorSubmissionBlock, MentorRequestBlock],
+      blocks: [PartnerSubmissionBlock, MentorSubmissionBlock, MentorRequestBlock, ContactFormBlock],
     },
     {
       name: 'youtube',
