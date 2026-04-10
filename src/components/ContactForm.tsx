@@ -3,6 +3,10 @@
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { contactFormLabels } from '@/constants/contact-form-labels'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
 
 type FormData = {
   name: string
@@ -60,113 +64,66 @@ export default function ContactForm() {
 
   if (submitted) {
     return (
-      <div
-        style={{
-          marginTop: '2rem',
-          padding: '2rem',
-          backgroundColor: '#f0fdf4',
-          borderRadius: '0.5rem',
-        }}
-      >
-        <h3 style={{ color: '#16a34a', marginBottom: '0.5rem' }}>{labels.successTitle}</h3>
-        <p style={{ color: '#15803d' }}>{labels.successMessage}</p>
+      <div className="mt-8 rounded-md border border-green-200 bg-green-50 p-4">
+        <h3 className="mb-2 font-semibold text-green-900">{labels.successTitle}</h3>
+        <p className="text-green-800">{labels.successMessage}</p>
       </div>
     )
   }
 
-  const inputStyle: React.CSSProperties = {
-    padding: '0.5rem',
-    border: '1px solid #ccc',
-    borderRadius: '0.25rem',
-    width: '100%',
-    boxSizing: 'border-box',
-  }
-
-  const labelStyle: React.CSSProperties = {
-    display: 'grid',
-    gap: '0.5rem',
-    marginBottom: '1rem',
-  }
-
-  const required = <span style={{ color: '#ef4444' }}>{labels.required}</span>
-
   return (
-    <div style={{ marginTop: '2rem' }}>
-      <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '0.25rem', maxWidth: '640px' }}>
-        <label style={labelStyle}>
-          <span style={{ fontWeight: 500 }}>
-            {labels.name} {required}
-          </span>
-          <input
+    <div className="mt-8">
+      <form onSubmit={handleSubmit} className="grid gap-6 max-w-lg">
+        <div className="grid gap-2">
+          <Label htmlFor="name">
+            {labels.name} <span className="text-red-500">{labels.required}</span>
+          </Label>
+          <Input
+            id="name"
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
             placeholder={labels.namePlaceholder}
-            style={inputStyle}
           />
-        </label>
+        </div>
 
-        <label style={labelStyle}>
-          <span style={{ fontWeight: 500 }}>
-            {labels.email} {required}
-          </span>
-          <input
+        <div className="grid gap-2">
+          <Label htmlFor="email">
+            {labels.email} <span className="text-red-500">{labels.required}</span>
+          </Label>
+          <Input
+            id="email"
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
             placeholder={labels.emailPlaceholder}
-            style={inputStyle}
           />
-        </label>
+        </div>
 
-        <label style={labelStyle}>
-          <span style={{ fontWeight: 500 }}>
-            {labels.message} {required}
-          </span>
-          <textarea
+        <div className="grid gap-2">
+          <Label htmlFor="message">
+            {labels.message} <span className="text-red-500">{labels.required}</span>
+          </Label>
+          <Textarea
+            id="message"
             name="message"
             value={formData.message}
             onChange={handleChange}
             rows={6}
-            style={inputStyle}
           />
-        </label>
+        </div>
 
-        {error ? (
-          <div
-            style={{
-              padding: '0.75rem',
-              backgroundColor: '#fee2e2',
-              color: '#991b1b',
-              borderRadius: '0.25rem',
-              border: '1px solid #fecaca',
-              marginBottom: '1rem',
-            }}
-          >
+        {error && (
+          <div className="rounded-md border border-red-200 bg-red-50 p-3 text-red-900">
             {error}
           </div>
-        ) : null}
+        )}
 
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          style={{
-            padding: '0.75rem 1.5rem',
-            backgroundColor: '#3b82f6',
-            color: 'white',
-            border: 'none',
-            borderRadius: '0.25rem',
-            fontSize: '1rem',
-            fontWeight: 500,
-            cursor: isSubmitting ? 'not-allowed' : 'pointer',
-            opacity: isSubmitting ? 0.6 : 1,
-            justifySelf: 'start',
-          }}
-        >
+        <Button type="submit" disabled={isSubmitting} className="w-fit">
           {isSubmitting ? labels.submitting : labels.submit}
-        </button>
+        </Button>
       </form>
     </div>
   )

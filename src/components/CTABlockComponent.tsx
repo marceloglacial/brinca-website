@@ -1,8 +1,10 @@
 import Link from 'next/link'
 import { resolveLink } from '@/lib/resolveLink'
-import { buttonClass, buttonStyles, type ButtonStyle } from '@/lib/buttonStyles'
+import { Button } from '@/components/ui/button'
 
-type Button = {
+type ButtonStyle = 'primary' | 'secondary' | 'link'
+
+type Button_Type = {
   label?: string | null
   style?: ButtonStyle | null
   linkType?: 'internal' | 'external' | null
@@ -14,9 +16,15 @@ type Button = {
 type Props = {
   block: {
     blockType: 'ctaBlock'
-    buttons?: Button[] | null
+    buttons?: Button_Type[] | null
   }
   locale: string
+}
+
+const variantMap: Record<ButtonStyle, string> = {
+  primary: 'primary',
+  secondary: 'brandSecondary',
+  link: 'brandLink',
 }
 
 export default function CTABlockComponent({ block, locale }: Props) {
@@ -27,27 +35,22 @@ export default function CTABlockComponent({ block, locale }: Props) {
   if (buttons.length === 0) return null
 
   return (
-    <div className="cta-block">
+    <div className="cta-block flex flex-wrap gap-3 my-8">
       {buttons.map((button, index) => (
-        <Link
+        <Button
           key={index}
-          href={button.href!}
-          className={buttonClass[button.style ?? 'primary']}
-          {...(button.openInNewWindow ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          asChild
+          variant={variantMap[button.style ?? 'primary'] as any}
+          size="default"
         >
-          {button.label || button.href}
-        </Link>
+          <Link
+            href={button.href!}
+            {...(button.openInNewWindow ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          >
+            {button.label || button.href}
+          </Link>
+        </Button>
       ))}
-
-      <style>{`
-        .cta-block {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.75rem;
-          margin: 2rem 0;
-        }
-        ${buttonStyles}
-      `}</style>
     </div>
   )
 }

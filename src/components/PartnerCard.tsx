@@ -1,6 +1,7 @@
 'use client'
 
 import { getLocalizedValue } from '@/lib/locales'
+import { Card } from '@/components/ui/card'
 
 interface PartnerCardProps {
   partner: any
@@ -37,7 +38,7 @@ export default function PartnerCard({ partner, locale }: PartnerCardProps) {
     : null
 
   return (
-    <article className="partner-card rounded-3xl bg-[#f1f1f1] px-6 py-7 md:px-9 md:py-8">
+    <Card className="rounded-3xl bg-[#f1f1f1] px-6 py-7 md:px-9 md:py-8 border-0">
       <div className="flex flex-col gap-5 md:flex-row md:gap-7">
         {partner.logo && (
           <div className="flex-shrink-0 md:w-44 md:pt-1">
@@ -183,6 +184,6 @@ export default function PartnerCard({ partner, locale }: PartnerCardProps) {
           </div>
         </div>
       </div>
-    </article>
+    </Card>
   )
 }

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import config from '@/payload.config'
 import { getLocalizedValue } from '@/lib/locales'
 import { formatDate } from '@/lib/formatDate'
+import { Card } from '@/components/ui/card'
 
 export default async function CalendarList({ locale, title, limit }: { locale: string; title?: string; limit?: number }) {
   const payloadConfig = await config
@@ -40,27 +41,27 @@ export default async function CalendarList({ locale, title, limit }: { locale: s
   }
 
   return (
-    <div className="calendar-list-section">
+    <div className="calendar-list-section mt-16 pt-8 border-t border-gray-200">
       {title && <h2>{title}</h2>}
-      <div className="calendar-grid">
+      <div className="calendar-grid gap-8 mt-6">
         {Object.entries(groups).map(([key, { label, events }]) => (
-          <div key={key} className="calendar-month">
-            <h3>{label}</h3>
-            <ul>
+          <Card key={key} className="p-6 border-0 bg-white">
+            <h3 className="text-xl font-semibold mb-4">{label}</h3>
+            <ul className="space-y-2">
               {events.map((event) => {
                 const slug = typeof event.slug === 'string' ? event.slug : event.slug?.[locale]
                 const href = `/${locale}/calendars/${slug}`
                 return (
-                  <li key={event.id} className="calendar-event">
-                    <Link href={href} className="calendar-event-link">
-                      {event.thumbnail ? (
+                  <li key={event.id}>
+                    <Link href={href} className="flex items-center gap-2 hover:opacity-70 transition-opacity">
+                      {event.thumbnail && (
                         <img
                           src={event.thumbnail}
                           alt={getLocalizedValue(event.title, locale)}
-                          className="calendar-thumb"
+                          className="w-12 h-12 object-cover rounded"
                         />
-                      ) : null}
-                      <span className="calendar-event-text">
+                      )}
+                      <span>
                         {formatDate(event.date, locale, { day: 'numeric', month: 'short' })} -{' '}
                         {getLocalizedValue(event.title, locale)}
                       </span>
@@ -69,27 +70,9 @@ export default async function CalendarList({ locale, title, limit }: { locale: s
                 )
               })}
             </ul>
-          </div>
+          </Card>
         ))}
       </div>
-
-      <style>{`
-        .calendar-list-section {
-          margin-top: 4rem;
-          padding-top: 2rem;
-          border-top: 1px solid #eaeaea;
-        }
-        .calendar-month {
-          margin-bottom: 1.5rem;
-        }
-        .calendar-event {
-          margin: 0.25rem 0;
-        }
-        .calendar-event-link { display: flex; align-items: center; gap: 0.5rem }
-        .calendar-thumb { width: 48px; height: 48px; object-fit: cover; border-radius: 6px }
-        .calendar-event-text { display: inline-block }
-        
-      `}</style>
     </div>
   )
 }

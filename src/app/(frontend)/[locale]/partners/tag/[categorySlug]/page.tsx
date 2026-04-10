@@ -1,8 +1,7 @@
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
-import { defaultJSXConverters, RichText } from '@payloadcms/richtext-lexical/react'
 import config from '@/payload.config'
-import { getLocalizedData, getLocalizedValue } from '@/lib/locales'
+import { getLocalizedValue } from '@/lib/locales'
 import PartnersList from '@/components/PartnersList'
 import PartnersFilter from '@/components/PartnersFilter'
 import { SetSlug } from '@/components/SlugProvider'
@@ -77,7 +76,6 @@ export default async function PartnersTagPage(props: {
     : locale === 'pt-BR'
       ? 'Parceiros'
       : 'Partners'
-  const contentValue = page ? getLocalizedData(page.content, locale) : null
 
   return (
     <div className="page-view">
@@ -85,14 +83,6 @@ export default async function PartnersTagPage(props: {
       <div className="page-header">
         <h1>{pageTitle}</h1>
       </div>
-
-      {contentValue && typeof contentValue === 'object' && (contentValue as any).root ? (
-        <div className="page-content">
-          <RichText data={contentValue as any} converters={defaultJSXConverters} />
-        </div>
-      ) : typeof contentValue === 'string' ? (
-        <div className="page-content">{contentValue}</div>
-      ) : null}
 
       <div className="mt-8 flex flex-col gap-8 md:flex-row">
         <aside className="w-full flex-shrink-0 md:w-56">

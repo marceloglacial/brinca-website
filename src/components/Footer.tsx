@@ -1,32 +1,16 @@
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 
 export default function SiteFooter() {
   return (
-    <footer className="site-footer">
-      <div className="site-footer-inner">
-        <div className="footer-links">
-          <a className="admin" href="/admin">Dashboard</a>
-        </div>
+    <footer className="site-footer mt-12 py-4">
+      <Separator className="mb-4" />
+      <div className="site-footer-inner max-w-4xl mx-auto px-8 flex justify-end">
+        <Button asChild variant="ghost" size="sm">
+          <Link href="/admin">Dashboard</Link>
+        </Button>
       </div>
-
-      <style>{`
-        .site-footer {
-          border-top: 1px solid #eaeaea;
-          margin-top: 3rem;
-          padding: 1rem 0;
-        }
-        .site-footer-inner {
-          max-width: 1100px;
-          margin: 0 auto;
-          padding: 0 1rem;
-          display: flex;
-          justify-content: flex-end;
-        }
-        .site-footer .admin {
-          color: #666;
-          text-decoration: none;
-        }
-      `}</style>
     </footer>
   )
 }

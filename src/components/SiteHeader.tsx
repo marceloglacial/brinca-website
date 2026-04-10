@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 import React from 'react'
 import { useSlug } from '@/components/SlugProvider'
+import { Button } from '@/components/ui/button'
 
 const LOCALE_LABELS: Record<string, string> = { en: 'English', 'pt-BR': 'Português' }
 const LOCALES = Object.keys(LOCALE_LABELS)
@@ -43,9 +44,11 @@ export default function SiteHeader({ locale }: { locale: string }) {
   return (
     <header className="site-header">
       <div className="site-header-inner">
-        <Link className="logo" href={`/${locale}`}>
-          Brinca
-        </Link>
+        <Button asChild variant="ghost" className="text-lg font-semibold">
+          <Link href={`/${locale}`}>
+            Brinca
+          </Link>
+        </Button>
 
         <div className="header-actions">
           <div className="pages-list" aria-hidden={!locale}>
@@ -54,9 +57,11 @@ export default function SiteHeader({ locale }: { locale: string }) {
                 {pages.map((p: any) => {
                   const slug = typeof p.slug === 'string' ? p.slug : p.slug?.[locale]
                   return (
-                    <Link key={p.id} href={`/${locale}/${slug}`} className="page-link">
-                      {p.title?.[locale] ?? p.title ?? 'Page'}
-                    </Link>
+                    <Button key={p.id} asChild variant="ghost" size="sm">
+                      <Link href={`/${locale}/${slug}`}>
+                        {p.title?.[locale] ?? p.title ?? 'Page'}
+                      </Link>
+                    </Button>
                   )
                 })}
               </div>
@@ -87,9 +92,16 @@ export default function SiteHeader({ locale }: { locale: string }) {
             const isActive = l === locale
 
             return (
-              <Link key={index} href={href} className={isActive ? 'active' : ''}>
-                {LOCALE_LABELS[l] ?? l}
-              </Link>
+              <Button
+                key={index}
+                asChild
+                variant={isActive ? 'default' : 'ghost'}
+                size="sm"
+              >
+                <Link href={href}>
+                  {LOCALE_LABELS[l] ?? l}
+                </Link>
+              </Button>
             )
           })}
         </nav>
@@ -106,16 +118,6 @@ export default function SiteHeader({ locale }: { locale: string }) {
           gap: 0.5rem;
           overflow-x: auto;
           padding: 0.25rem 0;
-        }
-        .page-link {
-          white-space: nowrap;
-          padding: 0.25rem 0.5rem;
-          color: #333;
-          text-decoration: none;
-          border-radius: 4px;
-        }
-        .page-link:hover {
-          background: rgba(0,0,0,0.03);
         }
       `}</style>
     </header>

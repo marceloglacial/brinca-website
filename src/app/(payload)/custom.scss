@@ -1,0 +1,39 @@
+@plugin 'tailwindcss-animate';
+
+@custom-variant dark (&:is([data-theme='dark'] *));
+
+@layer base {
+  :root {
+    --border-color: #e5e7eb;
+    --background-color: #ffffff;
+    --foreground-color: #000000;
+  }
+
+  .twp {
+    @import 'tailwindcss/preflight.css';
+
+    * {
+      border-color: var(--border-color);
+    }
+
+    body {
+      background-color: var(--background-color);
+      color: var(--foreground-color);
+    }
+  }
+
+  /* escape hatch: revert Tailwind styles inside Payload's own components */
+  .twp .no-twp {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+      all: revert-layer;
+    }
+  }
+}
+
+@layer utilities {
+  @import 'tailwindcss/utilities.css';
+}

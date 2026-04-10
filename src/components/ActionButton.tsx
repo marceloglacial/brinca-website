@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { FC } from 'react'
 import { getLocalizedValue } from '@/lib/locales'
+import { Button } from '@/components/ui/button'
 
 type ButtonGroup = {
   title?: any
@@ -25,11 +26,11 @@ const ActionButton: FC<Props> = ({ button, locale }) => {
   const rel = button.openInNewWindow ? 'noopener noreferrer' : undefined
 
   return (
-    <div className="action-button-wrapper">
-      <Link href={href} target={target} rel={rel} className="action-button">
+    <Button asChild>
+      <Link href={href} target={target} rel={rel}>
         {title || href}
       </Link>
-    </div>
+    </Button>
   )
 }
 

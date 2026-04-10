@@ -3,6 +3,7 @@ import Link from 'next/link'
 import config from '@/payload.config'
 import { getLocalizedValue } from '@/lib/locales'
 import { formatDate } from '@/lib/formatDate'
+import { Card } from '@/components/ui/card'
 
 export default async function EventsList({ locale, title, limit }: { locale: string; title?: string; limit?: number }) {
   const payloadConfig = await config
@@ -20,69 +21,40 @@ export default async function EventsList({ locale, title, limit }: { locale: str
   return (
     <div className="events-list-section">
       {title && <h2>{title}</h2>}
-      <div className="events-grid">
+      <div className="events-grid gap-4 mt-4">
         {events.map((event) => {
           const slug = typeof event.slug === 'string' ? event.slug : event.slug?.[locale]
           const href = `/${locale}/events/${slug}`
 
           return (
-            <div key={event.id} className="event-card">
-              {event.thumbnail ? (
-                <div className="event-thumb-wrap">
-                  <img
-                    src={event.thumbnail}
-                    alt={getLocalizedValue(event.title, locale)}
-                    className="event-thumb"
-                  />
-                </div>
-              ) : null}
-
-              <div className="event-card-body">
-                <h3>
-                  <Link href={href}>{getLocalizedValue(event.title, locale)}</Link>
-                </h3>
-                <p className="event-date">
-                  <Link href={href}>
+            <Card key={event.id} className="p-4 border-0 bg-white hover:shadow-md transition-shadow">
+              <Link href={href} className="flex gap-4 items-start">
+                {event.thumbnail && (
+                  <div className="flex-shrink-0">
+                    <img
+                      src={event.thumbnail}
+                      alt={getLocalizedValue(event.title, locale)}
+                      className="w-[120px] h-[80px] object-cover rounded-md"
+                    />
+                  </div>
+                )}
+                <div className="flex-grow">
+                  <h3 className="font-semibold text-lg hover:underline">
+                    {getLocalizedValue(event.title, locale)}
+                  </h3>
+                  <p className="text-gray-600 font-medium mt-1">
                     {formatDate(event.date, locale, {
                       day: 'numeric',
                       month: 'long',
                       year: 'numeric',
                     })}
-                  </Link>
-                </p>
-              </div>
-            </div>
+                  </p>
+                </div>
+              </Link>
+            </Card>
           )
         })}
       </div>
-
-      <style>{`
-        .events-list-section {
-        }
-        .events-grid {
-          display: grid;
-          gap: 1rem;
-          margin-top: 1rem;
-        }
-        .event-card {
-          padding: 0.75rem 0;
-          display: flex;
-          gap: 1rem;
-          align-items: center;
-        }
-        .event-thumb {
-          width: 120px;
-          height: 80px;
-          object-fit: cover;
-          border-radius: 6px;
-        }
-        .event-card-body { flex: 1 }
-        .event-date {
-          color: #666;
-          font-weight: 500;
-          margin-top: 0.25rem;
-        }
-      `}</style>
     </div>
   )
 }

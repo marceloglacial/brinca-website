@@ -1,6 +1,9 @@
 import Link from 'next/link'
 import { resolveLink } from '@/lib/resolveLink'
-import { buttonClass, buttonStyles, type ButtonStyle } from '@/lib/buttonStyles'
+import { Button } from '@/components/ui/button'
+import type { ButtonHTMLAttributes } from 'react'
+
+type ButtonStyle = 'primary' | 'secondary' | 'link'
 
 type Props = {
   block: {
@@ -21,85 +24,53 @@ type Props = {
   locale: string
 }
 
+const variantMap: Record<ButtonStyle, string> = {
+  primary: 'primary',
+  secondary: 'brandSecondary',
+  link: 'brandLink',
+}
+
 export default function HeroBlockComponent({ block, locale }: Props) {
   const imageOnLeft = block.direction === 'left'
   const ctaHref = block.cta ? resolveLink(block.cta, locale) : null
+  const variant = variantMap[block.cta?.style ?? 'primary']
 
   return (
-    <section className="hero-block">
-      <div className={`hero-inner ${imageOnLeft ? 'hero-reverse' : ''}`}>
-        <div className="hero-content">
-          <h1 className="hero-title">{block.title}</h1>
-          {block.description && <p className="hero-description">{block.description}</p>}
+    <section className="hero-block py-16">
+      <div className={`hero-inner flex items-center gap-12 ${imageOnLeft ? 'flex-row-reverse' : ''}`}>
+        <div className="hero-content flex-1 flex flex-col gap-5">
+          <h1 className="hero-title text-5xl font-bold leading-tight m-0">{block.title}</h1>
+          {block.description && <p className="hero-description text-xl leading-relaxed m-0 opacity-80">{block.description}</p>}
           {ctaHref && (
-            <Link
-              href={ctaHref}
-              className={buttonClass[block.cta?.style ?? 'primary']}
-              style={{ alignSelf: 'flex-start' }}
-              {...(block.cta?.openInNewWindow
-                ? { target: '_blank', rel: 'noopener noreferrer' }
-                : {})}
-            >
-              {block.cta?.label || ctaHref}
-            </Link>
+            <Button asChild variant={variant as any} size="lg" className="w-fit">
+              <Link
+                href={ctaHref}
+                {...(block.cta?.openInNewWindow
+                  ? { target: '_blank', rel: 'noopener noreferrer' }
+                  : {})}
+              >
+                {block.cta?.label || ctaHref}
+              </Link>
+            </Button>
           )}
         </div>
 
         {block.image && (
-          <div className="hero-image-wrap">
-            <img src={block.image} alt={block.title} className="hero-image" />
+          <div className="hero-image-wrap flex-1">
+            <img src={block.image} alt={block.title} className="hero-image w-full h-auto rounded-lg object-cover" />
           </div>
         )}
       </div>
 
       <style>{`
-        .hero-block {
-          padding: 4rem 0;
-        }
-        .hero-inner {
-          display: flex;
-          align-items: center;
-          gap: 3rem;
-        }
-        .hero-reverse {
-          flex-direction: row-reverse;
-        }
-        .hero-content {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          gap: 1.25rem;
-        }
-        .hero-title {
-          margin: 0;
-          font-size: 3rem;
-          line-height: 1.1;
-        }
-        .hero-description {
-          margin: 0;
-          font-size: 1.2rem;
-          line-height: 1.6;
-          opacity: 0.8;
-        }
-        .hero-image-wrap {
-          flex: 1;
-        }
-        .hero-image {
-          width: 100%;
-          height: auto;
-          border-radius: 12px;
-          object-fit: cover;
-        }
         @media (max-width: 768px) {
-          .hero-inner,
-          .hero-reverse {
-            flex-direction: column;
+          .hero-inner {
+            flex-direction: column !important;
           }
           .hero-title {
-            font-size: 2rem;
+            font-size: 2rem !important;
           }
         }
-        ${buttonStyles}
       `}</style>
     </section>
   )

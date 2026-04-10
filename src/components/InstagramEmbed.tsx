@@ -54,21 +54,11 @@ export default function InstagramEmbed({ url, maxWidth = 540 }: Props) {
   }, [url, maxWidth])
 
   return (
-    <div className="instagram-embed" ref={ref}>
+    <div className="instagram-embed w-full block my-4" ref={ref}>
       {/* Server-rendered fallback link for non-JS or before embed loads */}
-      <a href={url} target="_blank" rel="noopener noreferrer">
+      <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
         View Instagram post
       </a>
-      <style jsx>{`
-        .instagram-embed {
-          width: 100%;
-          display: block;
-          margin: 1rem 0;
-        }
-        .instagram-embed iframe {
-          max-width: 100% !important;
-        }
-      `}</style>
     </div>
   )
 }

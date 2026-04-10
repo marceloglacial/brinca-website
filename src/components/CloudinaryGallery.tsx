@@ -16,14 +16,9 @@ export default async function CloudinaryGallery({
   if (images.length === 0) return null
 
   return (
-    <section className="cloudinary-gallery">
+    <section className="cloudinary-gallery mt-12">
       {title && <h2>{title}</h2>}
       <Gallery images={images} />
-      <style>{`
-        .cloudinary-gallery {
-          margin-top: 3rem;
-        }
-      `}</style>
     </section>
   )
 }

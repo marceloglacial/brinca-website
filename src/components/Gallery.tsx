@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useCallback } from 'react'
+import { Button } from '@/components/ui/button'
 import type { CloudinaryGalleryImage } from '@/lib/cloudinary'
 
 type GalleryProps = {
@@ -63,11 +64,13 @@ export default function Gallery({ images }: GalleryProps) {
 
   return (
     <div className="gallery-container">
-      <div className="gallery-grid">
+      <div className="grid grid-cols-4 gap-4 mt-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
         {images.map((image, index) => (
           <div
             key={image.id}
-            className={`gallery-item ${loadedThumbnails[image.id] ? 'loaded' : 'loading'}`}
+            className={`relative cursor-pointer overflow-hidden rounded-lg aspect-square bg-gray-900 transition-transform hover:scale-105 ${
+              loadedThumbnails[image.id] ? '' : ''
+            }`}
             onClick={() => openLightbox(index)}
             role="button"
             tabIndex={0}
@@ -78,166 +81,68 @@ export default function Gallery({ images }: GalleryProps) {
               alt={image.alt} 
               loading="lazy" 
               onLoad={() => handleThumbnailLoad(image.id)}
+              className={`w-full h-full object-cover transition-opacity ${
+                loadedThumbnails[image.id] ? 'opacity-100' : 'opacity-0'
+              }`}
             />
-            {!loadedThumbnails[image.id] && <div className="thumbnail-skeleton" />}
+            {!loadedThumbnails[image.id] && (
+              <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 animate-pulse" />
+            )}
           </div>
         ))}
       </div>
 
       {selectedIndex !== null && (
-        <div className="lightbox" onClick={closeLightbox}>
-          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+        <div 
+          className="fixed inset-0 bg-black/90 flex items-center justify-center z-50"
+          onClick={closeLightbox}
+        >
+          <div 
+            className="relative max-w-[90%] max-h-[90%] flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
             {isFullImageLoading && (
-              <div className="lightbox-loader">
-                <div className="spinner"></div>
+              <div className="absolute inset-0 flex items-center justify-center z-[51]">
+                <div className="w-12 h-12 border-3 border-white/30 border-t-white rounded-full animate-spin" />
               </div>
             )}
             <img
               src={getFullUrl(images[selectedIndex].src)}
               alt={images[selectedIndex].alt}
               onLoad={() => setIsFullImageLoading(false)}
+              className="max-w-full max-h-[90vh] object-contain rounded transition-opacity"
               style={{ opacity: isFullImageLoading ? 0 : 1, transition: 'opacity 0.3s ease' }}
             />
-            <button className="close-button" onClick={closeLightbox} aria-label="Close">
+            <Button 
+              variant="ghost"
+              size="icon"
+              onClick={closeLightbox}
+              className="fixed top-5 right-7 text-white text-4xl h-auto w-auto p-0 hover:bg-transparent"
+              aria-label="Close"
+            >
               ×
-            </button>
-            <button className="nav-button prev" onClick={showPrev} aria-label="Previous">
+            </Button>
+            <Button 
+              variant="ghost"
+              size="icon"
+              onClick={showPrev}
+              className="absolute left-2 top-1/2 -translate-y-1/2 text-white text-4xl h-auto w-auto p-5 bg-white/10 hover:bg-white/20 lg:left-3 lg:right-auto"
+              aria-label="Previous"
+            >
               ‹
-            </button>
-            <button className="nav-button next" onClick={showNext} aria-label="Next">
+            </Button>
+            <Button 
+              variant="ghost"
+              size="icon"
+              onClick={showNext}
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-white text-4xl h-auto w-auto p-5 bg-white/10 hover:bg-white/20 lg:right-3 lg:left-auto"
+              aria-label="Next"
+            >
               ›
-            </button>
+            </Button>
           </div>
         </div>
       )}
-
-      <style>{`
-        .gallery-grid {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 1rem;
-          margin-top: 1.5rem;
-        }
-        @media (max-width: 1024px) {
-          .gallery-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-        @media (max-width: 768px) {
-          .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 480px) {
-          .gallery-grid { grid-template-columns: 1fr; }
-        }
-        .gallery-item {
-          position: relative;
-          cursor: pointer;
-          overflow: hidden;
-          border-radius: 8px;
-          aspect-ratio: 1 / 1;
-          background: #222;
-        }
-        .gallery-item img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          transition: transform 0.3s ease, opacity 0.3s ease;
-          opacity: 0;
-        }
-        .gallery-item.loaded img {
-          opacity: 1;
-        }
-        .gallery-item:hover img {
-          transform: scale(1.05);
-        }
-        .thumbnail-skeleton {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, #222 25%, #333 50%, #222 75%);
-          background-size: 200% 100%;
-          animation: skeleton-loading 1.5s infinite;
-        }
-        @keyframes skeleton-loading {
-          0% { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
-        }
-        .lightbox {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.9);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 1000;
-        }
-        .lightbox-content {
-          position: relative;
-          max-width: 90%;
-          max-height: 90%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .lightbox-content img {
-          max-width: 100%;
-          max-height: 90vh;
-          object-fit: contain;
-          border-radius: 4px;
-        }
-        .lightbox-loader {
-          position: absolute;
-          z-index: 1002;
-        }
-        .spinner {
-          width: 50px;
-          height: 50px;
-          border: 3px solid rgba(255,255,255,0.3);
-          border-radius: 50%;
-          border-top-color: #fff;
-          animation: spin 1s ease-in-out infinite;
-        }
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-        .close-button {
-          position: fixed;
-          top: 20px;
-          right: 30px;
-          background: none;
-          border: none;
-          color: white;
-          font-size: 40px;
-          cursor: pointer;
-          z-index: 1001;
-        }
-        .nav-button {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          background: rgba(255, 255, 255, 0.1);
-          border: none;
-          color: white;
-          font-size: 40px;
-          padding: 20px;
-          cursor: pointer;
-          border-radius: 4px;
-          transition: background 0.3s;
-        }
-        .nav-button:hover {
-          background: rgba(255, 255, 255, 0.2);
-        }
-        .prev { left: -80px; }
-        .next { right: -80px; }
-        @media (max-width: 1200px) {
-          .prev { left: 10px; }
-          .next { right: 10px; }
-          .nav-button { background: rgba(0, 0, 0, 0.3); }
-        }
-      `}</style>
     </div>
   )
 }
