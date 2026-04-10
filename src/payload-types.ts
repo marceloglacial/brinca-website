@@ -387,43 +387,76 @@ export interface Event {
    * Event date (non-localized)
    */
   date: string;
-  /**
-   * Event description (localized rich text)
-   */
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  gallery?: {
-    /**
-     * Paste the Cloudinary folder path for this event gallery.
-     */
-    cloudinaryFolder?: string | null;
-  };
-  instagram?: {
-    /**
-     * Paste the instagram link.
-     */
-    InstagramEmbed?: string | null;
-  };
-  cta?:
-    | {
-        title?: string | null;
-        url?: string | null;
-        openInNewWindow?: boolean | null;
-        id?: string | null;
-      }[]
+  components?:
+    | (
+        | {
+            content: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'richTextBlock';
+          }
+        | {
+            /**
+             * Cloudinary folder path to load images from (e.g. brinca/events/2026)
+             */
+            cloudinaryFolder: string;
+            /**
+             * Optional heading displayed above the gallery
+             */
+            title?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galleryBlock';
+          }
+        | {
+            url: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'instagramBlock';
+          }
+        | {
+            buttons?:
+              | {
+                  label?: string | null;
+                  style?: ('primary' | 'secondary' | 'link') | null;
+                  linkType?: ('internal' | 'external') | null;
+                  internalLink?:
+                    | ({
+                        relationTo: 'pages';
+                        value: string | Page;
+                      } | null)
+                    | ({
+                        relationTo: 'events';
+                        value: string | Event;
+                      } | null)
+                    | ({
+                        relationTo: 'calendars';
+                        value: string | Calendar;
+                      } | null);
+                  url?: string | null;
+                  openInNewWindow?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaBlock';
+          }
+      )[]
     | null;
   updatedAt: string;
   createdAt: string;
@@ -448,43 +481,76 @@ export interface Calendar {
    * Event date (non-localized)
    */
   date: string;
-  /**
-   * Event description (localized rich text)
-   */
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  gallery?: {
-    /**
-     * Paste the Cloudinary folder path for this event gallery.
-     */
-    cloudinaryFolder?: string | null;
-  };
-  instagram?: {
-    /**
-     * Paste the instagram link.
-     */
-    InstagramEmbed?: string | null;
-  };
-  cta?:
-    | {
-        title?: string | null;
-        url?: string | null;
-        openInNewWindow?: boolean | null;
-        id?: string | null;
-      }[]
+  components?:
+    | (
+        | {
+            content: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'richTextBlock';
+          }
+        | {
+            /**
+             * Cloudinary folder path to load images from (e.g. brinca/events/2026)
+             */
+            cloudinaryFolder: string;
+            /**
+             * Optional heading displayed above the gallery
+             */
+            title?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galleryBlock';
+          }
+        | {
+            url: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'instagramBlock';
+          }
+        | {
+            buttons?:
+              | {
+                  label?: string | null;
+                  style?: ('primary' | 'secondary' | 'link') | null;
+                  linkType?: ('internal' | 'external') | null;
+                  internalLink?:
+                    | ({
+                        relationTo: 'pages';
+                        value: string | Page;
+                      } | null)
+                    | ({
+                        relationTo: 'events';
+                        value: string | Event;
+                      } | null)
+                    | ({
+                        relationTo: 'calendars';
+                        value: string | Calendar;
+                      } | null);
+                  url?: string | null;
+                  openInNewWindow?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaBlock';
+          }
+      )[]
     | null;
   updatedAt: string;
   createdAt: string;
@@ -896,24 +962,48 @@ export interface EventsSelect<T extends boolean = true> {
   slug?: T;
   thumbnail?: T;
   date?: T;
-  description?: T;
-  gallery?:
+  components?:
     | T
     | {
-        cloudinaryFolder?: T;
-      };
-  instagram?:
-    | T
-    | {
-        InstagramEmbed?: T;
-      };
-  cta?:
-    | T
-    | {
-        title?: T;
-        url?: T;
-        openInNewWindow?: T;
-        id?: T;
+        richTextBlock?:
+          | T
+          | {
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        galleryBlock?:
+          | T
+          | {
+              cloudinaryFolder?: T;
+              title?: T;
+              id?: T;
+              blockName?: T;
+            };
+        instagramBlock?:
+          | T
+          | {
+              url?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaBlock?:
+          | T
+          | {
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    style?: T;
+                    linkType?: T;
+                    internalLink?: T;
+                    url?: T;
+                    openInNewWindow?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
@@ -928,24 +1018,48 @@ export interface CalendarsSelect<T extends boolean = true> {
   slug?: T;
   thumbnail?: T;
   date?: T;
-  description?: T;
-  gallery?:
+  components?:
     | T
     | {
-        cloudinaryFolder?: T;
-      };
-  instagram?:
-    | T
-    | {
-        InstagramEmbed?: T;
-      };
-  cta?:
-    | T
-    | {
-        title?: T;
-        url?: T;
-        openInNewWindow?: T;
-        id?: T;
+        richTextBlock?:
+          | T
+          | {
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        galleryBlock?:
+          | T
+          | {
+              cloudinaryFolder?: T;
+              title?: T;
+              id?: T;
+              blockName?: T;
+            };
+        instagramBlock?:
+          | T
+          | {
+              url?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaBlock?:
+          | T
+          | {
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    style?: T;
+                    linkType?: T;
+                    internalLink?: T;
+                    url?: T;
+                    openInNewWindow?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;

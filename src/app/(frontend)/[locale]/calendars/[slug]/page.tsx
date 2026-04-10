@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import { defaultJSXConverters, RichText } from '@payloadcms/richtext-lexical/react'
 
-import { getLocalizedData, getLocalizedValue } from '@/lib/locales'
+import { getLocalizedValue } from '@/lib/locales'
 import config from '@/payload.config'
 import { formatDate } from '@/lib/formatDate'
 import { SetSlug } from '@/components/SlugProvider'
@@ -10,6 +10,7 @@ import CloudinaryGallery from '@/components/CloudinaryGallery'
 import InstagramEmbed from '@/components/InstagramEmbed'
 import ActionButton from '@/components/ActionButton'
 import { LOCALE_CODES } from '@/constants/locales'
+import type { Calendar } from '@/payload-types'
 
 export async function generateStaticParams() {
   const payloadConfig = await config
@@ -55,6 +56,61 @@ export async function generateMetadata({
   return { title }
 }
 
+function renderCalendarBlocks(item: Calendar, locale: string) {
+  if (!item.components || !Array.isArray(item.components)) {
+    return null
+  }
+
+  return (
+    <>
+      {item.components.map((block, index) => {
+        if (block?.blockType === 'richTextBlock' && 'content' in block) {
+          return (
+            <div key={index} className="calendar-description">
+              <RichText data={block.content as any} converters={defaultJSXConverters} />
+            </div>
+          )
+        }
+
+        if (block?.blockType === 'galleryBlock' && 'cloudinaryFolder' in block) {
+          return (
+            <CloudinaryGallery
+              key={index}
+              folderPath={block.cloudinaryFolder as string}
+              title={locale === 'pt-BR' ? 'Galeria' : 'Gallery'}
+            />
+          )
+        }
+
+        if (block?.blockType === 'instagramBlock' && 'url' in block) {
+          return <InstagramEmbed key={index} url={block.url as string} />
+        }
+
+        if (block?.blockType === 'ctaBlock' && 'buttons' in block && Array.isArray(block.buttons)) {
+          const buttons = block.buttons.filter((button: any) => {
+            if (button?.linkType === 'external') return Boolean(button?.url)
+            if (button?.linkType === 'internal') return Boolean(button?.internalLink)
+            return false
+          })
+          return buttons.length > 0 ? (
+            <div key={index} style={{ marginTop: 12, display: 'grid', gap: '0.75rem' }}>
+              {buttons.map((button: any, btnIndex: number) => (
+                <ActionButton
+                  key={`${button?.url ?? button?.internalLink ?? 'cta'}-${btnIndex}`}
+                  button={button}
+                  locale={locale}
+                />
+              ))}
+            </div>
+          ) : null
+        }
+
+        return null
+      })}
+    </>
+  )
+}
+
 export default async function CalendarPageRoute(props: {
   params: Promise<{ locale: string; slug: string }>
 }) {
@@ -92,9 +148,6 @@ export default async function CalendarPageRoute(props: {
     }
   }
 
-  const descriptionValue = getLocalizedData(item.description, locale)
-  const ctaButtons = (item.cta ?? []).filter((button) => Boolean(button?.url))
-
   return (
     <div className="calendar-item-view">
       <SetSlug slugs={slugMap} />
@@ -112,26 +165,7 @@ export default async function CalendarPageRoute(props: {
             </p>
           </div>
 
-          <div className="calendar-item-description">
-            {descriptionValue &&
-            typeof descriptionValue === 'object' &&
-            (descriptionValue as any).root ? (
-              <div>
-                <RichText data={descriptionValue as any} converters={defaultJSXConverters} />
-              </div>
-            ) : descriptionValue ? (
-              <div>{descriptionValue as any}</div>
-            ) : null}
-          </div>
-
-          {item.gallery?.cloudinaryFolder && (
-            <CloudinaryGallery
-              folderPath={item.gallery.cloudinaryFolder}
-              title={locale === 'pt-BR' ? 'Galeria' : 'Gallery'}
-            />
-          )}
-
-          {item.instagram?.InstagramEmbed && <InstagramEmbed url={item.instagram.InstagramEmbed} />}
+          {renderCalendarBlocks(item, locale)}
         </main>
 
         <aside className="calendar-sidebar">
@@ -142,17 +176,6 @@ export default async function CalendarPageRoute(props: {
                 alt={getLocalizedValue(item.title, locale)}
                 style={{ width: '100%', borderRadius: 6 }}
               />
-              {ctaButtons.length > 0 ? (
-                <div style={{ marginTop: 12, display: 'grid', gap: '0.75rem' }}>
-                  {ctaButtons.map((button, index) => (
-                    <ActionButton
-                      key={`${button?.url ?? 'cta'}-${index}`}
-                      button={button}
-                      locale={locale}
-                    />
-                  ))}
-                </div>
-              ) : null}
             </>
           ) : null}
         </aside>

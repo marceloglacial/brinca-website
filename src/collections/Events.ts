@@ -1,5 +1,9 @@
 import { slugField } from 'payload'
 import type { CollectionConfig } from 'payload'
+import { RichTextBlock } from '../blocks/RichTextBlock'
+import { GalleryBlock } from '../blocks/GalleryBlock'
+import { InstagramBlock } from '../blocks/InstagramBlock'
+import { CTABlock } from '../blocks/CTABlock'
 
 export const Events: CollectionConfig = {
   slug: 'events',
@@ -32,57 +36,13 @@ export const Events: CollectionConfig = {
       },
     },
     {
-      name: 'description',
-      type: 'richText',
-      localized: true,
-      admin: {
-        description: 'Event description (localized rich text)',
-      },
-    },
-    {
-      name: 'gallery',
-      type: 'group',
-      fields: [
-        {
-          name: 'cloudinaryFolder',
-          type: 'text',
-          admin: {
-            description: 'Paste the Cloudinary folder path for this event gallery.',
-          },
-        },
-      ],
-    },
-    {
-      name: 'instagram',
-      type: 'group',
-      fields: [
-        {
-          name: 'InstagramEmbed',
-          type: 'text',
-          admin: {
-            description: 'Paste the instagram link.',
-          },
-        },
-      ],
-    },
-    {
-      name: 'cta',
-      type: 'array',
-      label: 'Call to action buttons',
+      name: 'components',
+      type: 'blocks',
       labels: {
-        singular: 'Button',
-        plural: 'Buttons',
+        singular: 'Component',
+        plural: 'Components',
       },
-      fields: [
-        { name: 'title', type: 'text', localized: true, required: false },
-        { name: 'url', type: 'text', localized: true, required: false },
-        {
-          name: 'openInNewWindow',
-          type: 'checkbox',
-          label: 'Open in new window',
-          defaultValue: false,
-        },
-      ],
+      blocks: [RichTextBlock, GalleryBlock, InstagramBlock, CTABlock],
     },
   ],
   timestamps: true,
