@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { linkFields } from './fields/linkFields'
 
 export const CTABlock: Block = {
   slug: 'ctaBlock',
@@ -14,22 +15,11 @@ export const CTABlock: Block = {
       minRows: 1,
       fields: [
         {
-          name: 'title',
+          name: 'label',
           type: 'text',
           localized: true,
         },
-        {
-          name: 'url',
-          type: 'text',
-          required: true,
-          localized: true,
-        },
-        {
-          name: 'openInNewWindow',
-          type: 'checkbox',
-          label: 'Open in new window',
-          defaultValue: false,
-        },
+        ...linkFields,
       ],
     },
   ],

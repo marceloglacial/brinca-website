@@ -13,6 +13,7 @@ export default async function HomePage(props: { params: Promise<{ locale: string
     collection: 'pages',
     where: { isHome: { equals: true } },
     locale: locale as any,
+    depth: 2,
     limit: 1,
   })
 

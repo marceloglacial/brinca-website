@@ -285,8 +285,22 @@ export interface Page {
         | {
             buttons?:
               | {
-                  title?: string | null;
-                  url: string;
+                  label?: string | null;
+                  linkType?: ('internal' | 'external') | null;
+                  internalLink?:
+                    | ({
+                        relationTo: 'pages';
+                        value: string | Page;
+                      } | null)
+                    | ({
+                        relationTo: 'events';
+                        value: string | Event;
+                      } | null)
+                    | ({
+                        relationTo: 'calendars';
+                        value: string | Calendar;
+                      } | null);
+                  url?: string | null;
                   openInNewWindow?: boolean | null;
                   id?: string | null;
                 }[]
@@ -325,6 +339,20 @@ export interface Page {
             direction?: ('left' | 'right') | null;
             cta?: {
               label?: string | null;
+              linkType?: ('internal' | 'external') | null;
+              internalLink?:
+                | ({
+                    relationTo: 'pages';
+                    value: string | Page;
+                  } | null)
+                | ({
+                    relationTo: 'events';
+                    value: string | Event;
+                  } | null)
+                | ({
+                    relationTo: 'calendars';
+                    value: string | Calendar;
+                  } | null);
               url?: string | null;
               openInNewWindow?: boolean | null;
             };
@@ -814,7 +842,9 @@ export interface PagesSelect<T extends boolean = true> {
               buttons?:
                 | T
                 | {
-                    title?: T;
+                    label?: T;
+                    linkType?: T;
+                    internalLink?: T;
                     url?: T;
                     openInNewWindow?: T;
                     id?: T;
@@ -840,6 +870,8 @@ export interface PagesSelect<T extends boolean = true> {
                 | T
                 | {
                     label?: T;
+                    linkType?: T;
+                    internalLink?: T;
                     url?: T;
                     openInNewWindow?: T;
                   };

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { resolveLink } from '@/lib/resolveLink'
 
 type Props = {
   block: {
@@ -9,14 +10,18 @@ type Props = {
     direction?: 'left' | 'right' | null
     cta?: {
       label?: string | null
+      linkType?: 'internal' | 'external' | null
+      internalLink?: any
       url?: string | null
       openInNewWindow?: boolean | null
     } | null
   }
+  locale: string
 }
 
-export default function HeroBlockComponent({ block }: Props) {
+export default function HeroBlockComponent({ block, locale }: Props) {
   const imageOnLeft = block.direction === 'left'
+  const ctaHref = block.cta ? resolveLink(block.cta, locale) : null
 
   return (
     <section className="hero-block">
@@ -24,15 +29,15 @@ export default function HeroBlockComponent({ block }: Props) {
         <div className="hero-content">
           <h1 className="hero-title">{block.title}</h1>
           {block.description && <p className="hero-description">{block.description}</p>}
-          {block.cta?.url && (
+          {ctaHref && (
             <Link
-              href={block.cta.url}
+              href={ctaHref}
               className="hero-cta"
-              {...(block.cta.openInNewWindow
+              {...(block.cta?.openInNewWindow
                 ? { target: '_blank', rel: 'noopener noreferrer' }
                 : {})}
             >
-              {block.cta.label || block.cta.url}
+              {block.cta?.label || ctaHref}
             </Link>
           )}
         </div>

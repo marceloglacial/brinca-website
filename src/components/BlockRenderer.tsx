@@ -47,7 +47,7 @@ export default function BlockRenderer({ block, locale }: Props) {
     case 'richTextBlock':
       return <RichTextBlockComponent block={block} />
     case 'heroBlock':
-      return <HeroBlockComponent block={block} />
+      return <HeroBlockComponent block={block} locale={locale} />
     default:
       return null
   }

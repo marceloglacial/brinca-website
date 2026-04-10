@@ -40,6 +40,7 @@ export default async function PageRoute(props: {
     collection: 'pages',
     where: { slug: { equals: slug } },
     locale: locale as any,
+    depth: 2,
     limit: 1,
   })
 

@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { linkFields } from './fields/linkFields'
 
 export const HeroBlock: Block = {
   slug: 'heroBlock',
@@ -49,18 +50,7 @@ export const HeroBlock: Block = {
           localized: true,
           label: 'Button Label',
         },
-        {
-          name: 'url',
-          type: 'text',
-          localized: true,
-          label: 'Button URL',
-        },
-        {
-          name: 'openInNewWindow',
-          type: 'checkbox',
-          label: 'Open in new window',
-          defaultValue: false,
-        },
+        ...linkFields,
       ],
     },
   ],
