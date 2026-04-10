@@ -315,6 +315,23 @@ export interface Page {
             blockName?: string | null;
             blockType: 'richTextBlock';
           }
+        | {
+            title: string;
+            description?: string | null;
+            /**
+             * Paste full Cloudinary or image URL
+             */
+            image?: string | null;
+            direction?: ('left' | 'right') | null;
+            cta?: {
+              label?: string | null;
+              url?: string | null;
+              openInNewWindow?: boolean | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'heroBlock';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -809,6 +826,23 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        heroBlock?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              image?: T;
+              direction?: T;
+              cta?:
+                | T
+                | {
+                    label?: T;
+                    url?: T;
+                    openInNewWindow?: T;
+                  };
               id?: T;
               blockName?: T;
             };

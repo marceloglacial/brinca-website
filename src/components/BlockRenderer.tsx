@@ -11,6 +11,7 @@ import GalleryBlockComponent from './GalleryBlockComponent'
 import InstagramBlockComponent from './InstagramBlockComponent'
 import CTABlockComponent from './CTABlockComponent'
 import RichTextBlockComponent from './RichTextBlockComponent'
+import HeroBlockComponent from './HeroBlockComponent'
 
 type Props = {
   block: any
@@ -45,6 +46,8 @@ export default function BlockRenderer({ block, locale }: Props) {
       return <CTABlockComponent block={block} locale={locale} />
     case 'richTextBlock':
       return <RichTextBlockComponent block={block} />
+    case 'heroBlock':
+      return <HeroBlockComponent block={block} />
     default:
       return null
   }

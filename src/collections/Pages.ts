@@ -13,6 +13,7 @@ import { GalleryBlock } from '../blocks/GalleryBlock'
 import { InstagramBlock } from '../blocks/InstagramBlock'
 import { CTABlock } from '../blocks/CTABlock'
 import { RichTextBlock } from '../blocks/RichTextBlock'
+import { HeroBlock } from '../blocks/HeroBlock'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -76,6 +77,7 @@ export const Pages: CollectionConfig = {
         InstagramBlock,
         CTABlock,
         RichTextBlock,
+        HeroBlock,
       ],
     },
   ],
