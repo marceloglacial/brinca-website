@@ -37,10 +37,10 @@ export default function HeroBlockComponent({ block, locale }: Props) {
 
   return (
     <section className="hero-block py-16">
-      <div className={`hero-inner flex items-center gap-12 ${imageOnLeft ? 'flex-row-reverse' : ''}`}>
-        <div className="hero-content flex-1 flex flex-col gap-5">
-          <h1 className="hero-title text-5xl font-bold leading-tight m-0">{block.title}</h1>
-          {block.description && <p className="hero-description text-xl leading-relaxed m-0 opacity-80">{block.description}</p>}
+      <div className={`flex items-center gap-12 flex-col md:flex-row ${imageOnLeft ? 'md:flex-row-reverse' : ''}`}>
+        <div className="flex-1 flex flex-col gap-5">
+          <h1 className="text-5xl md:text-5xl sm:text-2xl font-bold leading-tight m-0">{block.title}</h1>
+          {block.description && <p className="text-xl leading-relaxed m-0 opacity-80">{block.description}</p>}
           {ctaHref && (
             <Button asChild variant={variant as any} size="lg" className="w-fit">
               <Link
@@ -56,22 +56,11 @@ export default function HeroBlockComponent({ block, locale }: Props) {
         </div>
 
         {block.image && (
-          <div className="hero-image-wrap flex-1">
-            <img src={block.image} alt={block.title} className="hero-image w-full h-auto rounded-lg object-cover" />
+          <div className="flex-1">
+            <img src={block.image} alt={block.title} className="w-full h-auto rounded-lg object-cover" />
           </div>
         )}
       </div>
-
-      <style>{`
-        @media (max-width: 768px) {
-          .hero-inner {
-            flex-direction: column !important;
-          }
-          .hero-title {
-            font-size: 2rem !important;
-          }
-        }
-      `}</style>
     </section>
   )
 }

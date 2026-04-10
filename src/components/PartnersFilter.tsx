@@ -31,7 +31,7 @@ export default async function PartnersFilter({ locale, activeCategorySlug }: Par
         <li>
           <Link
             href={`/${locale}/partners`}
-            className={`block rounded px-2 py-1 transition-opacity hover:opacity-70${!activeCategorySlug ? ' font-bold underline' : ''}`}
+            className={`block rounded px-2 py-1 transition-opacity hover:opacity-70 ${!activeCategorySlug ? 'font-bold underline' : ''}`}
           >
             {allLabel}
           </Link>
@@ -44,7 +44,7 @@ export default async function PartnersFilter({ locale, activeCategorySlug }: Par
             <li key={category.id}>
               <Link
                 href={`/${locale}/partners/tag/${slug}`}
-                className={`block rounded px-2 py-1 transition-opacity hover:opacity-70${isActive ? ' font-bold underline' : ''}`}
+                className={`block rounded px-2 py-1 transition-opacity hover:opacity-70 ${isActive ? 'font-bold underline' : ''}`}
               >
                 {title}
               </Link>

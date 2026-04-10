@@ -32,6 +32,9 @@
       all: revert-layer;
     }
   }
+  .table {
+    width: 100%;
+  }
 }
 
 @layer utilities {

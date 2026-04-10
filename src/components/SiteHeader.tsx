@@ -43,17 +43,17 @@ export default function SiteHeader({ locale }: { locale: string }) {
 
   return (
     <header className="site-header">
-      <div className="site-header-inner">
+      <div className="site-header-inner flex items-center justify-between gap-4">
         <Button asChild variant="ghost" className="text-lg font-semibold">
           <Link href={`/${locale}`}>
             Brinca
           </Link>
         </Button>
 
-        <div className="header-actions">
-          <div className="pages-list" aria-hidden={!locale}>
+        <div className="header-actions flex-1">
+          <div className="pages-list flex items-center mr-4" aria-hidden={!locale}>
             {pages.length > 0 && (
-              <div className="pages-scroll">
+              <div className="pages-scroll flex gap-2 overflow-x-auto py-1">
                 {pages.map((p: any) => {
                   const slug = typeof p.slug === 'string' ? p.slug : p.slug?.[locale]
                   return (
@@ -69,7 +69,7 @@ export default function SiteHeader({ locale }: { locale: string }) {
           </div>
         </div>
 
-        <nav className="locale-switcher" aria-label="Language switcher">
+        <nav className="locale-switcher flex gap-1" aria-label="Language switcher">
           {LOCALES.map((l, index) => {
             let href = `/${l}${pathname}`
 
@@ -106,20 +106,6 @@ export default function SiteHeader({ locale }: { locale: string }) {
           })}
         </nav>
       </div>
-
-      <style>{`
-        .pages-list {
-          display: flex;
-          align-items: center;
-          margin-right: 1rem;
-        }
-        .pages-scroll {
-          display: flex;
-          gap: 0.5rem;
-          overflow-x: auto;
-          padding: 0.25rem 0;
-        }
-      `}</style>
     </header>
   )
 }

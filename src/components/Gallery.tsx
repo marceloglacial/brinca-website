@@ -110,8 +110,7 @@ export default function Gallery({ images }: GalleryProps) {
               src={getFullUrl(images[selectedIndex].src)}
               alt={images[selectedIndex].alt}
               onLoad={() => setIsFullImageLoading(false)}
-              className="max-w-full max-h-[90vh] object-contain rounded transition-opacity"
-              style={{ opacity: isFullImageLoading ? 0 : 1, transition: 'opacity 0.3s ease' }}
+              className={`max-w-full max-h-[90vh] object-contain rounded transition-opacity ${isFullImageLoading ? 'opacity-0' : 'opacity-100'}`}
             />
             <Button 
               variant="ghost"

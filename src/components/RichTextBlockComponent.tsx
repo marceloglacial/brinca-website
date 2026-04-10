@@ -11,7 +11,7 @@ export default function RichTextBlockComponent({ block }: Props) {
   if (!block.content?.root) return null
 
   return (
-    <div className="page-content">
+    <div className="page-content prose prose-sm md:prose-base max-w-none">
       <RichText data={block.content} converters={defaultJSXConverters} />
     </div>
   )

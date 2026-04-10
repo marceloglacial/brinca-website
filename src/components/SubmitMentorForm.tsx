@@ -3,6 +3,10 @@
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { mentorSubmissionLabels } from '@/constants/mentor-submission-labels'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Button } from '@/components/ui/button'
 
 type FormData = {
   name: string
@@ -74,151 +78,108 @@ export default function SubmitMentorForm() {
 
   if (submitted) {
     return (
-      <div
-        style={{
-          marginTop: '2rem',
-          padding: '2rem',
-          backgroundColor: '#f0fdf4',
-          borderRadius: '0.5rem',
-        }}
-      >
-        <h3 style={{ color: '#16a34a', marginBottom: '0.5rem' }}>{labels.successTitle}</h3>
-        <p style={{ color: '#15803d' }}>{labels.successMessage}</p>
+      <div className="mt-8 rounded bg-green-50 p-8">
+        <h3 className="mb-2 text-green-600 font-semibold">{labels.successTitle}</h3>
+        <p className="text-green-700">{labels.successMessage}</p>
       </div>
     )
   }
 
-  const inputStyle: React.CSSProperties = {
-    padding: '0.5rem',
-    border: '1px solid #ccc',
-    borderRadius: '0.25rem',
-    width: '100%',
-    boxSizing: 'border-box',
-  }
-
-  const labelStyle: React.CSSProperties = {
-    display: 'grid',
-    gap: '0.5rem',
-    marginBottom: '1rem',
-  }
-
-  const required = <span style={{ color: '#ef4444' }}>{labels.required}</span>
-
   return (
-    <div style={{ marginTop: '2rem' }}>
-      <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '0.25rem', maxWidth: '640px' }}>
-        <label style={labelStyle}>
-          <span style={{ fontWeight: 500 }}>
-            {labels.name} {required}
-          </span>
-          <input
+    <div className="mt-8">
+      <form onSubmit={handleSubmit} className="grid max-w-lg gap-4">
+        <div className="grid gap-2">
+          <Label htmlFor="name">
+            {labels.name} <span className="text-red-500">{labels.required}</span>
+          </Label>
+          <Input
+            id="name"
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
-            style={inputStyle}
           />
-        </label>
+        </div>
 
-        <label style={labelStyle}>
-          <span style={{ fontWeight: 500 }}>
-            {labels.email} {required}
-          </span>
-          <input
+        <div className="grid gap-2">
+          <Label htmlFor="email">
+            {labels.email} <span className="text-red-500">{labels.required}</span>
+          </Label>
+          <Input
+            id="email"
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
-            style={inputStyle}
           />
-        </label>
+        </div>
 
-        <label style={labelStyle}>
-          <span style={{ fontWeight: 500 }}>
-            {labels.phone} {required}
-          </span>
-          <input
+        <div className="grid gap-2">
+          <Label htmlFor="phone">
+            {labels.phone} <span className="text-red-500">{labels.required}</span>
+          </Label>
+          <Input
+            id="phone"
             type="tel"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
             inputMode="numeric"
-            style={inputStyle}
           />
-        </label>
+        </div>
 
-        <label style={labelStyle}>
-          <span style={{ fontWeight: 500 }}>
-            {labels.inCanadaSince} {required}
-          </span>
-          <input
+        <div className="grid gap-2">
+          <Label htmlFor="inCanadaSince">
+            {labels.inCanadaSince} <span className="text-red-500">{labels.required}</span>
+          </Label>
+          <Input
+            id="inCanadaSince"
             type="date"
             name="inCanadaSince"
             value={formData.inCanadaSince}
             onChange={handleChange}
-            style={inputStyle}
           />
-        </label>
+        </div>
 
-        <label style={labelStyle}>
-          <span style={{ fontWeight: 500 }}>
-            {labels.hasChildren} {required}
-          </span>
-          <input
+        <div className="grid gap-2">
+          <Label htmlFor="hasChildren">
+            {labels.hasChildren} <span className="text-red-500">{labels.required}</span>
+          </Label>
+          <Input
+            id="hasChildren"
             type="text"
             name="hasChildren"
             value={formData.hasChildren}
             onChange={handleChange}
-            style={inputStyle}
           />
-        </label>
+        </div>
 
-        <label style={labelStyle}>
-          <span style={{ fontWeight: 500 }}>
-            {labels.profile} {required}
-          </span>
-          <textarea
+        <div className="grid gap-2">
+          <Label htmlFor="profile">
+            {labels.profile} <span className="text-red-500">{labels.required}</span>
+          </Label>
+          <Textarea
+            id="profile"
             name="profile"
             value={formData.profile}
             onChange={handleChange}
             rows={6}
-            style={inputStyle}
           />
-        </label>
+        </div>
 
         {error ? (
-          <div
-            style={{
-              padding: '0.75rem',
-              backgroundColor: '#fee2e2',
-              color: '#991b1b',
-              borderRadius: '0.25rem',
-              border: '1px solid #fecaca',
-              marginBottom: '1rem',
-            }}
-          >
+          <div className="rounded border border-red-200 bg-red-50 p-3 text-red-900">
             {error}
           </div>
         ) : null}
 
-        <button
+        <Button
           type="submit"
           disabled={isSubmitting}
-          style={{
-            padding: '0.75rem 1.5rem',
-            backgroundColor: '#3b82f6',
-            color: 'white',
-            border: 'none',
-            borderRadius: '0.25rem',
-            fontSize: '1rem',
-            fontWeight: 500,
-            cursor: isSubmitting ? 'not-allowed' : 'pointer',
-            opacity: isSubmitting ? 0.6 : 1,
-            justifySelf: 'start',
-          }}
+          className="w-fit"
         >
           {isSubmitting ? labels.submitting : labels.submit}
-        </button>
+        </Button>
       </form>
     </div>
   )
