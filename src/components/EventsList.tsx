@@ -4,7 +4,7 @@ import config from '@/payload.config'
 import { getLocalizedValue } from '@/lib/locales'
 import { formatDate } from '@/lib/formatDate'
 
-export default async function EventsList({ locale }: { locale: string }) {
+export default async function EventsList({ locale, title, limit }: { locale: string; title?: string; limit?: number }) {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
 
@@ -12,12 +12,14 @@ export default async function EventsList({ locale }: { locale: string }) {
     collection: 'events',
     sort: '-date',
     locale: locale as any,
+    ...(limit ? { limit } : {}),
   })
 
   if (!events || events.length === 0) return null
 
   return (
     <div className="events-list-section">
+      {title && <h2>{title}</h2>}
       <div className="events-grid">
         {events.map((event) => {
           const slug = typeof event.slug === 'string' ? event.slug : event.slug?.[locale]

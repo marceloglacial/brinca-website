@@ -4,6 +4,15 @@ import { PartnerSubmissionBlock } from '../blocks/PartnerSubmissionBlock'
 import { MentorSubmissionBlock } from '../blocks/MentorSubmissionBlock'
 import { MentorRequestBlock } from '../blocks/MentorRequestBlock'
 import { ContactFormBlock } from '../blocks/ContactFormBlock'
+import { SponsorsBlock } from '../blocks/SponsorsBlock'
+import { EventsListBlock } from '../blocks/EventsListBlock'
+import { CalendarsListBlock } from '../blocks/CalendarsListBlock'
+import { PartnersListBlock } from '../blocks/PartnersListBlock'
+import { YouTubeBlock } from '../blocks/YouTubeBlock'
+import { GalleryBlock } from '../blocks/GalleryBlock'
+import { InstagramBlock } from '../blocks/InstagramBlock'
+import { CTABlock } from '../blocks/CTABlock'
+import { RichTextBlock } from '../blocks/RichTextBlock'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -37,9 +46,14 @@ export const Pages: CollectionConfig = {
       },
     },
     {
-      name: 'content',
-      type: 'richText',
-      localized: true,
+      name: 'isHome',
+      type: 'checkbox',
+      label: 'Home Page',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+        description: 'Mark this page as the site home page',
+      },
     },
     {
       name: 'components',
@@ -48,62 +62,20 @@ export const Pages: CollectionConfig = {
         singular: 'Component',
         plural: 'Components',
       },
-      blocks: [PartnerSubmissionBlock, MentorSubmissionBlock, MentorRequestBlock, ContactFormBlock],
-    },
-    {
-      name: 'youtube',
-      type: 'group',
-      fields: [
-        {
-          name: 'url',
-          type: 'text',
-          admin: {
-            description: 'YouTube video URL or ID (paste full URL or the video id)',
-          },
-        },
-      ],
-    },
-    {
-      name: 'cta',
-      type: 'array',
-      label: 'Call to action buttons',
-      labels: {
-        singular: 'Button',
-        plural: 'Buttons',
-      },
-      fields: [
-        { name: 'title', type: 'text', localized: true, required: false },
-        { name: 'url', type: 'text', localized: true, required: false },
-        {
-          name: 'openInNewWindow',
-          type: 'checkbox',
-          label: 'Open in new window',
-          defaultValue: false,
-        },
-      ],
-    },
-    {
-      name: 'lists',
-      type: 'group',
-      fields: [
-        {
-          name: 'showEvents',
-          type: 'checkbox',
-          label: 'Show Events List',
-          defaultValue: false,
-        },
-        {
-          name: 'showCalendars',
-          type: 'checkbox',
-          label: 'Show Calendar List',
-          defaultValue: false,
-        },
-        {
-          name: 'showPartners',
-          type: 'checkbox',
-          label: 'Show Partners List',
-          defaultValue: false,
-        },
+      blocks: [
+        PartnerSubmissionBlock,
+        MentorSubmissionBlock,
+        MentorRequestBlock,
+        ContactFormBlock,
+        SponsorsBlock,
+        EventsListBlock,
+        CalendarsListBlock,
+        PartnersListBlock,
+        YouTubeBlock,
+        GalleryBlock,
+        InstagramBlock,
+        CTABlock,
+        RichTextBlock,
       ],
     },
   ],

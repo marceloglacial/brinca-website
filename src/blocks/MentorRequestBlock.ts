@@ -6,18 +6,5 @@ export const MentorRequestBlock: Block = {
     singular: 'Mentor Request Block',
     plural: 'Mentor Request Blocks',
   },
-  fields: [
-    {
-      name: 'introText',
-      type: 'richText',
-      label: 'Intro Text',
-      localized: true,
-      admin: {
-        description: 'Optional intro content to display above the form (supports localization)',
-      },
-    },
-  ],
-  graphQL: {
-    singularName: 'MentorRequestBlock',
-  },
+  fields: [],
 }

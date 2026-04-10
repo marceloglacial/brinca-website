@@ -4,7 +4,7 @@ import config from '@/payload.config'
 import { getLocalizedValue } from '@/lib/locales'
 import { formatDate } from '@/lib/formatDate'
 
-export default async function CalendarList({ locale }: { locale: string }) {
+export default async function CalendarList({ locale, title, limit }: { locale: string; title?: string; limit?: number }) {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
 
@@ -12,6 +12,7 @@ export default async function CalendarList({ locale }: { locale: string }) {
     collection: 'calendars',
     sort: 'date',
     locale: locale as any,
+    ...(limit ? { limit } : {}),
   })
 
   if (!events || events.length === 0) return null
@@ -40,7 +41,7 @@ export default async function CalendarList({ locale }: { locale: string }) {
 
   return (
     <div className="calendar-list-section">
-      <h2>Calendar</h2>
+      {title && <h2>{title}</h2>}
       <div className="calendar-grid">
         {Object.entries(groups).map(([key, { label, events }]) => (
           <div key={key} className="calendar-month">

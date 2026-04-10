@@ -76,6 +76,7 @@ export interface Config {
     partners: Partner;
     mentors: Mentor;
     'mentor-requests': MentorRequest;
+    sponsors: Sponsor;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -92,6 +93,7 @@ export interface Config {
     partners: PartnersSelect<false> | PartnersSelect<true>;
     mentors: MentorsSelect<false> | MentorsSelect<true>;
     'mentor-requests': MentorRequestsSelect<false> | MentorRequestsSelect<true>;
+    sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -192,97 +194,109 @@ export interface Page {
    */
   thumbnail?: string | null;
   showInNavbar?: boolean | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  /**
+   * Mark this page as the site home page
+   */
+  isHome?: boolean | null;
   components?:
     | (
         | {
-            /**
-             * Optional intro content to display above the form (supports localization)
-             */
-            introText?: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'partnerSubmissionBlock';
           }
         | {
-            /**
-             * Optional intro content to display above the form (supports localization)
-             */
-            introText?: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'mentorSubmissionBlock';
           }
         | {
-            /**
-             * Optional intro content to display above the form (supports localization)
-             */
-            introText?: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'mentorRequestBlock';
           }
         | {
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'contactFormBlock';
+          }
+        | {
             /**
-             * Optional intro content to display above the form (supports localization)
+             * Leave empty to use the current year
              */
-            introText?: {
+            year?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'sponsorsBlock';
+          }
+        | {
+            title?: string | null;
+            /**
+             * Maximum number of events to display (leave empty for all)
+             */
+            limit?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'eventsListBlock';
+          }
+        | {
+            title?: string | null;
+            /**
+             * Maximum number of calendar entries to display (leave empty for all)
+             */
+            limit?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'calendarsListBlock';
+          }
+        | {
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'partnersListBlock';
+          }
+        | {
+            /**
+             * YouTube video URL or video ID
+             */
+            url: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'youTubeBlock';
+          }
+        | {
+            /**
+             * Cloudinary folder path to load images from (e.g. brinca/events/2026)
+             */
+            cloudinaryFolder: string;
+            /**
+             * Optional heading displayed above the gallery
+             */
+            title?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galleryBlock';
+          }
+        | {
+            url: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'instagramBlock';
+          }
+        | {
+            buttons?:
+              | {
+                  title?: string | null;
+                  url: string;
+                  openInNewWindow?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaBlock';
+          }
+        | {
+            content: {
               root: {
                 type: string;
                 children: {
@@ -296,32 +310,13 @@ export interface Page {
                 version: number;
               };
               [k: string]: unknown;
-            } | null;
+            };
             id?: string | null;
             blockName?: string | null;
-            blockType: 'contactFormBlock';
+            blockType: 'richTextBlock';
           }
       )[]
     | null;
-  youtube?: {
-    /**
-     * YouTube video URL or ID (paste full URL or the video id)
-     */
-    url?: string | null;
-  };
-  cta?:
-    | {
-        title?: string | null;
-        url?: string | null;
-        openInNewWindow?: boolean | null;
-        id?: string | null;
-      }[]
-    | null;
-  lists?: {
-    showEvents?: boolean | null;
-    showCalendars?: boolean | null;
-    showPartners?: boolean | null;
-  };
   updatedAt: string;
   createdAt: string;
 }
@@ -542,6 +537,27 @@ export interface MentorRequest {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sponsors".
+ */
+export interface Sponsor {
+  id: string;
+  name: string;
+  /**
+   * Paste full Cloudinary or image URL
+   */
+  logo?: string | null;
+  website?: string | null;
+  tier: 'diamond' | 'silver' | 'bronze';
+  /**
+   * Year this sponsorship applies to (e.g. 2026)
+   */
+  year: number;
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -599,6 +615,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'mentor-requests';
         value: string | MentorRequest;
+      } | null)
+    | ({
+        relationTo: 'sponsors';
+        value: string | Sponsor;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -692,58 +712,106 @@ export interface PagesSelect<T extends boolean = true> {
   slug?: T;
   thumbnail?: T;
   showInNavbar?: T;
-  content?: T;
+  isHome?: T;
   components?:
     | T
     | {
         partnerSubmissionBlock?:
           | T
           | {
-              introText?: T;
               id?: T;
               blockName?: T;
             };
         mentorSubmissionBlock?:
           | T
           | {
-              introText?: T;
               id?: T;
               blockName?: T;
             };
         mentorRequestBlock?:
           | T
           | {
-              introText?: T;
               id?: T;
               blockName?: T;
             };
         contactFormBlock?:
           | T
           | {
-              introText?: T;
               id?: T;
               blockName?: T;
             };
-      };
-  youtube?:
-    | T
-    | {
-        url?: T;
-      };
-  cta?:
-    | T
-    | {
-        title?: T;
-        url?: T;
-        openInNewWindow?: T;
-        id?: T;
-      };
-  lists?:
-    | T
-    | {
-        showEvents?: T;
-        showCalendars?: T;
-        showPartners?: T;
+        sponsorsBlock?:
+          | T
+          | {
+              year?: T;
+              id?: T;
+              blockName?: T;
+            };
+        eventsListBlock?:
+          | T
+          | {
+              title?: T;
+              limit?: T;
+              id?: T;
+              blockName?: T;
+            };
+        calendarsListBlock?:
+          | T
+          | {
+              title?: T;
+              limit?: T;
+              id?: T;
+              blockName?: T;
+            };
+        partnersListBlock?:
+          | T
+          | {
+              id?: T;
+              blockName?: T;
+            };
+        youTubeBlock?:
+          | T
+          | {
+              url?: T;
+              id?: T;
+              blockName?: T;
+            };
+        galleryBlock?:
+          | T
+          | {
+              cloudinaryFolder?: T;
+              title?: T;
+              id?: T;
+              blockName?: T;
+            };
+        instagramBlock?:
+          | T
+          | {
+              url?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaBlock?:
+          | T
+          | {
+              buttons?:
+                | T
+                | {
+                    title?: T;
+                    url?: T;
+                    openInNewWindow?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        richTextBlock?:
+          | T
+          | {
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
@@ -881,6 +949,20 @@ export interface MentorRequestsSelect<T extends boolean = true> {
   stayDuration?: T;
   familyDescription?: T;
   status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sponsors_select".
+ */
+export interface SponsorsSelect<T extends boolean = true> {
+  name?: T;
+  logo?: T;
+  website?: T;
+  tier?: T;
+  year?: T;
+  active?: T;
   updatedAt?: T;
   createdAt?: T;
 }

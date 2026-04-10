@@ -1,19 +1,9 @@
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
-import { defaultJSXConverters, RichText } from '@payloadcms/richtext-lexical/react'
 
-import ActionButton from '@/components/ActionButton'
-import CalendarList from '@/components/CalendarList'
-import EventsList from '@/components/EventsList'
-import PartnersFilter from '@/components/PartnersFilter'
-import PartnersList from '@/components/PartnersList'
-import PartnerSubmissionBlockComponent from '@/components/PartnerSubmissionBlockComponent'
-import MentorSubmissionBlockComponent from '@/components/MentorSubmissionBlockComponent'
-import MentorRequestBlockComponent from '@/components/MentorRequestBlockComponent'
-import ContactFormBlockComponent from '@/components/ContactFormBlockComponent'
+import BlockRenderer from '@/components/BlockRenderer'
 import { SetSlug } from '@/components/SlugProvider'
-import { getLocalizedData, getLocalizedValue } from '@/lib/locales'
-import { extractYouTubeId, getYouTubeEmbedUrl } from '@/lib/youtube'
+import { getLocalizedValue } from '@/lib/locales'
 import config from '@/payload.config'
 
 export async function generateMetadata({
@@ -48,9 +38,7 @@ export default async function PageRoute(props: {
 
   const { docs } = await payload.find({
     collection: 'pages',
-    where: {
-      slug: { equals: slug },
-    },
+    where: { slug: { equals: slug } },
     locale: locale as any,
     limit: 1,
   })
@@ -77,112 +65,13 @@ export default async function PageRoute(props: {
     }
   }
 
-  const contentValue = getLocalizedData(page.content, locale)
-
-  // Get partner submission blocks
-  const partnerSubmissionBlocks = (page.components ?? []).filter(
-    (block) => block.blockType === 'partnerSubmissionBlock',
-  )
-
-  const mentorSubmissionBlocks = (page.components ?? []).filter(
-    (block) => block.blockType === 'mentorSubmissionBlock',
-  )
-
-  const mentorRequestBlocks = (page.components ?? []).filter(
-    (block) => block.blockType === 'mentorRequestBlock',
-  )
-
-  const contactFormBlocks = (page.components ?? []).filter(
-    (block) => block.blockType === 'contactFormBlock',
-  )
-
-  const videoId = extractYouTubeId(page.youtube?.url)
-  const embedUrl = getYouTubeEmbedUrl(videoId)
-  const ctaButtons = (page.cta ?? []).filter((button) => Boolean(button?.url))
-
   return (
     <div className="page-view">
       <SetSlug slugs={slugMap} />
 
-      <div className="page-header">
-        <h1>{getLocalizedValue(page.title, locale)}</h1>
-      </div>
-
-      <div className="page-content">
-        {contentValue && typeof contentValue === 'object' && contentValue.root ? (
-          <div>
-            <RichText data={contentValue as any} converters={defaultJSXConverters} />
-          </div>
-        ) : typeof contentValue === 'string' ? (
-          <div>{contentValue}</div>
-        ) : null}
-      </div>
-
-      {partnerSubmissionBlocks.map((block, index) => (
-        <PartnerSubmissionBlockComponent
-          key={block.id ?? `partner-submission-${index}`}
-          block={block}
-        />
+      {(page.components ?? []).map((block, index) => (
+        <BlockRenderer key={block.id ?? index} block={block} locale={locale} />
       ))}
-
-      {mentorSubmissionBlocks.map((block, index) => (
-        <MentorSubmissionBlockComponent
-          key={block.id ?? `mentor-submission-${index}`}
-          block={block}
-        />
-      ))}
-
-      {mentorRequestBlocks.map((block, index) => (
-        <MentorRequestBlockComponent
-          key={block.id ?? `mentor-request-${index}`}
-          block={block}
-        />
-      ))}
-
-      {contactFormBlocks.map((block, index) => (
-        <ContactFormBlockComponent
-          key={block.id ?? `contact-form-${index}`}
-          block={block}
-        />
-      ))}
-
-      {ctaButtons.length > 0 ? (
-        <div className="page-cta" style={{ margin: '2rem 0', display: 'grid', gap: '0.75rem' }}>
-          {ctaButtons.map((button, index) => (
-            <ActionButton
-              key={`${button?.url ?? 'cta'}-${index}`}
-              button={button}
-              locale={locale}
-            />
-          ))}
-        </div>
-      ) : null}
-
-      {embedUrl ? (
-        <div className="page-video">
-          <iframe
-            width="100%"
-            height="480"
-            src={embedUrl}
-            title={getLocalizedValue(page.title, locale)}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
-      ) : null}
-
-      {page.lists?.showEvents && <EventsList locale={locale} />}
-      {page.lists?.showCalendars && <CalendarList locale={locale} />}
-      {page.lists?.showPartners && (
-        <div className="mt-8 flex flex-col gap-8 md:flex-row">
-          <aside className="w-full flex-shrink-0 md:w-56">
-            <PartnersFilter locale={locale} />
-          </aside>
-          <div className="flex-1">
-            <PartnersList locale={locale} />
-          </div>
-        </div>
-      )}
     </div>
   )
 }

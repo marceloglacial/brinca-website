@@ -6,18 +6,5 @@ export const PartnerSubmissionBlock: Block = {
     singular: 'Partner Submission Block',
     plural: 'Partner Submission Blocks',
   },
-  fields: [
-    {
-      name: 'introText',
-      type: 'richText',
-      label: 'Intro Text',
-      localized: true,
-      admin: {
-        description: 'Optional intro content to display above the form (supports localization)',
-      },
-    },
-  ],
-  graphQL: {
-    singularName: 'PartnerSubmissionBlock',
-  },
+  fields: [],
 }
