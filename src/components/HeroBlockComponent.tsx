@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { resolveLink } from '@/lib/resolveLink'
+import { buttonClass, buttonStyles, type ButtonStyle } from '@/lib/buttonStyles'
 
 type Props = {
   block: {
@@ -10,6 +11,7 @@ type Props = {
     direction?: 'left' | 'right' | null
     cta?: {
       label?: string | null
+      style?: ButtonStyle | null
       linkType?: 'internal' | 'external' | null
       internalLink?: any
       url?: string | null
@@ -32,7 +34,8 @@ export default function HeroBlockComponent({ block, locale }: Props) {
           {ctaHref && (
             <Link
               href={ctaHref}
-              className="hero-cta"
+              className={buttonClass[block.cta?.style ?? 'primary']}
+              style={{ alignSelf: 'flex-start' }}
               {...(block.cta?.openInNewWindow
                 ? { target: '_blank', rel: 'noopener noreferrer' }
                 : {})}
@@ -78,20 +81,6 @@ export default function HeroBlockComponent({ block, locale }: Props) {
           line-height: 1.6;
           opacity: 0.8;
         }
-        .hero-cta {
-          display: inline-block;
-          align-self: flex-start;
-          padding: 0.75rem 1.75rem;
-          background: #019f44;
-          color: #fff;
-          text-decoration: none;
-          border-radius: 6px;
-          font-weight: 600;
-          transition: background 0.2s;
-        }
-        .hero-cta:hover {
-          background: #02662c;
-        }
         .hero-image-wrap {
           flex: 1;
         }
@@ -110,6 +99,7 @@ export default function HeroBlockComponent({ block, locale }: Props) {
             font-size: 2rem;
           }
         }
+        ${buttonStyles}
       `}</style>
     </section>
   )

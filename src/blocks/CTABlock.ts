@@ -19,6 +19,17 @@ export const CTABlock: Block = {
           type: 'text',
           localized: true,
         },
+        {
+          name: 'style',
+          type: 'select',
+          label: 'Button Style',
+          defaultValue: 'primary',
+          options: [
+            { label: 'Primary', value: 'primary' },
+            { label: 'Secondary', value: 'secondary' },
+            { label: 'Link', value: 'link' },
+          ],
+        },
         ...linkFields,
       ],
     },

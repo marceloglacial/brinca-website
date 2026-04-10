@@ -286,6 +286,7 @@ export interface Page {
             buttons?:
               | {
                   label?: string | null;
+                  style?: ('primary' | 'secondary' | 'link') | null;
                   linkType?: ('internal' | 'external') | null;
                   internalLink?:
                     | ({
@@ -339,6 +340,7 @@ export interface Page {
             direction?: ('left' | 'right') | null;
             cta?: {
               label?: string | null;
+              style?: ('primary' | 'secondary' | 'link') | null;
               linkType?: ('internal' | 'external') | null;
               internalLink?:
                 | ({
@@ -843,6 +845,7 @@ export interface PagesSelect<T extends boolean = true> {
                 | T
                 | {
                     label?: T;
+                    style?: T;
                     linkType?: T;
                     internalLink?: T;
                     url?: T;
@@ -870,6 +873,7 @@ export interface PagesSelect<T extends boolean = true> {
                 | T
                 | {
                     label?: T;
+                    style?: T;
                     linkType?: T;
                     internalLink?: T;
                     url?: T;
