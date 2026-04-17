@@ -2,7 +2,6 @@ import { getPayload } from 'payload'
 
 import BlockRenderer from '@/components/BlockRenderer'
 import config from '@/payload.config'
-import './styles.css'
 
 export default async function HomePage(props: { params: Promise<{ locale: string }> }) {
   const { locale } = await props.params
