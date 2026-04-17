@@ -5,6 +5,7 @@ import { usePathname, useSearchParams } from 'next/navigation'
 import React from 'react'
 import { useSlug } from '@/components/SlugProvider'
 import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 
 const LOCALE_LABELS: Record<string, string> = { en: 'English', 'pt-BR': 'Português' }
 const LOCALES = Object.keys(LOCALE_LABELS)
@@ -43,7 +44,7 @@ export default function SiteHeader({ locale }: { locale: string }) {
 
   return (
     <header className="site-header">
-      <div className="site-header-inner flex items-center justify-between gap-4">
+      <Card className="site-header-inner mx-auto flex items-center justify-between gap-4 border-border/60 px-6 py-3 shadow-none">
         <Button asChild variant="ghost" className="text-lg font-semibold">
           <Link href={`/${locale}`}>
             Brinca
@@ -105,7 +106,7 @@ export default function SiteHeader({ locale }: { locale: string }) {
             )
           })}
         </nav>
-      </div>
+      </Card>
     </header>
   )
 }

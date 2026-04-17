@@ -1,7 +1,14 @@
 'use client'
 
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { ChevronLeft, ChevronRight, LoaderCircle, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import type { CloudinaryGalleryImage } from '@/lib/cloudinary'
 
 type GalleryProps = {
@@ -16,13 +23,11 @@ export default function Gallery({ images }: GalleryProps) {
   const openLightbox = (index: number) => {
     setSelectedIndex(index)
     setIsFullImageLoading(true)
-    document.body.style.overflow = 'hidden'
   }
 
   const closeLightbox = useCallback(() => {
     setSelectedIndex(null)
     setIsFullImageLoading(false)
-    document.body.style.overflow = ''
   }, [])
 
   const showNext = useCallback(() => {
@@ -59,89 +64,94 @@ export default function Gallery({ images }: GalleryProps) {
   }
 
   const handleThumbnailLoad = (id: string) => {
-    setLoadedThumbnails(prev => ({ ...prev, [id]: true }))
+    setLoadedThumbnails((prev) => ({ ...prev, [id]: true }))
   }
 
   return (
     <div className="gallery-container">
-      <div className="grid grid-cols-4 gap-4 mt-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+      <div className="mt-6 grid grid-cols-4 gap-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
         {images.map((image, index) => (
           <div
             key={image.id}
-            className={`relative cursor-pointer overflow-hidden rounded-lg aspect-square bg-gray-900 transition-transform hover:scale-105 ${
-              loadedThumbnails[image.id] ? '' : ''
-            }`}
+            className="relative aspect-square cursor-pointer overflow-hidden rounded-xl border bg-muted/40 transition-transform hover:scale-[1.02]"
             onClick={() => openLightbox(index)}
             role="button"
             tabIndex={0}
             onKeyDown={(e) => e.key === 'Enter' && openLightbox(index)}
           >
-            <img 
-              src={getThumbnailUrl(image.src)} 
-              alt={image.alt} 
-              loading="lazy" 
+            <img
+              src={getThumbnailUrl(image.src)}
+              alt={image.alt}
+              loading="lazy"
               onLoad={() => handleThumbnailLoad(image.id)}
-              className={`w-full h-full object-cover transition-opacity ${
+              className={`h-full w-full object-cover transition-opacity ${
                 loadedThumbnails[image.id] ? 'opacity-100' : 'opacity-0'
               }`}
             />
             {!loadedThumbnails[image.id] && (
-              <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 animate-pulse" />
+              <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-muted via-muted/80 to-muted" />
             )}
           </div>
         ))}
       </div>
 
-      {selectedIndex !== null && (
-        <div 
-          className="fixed inset-0 bg-black/90 flex items-center justify-center z-50"
-          onClick={closeLightbox}
-        >
-          <div 
-            className="relative max-w-[90%] max-h-[90%] flex items-center justify-center"
-            onClick={(e) => e.stopPropagation()}
+      <Dialog open={selectedIndex !== null} onOpenChange={(open) => !open && closeLightbox()}>
+        {selectedIndex !== null ? (
+          <DialogContent
+            showCloseButton={false}
+            className="max-w-[95vw] border-0 bg-black/95 p-4 text-white shadow-none sm:rounded-xl"
           >
-            {isFullImageLoading && (
-              <div className="absolute inset-0 flex items-center justify-center z-[51]">
-                <div className="w-12 h-12 border-3 border-white/30 border-t-white rounded-full animate-spin" />
-              </div>
-            )}
-            <img
-              src={getFullUrl(images[selectedIndex].src)}
-              alt={images[selectedIndex].alt}
-              onLoad={() => setIsFullImageLoading(false)}
-              className={`max-w-full max-h-[90vh] object-contain rounded transition-opacity ${isFullImageLoading ? 'opacity-0' : 'opacity-100'}`}
-            />
-            <Button 
-              variant="ghost"
-              size="icon"
-              onClick={closeLightbox}
-              className="fixed top-5 right-7 text-white text-4xl h-auto w-auto p-0 hover:bg-transparent"
-              aria-label="Close"
-            >
-              ×
-            </Button>
-            <Button 
-              variant="ghost"
-              size="icon"
-              onClick={showPrev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 text-white text-4xl h-auto w-auto p-5 bg-white/10 hover:bg-white/20 lg:left-3 lg:right-auto"
-              aria-label="Previous"
-            >
-              ‹
-            </Button>
-            <Button 
-              variant="ghost"
-              size="icon"
-              onClick={showNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-white text-4xl h-auto w-auto p-5 bg-white/10 hover:bg-white/20 lg:right-3 lg:left-auto"
-              aria-label="Next"
-            >
-              ›
-            </Button>
-          </div>
-        </div>
-      )}
+            <DialogTitle className="sr-only">{images[selectedIndex].alt}</DialogTitle>
+            <DialogDescription className="sr-only">Image gallery preview</DialogDescription>
+            <div className="relative flex max-h-[90vh] items-center justify-center">
+              {isFullImageLoading ? (
+                <div className="absolute inset-0 z-[51] flex items-center justify-center">
+                  <LoaderCircle className="h-10 w-10 animate-spin text-white/80" />
+                </div>
+              ) : null}
+
+              <img
+                src={getFullUrl(images[selectedIndex].src)}
+                alt={images[selectedIndex].alt}
+                onLoad={() => setIsFullImageLoading(false)}
+                className={`max-h-[90vh] max-w-full rounded object-contain transition-opacity ${
+                  isFullImageLoading ? 'opacity-0' : 'opacity-100'
+                }`}
+              />
+
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={closeLightbox}
+                className="absolute right-2 top-2 h-10 w-10 text-white hover:bg-white/10"
+                aria-label="Close"
+              >
+                <X className="h-5 w-5" />
+              </Button>
+
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={showPrev}
+                className="absolute left-2 top-1/2 h-12 w-12 -translate-y-1/2 bg-white/10 text-white hover:bg-white/20 lg:left-3"
+                aria-label="Previous"
+              >
+                <ChevronLeft className="h-6 w-6" />
+              </Button>
+
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={showNext}
+                className="absolute right-2 top-1/2 h-12 w-12 -translate-y-1/2 bg-white/10 text-white hover:bg-white/20 lg:right-3"
+                aria-label="Next"
+              >
+                <ChevronRight className="h-6 w-6" />
+              </Button>
+            </div>
+          </DialogContent>
+        ) : null}
+      </Dialog>
     </div>
   )
 }

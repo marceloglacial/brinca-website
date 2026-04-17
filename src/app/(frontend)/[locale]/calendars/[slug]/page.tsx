@@ -11,6 +11,9 @@ import InstagramEmbed from '@/components/InstagramEmbed'
 import ActionButton from '@/components/ActionButton'
 import { LOCALE_CODES } from '@/constants/locales'
 import type { Calendar } from '@/payload-types'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 
 export async function generateStaticParams() {
   const payloadConfig = await config
@@ -93,7 +96,7 @@ function renderCalendarBlocks(item: Calendar, locale: string) {
             return false
           })
           return buttons.length > 0 ? (
-            <div key={index} style={{ marginTop: 12, display: 'grid', gap: '0.75rem' }}>
+            <div key={index} className="mt-3 grid gap-3">
               {buttons.map((button: any, btnIndex: number) => (
                 <ActionButton
                   key={`${button?.url ?? button?.internalLink ?? 'cta'}-${btnIndex}`}
@@ -149,63 +152,46 @@ export default async function CalendarPageRoute(props: {
   }
 
   return (
-    <div className="calendar-item-view">
+    <div className="mx-auto max-w-6xl px-4 py-8">
       <SetSlug slugs={slugMap} />
 
-      <div className="calendar-grid">
-        <main className="calendar-main">
-          <div className="calendar-item-header">
-            <h1>{getLocalizedValue(item.title, locale)}</h1>
-            <p className="calendar-date">
-              {formatDate(item.date, locale, {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              })}
-            </p>
-          </div>
-
-          {renderCalendarBlocks(item, locale)}
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <main className="space-y-6">
+          <Card>
+            <CardHeader>
+              <Badge variant="secondary" className="w-fit">
+                Calendar
+              </Badge>
+              <CardTitle>{getLocalizedValue(item.title, locale)}</CardTitle>
+              <p className="font-medium text-muted-foreground">
+                {formatDate(item.date, locale, {
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric',
+                })}
+              </p>
+            </CardHeader>
+            <CardContent>
+              <Separator className="mb-6" />
+              {renderCalendarBlocks(item, locale)}
+            </CardContent>
+          </Card>
         </main>
 
-        <aside className="calendar-sidebar">
+        <aside className="space-y-4">
           {item.thumbnail ? (
-            <>
+            <Card>
+              <CardContent className="p-4">
               <img
                 src={item.thumbnail}
                 alt={getLocalizedValue(item.title, locale)}
-                style={{ width: '100%', borderRadius: 6 }}
+                className="w-full rounded-md object-cover"
               />
-            </>
+              </CardContent>
+            </Card>
           ) : null}
         </aside>
       </div>
-
-      <style>{`
-        .calendar-item-view {
-          max-width: 1100px;
-          margin: 0 auto;
-          padding: 2rem 1rem;
-        }
-        .calendar-grid {
-          display: grid;
-          grid-template-columns: 1fr 320px;
-          gap: 2rem;
-        }
-        .calendar-item-header {
-          margin-bottom: 2rem;
-        }
-        .calendar-date {
-          font-size: 1.2rem;
-          color: #666;
-          margin-top: 0.5rem;
-        }
-        .calendar-item-description {
-          line-height: 1.6;
-          font-size: 1.1rem;
-        }
-        .calendar-sidebar img { max-width: 100%; height: auto; display: block; }
-      `}</style>
     </div>
   )
 }

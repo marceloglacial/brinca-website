@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import React from 'react'
 import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 
 export default function SiteFooter({ locale }: { locale: string }) {
@@ -30,7 +31,7 @@ export default function SiteFooter({ locale }: { locale: string }) {
   return (
     <footer className="site-footer mt-12 py-4">
       <Separator className="mb-4" />
-      <div className="site-footer-inner max-w-4xl mx-auto px-8 flex items-center justify-between gap-4">
+      <Card className="site-footer-inner mx-auto flex items-center justify-between gap-4 border-border/60 px-6 py-4 shadow-none">
         <div className="pages-list flex items-center mr-4" aria-hidden={!locale}>
           {pages.length > 0 && (
             <div className="pages-scroll flex gap-2 overflow-x-auto py-1">
@@ -52,7 +53,7 @@ export default function SiteFooter({ locale }: { locale: string }) {
         <Button asChild variant="ghost" size="sm">
           <Link href="/admin">Dashboard</Link>
         </Button>
-      </div>
+      </Card>
     </footer>
   )
 }

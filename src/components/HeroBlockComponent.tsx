@@ -25,9 +25,9 @@ type Props = {
 }
 
 const variantMap: Record<ButtonStyle, string> = {
-  primary: 'primary',
-  secondary: 'brandSecondary',
-  link: 'brandLink',
+  primary: 'default',
+  secondary: 'secondary',
+  link: 'link',
 }
 
 export default function HeroBlockComponent({ block, locale }: Props) {

@@ -2,7 +2,9 @@
 
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
+import { CheckCircle2, CircleAlert } from 'lucide-react'
 import { mentorRequestLabels } from '@/constants/mentor-request-labels'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -77,10 +79,11 @@ export default function SubmitMentorRequestForm() {
 
   if (submitted) {
     return (
-      <div className="mt-8 rounded-md border border-green-200 bg-green-50 p-4">
-        <h3 className="mb-2 font-semibold text-green-900">{labels.successTitle}</h3>
-        <p className="text-green-800">{labels.successMessage}</p>
-      </div>
+      <Alert variant="success" className="mt-8">
+        <CheckCircle2 className="h-4 w-4" />
+        <AlertTitle>{labels.successTitle}</AlertTitle>
+        <AlertDescription>{labels.successMessage}</AlertDescription>
+      </Alert>
     )
   }
 
@@ -167,9 +170,11 @@ export default function SubmitMentorRequestForm() {
         </div>
 
         {error && (
-          <div className="rounded-md border border-red-200 bg-red-50 p-3 text-red-900">
-            {error}
-          </div>
+          <Alert variant="destructive">
+            <CircleAlert className="h-4 w-4" />
+            <AlertTitle>{labels.errorSubmit}</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
         )}
 
         <Button type="submit" disabled={isSubmitting} className="w-fit">

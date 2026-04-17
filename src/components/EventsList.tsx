@@ -3,7 +3,8 @@ import Link from 'next/link'
 import config from '@/payload.config'
 import { getLocalizedValue } from '@/lib/locales'
 import { formatDate } from '@/lib/formatDate'
-import { Card } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default async function EventsList({ locale, title, limit }: { locale: string; title?: string; limit?: number }) {
   const payloadConfig = await config
@@ -27,10 +28,10 @@ export default async function EventsList({ locale, title, limit }: { locale: str
           const href = `/${locale}/events/${slug}`
 
           return (
-            <Card key={event.id} className="p-4 border-0 bg-white hover:shadow-md transition-shadow">
+            <Card key={event.id} className="transition-shadow hover:shadow-md">
               <Link href={href} className="flex gap-4 items-start">
                 {event.thumbnail && (
-                  <div className="flex-shrink-0">
+                  <div className="flex-shrink-0 p-4 pb-0">
                     <img
                       src={event.thumbnail}
                       alt={getLocalizedValue(event.title, locale)}
@@ -39,16 +40,23 @@ export default async function EventsList({ locale, title, limit }: { locale: str
                   </div>
                 )}
                 <div className="flex-grow">
-                  <h3 className="font-semibold text-lg hover:underline">
-                    {getLocalizedValue(event.title, locale)}
-                  </h3>
-                  <p className="text-gray-600 font-medium mt-1">
-                    {formatDate(event.date, locale, {
-                      day: 'numeric',
-                      month: 'long',
-                      year: 'numeric',
-                    })}
-                  </p>
+                  <CardHeader className="pb-2">
+                    <Badge variant="outline" className="w-fit">
+                      Event
+                    </Badge>
+                    <CardTitle className="text-lg hover:underline">
+                      {getLocalizedValue(event.title, locale)}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <p className="font-medium text-muted-foreground">
+                      {formatDate(event.date, locale, {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                      })}
+                    </p>
+                  </CardContent>
                 </div>
               </Link>
             </Card>

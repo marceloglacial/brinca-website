@@ -3,7 +3,8 @@ import Link from 'next/link'
 import config from '@/payload.config'
 import { getLocalizedValue } from '@/lib/locales'
 import { formatDate } from '@/lib/formatDate'
-import { Card } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default async function CalendarList({ locale, title, limit }: { locale: string; title?: string; limit?: number }) {
   const payloadConfig = await config
@@ -45,9 +46,15 @@ export default async function CalendarList({ locale, title, limit }: { locale: s
       {title && <h2>{title}</h2>}
       <div className="calendar-grid gap-8 mt-6">
         {Object.entries(groups).map(([key, { label, events }]) => (
-          <Card key={key} className="p-6 border-0 bg-white">
-            <h3 className="text-xl font-semibold mb-4">{label}</h3>
-            <ul className="space-y-2">
+          <Card key={key}>
+            <CardHeader>
+              <Badge variant="secondary" className="w-fit">
+                Calendar
+              </Badge>
+              <CardTitle className="text-xl">{label}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-3">
               {events.map((event) => {
                 const slug = typeof event.slug === 'string' ? event.slug : event.slug?.[locale]
                 const href = `/${locale}/calendars/${slug}`
@@ -69,7 +76,8 @@ export default async function CalendarList({ locale, title, limit }: { locale: s
                   </li>
                 )
               })}
-            </ul>
+              </ul>
+            </CardContent>
           </Card>
         ))}
       </div>

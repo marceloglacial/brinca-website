@@ -11,6 +11,9 @@ import InstagramEmbed from '@/components/InstagramEmbed'
 import ActionButton from '@/components/ActionButton'
 import { LOCALE_CODES } from '@/constants/locales'
 import type { Event } from '@/payload-types'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 
 export async function generateStaticParams() {
   const payloadConfig = await config
@@ -93,7 +96,7 @@ function renderEventBlocks(event: Event, locale: string) {
             return false
           })
           return buttons.length > 0 ? (
-            <div key={index} style={{ marginTop: 12, display: 'grid', gap: '0.75rem' }}>
+            <div key={index} className="mt-3 grid gap-3">
               {buttons.map((button: any, btnIndex: number) => (
                 <ActionButton
                   key={`${button?.url ?? button?.internalLink ?? 'cta'}-${btnIndex}`}
@@ -149,63 +152,46 @@ export default async function EventPageRoute(props: {
   }
 
   return (
-    <div className="event-view">
+    <div className="mx-auto max-w-6xl px-4 py-8">
       <SetSlug slugs={slugMap} />
 
-      <div className="event-grid">
-        <main className="event-main">
-          <div className="event-header">
-            <h1>{getLocalizedValue(event.title, locale)}</h1>
-            <p className="event-date">
-              {formatDate(event.date, locale, {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              })}
-            </p>
-          </div>
-
-          {renderEventBlocks(event, locale)}
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <main className="space-y-6">
+          <Card>
+            <CardHeader>
+              <Badge variant="secondary" className="w-fit">
+                Event
+              </Badge>
+              <CardTitle>{getLocalizedValue(event.title, locale)}</CardTitle>
+              <p className="font-medium text-muted-foreground">
+                {formatDate(event.date, locale, {
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric',
+                })}
+              </p>
+            </CardHeader>
+            <CardContent>
+              <Separator className="mb-6" />
+              {renderEventBlocks(event, locale)}
+            </CardContent>
+          </Card>
         </main>
 
-        <aside className="event-sidebar">
+        <aside className="space-y-4">
           {event.thumbnail ? (
-            <>
+            <Card>
+              <CardContent className="p-4">
               <img
                 src={event.thumbnail}
                 alt={getLocalizedValue(event.title, locale)}
-                style={{ width: '100%', borderRadius: 6 }}
+                className="w-full rounded-md object-cover"
               />
-            </>
+              </CardContent>
+            </Card>
           ) : null}
         </aside>
       </div>
-
-      <style>{`
-        .event-view {
-          max-width: 1100px;
-          margin: 0 auto;
-          padding: 2rem 1rem;
-        }
-        .event-grid {
-          display: grid;
-          grid-template-columns: 1fr 320px;
-          gap: 2rem;
-        }
-        .event-header {
-          margin-bottom: 2rem;
-        }
-        .event-date {
-          font-size: 1.2rem;
-          color: #666;
-          margin-top: 0.5rem;
-        }
-        .event-description {
-          line-height: 1.6;
-          font-size: 1.1rem;
-        }
-        .event-sidebar img { max-width: 100%; height: auto; display: block; }
-      `}</style>
     </div>
   )
 }

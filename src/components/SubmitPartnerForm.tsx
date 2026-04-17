@@ -1,8 +1,11 @@
 'use client'
 
 import { useState } from 'react'
+import { CheckCircle2, CircleAlert } from 'lucide-react'
 import { partnerSubmissionLabels } from '@/constants/partner-submission-labels'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
@@ -177,24 +180,27 @@ export default function SubmitPartnerForm({ categories }: Props) {
 
   if (submitted) {
     return (
-      <div className="mt-8 rounded-md border border-green-200 bg-green-50 p-8">
-        <h3 className="mb-2 font-semibold text-green-900">
+      <Alert variant="success" className="mt-8">
+        <CheckCircle2 className="h-4 w-4" />
+        <AlertTitle>
           {en.successTitle} / {pt.successTitle}
-        </h3>
-        <p className="text-green-800">{en.successMessage}</p>
-        <p className="mt-2 text-green-800">{pt.successMessage}</p>
-      </div>
+        </AlertTitle>
+        <AlertDescription>
+          <p>{en.successMessage}</p>
+          <p className="mt-2">{pt.successMessage}</p>
+        </AlertDescription>
+      </Alert>
     )
   }
 
   return (
     <div className="mt-8">
       <form onSubmit={handleSubmit} className="grid gap-8 max-w-full">
-        {/* Basic Information - Bilingual Fields */}
-        <fieldset className="border-none p-0">
-          <legend className="mb-4 text-lg font-semibold">
-            {en.basicInfo} / {pt.basicInfo}
-          </legend>
+        <Card>
+          <CardHeader>
+            <CardTitle>{en.basicInfo} / {pt.basicInfo}</CardTitle>
+          </CardHeader>
+          <CardContent className="grid gap-4">
 
           {/* Partner Name - English & Portuguese */}
           <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -302,13 +308,14 @@ export default function SubmitPartnerForm({ categories }: Props) {
               placeholder="https://..."
             />
           </div>
-        </fieldset>
+          </CardContent>
+        </Card>
 
-        {/* Contact Information - Universal */}
-        <fieldset className="border-none p-0">
-          <legend className="mb-4 text-lg font-semibold">
-            {en.contact} / {pt.contact}
-          </legend>
+        <Card>
+          <CardHeader>
+            <CardTitle>{en.contact} / {pt.contact}</CardTitle>
+          </CardHeader>
+          <CardContent className="grid gap-4">
 
           <div className="mb-4 grid gap-2">
             <Label htmlFor="contact_email">
@@ -377,13 +384,14 @@ export default function SubmitPartnerForm({ categories }: Props) {
               placeholder={en.membershipEmailHint}
             />
           </div>
-        </fieldset>
+          </CardContent>
+        </Card>
 
-        {/* Social Media - Universal */}
-        <fieldset className="border-none p-0">
-          <legend className="mb-4 text-lg font-semibold">
-            {en.social} / {pt.social}
-          </legend>
+        <Card>
+          <CardHeader>
+            <CardTitle>{en.social} / {pt.social}</CardTitle>
+          </CardHeader>
+          <CardContent className="grid gap-4">
 
           <div className="mb-4 grid gap-2">
             <Label htmlFor="social_facebook">
@@ -426,13 +434,15 @@ export default function SubmitPartnerForm({ categories }: Props) {
               placeholder="https://linkedin.com/company/..."
             />
           </div>
-        </fieldset>
+          </CardContent>
+        </Card>
 
-        {/* Error and Submit */}
         {error && (
-          <div className="rounded-md border border-red-200 bg-red-50 p-3 text-red-900">
-            {error}
-          </div>
+          <Alert variant="destructive">
+            <CircleAlert className="h-4 w-4" />
+            <AlertTitle>{en.errorSubmit}</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
         )}
 
         <Button type="submit" disabled={isSubmitting} className="w-fit">

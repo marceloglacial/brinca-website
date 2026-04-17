@@ -1,5 +1,7 @@
 import { getPayload } from 'payload'
 import config from '@/payload.config'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 interface SponsorsBlockProps {
   locale: string
@@ -53,13 +55,14 @@ export default async function SponsorsBlock({ locale, year }: SponsorsBlockProps
           const tierLabel = locale === 'pt-BR' ? tier.label['pt-BR'] : tier.label['en']
 
           return (
-            <div key={tier.value} className="border-b border-gray-200 pb-6 last:border-0">
-              <p
-                className={`mb-4 text-center text-sm font-semibold uppercase tracking-widest ${tier.color}`}
-              >
-                {tierLabel}
-              </p>
-              <div className="flex flex-wrap items-center justify-center gap-4 md:gap-24">
+            <Card key={tier.value}>
+              <CardHeader className="items-center text-center">
+                <Badge variant="secondary" className={tier.color}>
+                  {tierLabel}
+                </Badge>
+                <CardTitle className="text-xl">{tierLabel}</CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-wrap items-center justify-center gap-4 md:gap-24">
                 {tierSponsors.map((sponsor: any) => {
                   const inner = sponsor.logo ? (
                     <img
@@ -68,7 +71,7 @@ export default async function SponsorsBlock({ locale, year }: SponsorsBlockProps
                       className="h-14 w-auto object-contain md:h-28"
                     />
                   ) : (
-                    <span className="text-center text-sm font-medium text-white">
+                    <span className="text-center text-sm font-medium text-foreground">
                       {sponsor.name}
                     </span>
                   )
@@ -87,8 +90,8 @@ export default async function SponsorsBlock({ locale, year }: SponsorsBlockProps
                     <div key={sponsor.id}>{inner}</div>
                   )
                 })}
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           )
         })}
       </div>

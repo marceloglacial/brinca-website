@@ -2,7 +2,9 @@
 
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
+import { CheckCircle2, CircleAlert } from 'lucide-react'
 import { mentorSubmissionLabels } from '@/constants/mentor-submission-labels'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -78,10 +80,11 @@ export default function SubmitMentorForm() {
 
   if (submitted) {
     return (
-      <div className="mt-8 rounded bg-green-50 p-8">
-        <h3 className="mb-2 text-green-600 font-semibold">{labels.successTitle}</h3>
-        <p className="text-green-700">{labels.successMessage}</p>
-      </div>
+      <Alert variant="success" className="mt-8">
+        <CheckCircle2 className="h-4 w-4" />
+        <AlertTitle>{labels.successTitle}</AlertTitle>
+        <AlertDescription>{labels.successMessage}</AlertDescription>
+      </Alert>
     )
   }
 
@@ -168,9 +171,11 @@ export default function SubmitMentorForm() {
         </div>
 
         {error ? (
-          <div className="rounded border border-red-200 bg-red-50 p-3 text-red-900">
-            {error}
-          </div>
+          <Alert variant="destructive">
+            <CircleAlert className="h-4 w-4" />
+            <AlertTitle>{labels.errorSubmit}</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
         ) : null}
 
         <Button
