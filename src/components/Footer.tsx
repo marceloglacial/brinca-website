@@ -2,9 +2,8 @@
 
 import Link from 'next/link'
 import React from 'react'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
+import { BrazilFlagIcon, BrincaLogo, CanadaFlagIcon } from '@/components/brinca/BrandIcons'
+import { buildSiteNav } from '@/lib/site-nav'
 
 export default function SiteFooter({ locale }: { locale: string }) {
   const [pages, setPages] = React.useState<any[]>([])
@@ -19,7 +18,7 @@ export default function SiteFooter({ locale }: { locale: string }) {
         const json = await res.json()
         if (mounted) setPages(json.pages || [])
       } catch {
-        // ignore
+        // Ignore footer nav fetch failures.
       }
     })()
 
@@ -28,32 +27,47 @@ export default function SiteFooter({ locale }: { locale: string }) {
     }
   }, [locale])
 
+  const navItems = React.useMemo(
+    () =>
+      buildSiteNav(
+        locale,
+        pages.map((page: any) => ({
+          id: page.id,
+          slug: typeof page.slug === 'string' ? page.slug : page.slug?.[locale],
+          title: page.title?.[locale] ?? page.title,
+        })),
+      ),
+    [locale, pages],
+  )
+
   return (
-    <footer className="site-footer mt-12 py-4">
-      <Separator className="mb-4" />
-      <Card className="site-footer-inner mx-auto flex items-center justify-between gap-4 border-border/60 px-6 py-4 shadow-none">
-        <div className="pages-list flex items-center mr-4" aria-hidden={!locale}>
-          {pages.length > 0 && (
-            <div className="pages-scroll flex gap-2 overflow-x-auto py-1">
-              {pages.map((p: any) => {
-                const slug = typeof p.slug === 'string' ? p.slug : p.slug?.[locale]
+    <footer className="border-t border-gray-200 pt-8">
+      <div className="flex flex-col items-center gap-6 text-center lg:flex-row lg:justify-between lg:text-left">
+        <Link href={`/${locale}`} aria-label="Home">
+          <BrincaLogo />
+        </Link>
 
-                return (
-                  <Button key={p.id} asChild variant="ghost" size="sm">
-                    <Link href={`/${locale}/${slug}`}>
-                      {p.title?.[locale] ?? p.title ?? 'Page'}
-                    </Link>
-                  </Button>
-                )
-              })}
-            </div>
-          )}
+        <div className="flex flex-col items-center gap-4 lg:flex-row">
+          <div className="flex flex-wrap items-center justify-center gap-4 lg:gap-8">
+            {navItems.map((item) => (
+              <Link key={item.key} href={item.href} className="font-normal transition-colors duration-200 hover:text-[#16a34a]">
+                {item.label}
+              </Link>
+            ))}
+          </div>
+
+          <div className="hidden lg:block">|</div>
+
+          <div className="flex items-center gap-4">
+            <Link href="/pt-BR" title="Português" className="flex text-2xl transition-opacity duration-[0.25s] ease-out hover:opacity-50">
+              <BrazilFlagIcon />
+            </Link>
+            <Link href="/en" title="English" className="flex text-2xl transition-opacity duration-[0.25s] ease-out hover:opacity-50">
+              <CanadaFlagIcon />
+            </Link>
+          </div>
         </div>
-
-        <Button asChild variant="ghost" size="sm">
-          <Link href="/admin">Dashboard</Link>
-        </Button>
-      </Card>
+      </div>
     </footer>
   )
 }
