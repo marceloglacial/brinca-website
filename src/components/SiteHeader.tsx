@@ -6,7 +6,6 @@ import React from 'react'
 import { BrazilFlagIcon, BrincaLogo, CanadaFlagIcon, MenuIcon } from '@/components/brinca/BrandIcons'
 import { useSlug } from '@/components/SlugProvider'
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import { buildSiteNav } from '@/lib/site-nav'
 
 const LOCALES = ['en', 'pt-BR'] as const
 const FLAG_BY_LOCALE = {
@@ -49,19 +48,6 @@ export default function SiteHeader({ locale }: { locale: string }) {
     }
   }, [locale])
 
-  const navItems = React.useMemo(
-    () =>
-      buildSiteNav(
-        locale,
-        pages.map((page: any) => ({
-          id: page.id,
-          slug: typeof page.slug === 'string' ? page.slug : page.slug?.[locale],
-          title: page.title?.[locale] ?? page.title,
-        })),
-      ),
-    [locale, pages],
-  )
-
   const getLocaleHref = (targetLocale: (typeof LOCALES)[number]) => {
     let href = `/${targetLocale}${pathname}`
 
@@ -93,14 +79,23 @@ export default function SiteHeader({ locale }: { locale: string }) {
 
         <div className="ml-auto flex items-center">
           <div className="hidden items-center gap-8 xl:flex">
-            {navItems.map((item) => (
-              <Link key={item.key} href={item.href} className="group relative inline whitespace-nowrap font-normal">
-                <span className="transition-colors duration-200 ease-in-out group-hover:text-[#16a34a]">
-                  {item.label}
-                </span>
-                <span className="absolute left-0 top-full mt-1 block h-[3px] w-0 rounded-full bg-[#16a34a] transition-all duration-200 ease-in-out group-hover:w-full" />
-              </Link>
-            ))}
+            {pages.map((page: any) => {
+              const slug = typeof page.slug === 'string' ? page.slug : page.slug?.[locale]
+              if (!slug) return null
+
+              return (
+                <Link
+                  key={page.id}
+                  href={`/${locale}/${slug}`}
+                  className="group relative inline whitespace-nowrap font-normal"
+                >
+                  <span className="transition-colors duration-200 ease-in-out group-hover:text-[#16a34a]">
+                    {page.title?.[locale] ?? page.title ?? 'Page'}
+                  </span>
+                  <span className="absolute left-0 top-full mt-1 block h-[3px] w-0 rounded-full bg-[#16a34a] transition-all duration-200 ease-in-out group-hover:w-full" />
+                </Link>
+              )
+            })}
 
             <div className="rotate-90 transform xl:rotate-0">|</div>
 
@@ -142,13 +137,18 @@ export default function SiteHeader({ locale }: { locale: string }) {
               </div>
 
               <div className="flex flex-col gap-8 overflow-y-auto">
-                {navItems.map((item) => (
-                  <DialogClose asChild key={item.key}>
-                    <Link href={item.href} className="inline text-[20px] leading-normal font-normal">
-                      {item.label}
-                    </Link>
-                  </DialogClose>
-                ))}
+                {pages.map((page: any) => {
+                  const slug = typeof page.slug === 'string' ? page.slug : page.slug?.[locale]
+                  if (!slug) return null
+
+                  return (
+                    <DialogClose asChild key={page.id}>
+                      <Link href={`/${locale}/${slug}`} className="inline text-[20px] leading-normal font-normal">
+                        {page.title?.[locale] ?? page.title ?? 'Page'}
+                      </Link>
+                    </DialogClose>
+                  )
+                })}
 
                 <div className="mx-auto flex items-center gap-4">
                   {LOCALES.map((targetLocale) => {

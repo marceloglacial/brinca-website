@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import React from 'react'
 import { BrazilFlagIcon, BrincaLogo, CanadaFlagIcon } from '@/components/brinca/BrandIcons'
-import { buildSiteNav } from '@/lib/site-nav'
 
 export default function SiteFooter({ locale }: { locale: string }) {
   const [pages, setPages] = React.useState<any[]>([])
@@ -27,19 +26,6 @@ export default function SiteFooter({ locale }: { locale: string }) {
     }
   }, [locale])
 
-  const navItems = React.useMemo(
-    () =>
-      buildSiteNav(
-        locale,
-        pages.map((page: any) => ({
-          id: page.id,
-          slug: typeof page.slug === 'string' ? page.slug : page.slug?.[locale],
-          title: page.title?.[locale] ?? page.title,
-        })),
-      ),
-    [locale, pages],
-  )
-
   return (
     <footer className="border-t border-gray-200 pt-8">
       <div className="flex flex-col items-center gap-6 text-center lg:flex-row lg:justify-between lg:text-left">
@@ -49,11 +35,20 @@ export default function SiteFooter({ locale }: { locale: string }) {
 
         <div className="flex flex-col items-center gap-4 lg:flex-row">
           <div className="flex flex-wrap items-center justify-center gap-4 lg:gap-8">
-            {navItems.map((item) => (
-              <Link key={item.key} href={item.href} className="font-normal transition-colors duration-200 hover:text-[#16a34a]">
-                {item.label}
-              </Link>
-            ))}
+            {pages.map((page: any) => {
+              const slug = typeof page.slug === 'string' ? page.slug : page.slug?.[locale]
+              if (!slug) return null
+
+              return (
+                <Link
+                  key={page.id}
+                  href={`/${locale}/${slug}`}
+                  className="font-normal transition-colors duration-200 hover:text-[#16a34a]"
+                >
+                  {page.title?.[locale] ?? page.title ?? 'Page'}
+                </Link>
+              )
+            })}
           </div>
 
           <div className="hidden lg:block">|</div>
