@@ -10,6 +10,7 @@ import CloudinaryGallery from '@/components/CloudinaryGallery'
 import InstagramEmbed from '@/components/InstagramEmbed'
 import ActionButton from '@/components/ActionButton'
 import { LOCALE_CODES } from '@/constants/locales'
+import { withSiteName } from '@/lib/metadata'
 import type { Calendar } from '@/payload-types'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -54,8 +55,8 @@ export async function generateMetadata({
     limit: 1,
   })
   const item = docs[0]
-  const titleValue = item ? getLocalizedValue(item.title, locale) : 'Calendar'
-  const title = `${titleValue} | Brinca`
+  const titleValue = item ? getLocalizedValue(item.title, locale) : locale === 'pt-BR' ? 'Calendário' : 'Calendar'
+  const title = withSiteName(titleValue)
   return { title }
 }
 

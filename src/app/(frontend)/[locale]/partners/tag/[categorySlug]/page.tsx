@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { getLocalizedValue } from '@/lib/locales'
+import { withSiteName } from '@/lib/metadata'
 import PartnersList from '@/components/PartnersList'
 import PartnersFilter from '@/components/PartnersFilter'
 import { SetSlug } from '@/components/SlugProvider'
@@ -23,7 +24,8 @@ export async function generateMetadata({
   })
 
   const categoryTitle = cats[0] ? getLocalizedValue(cats[0].title, locale) : categorySlug
-  return { title: `${categoryTitle} | Partners | Brinca` }
+  const partnersLabel = locale === 'pt-BR' ? 'Parceiros' : 'Partners'
+  return { title: withSiteName(`${categoryTitle} | ${partnersLabel}`) }
 }
 
 export default async function PartnersTagPage(props: {

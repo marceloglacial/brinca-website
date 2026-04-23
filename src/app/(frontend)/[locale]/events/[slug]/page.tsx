@@ -10,6 +10,7 @@ import CloudinaryGallery from '@/components/CloudinaryGallery'
 import InstagramEmbed from '@/components/InstagramEmbed'
 import ActionButton from '@/components/ActionButton'
 import { LOCALE_CODES } from '@/constants/locales'
+import { withSiteName } from '@/lib/metadata'
 import type { Event } from '@/payload-types'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -54,8 +55,8 @@ export async function generateMetadata({
     limit: 1,
   })
   const event = docs[0]
-  const eventTitle = event ? getLocalizedValue(event.title, locale) : 'Event'
-  const title = `${eventTitle} | Brinca`
+  const eventTitle = event ? getLocalizedValue(event.title, locale) : locale === 'pt-BR' ? 'Evento' : 'Event'
+  const title = withSiteName(eventTitle)
   return { title }
 }
 

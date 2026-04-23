@@ -4,6 +4,7 @@ import { getPayload } from 'payload'
 import BlockRenderer from '@/components/BlockRenderer'
 import { SetSlug } from '@/components/SlugProvider'
 import { getLocalizedValue } from '@/lib/locales'
+import { withSiteName } from '@/lib/metadata'
 import config from '@/payload.config'
 
 export async function generateMetadata({
@@ -25,7 +26,7 @@ export async function generateMetadata({
   const pageTitle = page ? getLocalizedValue(page.title, locale) : 'Page'
 
   return {
-    title: `${pageTitle} | Brinca`,
+    title: withSiteName(pageTitle),
   }
 }
 

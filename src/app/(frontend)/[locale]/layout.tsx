@@ -1,11 +1,13 @@
 import React from 'react'
 import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
 import { Mulish } from 'next/font/google'
 import SiteHeader from '@/components/SiteHeader'
 import { SlugProvider } from '@/components/SlugProvider'
 import SiteFooter from '@/components/Footer'
 import { LOCALE_CODES } from '@/constants/locales'
 import { isSupportedLocale } from '@/lib/locales'
+import { buildLocaleMetadata } from '@/lib/metadata'
 import { cn } from '@/lib/utils'
 import './globals.css'
 
@@ -20,11 +22,11 @@ export async function generateStaticParams() {
   }))
 }
 
-export const SITE_NAME = 'Brinca'
-
-export const metadata = {
-  description: 'Your Brazilian community in Ottawa-Gatineau!',
-  title: SITE_NAME,
+export async function generateMetadata(props: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await props.params
+  return buildLocaleMetadata(locale)
 }
 
 export default async function RootLayout(props: {
