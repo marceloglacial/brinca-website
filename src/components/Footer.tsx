@@ -1,66 +1,51 @@
-'use client'
-
 import Link from 'next/link'
-import React from 'react'
-import { BrazilFlagIcon, BrincaLogo, CanadaFlagIcon } from '@/components/brinca/BrandIcons'
+import { getPayload } from 'payload'
+import type { LocaleCode } from '@/constants/locales'
+import config from '@/payload.config'
 
-export default function SiteFooter({ locale }: { locale: string }) {
-  const [pages, setPages] = React.useState<any[]>([])
-
-  React.useEffect(() => {
-    let mounted = true
-
-    ;(async () => {
-      try {
-        const res = await fetch(`/api/public/pages?locale=${encodeURIComponent(locale)}`)
-        if (!res.ok) return
-        const json = await res.json()
-        if (mounted) setPages(json.pages || [])
-      } catch {
-        // Ignore footer nav fetch failures.
-      }
-    })()
-
-    return () => {
-      mounted = false
-    }
-  }, [locale])
+export default async function SiteFooter({ locale }: { locale: LocaleCode }) {
+  const loginLabel = locale === 'pt-BR' ? 'Admin' : 'Login'
+  const payloadConfig = await config
+  const payload = await getPayload({ config: payloadConfig })
+  const { docs: pages } = await payload.find({
+    collection: 'pages',
+    locale: locale as any,
+    where: {
+      showInNavbar: {
+        equals: true,
+      },
+    },
+    limit: 100,
+    sort: 'title',
+  })
 
   return (
     <footer className="border-t border-gray-200 pt-8">
-      <div className="flex flex-col items-center gap-6 text-center lg:flex-row lg:justify-between lg:text-left">
-        <Link href={`/${locale}`} aria-label="Home">
-          <BrincaLogo />
-        </Link>
+      <div className="flex flex-col items-center gap-4 text-center lg:flex-row lg:items-center lg:justify-between lg:text-left">
+        <div className="flex flex-wrap items-center justify-center gap-4 lg:justify-start lg:gap-8">
+          {pages.map((page) => {
+            const slug = page.slug
+            if (!slug) return null
 
-        <div className="flex flex-col items-center gap-4 lg:flex-row">
-          <div className="flex flex-wrap items-center justify-center gap-4 lg:gap-8">
-            {pages.map((page: any) => {
-              const slug = typeof page.slug === 'string' ? page.slug : page.slug?.[locale]
-              if (!slug) return null
+            return (
+              <Link
+                key={page.id}
+                href={`/${locale}/${slug}`}
+                className="font-normal transition-colors duration-200 hover:text-[#16a34a]"
+              >
+                {page.title ?? 'Page'}
+              </Link>
+            )
+          })}
+        </div>
 
-              return (
-                <Link
-                  key={page.id}
-                  href={`/${locale}/${slug}`}
-                  className="font-normal transition-colors duration-200 hover:text-[#16a34a]"
-                >
-                  {page.title?.[locale] ?? page.title ?? 'Page'}
-                </Link>
-              )
-            })}
-          </div>
-
-          <div className="hidden lg:block">|</div>
-
-          <div className="flex items-center gap-4">
-            <Link href="/pt-BR" title="Português" className="flex text-2xl transition-opacity duration-[0.25s] ease-out hover:opacity-50">
-              <BrazilFlagIcon />
-            </Link>
-            <Link href="/en" title="English" className="flex text-2xl transition-opacity duration-[0.25s] ease-out hover:opacity-50">
-              <CanadaFlagIcon />
-            </Link>
-          </div>
+        <div className="flex items-center lg:ml-8">
+          <Link
+            href="/admin/login"
+            className="font-normal transition-colors duration-200 hover:text-[#16a34a]"
+          >
+            {loginLabel}
+          </Link>
         </div>
       </div>
     </footer>
