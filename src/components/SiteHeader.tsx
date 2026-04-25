@@ -5,7 +5,7 @@ import { usePathname, useSearchParams } from 'next/navigation'
 import React from 'react'
 import { BrazilFlagIcon, BrincaLogo, CanadaFlagIcon, MenuIcon } from '@/components/brinca/BrandIcons'
 import { useSlug } from '@/components/SlugProvider'
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 
 const LOCALES = ['en', 'pt-BR'] as const
 const FLAG_BY_LOCALE = {
@@ -128,6 +128,7 @@ export default function SiteHeader({ locale }: { locale: string }) {
               showCloseButton={false}
               className="left-auto right-0 top-0 h-screen w-screen max-w-none translate-x-0 translate-y-0 gap-8 border-0 bg-white px-8 py-16 shadow-none duration-200 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-right-full md:w-1/2 md:shadow-2xl"
             >
+              <DialogTitle className="sr-only">Navigation menu</DialogTitle>
               <div className="absolute right-6 top-8 z-50">
                 <DialogClose asChild>
                   <button className="flex p-2" aria-label="Close navigation menu">
