@@ -19,9 +19,9 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         brincaOutline:
-          "rounded-full border-2 border-[#16a34a] bg-transparent font-normal text-[#16a34a] hover:bg-[#16a34a] hover:text-white",
+          "rounded-full border-2 border-[#16a34a] bg-white font-normal text-[#16a34a] hover:bg-[#16a34a] hover:text-white focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#16a34a]",
         brincaSolid:
-          "rounded-full border-2 border-[#16a34a] bg-[#16a34a] font-normal text-white hover:border-[#15803d] hover:bg-[#15803d]",
+          "rounded-full border-2 border-[#16a34a] bg-[#16a34a] font-normal text-white hover:bg-white hover:text-[#16a34a] focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#16a34a]",
       },
       size: {
         default: "h-10 px-4 py-2",

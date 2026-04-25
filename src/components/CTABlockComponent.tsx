@@ -22,8 +22,8 @@ type Props = {
 }
 
 const variantMap: Record<ButtonStyle, string> = {
-  primary: 'default',
-  secondary: 'secondary',
+  primary: 'brincaSolid',
+  secondary: 'brincaOutline',
   link: 'link',
 }
 
@@ -35,13 +35,13 @@ export default function CTABlockComponent({ block, locale }: Props) {
   if (buttons.length === 0) return null
 
   return (
-    <div className="cta-block flex flex-wrap gap-3 my-8">
+    <div className="cta-block my-8 flex flex-wrap justify-center gap-4">
       {buttons.map((button, index) => (
         <Button
           key={index}
           asChild
           variant={variantMap[button.style ?? 'primary'] as any}
-          size="default"
+          size={button.style === 'link' ? 'default' : 'brinca'}
         >
           <Link
             href={button.href!}

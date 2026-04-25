@@ -3,10 +3,13 @@ import type { FC } from 'react'
 import { getLocalizedValue } from '@/lib/locales'
 import { Button } from '@/components/ui/button'
 
+type ButtonStyle = 'primary' | 'secondary' | 'link'
+
 type ButtonGroup = {
   title?: any
   url?: any
   openInNewWindow?: boolean | null
+  style?: ButtonStyle | null
 }
 
 type Props = {
@@ -24,9 +27,15 @@ const ActionButton: FC<Props> = ({ button, locale }) => {
 
   const target = button.openInNewWindow ? '_blank' : undefined
   const rel = button.openInNewWindow ? 'noopener noreferrer' : undefined
+  const style = button.style ?? 'primary'
+  const variantMap: Record<ButtonStyle, 'brincaSolid' | 'brincaOutline' | 'link'> = {
+    primary: 'brincaSolid',
+    secondary: 'brincaOutline',
+    link: 'link',
+  }
 
   return (
-    <Button asChild>
+    <Button asChild variant={variantMap[style]} size={style === 'link' ? 'default' : 'brinca'}>
       <Link href={href} target={target} rel={rel}>
         {title || href}
       </Link>

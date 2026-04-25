@@ -28,6 +28,13 @@ export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [submitted, setSubmitted] = useState(false)
+  const fieldClass =
+    'min-h-14 rounded-2xl border-2 border-[#16a34a] bg-white px-6 text-[15px] text-slate-900 shadow-none placeholder:text-slate-400 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#16a34a]'
+  const textareaClass =
+    'min-h-[180px] rounded-2xl border-2 border-[#16a34a] bg-white px-6 py-4 text-[15px] text-slate-900 shadow-none placeholder:text-slate-400 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#16a34a]'
+  const labelClass = 'text-[15px] font-bold leading-6 text-slate-900'
+  const submitClass =
+    'min-h-12 rounded-full border-2 border-[#16a34a] bg-white px-8 text-base font-normal text-[#16a34a] transition-colors hover:bg-[#16a34a] hover:text-white focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#16a34a]'
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -75,10 +82,10 @@ export default function ContactForm() {
   }
 
   return (
-    <div className="mt-8">
-      <form onSubmit={handleSubmit} className="grid gap-6 max-w-lg">
-        <div className="grid gap-2">
-          <Label htmlFor="name">
+    <div className="mt-8 md:mt-10">
+      <form onSubmit={handleSubmit} className="mx-auto grid w-full max-w-screen-md gap-5 md:gap-6">
+        <div className="grid gap-3">
+          <Label htmlFor="name" className={labelClass}>
             {labels.name} <span className="text-red-500">{labels.required}</span>
           </Label>
           <Input
@@ -88,11 +95,12 @@ export default function ContactForm() {
             value={formData.name}
             onChange={handleChange}
             placeholder={labels.namePlaceholder}
+            className={fieldClass}
           />
         </div>
 
-        <div className="grid gap-2">
-          <Label htmlFor="email">
+        <div className="grid gap-3">
+          <Label htmlFor="email" className={labelClass}>
             {labels.email} <span className="text-red-500">{labels.required}</span>
           </Label>
           <Input
@@ -102,11 +110,12 @@ export default function ContactForm() {
             value={formData.email}
             onChange={handleChange}
             placeholder={labels.emailPlaceholder}
+            className={fieldClass}
           />
         </div>
 
-        <div className="grid gap-2">
-          <Label htmlFor="message">
+        <div className="grid gap-3">
+          <Label htmlFor="message" className={labelClass}>
             {labels.message} <span className="text-red-500">{labels.required}</span>
           </Label>
           <Textarea
@@ -115,18 +124,19 @@ export default function ContactForm() {
             value={formData.message}
             onChange={handleChange}
             rows={6}
+            className={textareaClass}
           />
         </div>
 
         {error && (
-          <Alert variant="destructive">
+          <Alert variant="destructive" className="rounded-2xl border-2 border-red-300 px-5 py-4 text-[15px]">
             <CircleAlert className="h-4 w-4" />
             <AlertTitle>{labels.errorSubmit}</AlertTitle>
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
 
-        <Button type="submit" disabled={isSubmitting} className="w-fit">
+        <Button type="submit" disabled={isSubmitting} className={submitClass}>
           {isSubmitting ? labels.submitting : labels.submit}
         </Button>
       </form>

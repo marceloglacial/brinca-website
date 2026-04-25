@@ -38,6 +38,13 @@ export default function SubmitMentorRequestForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [submitted, setSubmitted] = useState(false)
+  const fieldClass =
+    'min-h-14 rounded-2xl border-2 border-[#16a34a] bg-white px-6 text-[15px] text-slate-900 shadow-none placeholder:text-slate-400 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#16a34a]'
+  const textareaClass =
+    'min-h-[180px] rounded-2xl border-2 border-[#16a34a] bg-white px-6 py-4 text-[15px] text-slate-900 shadow-none placeholder:text-slate-400 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#16a34a]'
+  const labelClass = 'text-[15px] font-bold leading-6 text-slate-900'
+  const submitClass =
+    'min-h-12 rounded-full border-2 border-[#16a34a] bg-white px-8 text-base font-normal text-[#16a34a] transition-colors hover:bg-[#16a34a] hover:text-white focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#16a34a]'
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -88,10 +95,10 @@ export default function SubmitMentorRequestForm() {
   }
 
   return (
-    <div className="mt-8">
-      <form onSubmit={handleSubmit} className="grid gap-6 max-w-lg">
-        <div className="grid gap-2">
-          <Label htmlFor="name">
+    <div className="mt-8 md:mt-10">
+      <form onSubmit={handleSubmit} className="mx-auto grid w-full max-w-screen-md gap-5 md:gap-6">
+        <div className="grid gap-3">
+          <Label htmlFor="name" className={labelClass}>
             {labels.name} <span className="text-red-500">{labels.required}</span>
           </Label>
           <Input
@@ -100,11 +107,12 @@ export default function SubmitMentorRequestForm() {
             name="name"
             value={formData.name}
             onChange={handleChange}
+            className={fieldClass}
           />
         </div>
 
-        <div className="grid gap-2">
-          <Label htmlFor="email">
+        <div className="grid gap-3">
+          <Label htmlFor="email" className={labelClass}>
             {labels.email} <span className="text-red-500">{labels.required}</span>
           </Label>
           <Input
@@ -113,11 +121,12 @@ export default function SubmitMentorRequestForm() {
             name="email"
             value={formData.email}
             onChange={handleChange}
+            className={fieldClass}
           />
         </div>
 
-        <div className="grid gap-2">
-          <Label htmlFor="phone">
+        <div className="grid gap-3">
+          <Label htmlFor="phone" className={labelClass}>
             {labels.phone} <span className="text-red-500">{labels.required}</span>
           </Label>
           <Input
@@ -127,11 +136,12 @@ export default function SubmitMentorRequestForm() {
             value={formData.phone}
             onChange={handleChange}
             inputMode="numeric"
+            className={fieldClass}
           />
         </div>
 
-        <div className="grid gap-2">
-          <Label htmlFor="plannedTravelDate">
+        <div className="grid gap-3">
+          <Label htmlFor="plannedTravelDate" className={labelClass}>
             {labels.plannedTravelDate} <span className="text-red-500">{labels.required}</span>
           </Label>
           <Input
@@ -140,11 +150,12 @@ export default function SubmitMentorRequestForm() {
             name="plannedTravelDate"
             value={formData.plannedTravelDate}
             onChange={handleChange}
+            className={fieldClass}
           />
         </div>
 
-        <div className="grid gap-2">
-          <Label htmlFor="stayDuration">
+        <div className="grid gap-3">
+          <Label htmlFor="stayDuration" className={labelClass}>
             {labels.stayDuration} <span className="text-red-500">{labels.required}</span>
           </Label>
           <Input
@@ -153,11 +164,12 @@ export default function SubmitMentorRequestForm() {
             name="stayDuration"
             value={formData.stayDuration}
             onChange={handleChange}
+            className={fieldClass}
           />
         </div>
 
-        <div className="grid gap-2">
-          <Label htmlFor="familyDescription">
+        <div className="grid gap-3">
+          <Label htmlFor="familyDescription" className={labelClass}>
             {labels.familyDescription} <span className="text-red-500">{labels.required}</span>
           </Label>
           <Textarea
@@ -166,18 +178,19 @@ export default function SubmitMentorRequestForm() {
             value={formData.familyDescription}
             onChange={handleChange}
             rows={6}
+            className={textareaClass}
           />
         </div>
 
         {error && (
-          <Alert variant="destructive">
+          <Alert variant="destructive" className="rounded-2xl border-2 border-red-300 px-5 py-4 text-[15px]">
             <CircleAlert className="h-4 w-4" />
             <AlertTitle>{labels.errorSubmit}</AlertTitle>
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
 
-        <Button type="submit" disabled={isSubmitting} className="w-fit">
+        <Button type="submit" disabled={isSubmitting} className={submitClass}>
           {isSubmitting ? labels.submitting : labels.submit}
         </Button>
       </form>
