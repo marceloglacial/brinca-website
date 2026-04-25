@@ -3,7 +3,6 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { getLocalizedValue } from '@/lib/locales'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 interface PartnersFilterProps {
   locale: string
@@ -27,37 +26,45 @@ export default async function PartnersFilter({ locale, activeCategorySlug }: Par
   const categoriesLabel = locale === 'pt-BR' ? 'Categorias' : 'Categories'
 
   return (
-    <Card>
-      <CardHeader className="pb-3">
-        <CardTitle className="text-base">{categoriesLabel}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <nav>
-          <ul className="m-0 flex list-none flex-col gap-2 p-0">
-            <li>
-              <Button asChild variant={!activeCategorySlug ? 'secondary' : 'ghost'} className="w-full justify-start">
-                <Link href={`/${locale}/partners`}>
-                  {allLabel}
-                </Link>
-              </Button>
-            </li>
-            {categories.map((category: any) => {
-              const title = getLocalizedValue(category.title, locale)
-              const slug = getLocalizedValue(category.slug, locale)
-              const isActive = activeCategorySlug === slug
-              return (
-                <li key={category.id}>
-                  <Button asChild variant={isActive ? 'secondary' : 'ghost'} className="w-full justify-start">
-                    <Link href={`/${locale}/partners/tag/${slug}`}>
-                      {title}
-                    </Link>
-                  </Button>
-                </li>
-              )
-            })}
-          </ul>
-        </nav>
-      </CardContent>
-    </Card>
+    <section className="space-y-3 md:space-y-4">
+      <h2 className="text-sm font-bold tracking-tight text-slate-900 md:text-base">{categoriesLabel}</h2>
+      <nav>
+        <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
+          <li>
+            <Button
+              asChild
+              variant="ghost"
+              className={
+                !activeCategorySlug
+                  ? 'h-8 rounded-full border border-[#16a34a] bg-[#16a34a] px-3 text-xs font-semibold text-white shadow-none hover:bg-[#15803d] hover:text-white'
+                  : 'h-8 rounded-full border border-[#16a34a] bg-white px-3 text-xs font-semibold text-[#16a34a] shadow-none hover:bg-[#16a34a]/8 hover:text-[#16a34a]'
+              }
+            >
+              <Link href={`/${locale}/partners`}>{allLabel}</Link>
+            </Button>
+          </li>
+          {categories.map((category: any) => {
+            const title = getLocalizedValue(category.title, locale)
+            const slug = getLocalizedValue(category.slug, locale)
+            const isActive = activeCategorySlug === slug
+            return (
+              <li key={category.id}>
+                <Button
+                  asChild
+                  variant="ghost"
+                  className={
+                    isActive
+                      ? 'h-8 rounded-full border border-[#16a34a] bg-[#16a34a] px-3 text-xs font-semibold text-white shadow-none hover:bg-[#15803d] hover:text-white'
+                      : 'h-8 rounded-full border border-[#16a34a] bg-white px-3 text-xs font-semibold text-[#16a34a] shadow-none hover:bg-[#16a34a]/8 hover:text-[#16a34a]'
+                  }
+                >
+                  <Link href={`/${locale}/partners/tag/${slug}`}>{title}</Link>
+                </Button>
+              </li>
+            )
+          })}
+        </ul>
+      </nav>
+    </section>
   )
 }

@@ -43,7 +43,7 @@ export default async function PartnersList({ locale, categorySlug }: PartnersLis
   if (!partners || partners.length === 0) return null
 
   return (
-    <div className="partners-list grid grid-cols-1 gap-16 pt-8">
+    <div className="partners-list grid grid-cols-1 gap-5 pt-1 md:gap-6 xl:grid-cols-2">
       {partners.map((partner: any) => (
         <PartnerCard key={partner.id} partner={partner} locale={locale} />
       ))}
