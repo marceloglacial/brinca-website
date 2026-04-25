@@ -3,6 +3,7 @@ import { getPayload } from 'payload'
 import { defaultJSXConverters, RichText } from '@payloadcms/richtext-lexical/react'
 
 import { getLocalizedValue } from '@/lib/locales'
+import PageHeading from '@/components/brinca/PageHeading'
 import config from '@/payload.config'
 import { formatDate } from '@/lib/formatDate'
 import { SetSlug } from '@/components/SlugProvider'
@@ -13,7 +14,7 @@ import { LOCALE_CODES } from '@/constants/locales'
 import { withSiteName } from '@/lib/metadata'
 import type { Event } from '@/payload-types'
 import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 
 export async function generateStaticParams() {
@@ -152,9 +153,12 @@ export default async function EventPageRoute(props: {
     }
   }
 
+  const eventTitle = getLocalizedValue(event.title, locale)
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
       <SetSlug slugs={slugMap} />
+      <PageHeading title={eventTitle} />
 
       <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
         <main className="space-y-6">
@@ -163,7 +167,6 @@ export default async function EventPageRoute(props: {
               <Badge variant="secondary" className="w-fit">
                 Event
               </Badge>
-              <CardTitle>{getLocalizedValue(event.title, locale)}</CardTitle>
               <p className="font-medium text-muted-foreground">
                 {formatDate(event.date, locale, {
                   day: 'numeric',
@@ -183,11 +186,11 @@ export default async function EventPageRoute(props: {
           {event.thumbnail ? (
             <Card>
               <CardContent className="p-4">
-              <img
-                src={event.thumbnail}
-                alt={getLocalizedValue(event.title, locale)}
-                className="w-full rounded-md object-cover"
-              />
+                <img
+                  src={event.thumbnail}
+                  alt={eventTitle}
+                  className="w-full rounded-md object-cover"
+                />
               </CardContent>
             </Card>
           ) : null}

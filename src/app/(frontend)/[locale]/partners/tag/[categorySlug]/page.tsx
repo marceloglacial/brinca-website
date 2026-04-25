@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
+import PageHeading from '@/components/brinca/PageHeading'
 import { getLocalizedValue } from '@/lib/locales'
 import { withSiteName } from '@/lib/metadata'
 import PartnersList from '@/components/PartnersList'
@@ -82,9 +83,7 @@ export default async function PartnersTagPage(props: {
   return (
     <div className="page-view">
       <SetSlug slugs={slugMap} />
-      <div className="page-header">
-        <h1>{pageTitle}</h1>
-      </div>
+      <PageHeading title={pageTitle} />
 
       <div className="mt-8 flex flex-col gap-8 md:flex-row">
         <aside className="w-full flex-shrink-0 md:w-56">

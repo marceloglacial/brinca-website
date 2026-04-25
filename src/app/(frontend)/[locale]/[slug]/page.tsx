@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 
 import BlockRenderer from '@/components/BlockRenderer'
+import PageHeading from '@/components/brinca/PageHeading'
 import { SetSlug } from '@/components/SlugProvider'
 import { getLocalizedValue } from '@/lib/locales'
 import { withSiteName } from '@/lib/metadata'
@@ -67,9 +68,12 @@ export default async function PageRoute(props: {
     }
   }
 
+  const pageTitle = getLocalizedValue(page.title, locale)
+
   return (
     <div className="page-view">
       <SetSlug slugs={slugMap} />
+      <PageHeading title={pageTitle} />
 
       {(page.components ?? []).map((block, index) => (
         <BlockRenderer key={block.id ?? index} block={block} locale={locale} />
