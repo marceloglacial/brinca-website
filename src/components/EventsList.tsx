@@ -27,7 +27,7 @@ export default async function EventsList({
   return (
     <CollectionGridSection
       locale={locale}
-      title={title ?? 'Events'}
+      title={title}
       items={events.map((event) => {
         const slug = typeof event.slug === 'string' ? event.slug : event.slug?.[locale]
 

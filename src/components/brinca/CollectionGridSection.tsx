@@ -17,13 +17,13 @@ export default function CollectionGridSection({
 }: {
   items: Item[]
   locale: string
-  title: string
+  title?: string
 }) {
   if (items.length === 0) return null
 
   return (
     <section className="space-y-3 md:space-y-4">
-      <SectionHeading title={title} />
+      {title && <SectionHeading title={title} />}
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item) => (
@@ -31,7 +31,11 @@ export default function CollectionGridSection({
             <article className="flex h-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl transition-transform duration-200 hover:-translate-y-1">
               {item.thumbnail ? (
                 <figure className="relative aspect-[4/3] h-56 overflow-hidden md:h-64">
-                  <img src={item.thumbnail} alt={item.title} className="h-full w-full object-cover" />
+                  <img
+                    src={item.thumbnail}
+                    alt={item.title}
+                    className="h-full w-full object-cover"
+                  />
                 </figure>
               ) : null}
 
