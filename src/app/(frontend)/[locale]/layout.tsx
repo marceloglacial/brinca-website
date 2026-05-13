@@ -42,10 +42,12 @@ export default async function RootLayout(props: {
 
   return (
     <html lang={locale}>
-      <body className={cn('bg-background font-sans text-foreground antialiased', fontSans.variable)}>
+      <body
+        className={cn('bg-background font-sans text-foreground antialiased', fontSans.variable)}
+      >
         <SlugProvider>
           <div className="px-4 md:px-6 lg:px-8">
-            <div className="mx-auto flex min-h-screen max-w-screen-xl flex-col gap-8 p-4 md:gap-16 md:p-6 lg:my-8 2xl:p-0">
+            <div className="mx-auto flex min-h-screen max-w-7xl flex-col py-4 md:py-6 lg:py-8">
               <React.Suspense fallback={null}>
                 <SiteHeader locale={locale} />
               </React.Suspense>

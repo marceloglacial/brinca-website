@@ -20,11 +20,11 @@ export default async function HomePage(props: { params: Promise<{ locale: string
   const page = docs[0]
 
   if (!page) {
-    return <div className="page-view" />
+    return <div className="page-view home-page-view" />
   }
 
   return (
-    <div className="page-view">
+    <div className="page-view home-page-view">
       <SetSlug slugs={{}} />
       {(page.components ?? []).map((block, index) => (
         <BlockRenderer key={block.id ?? index} block={block} locale={locale} />

@@ -13,9 +13,6 @@ import ActionButton from '@/components/ActionButton'
 import { LOCALE_CODES } from '@/constants/locales'
 import { withSiteName } from '@/lib/metadata'
 import type { Calendar } from '@/payload-types'
-import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
 
 export async function generateStaticParams() {
   const payloadConfig = await config
@@ -156,46 +153,17 @@ export default async function CalendarPageRoute(props: {
   const calendarTitle = getLocalizedValue(item.title, locale)
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
+    <div className="w-full py-8">
       <SetSlug slugs={slugMap} />
       <PageHeading title={calendarTitle} />
-
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <main className="space-y-6">
-          <Card>
-            <CardHeader>
-              <Badge variant="secondary" className="w-fit">
-                Calendar
-              </Badge>
-              <p className="font-medium text-muted-foreground">
-                {formatDate(item.date, locale, {
-                  day: 'numeric',
-                  month: 'long',
-                  year: 'numeric',
-                })}
-              </p>
-            </CardHeader>
-            <CardContent>
-              <Separator className="mb-6" />
-              {renderCalendarBlocks(item, locale)}
-            </CardContent>
-          </Card>
-        </main>
-
-        <aside className="space-y-4">
-          {item.thumbnail ? (
-            <Card>
-              <CardContent className="p-4">
-                <img
-                  src={item.thumbnail}
-                  alt={calendarTitle}
-                  className="w-full rounded-md object-cover"
-                />
-              </CardContent>
-            </Card>
-          ) : null}
-        </aside>
-      </div>
+      <p className="mb-6 font-medium text-muted-foreground">
+        {formatDate(item.date, locale, {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+        })}
+      </p>
+      <div className="w-full">{renderCalendarBlocks(item, locale)}</div>
     </div>
   )
 }

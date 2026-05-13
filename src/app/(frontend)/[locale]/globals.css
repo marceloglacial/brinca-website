@@ -164,11 +164,10 @@
 .page-view {
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 2rem;
+  padding: 4rem 0;
 }
 
-@media (min-width: 768px) {
-  .page-view {
-    gap: 6rem;
-  }
+.home-page-view {
+  gap: 4rem;
 }

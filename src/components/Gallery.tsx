@@ -3,12 +3,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { ChevronLeft, ChevronRight, LoaderCircle, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-} from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
 import type { CloudinaryGalleryImage } from '@/lib/cloudinary'
 
 type GalleryProps = {
@@ -69,7 +64,7 @@ export default function Gallery({ images }: GalleryProps) {
 
   return (
     <div className="gallery-container">
-      <div className="mt-6 grid grid-cols-4 gap-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+      <div className="mt-6 grid grid-cols-3 gap-4 lg:grid-cols-6">
         {images.map((image, index) => (
           <div
             key={image.id}
