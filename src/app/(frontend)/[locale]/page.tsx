@@ -1,6 +1,7 @@
 import { getPayload } from 'payload'
 
 import BlockRenderer from '@/components/BlockRenderer'
+import { SetSlug } from '@/components/SlugProvider'
 import config from '@/payload.config'
 
 export default async function HomePage(props: { params: Promise<{ locale: string }> }) {
@@ -24,6 +25,7 @@ export default async function HomePage(props: { params: Promise<{ locale: string
 
   return (
     <div className="page-view">
+      <SetSlug slugs={{}} />
       {(page.components ?? []).map((block, index) => (
         <BlockRenderer key={block.id ?? index} block={block} locale={locale} />
       ))}

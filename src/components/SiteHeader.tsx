@@ -52,9 +52,10 @@ export default function SiteHeader({ locale }: { locale: string }) {
     let href = `/${targetLocale}${pathname}`
 
     if (hasLocale) {
+      const isLocaleRoot = segments.length === 1
       const localizedSlug = slugMap[targetLocale]
 
-      if (localizedSlug) {
+      if (!isLocaleRoot && localizedSlug) {
         href = `/${targetLocale}/${localizedSlug}${search}`
       } else if (segments.length > 1) {
         href = '/' + [targetLocale, ...segments.slice(1)].join('/') + search
