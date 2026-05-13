@@ -53,7 +53,11 @@ export async function generateMetadata({
     limit: 1,
   })
   const event = docs[0]
-  const eventTitle = event ? getLocalizedValue(event.title, locale) : locale === 'pt-BR' ? 'Evento' : 'Event'
+  const eventTitle = event
+    ? getLocalizedValue(event.title, locale)
+    : locale === 'pt-BR'
+      ? 'Evento'
+      : 'Event'
   const title = withSiteName(eventTitle)
   return { title }
 }
@@ -156,13 +160,13 @@ export default async function EventPageRoute(props: {
     <div className="w-full py-8">
       <SetSlug slugs={slugMap} />
       <PageHeading title={eventTitle} />
-      <p className="mb-6 font-medium text-muted-foreground">
+      <div className="mb-6 mt-4 text-sm text-center text-muted-foreground">
         {formatDate(event.date, locale, {
           day: 'numeric',
           month: 'long',
           year: 'numeric',
         })}
-      </p>
+      </div>
       <div className="w-full">{renderEventBlocks(event, locale)}</div>
     </div>
   )

@@ -53,7 +53,11 @@ export async function generateMetadata({
     limit: 1,
   })
   const item = docs[0]
-  const titleValue = item ? getLocalizedValue(item.title, locale) : locale === 'pt-BR' ? 'Calendário' : 'Calendar'
+  const titleValue = item
+    ? getLocalizedValue(item.title, locale)
+    : locale === 'pt-BR'
+      ? 'Calendário'
+      : 'Calendar'
   const title = withSiteName(titleValue)
   return { title }
 }
@@ -156,13 +160,13 @@ export default async function CalendarPageRoute(props: {
     <div className="w-full py-8">
       <SetSlug slugs={slugMap} />
       <PageHeading title={calendarTitle} />
-      <p className="mb-6 font-medium text-muted-foreground">
+      <div className="mb-6 mt-4 text-sm text-center text-muted-foreground">
         {formatDate(item.date, locale, {
           day: 'numeric',
           month: 'long',
           year: 'numeric',
         })}
-      </p>
+      </div>
       <div className="w-full">{renderCalendarBlocks(item, locale)}</div>
     </div>
   )
