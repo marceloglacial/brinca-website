@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "3.80.0",
+    "@payloadcms/email-resend": "3.80.0",
     "@payloadcms/next": "3.80.0",
     "@payloadcms/plugin-form-builder": "^3.80.0",
     "@payloadcms/richtext-lexical": "3.80.0",
@@ -37,7 +38,6 @@
     "graphql": "^16.8.1",
     "lucide-react": "^1.8.0",
     "next": "16.2.0",
-    "nodemailer": "^8.0.4",
     "payload": "3.80.0",
     "postcss": "^8.5.9",
     "react": "19.2.4",
@@ -52,7 +52,6 @@
     "@playwright/test": "1.58.2",
     "@testing-library/react": "16.3.0",
     "@types/node": "22.19.9",
-    "@types/nodemailer": "^7.0.11",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "4.5.2",

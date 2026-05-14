@@ -69,6 +69,7 @@ export const POST = async (request: Request) => {
     })
 
     await sendEmailToAdmins(
+      payload,
       `New Partner Submission: ${enTitle}`,
       `
         <h2>New Partner Submission</h2>

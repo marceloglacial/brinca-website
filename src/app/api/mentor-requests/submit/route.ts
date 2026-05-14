@@ -42,6 +42,7 @@ export const POST = async (request: Request) => {
     })
 
     await sendEmailToAdmins(
+      payload,
       `New Mentor Request: ${body.name.trim()}`,
       `
         <h2>New Mentor Request</h2>

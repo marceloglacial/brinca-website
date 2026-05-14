@@ -40,11 +40,24 @@ Create a `.env` file in the project root:
 PAYLOAD_SECRET=replace-with-a-long-random-secret
 DATABASE_URL=mongodb://127.0.0.1/brinca
 
+# Required for email delivery via Resend
+RESEND_API_KEY=your-resend-api-key
+RESEND_FROM_ADDRESS=noreply@brinca.ca
+
+# Optional sender name
+RESEND_FROM_NAME=Brinca
+
+# Form notification recipients
+CONTACT_FORM_TO=info@brinca.ca
+ADMIN_EMAILS=info@brinca.ca
+
 # Required only if you use Cloudinary gallery fields
 CLOUDINARY_CLOUD_NAME=your-cloud-name
 CLOUDINARY_API_KEY=your-api-key
 CLOUDINARY_API_SECRET=your-api-secret
 ```
+
+`CONTACT_FORM_TO` controls where contact form messages are sent. `ADMIN_EMAILS` is a comma-separated list used for mentor, mentor-request, and partner submission notifications.
 
 ### 3) Install and run
 
