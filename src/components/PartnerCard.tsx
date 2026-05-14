@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 interface PartnerCardProps {
   partner: any
   locale: string
+  showLogo?: boolean
 }
 
 function getTrimmedValue(value: unknown) {
@@ -49,7 +50,7 @@ function WhatsAppIcon(props: SVGProps<SVGSVGElement>) {
   )
 }
 
-export default function PartnerCard({ partner, locale }: PartnerCardProps) {
+export default function PartnerCard({ partner, locale, showLogo = true }: PartnerCardProps) {
   const title = getLocalizedValue(partner.title, locale)
   const description = getTrimmedValue(getLocalizedValue(partner.description, locale))
   const address = getTrimmedValue(
@@ -81,9 +82,7 @@ export default function PartnerCard({ partner, locale }: PartnerCardProps) {
       : `https://linkedin.com/company/${linkedin}`
     : null
 
-  const whatsappUrl = whatsapp
-    ? `https://wa.me/${whatsapp.replace(/\D/g, '')}`
-    : null
+  const whatsappUrl = whatsapp ? `https://wa.me/${whatsapp.replace(/\D/g, '')}` : null
   const mapsUrl = address
     ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
     : null
@@ -103,21 +102,17 @@ export default function PartnerCard({ partner, locale }: PartnerCardProps) {
     <Card className="h-full overflow-hidden rounded-3xl border border-[#e7ebef] bg-white shadow-[0_18px_40px_-28px_rgba(15,23,42,0.45)]">
       <div className="flex h-full flex-col p-5 md:p-6">
         <div className="flex items-start gap-4">
-          {partner.logo && (
-            <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-[20px]bg-white p-3 md:h-24 md:w-24">
-              <img src={partner.logo} alt={title} className="h-full w-full object-contain" />
-            </div>
-          )}
-
           <div className="min-w-0 flex-1">
             <CardHeader className="space-y-2 p-0">
-              <CardTitle className="text-[24px] leading-[1.15] font-bold text-slate-900 md:text-[28px]">
+              <CardTitle className="text-lg leading-[1.15] font-bold text-slate-900 md:text-xl">
                 {title}
               </CardTitle>
             </CardHeader>
 
             <CardContent className="space-y-4 p-0 pt-3">
-              {description ? <div className="text-sm leading-6 md:text-[15px]">{description}</div> : null}
+              {description ? (
+                <div className="line-clamp-3 text-sm leading-6 md:text-[15px]">{description}</div>
+              ) : null}
 
               <div className="grid gap-1.5 text-[13px] leading-5 text-slate-500">
                 {address ? (
@@ -206,6 +201,12 @@ export default function PartnerCard({ partner, locale }: PartnerCardProps) {
               </div>
             </CardContent>
           </div>
+
+          {showLogo && partner.logo && (
+            <div className="flex min-w-32 h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-[20px] bg-white p-3 md:h-32 md:w-32">
+              <img src={partner.logo} alt={title} className="h-full w-full object-contain" />
+            </div>
+          )}
         </div>
       </div>
     </Card>

@@ -13,6 +13,24 @@ export default async function PartnersFilter({ locale, activeCategorySlug }: Par
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
 
+  const { docs: defaultPartnerPages } = await payload.find({
+    collection: 'pages',
+    where: { slug: { equals: 'partners' } },
+    locale: 'en' as any,
+    limit: 1,
+  })
+
+  const defaultPartnerPage = defaultPartnerPages[0]
+
+  const { docs: localizedPartnerPages } = defaultPartnerPage
+    ? await payload.find({
+        collection: 'pages',
+        where: { id: { equals: defaultPartnerPage.id } },
+        locale: locale as any,
+        limit: 1,
+      })
+    : { docs: [] }
+
   const { docs: categories } = await payload.find({
     collection: 'partner-categories',
     sort: 'title',
@@ -24,6 +42,10 @@ export default async function PartnersFilter({ locale, activeCategorySlug }: Par
 
   const allLabel = locale === 'pt-BR' ? 'Todos' : 'All'
   const categoriesLabel = locale === 'pt-BR' ? 'Categorias' : 'Categories'
+  const localizedPartnersSlug =
+    getLocalizedValue(localizedPartnerPages[0]?.slug, locale) ||
+    getLocalizedValue(defaultPartnerPage?.slug, 'en')
+  const allHref = `/${locale}/${localizedPartnersSlug || 'partners'}`
 
   return (
     <section className="space-y-3 md:space-y-4">
@@ -40,7 +62,7 @@ export default async function PartnersFilter({ locale, activeCategorySlug }: Par
                   : 'h-8 rounded-full border border-[#16a34a] bg-white px-3 text-xs font-semibold text-[#16a34a] shadow-none hover:bg-[#16a34a]/8 hover:text-[#16a34a]'
               }
             >
-              <Link href={`/${locale}/partners`}>{allLabel}</Link>
+              <Link href={allHref}>{allLabel}</Link>
             </Button>
           </li>
           {categories.map((category: any) => {

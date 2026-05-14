@@ -85,7 +85,7 @@ export default async function PartnersTagPage(props: {
       <SetSlug slugs={slugMap} />
       <PageHeading title={pageTitle} />
 
-      <div className="mt-8 flex flex-col gap-8 md:flex-row">
+      <div className="mt-8 flex flex-col gap-8 md:flex-row md:gap-12">
         <aside className="w-full flex-shrink-0 md:w-56">
           <PartnersFilter locale={locale} activeCategorySlug={categorySlug} />
         </aside>
