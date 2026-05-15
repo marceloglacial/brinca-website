@@ -49,7 +49,9 @@ export default async function PartnersFilter({ locale, activeCategorySlug }: Par
 
   return (
     <section className="space-y-3 md:space-y-4">
-      <h2 className="text-sm font-bold tracking-tight text-slate-900 md:text-base">{categoriesLabel}</h2>
+      <h2 className="text-sm font-bold tracking-tight text-slate-900 md:text-base">
+        {categoriesLabel}
+      </h2>
       <nav>
         <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
           <li>
@@ -58,8 +60,8 @@ export default async function PartnersFilter({ locale, activeCategorySlug }: Par
               variant="ghost"
               className={
                 !activeCategorySlug
-                  ? 'h-8 rounded-full border border-[#16a34a] bg-[#16a34a] px-3 text-xs font-semibold text-white shadow-none hover:bg-[#15803d] hover:text-white'
-                  : 'h-8 rounded-full border border-[#16a34a] bg-white px-3 text-xs font-semibold text-[#16a34a] shadow-none hover:bg-[#16a34a]/8 hover:text-[#16a34a]'
+                  ? 'h-8 rounded-full border border-[#16a34a] bg-[#16a34a] px-3 text-md font-semibold text-white shadow-none hover:bg-[#15803d] hover:text-white'
+                  : 'h-8 rounded-full border border-[#16a34a] bg-white px-3 text-md font-semibold text-[#16a34a] shadow-none hover:bg-[#16a34a]/8 hover:text-[#16a34a]'
               }
             >
               <Link href={allHref}>{allLabel}</Link>
@@ -76,8 +78,8 @@ export default async function PartnersFilter({ locale, activeCategorySlug }: Par
                   variant="ghost"
                   className={
                     isActive
-                      ? 'h-8 rounded-full border border-[#16a34a] bg-[#16a34a] px-3 text-xs font-semibold text-white shadow-none hover:bg-[#15803d] hover:text-white'
-                      : 'h-8 rounded-full border border-[#16a34a] bg-white px-3 text-xs font-semibold text-[#16a34a] shadow-none hover:bg-[#16a34a]/8 hover:text-[#16a34a]'
+                      ? 'h-8 rounded-full border border-[#16a34a] bg-[#16a34a] px-3 text-md font-semibold text-white shadow-none hover:bg-[#15803d] hover:text-white'
+                      : 'h-8 rounded-full border border-[#16a34a] bg-white px-3 text-md font-semibold text-[#16a34a] shadow-none hover:bg-[#16a34a]/8 hover:text-[#16a34a]'
                   }
                 >
                   <Link href={`/${locale}/partners/tag/${slug}`}>{title}</Link>
