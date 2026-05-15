@@ -29,9 +29,9 @@ export default function ContactForm() {
   const [error, setError] = useState<string | null>(null)
   const [submitted, setSubmitted] = useState(false)
   const fieldClass =
-    'min-h-14 rounded-2xl border-2 border-[#16a34a] bg-white px-6 text-[15px] text-slate-900 shadow-none placeholder:text-slate-400 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#16a34a]'
+    'min-h-14 rounded-2xl border-2 border-[#16a34a] bg-white px-6 text-base font-medium text-slate-900 shadow-none placeholder:text-slate-400 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#16a34a]'
   const textareaClass =
-    'min-h-[180px] rounded-2xl border-2 border-[#16a34a] bg-white px-6 py-4 text-[15px] text-slate-900 shadow-none placeholder:text-slate-400 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#16a34a]'
+    'min-h-[180px] rounded-2xl border-2 border-[#16a34a] bg-white px-6 py-4 text-base font-medium text-slate-900 shadow-none placeholder:text-slate-400 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#16a34a]'
   const labelClass = 'text-[15px] font-bold leading-6 text-slate-900'
   const submitClass =
     'min-h-12 rounded-full border-2 border-[#16a34a] bg-white px-8 text-base font-normal text-[#16a34a] transition-colors hover:bg-[#16a34a] hover:text-white focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#16a34a]'

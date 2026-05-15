@@ -52,9 +52,9 @@ export default function SubmitPartnerForm({ categories }: Props) {
   const en = partnerSubmissionLabels.en
   const pt = partnerSubmissionLabels['pt-BR']
   const fieldClass =
-    'min-h-14 rounded-2xl border-2 border-[#16a34a] bg-white px-6 text-[15px] text-slate-900 shadow-none placeholder:text-slate-400 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#16a34a]'
+    'min-h-14 rounded-2xl border-2 border-[#16a34a] bg-white px-6 text-base font-medium text-slate-900 shadow-none placeholder:text-slate-400 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#16a34a]'
   const textareaClass =
-    'min-h-[180px] rounded-2xl border-2 border-[#16a34a] bg-white px-6 py-4 text-[15px] text-slate-900 shadow-none placeholder:text-slate-400 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#16a34a]'
+    'min-h-[180px] rounded-2xl border-2 border-[#16a34a] bg-white px-6 py-4 text-base font-medium text-slate-900 shadow-none placeholder:text-slate-400 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#16a34a]'
   const labelClass = 'text-[15px] font-bold leading-6 text-slate-900'
   const sectionClass = 'border-0 bg-transparent shadow-none'
   const sectionHeaderClass = 'px-0 pb-5 pt-0'
@@ -284,12 +284,12 @@ export default function SubmitPartnerForm({ categories }: Props) {
                   placeholder={`${en.selectCategory} / ${pt.selectCategory}`}
                 />
               </SelectTrigger>
-              <SelectContent className="rounded-2xl border-2 border-[#16a34a] bg-white p-2 text-[15px] text-slate-900 shadow-lg">
+              <SelectContent className="rounded-2xl border-2 border-[#16a34a] bg-white p-2 text-base font-medium text-slate-900 shadow-lg">
                 {categories.map((cat) => (
                   <SelectItem
                     key={cat.id}
                     value={cat.id}
-                    className="rounded-xl py-3 pl-8 pr-3 text-[15px] focus:bg-[#16a34a]/10 focus:text-slate-900"
+                    className="rounded-xl py-3 pl-8 pr-3 text-base font-medium focus:bg-[#16a34a]/10 focus:text-slate-900"
                   >
                     {cat.name}
                   </SelectItem>
