@@ -34,7 +34,7 @@ export default function CollectionGridSection({
                   <img
                     src={item.thumbnail}
                     alt={item.title}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover object-top"
                   />
                 </figure>
               ) : null}
