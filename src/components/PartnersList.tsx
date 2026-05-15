@@ -33,6 +33,7 @@ export default async function PartnersList({ locale, categorySlug }: PartnersLis
     where: {
       active: { equals: true },
     },
+    limit: 100,
     sort: 'title',
     locale: locale as any,
     depth: 1,
