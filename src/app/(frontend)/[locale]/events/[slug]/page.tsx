@@ -1,19 +1,14 @@
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
-import { RichText } from '@payloadcms/richtext-lexical/react'
 
 import { getLocalizedValue } from '@/lib/locales'
+import BlockRenderer from '@/components/BlockRenderer'
 import PageHeading from '@/components/brinca/PageHeading'
 import config from '@/payload.config'
 import { formatDate } from '@/lib/formatDate'
 import { SetSlug } from '@/components/SlugProvider'
-import CloudinaryGallery from '@/components/CloudinaryGallery'
-import InstagramEmbed from '@/components/InstagramEmbed'
-import ActionButton from '@/components/ActionButton'
 import { LOCALE_CODES } from '@/constants/locales'
-import { getRichTextConverters } from '@/lib/rich-text'
 import { withSiteName } from '@/lib/metadata'
-import type { Event } from '@/payload-types'
 
 export async function generateStaticParams() {
   const payloadConfig = await config
@@ -54,68 +49,8 @@ export async function generateMetadata({
     limit: 1,
   })
   const event = docs[0]
-  const eventTitle = event
-    ? getLocalizedValue(event.title, locale)
-    : locale === 'pt-BR'
-      ? 'Evento'
-      : 'Event'
-  const title = withSiteName(eventTitle)
+  const title = event ? withSiteName(getLocalizedValue(event.title, locale)) : undefined
   return { title }
-}
-
-function renderEventBlocks(event: Event, locale: string) {
-  if (!event.components || !Array.isArray(event.components)) {
-    return null
-  }
-
-  return (
-    <>
-      {event.components.map((block, index) => {
-        if (block?.blockType === 'richTextBlock' && 'content' in block) {
-          return (
-            <div key={index} className="rich-text-content event-description">
-              <RichText data={block.content as any} converters={getRichTextConverters(locale)} />
-            </div>
-          )
-        }
-
-        if (block?.blockType === 'galleryBlock' && 'cloudinaryFolder' in block) {
-          return (
-            <CloudinaryGallery
-              key={index}
-              folderPath={block.cloudinaryFolder as string}
-              title={locale === 'pt-BR' ? 'Galeria' : 'Gallery'}
-            />
-          )
-        }
-
-        if (block?.blockType === 'instagramBlock' && 'url' in block) {
-          return <InstagramEmbed key={index} url={block.url as string} />
-        }
-
-        if (block?.blockType === 'ctaBlock' && 'buttons' in block && Array.isArray(block.buttons)) {
-          const buttons = block.buttons.filter((button: any) => {
-            if (button?.linkType === 'external') return Boolean(button?.url)
-            if (button?.linkType === 'internal') return Boolean(button?.internalLink)
-            return false
-          })
-          return buttons.length > 0 ? (
-            <div key={index} className="mt-3 grid gap-3">
-              {buttons.map((button: any, btnIndex: number) => (
-                <ActionButton
-                  key={`${button?.url ?? button?.internalLink ?? 'cta'}-${btnIndex}`}
-                  button={button}
-                  locale={locale}
-                />
-              ))}
-            </div>
-          ) : null
-        }
-
-        return null
-      })}
-    </>
-  )
 }
 
 export default async function EventPageRoute(props: {
@@ -168,7 +103,11 @@ export default async function EventPageRoute(props: {
           year: 'numeric',
         })}
       </div>
-      <div className="w-full">{renderEventBlocks(event, locale)}</div>
+      <div className="w-full">
+        {event.components?.map((block, index) => (
+          <BlockRenderer key={block.id ?? index} block={block} locale={locale} />
+        ))}
+      </div>
     </div>
   )
 }

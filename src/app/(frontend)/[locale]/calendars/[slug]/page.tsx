@@ -1,20 +1,14 @@
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
-import { RichText } from '@payloadcms/richtext-lexical/react'
 
 import { getLocalizedValue } from '@/lib/locales'
+import BlockRenderer from '@/components/BlockRenderer'
 import PageHeading from '@/components/brinca/PageHeading'
 import config from '@/payload.config'
 import { formatDate } from '@/lib/formatDate'
 import { SetSlug } from '@/components/SlugProvider'
-import CloudinaryGallery from '@/components/CloudinaryGallery'
-import InstagramEmbed from '@/components/InstagramEmbed'
-import ActionButton from '@/components/ActionButton'
-import YouTubeBlockComponent from '@/components/YouTubeBlockComponent'
 import { LOCALE_CODES } from '@/constants/locales'
-import { getRichTextConverters } from '@/lib/rich-text'
 import { withSiteName } from '@/lib/metadata'
-import type { Calendar } from '@/payload-types'
 
 export async function generateStaticParams() {
   const payloadConfig = await config
@@ -55,72 +49,8 @@ export async function generateMetadata({
     limit: 1,
   })
   const item = docs[0]
-  const titleValue = item
-    ? getLocalizedValue(item.title, locale)
-    : locale === 'pt-BR'
-      ? 'Calendário'
-      : 'Calendar'
-  const title = withSiteName(titleValue)
+  const title = item ? withSiteName(getLocalizedValue(item.title, locale)) : undefined
   return { title }
-}
-
-function renderCalendarBlocks(item: Calendar, locale: string) {
-  if (!item.components || !Array.isArray(item.components)) {
-    return null
-  }
-
-  return (
-    <>
-      {item.components.map((block, index) => {
-        if (block?.blockType === 'richTextBlock' && 'content' in block) {
-          return (
-            <div key={index} className="rich-text-content calendar-description">
-              <RichText data={block.content as any} converters={getRichTextConverters(locale)} />
-            </div>
-          )
-        }
-
-        if (block?.blockType === 'galleryBlock' && 'cloudinaryFolder' in block) {
-          return (
-            <CloudinaryGallery
-              key={index}
-              folderPath={block.cloudinaryFolder as string}
-              title={locale === 'pt-BR' ? 'Galeria' : 'Gallery'}
-            />
-          )
-        }
-
-        if (block?.blockType === 'instagramBlock' && 'url' in block) {
-          return <InstagramEmbed key={index} url={block.url as string} />
-        }
-
-        if (block?.blockType === 'youTubeBlock' && 'url' in block) {
-          return <YouTubeBlockComponent key={index} block={{ blockType: 'youTubeBlock', url: block.url as string }} />
-        }
-
-        if (block?.blockType === 'ctaBlock' && 'buttons' in block && Array.isArray(block.buttons)) {
-          const buttons = block.buttons.filter((button: any) => {
-            if (button?.linkType === 'external') return Boolean(button?.url)
-            if (button?.linkType === 'internal') return Boolean(button?.internalLink)
-            return false
-          })
-          return buttons.length > 0 ? (
-            <div key={index} className="mt-3 grid gap-3">
-              {buttons.map((button: any, btnIndex: number) => (
-                <ActionButton
-                  key={`${button?.url ?? button?.internalLink ?? 'cta'}-${btnIndex}`}
-                  button={button}
-                  locale={locale}
-                />
-              ))}
-            </div>
-          ) : null
-        }
-
-        return null
-      })}
-    </>
-  )
 }
 
 export default async function CalendarPageRoute(props: {
@@ -173,7 +103,11 @@ export default async function CalendarPageRoute(props: {
           year: 'numeric',
         })}
       </div>
-      <div className="w-full">{renderCalendarBlocks(item, locale)}</div>
+      <div className="w-full">
+        {item.components?.map((block, index) => (
+          <BlockRenderer key={block.id ?? index} block={block} locale={locale} />
+        ))}
+      </div>
     </div>
   )
 }
