@@ -22,7 +22,7 @@ type Props = {
 export default function BlockRenderer({ block, locale }: Props) {
   switch (block.blockType) {
     case 'partnerSubmissionBlock':
-      return <PartnerSubmissionBlockComponent />
+      return <PartnerSubmissionBlockComponent locale={locale} />
     case 'mentorSubmissionBlock':
       return <MentorSubmissionBlockComponent />
     case 'mentorRequestBlock':
@@ -48,7 +48,7 @@ export default function BlockRenderer({ block, locale }: Props) {
     case 'ctaBlock':
       return <CTABlockComponent block={block} locale={locale} />
     case 'richTextBlock':
-      return <RichTextBlockComponent block={block} />
+      return <RichTextBlockComponent block={block} locale={locale} />
     case 'heroBlock':
       return <HeroBlockComponent block={block} locale={locale} />
     default:

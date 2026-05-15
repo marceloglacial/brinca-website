@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
-import { defaultJSXConverters, RichText } from '@payloadcms/richtext-lexical/react'
+import { RichText } from '@payloadcms/richtext-lexical/react'
 
 import { getLocalizedValue } from '@/lib/locales'
 import PageHeading from '@/components/brinca/PageHeading'
@@ -11,6 +11,7 @@ import CloudinaryGallery from '@/components/CloudinaryGallery'
 import InstagramEmbed from '@/components/InstagramEmbed'
 import ActionButton from '@/components/ActionButton'
 import { LOCALE_CODES } from '@/constants/locales'
+import { getRichTextConverters } from '@/lib/rich-text'
 import { withSiteName } from '@/lib/metadata'
 import type { Calendar } from '@/payload-types'
 
@@ -73,7 +74,7 @@ function renderCalendarBlocks(item: Calendar, locale: string) {
         if (block?.blockType === 'richTextBlock' && 'content' in block) {
           return (
             <div key={index} className="calendar-description">
-              <RichText data={block.content as any} converters={defaultJSXConverters} />
+              <RichText data={block.content as any} converters={getRichTextConverters(locale)} />
             </div>
           )
         }

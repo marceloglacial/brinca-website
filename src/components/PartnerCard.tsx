@@ -119,11 +119,16 @@ export default function PartnerCard({ partner, locale, showLogo = true }: Partne
                   <Button
                     asChild
                     variant="link"
-                    className="h-auto justify-start px-0 py-0 text-left text-[13px] font-medium text-[#16a34a] hover:text-[#15803d]"
+                    className="h-auto w-full justify-start px-0 py-0 text-left text-[13px] font-medium text-[#16a34a] hover:text-[#15803d]"
                   >
-                    <a href={mapsUrl ?? undefined} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={mapsUrl ?? undefined}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex min-w-0 items-center"
+                    >
                       <MapPin className="mr-1.5 h-3.5 w-3.5 shrink-0" />
-                      {address}
+                      <span className="truncate">{address}</span>
                     </a>
                   </Button>
                 ) : null}
