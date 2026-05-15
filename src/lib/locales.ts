@@ -11,11 +11,3 @@ export function getLocalizedValue(value: any, locale: string): string {
   }
   return ''
 }
-
-export function getLocalizedData<T>(value: T, locale: string): T {
-  if (typeof value === 'object' && value !== null && locale in (value as Record<string, unknown>)) {
-    return (value as Record<string, T>)[locale]
-  }
-
-  return value
-}

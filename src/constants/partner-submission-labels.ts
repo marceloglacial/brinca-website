@@ -70,12 +70,3 @@ export const partnerSubmissionLabels = {
     errorEmail: 'Email é obrigatório',
   },
 }
-
-export type SupportedLocale = keyof typeof partnerSubmissionLabels
-
-export function getPartnerSubmissionLabels(locale: string | undefined): Record<string, string> {
-  if (locale === 'pt-BR') {
-    return partnerSubmissionLabels['pt-BR']
-  }
-  return partnerSubmissionLabels.en
-}

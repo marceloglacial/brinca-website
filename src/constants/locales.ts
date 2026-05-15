@@ -1,4 +1,4 @@
-export const LOCALES = [
+const LOCALES = [
   { code: 'en', label: 'English' },
   { code: 'pt-BR', label: 'Português' },
 ]
