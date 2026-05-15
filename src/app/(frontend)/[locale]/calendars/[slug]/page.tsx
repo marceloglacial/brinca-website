@@ -73,7 +73,7 @@ function renderCalendarBlocks(item: Calendar, locale: string) {
       {item.components.map((block, index) => {
         if (block?.blockType === 'richTextBlock' && 'content' in block) {
           return (
-            <div key={index} className="calendar-description">
+            <div key={index} className="rich-text-content calendar-description">
               <RichText data={block.content as any} converters={getRichTextConverters(locale)} />
             </div>
           )

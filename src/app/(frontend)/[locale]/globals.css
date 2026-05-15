@@ -148,6 +148,13 @@
     line-height: 1.1;
   }
 
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.1;
+    padding: 1rem 0;
+  }
+
   p {
     font-size: 1.25rem;
     line-height: 2rem;
@@ -170,4 +177,54 @@
 
 .home-page-view {
   gap: 4rem;
+}
+
+.rich-text-content {
+  color: rgb(15 23 42);
+  max-width: none;
+}
+
+.rich-text-content p + p:not(:last-of-type) {
+  margin-bottom: 1.25rem;
+}
+
+.rich-text-content a {
+  color: rgb(22 163 74);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.2em;
+  transition: color 0.2s ease;
+}
+
+.rich-text-content a:hover,
+.rich-text-content a:focus-visible {
+  color: rgb(21 128 61);
+}
+
+.rich-text-content ul,
+.rich-text-content ol {
+  margin: 1.25rem 0;
+  padding-left: 3rem;
+  font-size: 1.25rem;
+  line-height: 1.75;
+}
+
+.rich-text-content ul {
+  list-style: disc;
+}
+
+.rich-text-content ol {
+  list-style: decimal;
+}
+
+.rich-text-content li {
+  margin-top: 0.35rem;
+}
+
+.rich-text-content li > p {
+  margin: 0;
+}
+
+.rich-text-content li::marker {
+  color: rgb(22 163 74);
 }

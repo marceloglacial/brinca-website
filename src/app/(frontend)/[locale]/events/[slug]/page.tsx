@@ -73,7 +73,7 @@ function renderEventBlocks(event: Event, locale: string) {
       {event.components.map((block, index) => {
         if (block?.blockType === 'richTextBlock' && 'content' in block) {
           return (
-            <div key={index} className="event-description">
+            <div key={index} className="rich-text-content event-description">
               <RichText data={block.content as any} converters={getRichTextConverters(locale)} />
             </div>
           )

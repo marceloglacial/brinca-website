@@ -13,7 +13,7 @@ export default function RichTextBlockComponent({ block, locale }: Props) {
   if (!block.content?.root) return null
 
   return (
-    <div className="page-content prose prose-sm md:prose-base max-w-none">
+    <div className="rich-text-content">
       <RichText data={block.content} converters={getRichTextConverters(locale)} />
     </div>
   )
