@@ -14,6 +14,7 @@ import { InstagramBlock } from '../blocks/InstagramBlock'
 import { CTABlock } from '../blocks/CTABlock'
 import { RichTextBlock } from '../blocks/RichTextBlock'
 import { HeroBlock } from '../blocks/HeroBlock'
+import { EbookRequestBlock } from '../blocks/EbookRequestBlock'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -68,6 +69,7 @@ export const Pages: CollectionConfig = {
         MentorSubmissionBlock,
         MentorRequestBlock,
         ContactFormBlock,
+        EbookRequestBlock,
         SponsorsBlock,
         EventsListBlock,
         CalendarsListBlock,

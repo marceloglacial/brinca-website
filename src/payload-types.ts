@@ -77,6 +77,7 @@ export interface Config {
     mentors: Mentor;
     'mentor-requests': MentorRequest;
     sponsors: Sponsor;
+    'ebook-requests': EbookRequest;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -94,6 +95,7 @@ export interface Config {
     mentors: MentorsSelect<false> | MentorsSelect<true>;
     'mentor-requests': MentorRequestsSelect<false> | MentorRequestsSelect<true>;
     sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
+    'ebook-requests': EbookRequestsSelect<false> | EbookRequestsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -219,6 +221,23 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'contactFormBlock';
+          }
+        | {
+            /**
+             * URL used by the success button to download the ebook.
+             */
+            downloadUrl: string;
+            /**
+             * Localized disclaimer shown below the email field.
+             */
+            disclaimerText: string;
+            /**
+             * Localized text shown next to the optional consent checkbox.
+             */
+            consentText: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ebookRequestBlock';
           }
         | {
             /**
@@ -671,6 +690,19 @@ export interface Sponsor {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ebook-requests".
+ */
+export interface EbookRequest {
+  id: string;
+  name: string;
+  email: string;
+  consentGiven?: boolean | null;
+  status: 'pending' | 'processed' | 'rejected';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -732,6 +764,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'sponsors';
         value: string | Sponsor;
+      } | null)
+    | ({
+        relationTo: 'ebook-requests';
+        value: string | EbookRequest;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -850,6 +886,15 @@ export interface PagesSelect<T extends boolean = true> {
         contactFormBlock?:
           | T
           | {
+              id?: T;
+              blockName?: T;
+            };
+        ebookRequestBlock?:
+          | T
+          | {
+              downloadUrl?: T;
+              disclaimerText?: T;
+              consentText?: T;
               id?: T;
               blockName?: T;
             };
@@ -1147,6 +1192,18 @@ export interface SponsorsSelect<T extends boolean = true> {
   tier?: T;
   year?: T;
   active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ebook-requests_select".
+ */
+export interface EbookRequestsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  consentGiven?: T;
+  status?: T;
   updatedAt?: T;
   createdAt?: T;
 }

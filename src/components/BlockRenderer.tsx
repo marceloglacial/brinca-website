@@ -2,6 +2,7 @@ import PartnerSubmissionBlockComponent from './PartnerSubmissionBlockComponent'
 import MentorSubmissionBlockComponent from './MentorSubmissionBlockComponent'
 import MentorRequestBlockComponent from './MentorRequestBlockComponent'
 import ContactFormBlockComponent from './ContactFormBlockComponent'
+import EbookRequestBlockComponent from './EbookRequestBlockComponent'
 import SponsorsBlockComponent from './SponsorsBlockComponent'
 import EventsListBlockComponent from './EventsListBlockComponent'
 import CalendarsListBlockComponent from './CalendarsListBlockComponent'
@@ -28,6 +29,8 @@ export default function BlockRenderer({ block, locale }: Props) {
       return <MentorRequestBlockComponent />
     case 'contactFormBlock':
       return <ContactFormBlockComponent />
+    case 'ebookRequestBlock':
+      return <EbookRequestBlockComponent block={block} />
     case 'sponsorsBlock':
       return <SponsorsBlockComponent locale={locale} year={block.year ?? undefined} />
     case 'eventsListBlock':

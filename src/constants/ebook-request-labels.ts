@@ -1,0 +1,28 @@
+export const ebookRequestLabels = {
+  en: {
+    name: 'Full Name',
+    email: 'E-mail',
+    required: '(Required)',
+    submit: 'Send',
+    submitting: 'Sending...',
+    download: 'Download your ebook',
+    successTitle: 'Thank you!',
+    successMessage: 'Thank you for being part of our history.',
+    errorSubmit: 'Failed to submit. Please try again.',
+    errorName: 'Full name is required',
+    errorEmail: 'E-mail is required',
+  },
+  'pt-BR': {
+    name: 'Nome Completo',
+    email: 'E-mail',
+    required: '(Obrigatório)',
+    submit: 'Enviar',
+    submitting: 'Enviando...',
+    download: 'Baixar seu ebook',
+    successTitle: 'Obrigado!',
+    successMessage: 'Obrigado por fazer parte da nossa história.',
+    errorSubmit: 'Falha ao enviar. Tente novamente.',
+    errorName: 'Nome completo é obrigatório',
+    errorEmail: 'E-mail é obrigatório',
+  },
+}
