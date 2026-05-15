@@ -15,14 +15,14 @@ export default function YouTubeBlockComponent({ block }: Props) {
 
   return (
     <div className="page-video py-8 md:py-12">
-      <iframe
-        width="100%"
-        height="480"
-        src={embedUrl}
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        className="rounded-lg"
-      />
+      <div className="aspect-video overflow-hidden rounded-lg">
+        <iframe
+          src={embedUrl}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="h-full w-full"
+        />
+      </div>
     </div>
   )
 }

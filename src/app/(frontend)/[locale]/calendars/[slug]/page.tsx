@@ -10,6 +10,7 @@ import { SetSlug } from '@/components/SlugProvider'
 import CloudinaryGallery from '@/components/CloudinaryGallery'
 import InstagramEmbed from '@/components/InstagramEmbed'
 import ActionButton from '@/components/ActionButton'
+import YouTubeBlockComponent from '@/components/YouTubeBlockComponent'
 import { LOCALE_CODES } from '@/constants/locales'
 import { getRichTextConverters } from '@/lib/rich-text'
 import { withSiteName } from '@/lib/metadata'
@@ -91,6 +92,10 @@ function renderCalendarBlocks(item: Calendar, locale: string) {
 
         if (block?.blockType === 'instagramBlock' && 'url' in block) {
           return <InstagramEmbed key={index} url={block.url as string} />
+        }
+
+        if (block?.blockType === 'youTubeBlock' && 'url' in block) {
+          return <YouTubeBlockComponent key={index} block={{ blockType: 'youTubeBlock', url: block.url as string }} />
         }
 
         if (block?.blockType === 'ctaBlock' && 'buttons' in block && Array.isArray(block.buttons)) {

@@ -569,6 +569,15 @@ export interface Calendar {
             blockName?: string | null;
             blockType: 'ctaBlock';
           }
+        | {
+            /**
+             * YouTube video URL or video ID
+             */
+            url: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'youTubeBlock';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -1102,6 +1111,13 @@ export interface CalendarsSelect<T extends boolean = true> {
                     openInNewWindow?: T;
                     id?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        youTubeBlock?:
+          | T
+          | {
+              url?: T;
               id?: T;
               blockName?: T;
             };

@@ -4,6 +4,7 @@ import { RichTextBlock } from '../blocks/RichTextBlock'
 import { GalleryBlock } from '../blocks/GalleryBlock'
 import { InstagramBlock } from '../blocks/InstagramBlock'
 import { CTABlock } from '../blocks/CTABlock'
+import { YouTubeBlock } from '../blocks/YouTubeBlock'
 
 export const Calendars: CollectionConfig = {
   slug: 'calendars',
@@ -42,7 +43,7 @@ export const Calendars: CollectionConfig = {
         singular: 'Component',
         plural: 'Components',
       },
-      blocks: [RichTextBlock, GalleryBlock, InstagramBlock, CTABlock],
+      blocks: [RichTextBlock, GalleryBlock, InstagramBlock, CTABlock, YouTubeBlock],
     },
   ],
   timestamps: true,

@@ -185,7 +185,11 @@
 }
 
 .rich-text-content p + p:not(:last-of-type) {
-  margin-bottom: 1.25rem;
+  font-weight: 300;
+}
+
+.rich-text-content strong {
+  font-weight: 700;
 }
 
 .rich-text-content a {
