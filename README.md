@@ -1,82 +1,108 @@
 # Brinca Website
 
-Brazil Canada Community Association Website
+Brinca is a multilingual website powered by **Payload CMS 3** and **Next.js 16**.
 
-## Setup local development
-
-Follow these steps to set up the project:
-
-**Requirements**
-
-- [Node.js 20+](https://nodejs.org/)
-- [PNPM 10+](https://pnpm.io/)
-
-1. **Clone the repository:**
-
-   ```sh
-   git clone https://github.com/marceloglacial/brinca-website.git
-   cd brinca-website
-   ```
-
-2. **Install dependencies:**
-
-   ```sh
-   pnpm install
-   ```
-
-3. **Set up environment variables:**
-
-   Use [dotenv.org](https://dotenv.org/) to manage your environment variables.
-
-   Open the environment variables configuration:
-
-   ```sh
-   pnpm env:open
-   ```
-
-   Pull the latest environment variables:
-
-   ```sh
-   # Local development using brinca-api running
-   pnpm env:pull
-
-   # Use staging database
-   pnpm env:pull-staging
-
-   # Use prod database
-   pnpm env:pull-prod
-
-   ```
-
-4. **Build the project:**
-
-   ```sh
-   pnpm build
-   ```
-
-5. **Run the development server:**
-
-   ```sh
-   pnpm dev
-   ```
-
-## Useful Scripts
-
-- `pnpm lint`: Lint the codebase.
-- `pnpm format`: Format the codebase.
-- `pnpm env:open`: Open the environment variables configuration.
-- `pnpm env:pull`: Pull the latest environment variables.
-- `pnpm env:push`: Push your local environment variables.
+It includes a public frontend and a Payload admin for managing pages, events, calendars, and media.
 
 ## Stack
 
-- [ESLint](https://eslint.org/)
-- [Husky](https://typicode.github.io/husky/)
-- [Next.js](https://nextjs.org/)
-- [Prettier](https://prettier.io/)
-- [React Server Components](https://react.dev/reference/rsc/server-components)
-- [Tailwind CSS](https://tailwindcss.com/)
+- Next.js 16 + React 19
+- Payload CMS 3
+- MongoDB (`@payloadcms/db-mongodb`)
+- Lexical rich text (`@payloadcms/richtext-lexical`)
+- Playwright + Vitest for testing
 
-## License
+## Core Features
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- Multilingual content (`en`, `pt-BR`) with localized fields
+- Dynamic content collections:
+  - `pages` (rich content, optional YouTube embed, CTA buttons, list toggles)
+  - `events` (date, localized description, optional Cloudinary gallery + Instagram embed)
+  - `calendars` (date, localized description, optional Cloudinary gallery + Instagram embed)
+  - `media` (uploads with localized alt text)
+  - `users` (Payload auth)
+- Locale-aware routing and slug switching
+- Public API endpoint for navbar pages (`/api/public/pages?locale=<locale>`)
+
+## Local Development
+
+### 1) Prerequisites
+
+- Node.js `^18.20.2 || >=20.9.0`
+- pnpm `^9 || ^10`
+- MongoDB
+
+### 2) Environment Variables
+
+Create a `.env` file in the project root:
+
+```bash
+PAYLOAD_SECRET=replace-with-a-long-random-secret
+DATABASE_URL=mongodb://127.0.0.1/brinca
+
+# Required for email delivery via Resend
+RESEND_API_KEY=your-resend-api-key
+RESEND_FROM_ADDRESS=noreply@brinca.ca
+
+# Optional sender name
+RESEND_FROM_NAME=Brinca
+
+# Form notification recipients
+CONTACT_FORM_TO=info@brinca.ca
+ADMIN_EMAILS=info@brinca.ca
+
+# Required only if you use Cloudinary gallery fields
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
+```
+
+`CONTACT_FORM_TO` controls where contact form messages are sent. `ADMIN_EMAILS` is a comma-separated list used for mentor, mentor-request, and partner submission notifications.
+
+### 3) Install and run
+
+```bash
+pnpm install
+pnpm dev
+```
+
+Open:
+
+- Frontend: `http://localhost:3000`
+- Admin: `http://localhost:3000/admin`
+
+On first run, create your initial admin user in the Payload admin UI.
+
+## Scripts
+
+- `pnpm dev` – start development server
+- `pnpm build` – production build
+- `pnpm start` – run production server
+- `pnpm lint` – run ESLint
+- `pnpm generate:types` – regenerate Payload TypeScript types
+- `pnpm generate:importmap` – regenerate Payload admin import map
+- `pnpm test:int` – integration tests (Vitest)
+- `pnpm test:e2e` – end-to-end tests (Playwright)
+- `pnpm test` – run integration + e2e tests
+
+## Docker (Optional)
+
+Use Docker Compose for local development:
+
+```bash
+docker-compose up
+```
+
+The compose setup starts:
+
+- `payload` service on port `3000`
+- `mongo` service on port `27017`
+
+Make sure `DATABASE_URL` in `.env` points to MongoDB in the compose network when using containers (for example `mongodb://mongo/brinca`).
+
+## Project Notes
+
+- Payload config lives in `src/payload.config.ts`
+- Generated types are in `src/payload-types.ts`
+- Frontend routes are under `src/app/(frontend)/[locale]`
+- Payload admin and API routes are under `src/app/(payload)`
