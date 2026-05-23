@@ -69,12 +69,6 @@ export default async function SiteFooter({ locale }: { locale: LocaleCode }) {
             <span className="sr-only">Instagram</span>
             <InstagramIcon className="h-5 w-5" />
           </a>
-          <Link
-            href="/admin/login"
-            className="font-normal transition-colors duration-200 hover:text-[#16a34a]"
-          >
-            {loginLabel}
-          </Link>
         </div>
       </div>
     </footer>
