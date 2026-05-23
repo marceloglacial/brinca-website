@@ -60,16 +60,6 @@ export default async function SiteFooter({ locale }: { locale: LocaleCode }) {
 
         <div className="flex items-center gap-3 lg:ml-8">
           <a
-            href="https://www.facebook.com/ottawa.brinca"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Facebook"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full text-slate-700 transition-colors duration-200 hover:text-[#16a34a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16a34a] focus-visible:ring-offset-2"
-          >
-            <span className="sr-only">Facebook</span>
-            <FacebookIcon className="h-5 w-5" />
-          </a>
-          <a
             href="https://www.instagram.com/brinca_official/"
             target="_blank"
             rel="noopener noreferrer"
