@@ -4,6 +4,7 @@ import { RichTextBlock } from '../blocks/RichTextBlock'
 import { GalleryBlock } from '../blocks/GalleryBlock'
 import { InstagramBlock } from '../blocks/InstagramBlock'
 import { CTABlock } from '../blocks/CTABlock'
+import { ImageBlock } from '../blocks/ImageBlock'
 
 export const Events: CollectionConfig = {
   slug: 'events',
@@ -42,7 +43,7 @@ export const Events: CollectionConfig = {
         singular: 'Component',
         plural: 'Components',
       },
-      blocks: [RichTextBlock, GalleryBlock, InstagramBlock, CTABlock],
+      blocks: [RichTextBlock, GalleryBlock, InstagramBlock, CTABlock, ImageBlock],
     },
   ],
   timestamps: true,
