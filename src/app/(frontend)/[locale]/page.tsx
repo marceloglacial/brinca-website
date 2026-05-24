@@ -11,7 +11,9 @@ export default async function HomePage(props: { params: Promise<{ locale: string
 
   const { docs } = await payload.find({
     collection: 'pages',
-    where: { isHome: { equals: true } },
+    where: {
+      and: [{ isHome: { equals: true } }, { status: { equals: 'published' } }],
+    },
     locale: locale as any,
     depth: 2,
     limit: 1,

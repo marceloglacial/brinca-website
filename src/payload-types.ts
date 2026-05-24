@@ -191,6 +191,7 @@ export interface Page {
    */
   generateSlug?: boolean | null;
   slug: string;
+  status: 'draft' | 'published' | 'archived';
   /**
    * Paste full Cloudinary image URL (https://res.cloudinary.com/...)
    */
@@ -408,6 +409,7 @@ export interface Event {
    */
   generateSlug?: boolean | null;
   slug: string;
+  status: 'draft' | 'published' | 'archived';
   /**
    * Paste full Cloudinary image URL (https://res.cloudinary.com/...)
    */
@@ -512,6 +514,7 @@ export interface Calendar {
    */
   generateSlug?: boolean | null;
   slug: string;
+  status: 'draft' | 'published' | 'archived';
   /**
    * Paste full Cloudinary image URL (https://res.cloudinary.com/...)
    */
@@ -898,6 +901,7 @@ export interface PagesSelect<T extends boolean = true> {
   title?: T;
   generateSlug?: T;
   slug?: T;
+  status?: T;
   thumbnail?: T;
   showInNavbar?: T;
   isHome?: T;
@@ -1052,6 +1056,7 @@ export interface EventsSelect<T extends boolean = true> {
   title?: T;
   generateSlug?: T;
   slug?: T;
+  status?: T;
   thumbnail?: T;
   date?: T;
   components?:
@@ -1116,6 +1121,7 @@ export interface CalendarsSelect<T extends boolean = true> {
   title?: T;
   generateSlug?: T;
   slug?: T;
+  status?: T;
   thumbnail?: T;
   date?: T;
   components?:

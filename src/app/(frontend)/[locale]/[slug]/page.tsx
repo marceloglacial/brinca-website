@@ -18,7 +18,9 @@ export async function generateMetadata({
   const payload = await getPayload({ config: payloadConfig })
   const { docs } = await payload.find({
     collection: 'pages',
-    where: { slug: { equals: slug } },
+    where: {
+      and: [{ slug: { equals: slug } }, { status: { equals: 'published' } }],
+    },
     locale: locale as any,
     limit: 1,
   })
@@ -40,7 +42,9 @@ export default async function PageRoute(props: {
 
   const { docs } = await payload.find({
     collection: 'pages',
-    where: { slug: { equals: slug } },
+    where: {
+      and: [{ slug: { equals: slug } }, { status: { equals: 'published' } }],
+    },
     locale: locale as any,
     depth: 2,
     limit: 1,

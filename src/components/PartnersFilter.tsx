@@ -15,7 +15,9 @@ export default async function PartnersFilter({ locale, activeCategorySlug }: Par
 
   const { docs: defaultPartnerPages } = await payload.find({
     collection: 'pages',
-    where: { slug: { equals: 'partners' } },
+    where: {
+      and: [{ slug: { equals: 'partners' } }, { status: { equals: 'published' } }],
+    },
     locale: 'en' as any,
     limit: 1,
   })

@@ -19,6 +19,9 @@ export default async function EventsList({
     collection: 'events',
     sort: '-date',
     locale: locale as any,
+    where: {
+      status: { equals: 'published' },
+    },
     ...(limit ? { limit } : {}),
   })
 

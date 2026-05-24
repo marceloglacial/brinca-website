@@ -13,9 +13,18 @@ export async function GET(req: Request) {
     collection: 'pages',
     locale: locale as any,
     where: {
-      showInNavbar: {
-        equals: true,
-      },
+      and: [
+        {
+          showInNavbar: {
+            equals: true,
+          },
+        },
+        {
+          status: {
+            equals: 'published',
+          },
+        },
+      ],
     },
     limit: 100,
     sort: 'title',

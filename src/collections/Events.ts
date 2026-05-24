@@ -10,7 +10,7 @@ export const Events: CollectionConfig = {
   slug: 'events',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', 'createdAt'],
+    defaultColumns: ['title', 'slug', 'status', 'createdAt'],
   },
   fields: [
     {
@@ -20,6 +20,20 @@ export const Events: CollectionConfig = {
       localized: true,
     },
     slugField({ fieldToUse: 'title', localized: true }),
+    {
+      name: 'status',
+      type: 'select',
+      required: true,
+      defaultValue: 'published',
+      options: [
+        { label: 'Draft', value: 'draft' },
+        { label: 'Published', value: 'published' },
+        { label: 'Archived', value: 'archived' },
+      ],
+      admin: {
+        position: 'sidebar',
+      },
+    },
     {
       name: 'thumbnail',
       type: 'text',

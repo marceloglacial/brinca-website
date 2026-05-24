@@ -68,7 +68,9 @@ export default async function PartnersTagPage(props: {
   // Fetch the partners page for its title and description
   const { docs } = await payload.find({
     collection: 'pages',
-    where: { slug: { equals: 'partners' } },
+    where: {
+      and: [{ slug: { equals: 'partners' } }, { status: { equals: 'published' } }],
+    },
     locale: locale as any,
     limit: 1,
   })

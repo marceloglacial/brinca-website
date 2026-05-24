@@ -19,6 +19,9 @@ export default async function CalendarList({
     collection: 'calendars',
     sort: '-date',
     locale: locale as any,
+    where: {
+      status: { equals: 'published' },
+    },
     ...(limit ? { limit } : {}),
   })
 

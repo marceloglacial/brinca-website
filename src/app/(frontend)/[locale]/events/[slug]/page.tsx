@@ -20,6 +20,9 @@ export async function generateStaticParams() {
     const { docs: events } = await payload.find({
       collection: 'events',
       locale: locale as any,
+      where: {
+        status: { equals: 'published' },
+      },
       limit: 100,
     })
 
@@ -44,7 +47,9 @@ export async function generateMetadata({
   const payload = await getPayload({ config: payloadConfig })
   const { docs } = await payload.find({
     collection: 'events',
-    where: { slug: { equals: slug } },
+    where: {
+      and: [{ slug: { equals: slug } }, { status: { equals: 'published' } }],
+    },
     locale: locale as any,
     limit: 1,
   })
@@ -64,7 +69,7 @@ export default async function EventPageRoute(props: {
   const { docs } = await payload.find({
     collection: 'events',
     where: {
-      slug: { equals: slug },
+      and: [{ slug: { equals: slug } }, { status: { equals: 'published' } }],
     },
     locale: locale as any,
     limit: 1,
