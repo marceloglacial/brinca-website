@@ -381,6 +381,16 @@ export interface Page {
             blockName?: string | null;
             blockType: 'heroBlock';
           }
+        | {
+            /**
+             * Paste full Cloudinary image URL (https://res.cloudinary.com/...)
+             */
+            imageUrl: string;
+            width: 'full' | 'half' | 'original';
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageBlock';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -474,6 +484,16 @@ export interface Event {
             id?: string | null;
             blockName?: string | null;
             blockType: 'ctaBlock';
+          }
+        | {
+            /**
+             * Paste full Cloudinary image URL (https://res.cloudinary.com/...)
+             */
+            imageUrl: string;
+            width: 'full' | 'half' | 'original';
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageBlock';
           }
       )[]
     | null;
@@ -577,6 +597,16 @@ export interface Calendar {
             id?: string | null;
             blockName?: string | null;
             blockType: 'youTubeBlock';
+          }
+        | {
+            /**
+             * Paste full Cloudinary image URL (https://res.cloudinary.com/...)
+             */
+            imageUrl: string;
+            width: 'full' | 'half' | 'original';
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageBlock';
           }
       )[]
     | null;
@@ -1002,6 +1032,14 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        imageBlock?:
+          | T
+          | {
+              imageUrl?: T;
+              width?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1055,6 +1093,14 @@ export interface EventsSelect<T extends boolean = true> {
                     openInNewWindow?: T;
                     id?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        imageBlock?:
+          | T
+          | {
+              imageUrl?: T;
+              width?: T;
               id?: T;
               blockName?: T;
             };
@@ -1118,6 +1164,14 @@ export interface CalendarsSelect<T extends boolean = true> {
           | T
           | {
               url?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageBlock?:
+          | T
+          | {
+              imageUrl?: T;
+              width?: T;
               id?: T;
               blockName?: T;
             };

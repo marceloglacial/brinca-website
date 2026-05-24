@@ -15,6 +15,7 @@ import { CTABlock } from '../blocks/CTABlock'
 import { RichTextBlock } from '../blocks/RichTextBlock'
 import { HeroBlock } from '../blocks/HeroBlock'
 import { EbookRequestBlock } from '../blocks/EbookRequestBlock'
+import { ImageBlock } from '../blocks/ImageBlock'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -80,6 +81,7 @@ export const Pages: CollectionConfig = {
         CTABlock,
         RichTextBlock,
         HeroBlock,
+        ImageBlock,
       ],
     },
   ],
