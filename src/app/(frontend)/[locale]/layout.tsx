@@ -2,13 +2,15 @@ import React from 'react'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { Mulish } from 'next/font/google'
-import SiteHeader from '@/components/SiteHeader'
+import { getPayload } from 'payload'
+import SiteHeader, { type NavigationPage } from '@/components/SiteHeader'
 import { SlugProvider } from '@/components/SlugProvider'
 import SiteFooter from '@/components/Footer'
 import { LOCALE_CODES } from '@/constants/locales'
 import { isSupportedLocale } from '@/lib/locales'
 import { buildLocaleMetadata } from '@/lib/metadata'
 import { cn } from '@/lib/utils'
+import config from '@/payload.config'
 import './globals.css'
 
 const fontSans = Mulish({
@@ -40,6 +42,31 @@ export default async function RootLayout(props: {
     notFound()
   }
 
+  const payloadConfig = await config
+  const payload = await getPayload({ config: payloadConfig })
+  const { docs } = await payload.find({
+    collection: 'pages',
+    locale,
+    where: {
+      and: [{ showInNavbar: { equals: true } }, { status: { equals: 'published' } }],
+    },
+    limit: 100,
+    sort: 'title',
+    select: {
+      title: true,
+      slug: true,
+    },
+  })
+  const navigationPages: NavigationPage[] = docs
+    .filter((page): page is typeof page & { slug: string; title: string } => {
+      return typeof page.slug === 'string' && typeof page.title === 'string'
+    })
+    .map((page) => ({
+      id: String(page.id),
+      slug: page.slug,
+      title: page.title,
+    }))
+
   return (
     <html lang={locale}>
       <body
@@ -48,9 +75,7 @@ export default async function RootLayout(props: {
         <SlugProvider>
           <div className="px-4 md:px-6 lg:px-8">
             <div className="mx-auto flex min-h-screen max-w-7xl flex-col py-4 md:py-6 lg:py-8">
-              <React.Suspense fallback={null}>
-                <SiteHeader locale={locale} />
-              </React.Suspense>
+              <SiteHeader locale={locale} pages={navigationPages} />
               <main className="flex-1">{children}</main>
               <SiteFooter locale={locale} />
             </div>
