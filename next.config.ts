@@ -7,6 +7,7 @@ const __filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(__filename)
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ['127.0.0.1', 'localhost', '10.0.0.221', 'yamagata'],
   experimental: {
     serverActions: {
       allowedOrigins: [

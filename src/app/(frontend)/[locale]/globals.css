@@ -179,6 +179,53 @@
   gap: 4rem;
 }
 
+.mobile-menu-overlay {
+  animation: mobile-menu-overlay-in 200ms ease-out;
+}
+
+.mobile-menu-panel {
+  animation: mobile-menu-panel-in 250ms ease-out;
+}
+
+.mobile-menu-overlay[data-state='closed'] {
+  animation: mobile-menu-overlay-out 150ms ease-in forwards;
+}
+
+.mobile-menu-panel[data-state='closed'] {
+  animation: mobile-menu-panel-out 200ms ease-in forwards;
+}
+
+@keyframes mobile-menu-overlay-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes mobile-menu-overlay-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes mobile-menu-panel-in {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes mobile-menu-panel-out {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu-overlay,
+  .mobile-menu-panel {
+    animation-duration: 0.01ms;
+  }
+}
+
 .rich-text-content {
   color: rgb(15 23 42);
   max-width: none;
