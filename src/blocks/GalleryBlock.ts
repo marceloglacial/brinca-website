@@ -14,6 +14,9 @@ export const GalleryBlock: Block = {
       label: 'Cloudinary Folder Path',
       admin: {
         description: 'Cloudinary folder path to load images from (e.g. brinca/events/2026)',
+        components: {
+          Field: '@/components/CloudinaryFolderField#CloudinaryFolderField',
+        },
       },
     },
     {
