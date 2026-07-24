@@ -4,6 +4,9 @@ import BlockRenderer from '@/components/BlockRenderer'
 import { SetSlug } from '@/components/SlugProvider'
 import config from '@/payload.config'
 
+// The home page is managed in Payload and must reflect published edits immediately.
+export const dynamic = 'force-dynamic'
+
 export default async function HomePage(props: { params: Promise<{ locale: string }> }) {
   const { locale } = await props.params
   const payloadConfig = await config
